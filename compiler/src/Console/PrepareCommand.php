@@ -9,43 +9,40 @@ namespace Spryk\Compiler\Console;
 
 use Exception;
 use Spryk\Compiler\Filesystem\FilesystemInterface;
-use Spryk\ShouldNotHappenException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
-use function chdir;
-use function dirname;
-use function escapeshellarg;
-use function exec;
-use function file_get_contents;
 use function file_put_contents;
-use function implode;
 use function is_dir;
 use function json_decode;
 use function json_encode;
 use function realpath;
-use function rename;
 use function sprintf;
-use function str_replace;
 use function strlen;
 use function substr;
-use function unlink;
 use function var_export;
 use const JSON_PRETTY_PRINT;
 use const JSON_UNESCAPED_SLASHES;
 
 final class PrepareCommand extends Command
 {
+    protected FilesystemInterface $filesystem;
+
+    protected string $buildDir;
+
     /**
      * @param \Spryk\Compiler\Filesystem\FilesystemInterface $filesystem
      * @param string $buildDir
      */
     public function __construct(
-        private FilesystemInterface $filesystem,
-        private string $buildDir
+        FilesystemInterface $filesystem,
+        string $buildDir
     ) {
         parent::__construct();
+
+        $this->filesystem = $filesystem;
+        $this->buildDir = $buildDir;
     }
 
     /**
