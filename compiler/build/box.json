@@ -1,0 +1,22 @@
+{
+  "alias": "spryk.phar",
+  "banner": false,
+  "base-path": "../..",
+  "check-requirements": false,
+  "compactors": [
+    "KevinGH\\Box\\Compactor\\PhpScoper"
+  ],
+  "files": [
+    "preload.php",
+    "vendor/composer/installed.php"
+  ],
+  "directories": [
+    "conf",
+    "src",
+    "resources",
+    "stubs"
+  ],
+  "force-autodiscovery": true,
+  "output": "tmp/spryk.phar",
+  "php-scoper": "compiler/build/scoper.inc.php"
+}

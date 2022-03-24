@@ -8,16 +8,10 @@
 namespace SprykerSdkTest;
 
 use Codeception\Actor;
-use SprykerSdk\Spryk\Model\Spryk\Configuration\Extender\SprykConfigurationExtender;
-use SprykerSdk\Spryk\Model\Spryk\Configuration\Finder\SprykConfigurationFinder;
-use SprykerSdk\Spryk\Model\Spryk\Configuration\Loader\SprykConfigurationLoader;
-use SprykerSdk\Spryk\Model\Spryk\Configuration\Merger\SprykConfigurationMerger;
-use SprykerSdk\Spryk\Model\Spryk\Configuration\Validator\ConfigurationValidator;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Argument;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollection;
 use SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition;
 use SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface;
-use SprykerSdk\Spryk\SprykConfig;
 
 /**
  * Inherited Methods
@@ -45,38 +39,6 @@ class SprykTester extends Actor
     public function getRootDirectory(): string
     {
         return codecept_data_dir();
-    }
-
-    /**
-     * @param string $module
-     *
-     * @return string
-     */
-    public function getModuleDirectory(string $module = 'FooBar'): string
-    {
-        return sprintf('%svendor/spryker/spryker/Bundles/%s/', $this->getRootDirectory(), $module);
-    }
-
-    /**
-     * @param string $directory
-     *
-     * @return array
-     */
-    public function getMergedConfiguration(string $directory): array
-    {
-        $configurationFinder = new SprykConfigurationFinder([$directory . '/Fixtures/config/']);
-        $configurationMerger = new SprykConfigurationMerger($configurationFinder);
-
-        $configurationFinder = new SprykConfigurationFinder([$directory . '/Fixtures/config/spryks/']);
-        $configurationLoader = new SprykConfigurationLoader(
-            $configurationFinder,
-            $configurationMerger,
-            new SprykConfigurationExtender([]),
-            new ConfigurationValidator([]),
-            new SprykConfig(),
-        );
-
-        return $configurationLoader->loadSpryk('SprykDefinition');
     }
 
     /**

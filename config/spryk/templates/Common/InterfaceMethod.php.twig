@@ -6,9 +6,9 @@
 {% endif %}
 
     /**
-     {% if specification is defined and specification.value is not empty %}
+     {% if specification is defined and specification.value is not empty -%}
      * Specification:
-     {%- for specificationLine in specification.value -%}
+     {% for specificationLine in specification.value -%}
      * {{ specificationLine }}
      {% endfor -%}
      *
@@ -34,6 +34,6 @@
      *
      {% endif -%}
      {% endif -%}
-     * @return {{ output }}
+     * @return {{ output | returnValueToDocParameter }}
      */
     public function {{ method }}({% if inputString is not empty %}{{ inputString | typedArrayConvert }}{% endif %}): {{ output | typedArrayConvert }};

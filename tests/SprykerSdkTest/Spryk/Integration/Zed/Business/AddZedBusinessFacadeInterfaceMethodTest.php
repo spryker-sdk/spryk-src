@@ -67,6 +67,8 @@ class AddZedBusinessFacadeInterfaceMethodTest extends Unit
     }
 
     /**
+     * @group testAddsCommentFacadeInterface
+     *
      * @return void
      */
     public function testAddsCommentFacadeInterface(): void
@@ -82,7 +84,7 @@ class AddZedBusinessFacadeInterfaceMethodTest extends Unit
             ],
         ]);
 
-        $pathToFacadeInterface = $this->tester->getModuleDirectory() . 'src/Spryker/Zed/FooBar/Business/FooBarFacadeInterface.php';
+        $pathToFacadeInterface = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Business/FooBarFacadeInterface.php';
         $facadeInterfaceContent = file_get_contents($pathToFacadeInterface);
         $facadeInterfaceContent = ($facadeInterfaceContent) ?: '';
 

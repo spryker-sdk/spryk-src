@@ -11,7 +11,7 @@ arguments:
         default: Spryker
 
     targetPath:
-        value: "{{ moduleRoot }}/"
+        value: ""
 
     directories:
         skipOnProjectLevel: true
@@ -20,3 +20,5 @@ arguments:
 
 postSpryks:
     - AddZedBusinessTestSuiteConfiguration
+    - AddZedBusinessTester
+    - AddZedTestHelper

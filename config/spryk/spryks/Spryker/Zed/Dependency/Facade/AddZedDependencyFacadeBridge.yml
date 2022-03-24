@@ -28,7 +28,7 @@ arguments:
         value: "{{ module }}To{{ dependentModule }}FacadeBridge.php"
 
     targetPath:
-        value: "{{ moduleRoot }}/src/{{ organization }}/Zed/{{ module }}/Dependency/Facade/"
+        value: "src/{{ organization }}/Zed/{{ module }}/Dependency/Facade/"
 
 preSpryks:
     - AddModule
@@ -37,11 +37,3 @@ postSpryks:
     - AddZedDependencyFacadeInterface
     - AddZedDependencyFacadeBusinessFactoryMethod
     - AddZedDependencyFacadeDependencyProviderMethod
-    - AddZedDependencyFacadeDependencyProviderConstant:
-        arguments:
-            name:
-                value: "FACADE_{{ dependentModule | underscored | upper }}"
-            value:
-                value: "FACADE_{{ dependentModule | underscored | upper }}"
-            visibility:
-                value: "public"
