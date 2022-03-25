@@ -143,11 +143,11 @@ class SprykConfig
         // Path to Spryks inside *this* package
         $sprykModuleDirectory = $this->getSprykRootDirectory() . 'config/spryk/' . $subDirectory;
 
-        if ($projectSprykDirectory !== false) {
+        if (is_dir($projectSprykDirectory)) {
             $directories[] = $projectSprykDirectory . DIRECTORY_SEPARATOR;
         }
 
-        if ($sprykModuleDirectory !== false) {
+        if (is_dir($sprykModuleDirectory)) {
             $directories[] = $sprykModuleDirectory . DIRECTORY_SEPARATOR;
         }
 
@@ -232,6 +232,7 @@ class SprykConfig
     public function getProjectNamespaces(): array
     {
         $namespaces = [];
+
         /** @var string $namespacesFromEnv */
         $namespacesFromEnv = getenv('PROJECT_NAMESPACES');
 

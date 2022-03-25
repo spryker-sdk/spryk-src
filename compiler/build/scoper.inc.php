@@ -33,11 +33,15 @@ return [
     'files-whitelist' => $stubs,
     'patchers' => [
         function (string $filePath, string $prefix, string $content): string {
-            if ($filePath !== 'bin/spryk-run') {
+            if (!in_array($filePath, [
+                'bin/spryk-build',
+                'bin/spryk-dump',
+                'bin/spryk-run',
+            ], true)) {
                 return $content;
             }
 
-            return str_replace('__DIR__ . \'/..', '\'phar://phpstan.phar', $content);
+            return str_replace('__DIR__ . \'/..', '\'phar://spryk.phar', $content);
         },
         function (string $filePath, string $prefix, string $content): string {
             if (strpos($filePath, 'src/') !== 0) {

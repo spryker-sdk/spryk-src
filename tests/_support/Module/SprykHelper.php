@@ -159,7 +159,7 @@ class SprykHelper extends Module
     protected function getSprykConfigMock()
     {
         $sprykConfig = Stub::make(SprykConfig::class, [
-            'getRootDirectory' => function () {
+            'getProjectRootDirectory' => function () {
                 // Write files only in memory
                 return $this->getVirtualDirectory();
             },
