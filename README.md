@@ -19,41 +19,13 @@ Currently we support two ways to work with Spryks.
 1. Console based (CLI).
 2. UI based (Zed GUI).
 
-### Spryk Console
+Currently available commands are `SprykDumpConsole`, `SprykBuildConsole` and `SprykRunConsole`.
 
-The console tool for working with Spryks is written with Symfony's Console component. To work with the Spryk Console you need to add it to your `ConsoleDependencyProvider`:
-
-```
-namespace Pyz\Zed\Console;
-
-use SprykerSdk\Spryk\Console\SprykDumpConsole;
-use SprykerSdk\Spryk\Console\SprykBuildConsole;
-use SprykerSdk\Spryk\Console\SprykRunConsole;
-
-class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
-{
-    protected function getConsoleCommands(Container $container)
-    {
-        if (Environment::isDevelopment()) {
-            $commands[] = new SprykRunConsole();
-            $commands[] = new SprykBuildConsole();
-            $commands[] = new SprykDumpConsole();
-        }
-        ...
-
-    }
-}
-```
-
-Currently available commands are `SprykDumpConsole` and `SprykRunConsole`.
-
-> **_NOTE:_** However, instead of registering command in `ConsoleDependencyProvider` you can use standalone commands: `vendor/bin/spryk-run`, `vendor/bin/spryk-build` and `vendor/bin/spryk-dump`.
-
-1. To get a list of top level spryks run `vendor/bin/console spryk:dump`.
-2. To get a list of all available spryks run `vendor/bin/console spryk:dump --level=all`.
-3. To get a list of all options available for a specific spryk run `vendor/bin/console spryk:dump {SPRYK NAME}`.
-4. To execute one Spryk run `vendor/bin/console spryk:run {SPRYK NAME}`.
-5. To reflect changes in Spryk arguments and generate a new cache for them run `vendor/bin/console spryk:build`.
+1. To get a list of top level spryks run `vendor/bin/spryk dump`.
+2. To get a list of all available spryks run `vendor/bin/spryk dump --level=all`.
+3. To get a list of all options available for a specific spryk run `vendor/bin/spryk dump {SPRYK NAME}`.
+4. To execute one Spryk run `vendor/bin/spryk run {SPRYK NAME}`.
+5. To reflect changes in Spryk arguments and generate a new cache for them run `vendor/bin/spryk build`.
 
 When you run a Spryk, the console will ask you for all needed arguments to build the Spryk. You also have the ability to pass all known arguments on the console by using `--{argument name}={argument value}`.
 

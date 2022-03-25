@@ -276,7 +276,7 @@ class CopyModuleSpryk extends AbstractBuilder
      */
     protected function getTargetPath(): string
     {
-        return $this->config->getRootDirectory() . $this->getStringArgument(static::ARGUMENT_TARGET_PATH);
+        return $this->config->getProjectRootDirectory() . $this->getStringArgument(static::ARGUMENT_TARGET_PATH);
     }
 
     /**

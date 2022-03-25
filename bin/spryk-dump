@@ -1,19 +1,74 @@
 #!/usr/bin/env php
 <?php
 
-include $_composer_autoload_path ?? getcwd() . '/vendor/autoload.php';
-
 use SprykerSdk\Kernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 
-define('APPLICATION_ROOT_DIR', getcwd() . DIRECTORY_SEPARATOR);
-define('APPLICATION_SOURCE_DIR', APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR);
-define('APPLICATION_ENV', getenv('APPLICATION_ENV') ?? 'prod');
-define('APPLICATION', 'Spryk');
-define('APPLICATION_STORE', '');
+(function () {
+    gc_disable(); // performance boost
 
-$kernel = new Kernel('prod', false);
-$application = new Application($kernel);
-$application->setDefaultCommand('spryk:dump', true);
+    define('__SPRYK_RUNNING__', true);
 
-exit($application->run());
+    $devOrPharLoader = require_once __DIR__ . '/../vendor/autoload.php';
+    require_once __DIR__ . '/../preload.php';
+    $devOrPharLoader->unregister();
+
+    $autoloaderInWorkingDirectory = getcwd() . '/vendor/autoload.php';
+    $composerAutoloaderProjectPaths = [];
+
+    if (is_file($autoloaderInWorkingDirectory)) {
+        $composerAutoloaderProjectPaths[] = dirname($autoloaderInWorkingDirectory, 2);
+
+        require_once $autoloaderInWorkingDirectory;
+    }
+
+    $autoloadProjectAutoloaderFile = function (string $file) use (&$composerAutoloaderProjectPaths): void {
+        $path = dirname(__DIR__) . $file;
+        if (!extension_loaded('phar')) {
+            if (is_file($path)) {
+                $composerAutoloaderProjectPaths[] = dirname($path, 2);
+
+                require_once $path;
+            }
+        } else {
+            $pharPath = \Phar::running(false);
+            if ($pharPath === '') {
+                if (is_file($path)) {
+                    $composerAutoloaderProjectPaths[] = dirname($path, 2);
+
+                    require_once $path;
+                }
+            } else {
+                $path = dirname($pharPath) . $file;
+                if (is_file($path)) {
+                    $composerAutoloaderProjectPaths[] = dirname($path, 2);
+
+                    require_once $path;
+                }
+            }
+        }
+    };
+
+    $autoloadProjectAutoloaderFile('/../../autoload.php');
+
+    $devOrPharLoader->register(true);
+
+    $version = 'Version unknown';
+    try {
+        $version = \Jean85\PrettyVersions::getVersion('spryker-sdk/spryk')->getPrettyVersion() ?: $version;
+    } catch (\OutOfBoundsException $e) {
+    }
+
+    define('SPRYK_ROOT_DIR', __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
+    define('APPLICATION_ROOT_DIR', getcwd() . DIRECTORY_SEPARATOR);
+    define('APPLICATION_SOURCE_DIR', APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR);
+    define('APPLICATION_ENV', getenv('APPLICATION_ENV') ?? 'prod');
+    define('APPLICATION', 'Spryk');
+    define('APPLICATION_STORE', '');
+
+    $kernel = new Kernel('prod', false);
+    $application = new Application($kernel);
+    $application->setDefaultCommand('spryk:dump');
+
+    $application->run();
+})();

@@ -63,7 +63,7 @@ final class PrepareCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->buildPreloadScript();
-        $this->fixComposerJson($this->buildDir);
+//        $this->fixComposerJson($this->buildDir);
 
         return 0;
     }
@@ -123,7 +123,8 @@ php;
 
         foreach (
             $finder->files()->name('*.php')->in([
-            $this->buildDir . '/src',
+                $this->buildDir . '/src',
+                $vendorDir . '/nikic/php-parser/lib/PhpParser',
             ]) as $phpFile
         ) {
             $realPath = $phpFile->getRealPath();
