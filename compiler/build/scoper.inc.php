@@ -67,15 +67,6 @@ return [
 
             return str_replace(sprintf('%s\\ReturnTypeWillChange', $prefix), 'ReturnTypeWillChange', $content);
         },
-        function (string $filePath, string $prefix, string $content): string {
-            if (!in_array($filePath, [
-                'vendor/jean85/pretty-package-versions/src/PrettyVersions.php',
-            ], true)) {
-                return $content;
-            }
-
-            return str_replace(sprintf('%s\\Composer\\InstalledVersions', $prefix), 'Composer\\InstalledVersions', $content);
-        }
     ],
     'whitelist' => [
         'SprykerSdk\*',

@@ -16,7 +16,8 @@
     "directories": [
         "src",
         "config",
-        "var"
+        "var",
+        "vendor/twig/twig"
     ],
     "force-autodiscovery": true,
     "output": "tmp/spryk.phar",
