@@ -62,7 +62,7 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 
     $kernel = new Kernel('prod', false);
     $application = new Application($kernel);
-    $application->setDefaultCommand('spryk:run');
+    $application->setDefaultCommand('spryk:run', true);
 
     $application->run();
 })();
