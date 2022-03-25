@@ -21,26 +21,18 @@ class TemplateRenderer implements TemplateRendererInterface
     protected $renderer;
 
     /**
-     * @var \SprykerSdk\Spryk\SprykConfig
-     */
-    protected SprykConfig $config;
-
-    /**
-     * @param \SprykerSdk\Spryk\SprykConfig $config
+     * @param \Twig\Environment $twig
      * @param array<\Twig\Extension\ExtensionInterface> $extensions
      */
-    public function __construct(SprykConfig $config, array $extensions)
+    public function __construct(Environment $twig, array $extensions)
     {
-        $loader = new FilesystemLoader($config->getTemplateDirectories());
-
-        $renderer = new Environment($loader, $config->getTwigConfiguration());
-        $renderer->addExtension(new DebugExtension());
-
         foreach ($extensions as $extension) {
-            $renderer->addExtension($extension);
+            if (!$twig->hasExtension(get_class($extension))) {
+                $twig->addExtension($extension);
+            }
         }
 
-        $this->renderer = $renderer;
+        $this->renderer = $twig;
     }
 
     /**
