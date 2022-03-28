@@ -4,6 +4,7 @@
     "base-path": "../..",
     "check-requirements": false,
     "compactors": [
+        "KevinGH\\Box\\Compactor\\Php",
         "KevinGH\\Box\\Compactor\\PhpScoper"
     ],
     "files": [
@@ -16,7 +17,7 @@
     "directories": [
         "src",
         "config",
-        "var",
+        "var/cache/prod",
         "vendor/twig/twig"
     ],
     "force-autodiscovery": true,

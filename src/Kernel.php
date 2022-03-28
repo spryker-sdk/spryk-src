@@ -9,7 +9,9 @@ namespace SprykerSdk;
 
 use SprykerSdk\Spryk\Model\Spryk\Configuration\Extender\SprykConfigurationExtender;
 use SprykerSdk\Spryk\Model\Spryk\Configuration\Extender\SprykConfigurationExtenderPluginInterface;
+use SprykerSdk\Spryk\Twig\TwigCompilerPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+use Symfony\Bundle\TwigBundle\DependencyInjection\Compiler\TwigEnvironmentPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
@@ -39,6 +41,7 @@ class Kernel extends BaseKernel
         parent::build($container);
 
         $container->addCompilerPass(new AutowireArrayParameterCompilerPass());
+        $container->addCompilerPass(new TwigCompilerPass());
     }
 
     /**

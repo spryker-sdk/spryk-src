@@ -7,10 +7,15 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer;
 
-use SprykerSdk\Spryk\SprykConfig;
+use Symfony\Bridge\Twig\Extension\FormExtension;
+use Symfony\Bridge\Twig\Extension\ProfilerExtension;
+use Symfony\Bridge\Twig\Extension\RoutingExtension;
+use Symfony\Bridge\Twig\Extension\SerializerExtension;
+use Symfony\Bridge\Twig\Extension\StopwatchExtension;
+use Symfony\Bridge\Twig\Extension\TranslationExtension;
+use Symfony\Bridge\Twig\Extension\WebLinkExtension;
 use Twig\Environment;
-use Twig\Extension\DebugExtension;
-use Twig\Loader\FilesystemLoader;
+use Twig\Extension\ExtensionInterface;
 use Twig\Loader\LoaderInterface;
 
 class TemplateRenderer implements TemplateRendererInterface
@@ -18,7 +23,20 @@ class TemplateRenderer implements TemplateRendererInterface
     /**
      * @var \Twig\Environment
      */
-    protected $renderer;
+    protected Environment $renderer;
+
+    /**
+     * @var array<string, bool>
+     */
+    protected array $excludedExtensions = [
+        ProfilerExtension::class => true,
+        TranslationExtension::class => true,
+        RoutingExtension::class => true,
+        StopwatchExtension::class => true,
+        WebLinkExtension::class => true,
+        SerializerExtension::class => true,
+        FormExtension::class => true,
+    ];
 
     /**
      * @param \Twig\Environment $twig
@@ -27,12 +45,32 @@ class TemplateRenderer implements TemplateRendererInterface
     public function __construct(Environment $twig, array $extensions)
     {
         foreach ($extensions as $extension) {
+            if ($this->isExcludedExtension($extension)) {
+                continue;
+            }
+
             if (!$twig->hasExtension(get_class($extension))) {
                 $twig->addExtension($extension);
             }
         }
 
         $this->renderer = $twig;
+    }
+
+    /**
+     * @param \Twig\Extension\ExtensionInterface $extension
+     *
+     * @return bool
+     */
+    protected function isExcludedExtension(ExtensionInterface $extension): bool
+    {
+        $extensionClassName = get_class($extension);
+
+        if (isset($this->excludedExtensions[$extensionClassName])) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

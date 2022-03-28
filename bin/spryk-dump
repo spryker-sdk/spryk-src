@@ -10,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
     define('__SPRYK_RUNNING__', true);
 
     $devOrPharLoader = require_once __DIR__ . '/../vendor/autoload.php';
-    require_once __DIR__ . '/../preload.php';
     $devOrPharLoader->unregister();
 
     $autoloaderInWorkingDirectory = getcwd() . '/vendor/autoload.php';

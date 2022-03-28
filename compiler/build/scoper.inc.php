@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once '../../vendor/autoload.php';
 
 $stubs = [
     '../../vendor/composer/InstalledVersions.php',
@@ -54,18 +54,14 @@ return [
             return $content;
         },
         function (string $filePath, string $prefix, string $content): string {
-            if (strpos($filePath, 'src/') !== 0) {
+            if (strpos($filePath, 'vendor/twig/twig/src/Node/ModuleNode.php') !== 0) {
                 return $content;
             }
 
-            return str_replace(sprintf('%s\\Attribute', $prefix), 'Attribute', $content);
+            return str_replace('use Twig', sprintf('use %s\\\\Twig', $prefix), $content);
         },
         function (string $filePath, string $prefix, string $content): string {
-            if (strpos($filePath, 'src/') !== 0) {
-                return $content;
-            }
-
-            return str_replace(sprintf('%s\\ReturnTypeWillChange', $prefix), 'ReturnTypeWillChange', $content);
+            return str_replace('\'Twig', sprintf('\'%s\\\\Twig', $prefix), $content);
         },
     ],
     'whitelist' => [
