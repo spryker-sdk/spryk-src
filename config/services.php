@@ -25,7 +25,6 @@ use SprykerSdk\Spryk\Model\Spryk\Dumper\SprykDefinitionDumper;
 use SprykerSdk\Spryk\Model\Spryk\Executor\SprykExecutor;
 use SprykerSdk\Spryk\SprykConfig;
 use SprykerSdk\Spryk\SprykFactory;
-use SprykerSdk\Spryk\Twig\PharAwareFilesystemCache;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 return function (ContainerConfigurator $configurator) {
@@ -36,7 +35,6 @@ return function (ContainerConfigurator $configurator) {
 
     $services->load('SprykerSdk\\', '../src/')
         ->exclude('../src/{DependencyInjection,Tests,Kernel.php}');
-
 
 //    $configurator->services()
 //        ->set(PharAwareFilesystemCache::class)
