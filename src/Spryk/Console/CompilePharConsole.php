@@ -31,10 +31,10 @@ class CompilePharConsole extends AbstractSprykConsole
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Clean the cache...');
-        $this->executeProcess(['php', 'bin/spryk', 'cache:clear'], getcwd());
+        $this->executeProcess(['php', 'bin/spryk', 'cache:clear'], (string)getcwd());
 
         $output->writeln('Warm up the cache...');
-        $this->executeProcess(['php', 'bin/spryk', 'cache:warmup'], getcwd());
+        $this->executeProcess(['php', 'bin/spryk', 'cache:warmup'], (string)getcwd());
 
         $output->writeln('Build the PHAR...');
         $this->executeProcess(['php', 'box.phar', 'compile'], getcwd() . '/compiler/build');
@@ -45,6 +45,8 @@ class CompilePharConsole extends AbstractSprykConsole
     /**
      * @param array $processDefinition
      * @param string $cwd
+     *
+     * @return void
      */
     protected function executeProcess(array $processDefinition, string $cwd): void
     {
@@ -53,7 +55,7 @@ class CompilePharConsole extends AbstractSprykConsole
         $iterator = $process->getIterator($process::ITER_SKIP_ERR | $process::ITER_KEEP_OUTPUT);
 
         foreach ($iterator as $data) {
-            echo $data."\n";
+            echo $data . "\n";
         }
     }
 }
