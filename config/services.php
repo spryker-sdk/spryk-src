@@ -25,7 +25,6 @@ use SprykerSdk\Spryk\Model\Spryk\Dumper\SprykDefinitionDumper;
 use SprykerSdk\Spryk\Model\Spryk\Executor\SprykExecutor;
 use SprykerSdk\Spryk\SprykConfig;
 use SprykerSdk\Spryk\SprykFactory;
-use SprykerSdk\Spryk\Twig\PharAwareFilesystemCache;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 return function (ContainerConfigurator $configurator) {
@@ -36,12 +35,6 @@ return function (ContainerConfigurator $configurator) {
 
     $services->load('SprykerSdk\\', '../src/')
         ->exclude('../src/{DependencyInjection,Tests,Kernel.php}');
-
-
-//    $configurator->services()
-//        ->set(PharAwareFilesystemCache::class)
-//        ->public()
-//        ->args([service('twig.loader'), abstract_arg('Twig options')]);
 
     // Make SprykFactory public for instantiating the SprykFacade from external packages like `spryker-sdk/spryk-gui`
     $services->get(SprykFactory::class)->public();

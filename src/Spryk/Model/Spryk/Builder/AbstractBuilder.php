@@ -171,9 +171,7 @@ abstract class AbstractBuilder implements SprykBuilderInterface
             $relativeTargetPath,
         ];
 
-        $path = rtrim($this->config->getProjectRootDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $targetPathFragments);
-
-        return $path;
+        return rtrim($this->config->getProjectRootDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $targetPathFragments);
     }
 
     /**
