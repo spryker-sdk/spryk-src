@@ -7,14 +7,19 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer;
 
+use Symfony\Bridge\Twig\Extension\CodeExtension;
 use Symfony\Bridge\Twig\Extension\FormExtension;
+use Symfony\Bridge\Twig\Extension\HttpFoundationExtension;
+use Symfony\Bridge\Twig\Extension\HttpKernelExtension;
 use Symfony\Bridge\Twig\Extension\ProfilerExtension;
 use Symfony\Bridge\Twig\Extension\RoutingExtension;
 use Symfony\Bridge\Twig\Extension\SerializerExtension;
 use Symfony\Bridge\Twig\Extension\StopwatchExtension;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Bridge\Twig\Extension\WebLinkExtension;
+use Symfony\Bridge\Twig\Extension\YamlExtension;
 use Twig\Environment;
+use Twig\Extension\DebugExtension;
 use Twig\Extension\ExtensionInterface;
 use Twig\Loader\LoaderInterface;
 
@@ -31,8 +36,13 @@ class TemplateRenderer implements TemplateRendererInterface
     protected array $excludedExtensions = [
         ProfilerExtension::class => true,
         TranslationExtension::class => true,
+        CodeExtension::class => true,
         RoutingExtension::class => true,
+        YamlExtension::class => true,
         StopwatchExtension::class => true,
+        HttpKernelExtension::class => true,
+        HttpFoundationExtension::class => true,
+        DebugExtension::class => true,
         WebLinkExtension::class => true,
         SerializerExtension::class => true,
         FormExtension::class => true,

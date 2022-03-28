@@ -15,6 +15,12 @@ foreach ($stubFinder->files()->name('*.php')->in([
     $stubs[] = $file->getPathName();
 }
 
+foreach ($stubFinder->files()->name('*.yml')->in([
+    '../../config/spryk',
+]) as $file) {
+    $stubs[] = $file->getPathName();
+}
+
 if ($_SERVER['PHAR_CHECKSUM'] ?? false) {
     $prefix = '_Spryk_checksum';
 } else {
@@ -61,7 +67,13 @@ return [
             return str_replace('use Twig', sprintf('use %s\\\\Twig', $prefix), $content);
         },
         function (string $filePath, string $prefix, string $content): string {
-            return str_replace('\'Twig', sprintf('\'%s\\\\Twig', $prefix), $content);
+            return str_replace('\'twig_', sprintf('\'%s\\twig_', $prefix), $content);
+        },
+        function (string $filePath, string $prefix, string $content): string {
+            return str_replace('= twig_', sprintf('= %s\\\\twig_', $prefix), $content);
+        },
+        function (string $filePath, string $prefix, string $content): string {
+            return str_replace('(twig_', sprintf('(%s\\twig_', $prefix), $content);
         },
     ],
     'whitelist' => [

@@ -31,6 +31,9 @@ src/*/Zed/*/Static/Assets/sprite
 src/*/Zed/*/Persistence/Propel/Base/*
 src/*/Zed/*/Persistence/Propel/Map/*
 
+# PHAR
+tmp/spryk.phar
+
 # tests
 tests/**/_generated/
 tests/_data/src/
