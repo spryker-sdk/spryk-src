@@ -71,7 +71,6 @@ When this is done re-run your tests. Now you should see a green test.
 
 ### Compile
 
----
 > **_NOTE_**
 >
 > You need to have [BOX](https://github.com/box-project/box) installed to create the `spryk.phar` archive.
