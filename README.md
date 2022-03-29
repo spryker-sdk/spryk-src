@@ -22,7 +22,7 @@ This is a development only "require-dev" library. Please make sure you include i
 >
 > See [Compile](#Compile) section for further details.
 
-# What are Spryks?
+### What are Spryks?
 
 Spryks are some sort of code generators for Spryker. Writing code is often a very repetitive task and you often need to write a lot code just to follow Spryker's clean and complex architecture.
 To take a way the monkey work from writing wir up code and move faster towards writing business code Spryks are born.
@@ -31,7 +31,7 @@ Spryks are written with the help of yml files. The filename of the yml file repr
 
 The vast majority of the Spryks need to execute other Spryks before the called Spryk can run. For example Add a Zed Business Facade needs to have a properly created module before the Facade itself can be created. Therefore Spryks have pre and post Spryks and with the call of one Spryk many things can and will be created for you.
 
-# How to create a Spryk?
+### How to create a Spryk?
 
 In most cases it is very easy to create a Spryk. As the whole Spryk Tool is covered by tests you also have to start by adding a test for the Spryk you want to create.
 
@@ -69,7 +69,7 @@ project OR package root directory
 
 When this is done re-run your tests. Now you should see a green test.
 
-# Compile
+### Compile
 
 ---
 > **_NOTE_**
