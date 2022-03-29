@@ -50,14 +50,7 @@ return [
             return str_replace('__DIR__ . \'/..', '\'phar://spryk.phar', $content);
         },
         function (string $filePath, string $prefix, string $content): string {
-            if (strpos($filePath, 'src/') !== 0) {
-                return $content;
-            }
-
-            $content = str_replace(sprintf('\'%s\\\\r\\\\n\'', $prefix), '\'\\\\r\\\\n\'', $content);
-            $content = str_replace(sprintf('\'%s\\\\', $prefix), '\'', $content);
-
-            return $content;
+            return str_replace('<?php ', '<?php', $content);
         },
         function (string $filePath, string $prefix, string $content): string {
             if (strpos($filePath, 'vendor/twig/twig/src/Node/ModuleNode.php') !== 0) {
