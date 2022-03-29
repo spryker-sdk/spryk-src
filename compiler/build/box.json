@@ -1,0 +1,26 @@
+{
+    "alias": "spryk.phar",
+    "banner": false,
+    "base-path": "../../",
+    "check-requirements": false,
+    "compactors": [
+        "KevinGH\\Box\\Compactor\\Php",
+        "KevinGH\\Box\\Compactor\\PhpScoper"
+    ],
+    "files": [
+        "bin/spryk-build",
+        "bin/spryk-dump",
+        "bin/spryk-run",
+        "bin/environment.php",
+        "vendor/composer/installed.php"
+    ],
+    "directories": [
+        "src/",
+        "config/",
+        "var/cache/prod/",
+        "vendor/twig/twig/"
+    ],
+    "force-autodiscovery": true,
+    "output": "tmp/spryk.phar",
+    "php-scoper": "compiler/build/scoper.inc.php"
+}

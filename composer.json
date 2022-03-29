@@ -4,22 +4,25 @@
     "description": "Spryk module",
     "license": "proprietary",
     "require": {
-        "doctrine/inflector": "^2.0",
+        "php": ">=7.4",
         "ext-dom": "*",
         "ext-simplexml": "*",
         "jfcherng/php-diff": "^6.11",
-        "laminas/laminas-filter": "^2.14",
-        "php": ">=7.4",
+        "nikic/php-parser": "^4.13",
         "ramsey/uuid": "^4.2",
         "spryker/config": "^3.5.0",
+        "doctrine/inflector": "^2.0",
+        "laminas/laminas-filter": "^2.14",
         "symfony/cache": "^5.4",
         "symfony/console": "^5.2.5 || ^6.0.0",
         "symfony/filesystem": "^5.2.0 || ^6.0.0",
         "symfony/finder": "^5.2.0 || ^6.0.0",
         "symfony/framework-bundle": "^5.4.0 || ^6.0.0",
+        "symfony/polyfill-php80": "^1.25",
+        "symfony/runtime": "^5.3.0 || ^6.0.0",
+        "symfony/twig-bundle": "^5.4",
         "symfony/process": "^5.0.0 || ^6.0.0",
         "symfony/proxy-manager-bridge": "^5.4.0",
-        "symfony/runtime": "^5.3.0 || ^6.0.0",
         "symfony/yaml": "^5.0.0 || ^6.0.0",
         "symplify/autowire-array-parameter": "^9.3.0",
         "twig/twig": "^3.0.0"
@@ -27,8 +30,7 @@
     "require-dev": {
         "codeception/codeception": "^4.0.0",
         "codeception/module-symfony": "^2.1",
-        "mikey179/vfsstream": "^1.6.10",
-        "phpunit/phpunit": "^9.5.0",
+        "mikey179/vfsstream": "^1.6",
         "rector/rector": "*",
         "spryker/code-sniffer": "*"
     },
@@ -41,12 +43,6 @@
         "psr-4": {
             "SprykerSdkTest\\": "tests/SprykerSdkTest/",
             "SprykerSdkTest\\Module\\": "tests/_support/Module/",
-            "Spryker\\Glue\\GlueApplicationExtension\\": "vendor/spryker/glue-application-extension/src/Spryker/Glue/GlueApplicationExtension/",
-            "Spryker\\Yves\\Kernel\\": "vendor/spryker/kernel/src/Spryker/Yves/Kernel/",
-            "Spryker\\Zed\\Kernel\\": "vendor/spryker/kernel/src/Spryker/Zed/Kernel/",
-            "Spryker\\Glue\\Kernel\\": "vendor/spryker/kernel/src/Spryker/Glue/Kernel/",
-            "Spryker\\Shared\\Kernel\\": "vendor/spryker/kernel/src/Spryker/Shared/Kernel/",
-            "Spryker\\Client\\Kernel\\": "vendor/spryker/kernel/src/Spryker/Client/Kernel/",
             "Spryker\\Client\\FooBar\\": "tests/_data/vendor/spryker/spryker/Bundles/FooBar/src/Spryker/Client/FooBar/",
             "Spryker\\Shared\\FooBar\\": "tests/_data/vendor/spryker/spryker/Bundles/FooBar/src/Spryker/Shared/FooBar/",
             "Spryker\\Yves\\FooBar\\": "tests/_data/vendor/spryker/spryker/Bundles/FooBar/src/Spryker/Yves/FooBar/",
@@ -90,8 +86,6 @@
         }
     },
     "bin": [
-        "bin/spryk-run",
-        "bin/spryk-dump",
-        "bin/spryk-build"
+        "bin/spryk"
     ]
 }

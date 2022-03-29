@@ -19,6 +19,7 @@ nbproject/
 
 # tooling
 vendor/
+compiler/vendor/
 composer.lock
 .phpunit.result.cache
 
@@ -29,6 +30,9 @@ src/*/Zed/*/Static/Assets/sprite
 # Propel classes
 src/*/Zed/*/Persistence/Propel/Base/*
 src/*/Zed/*/Persistence/Propel/Map/*
+
+# PHAR
+tmp/spryk.phar
 
 # tests
 tests/**/_generated/

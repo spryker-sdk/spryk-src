@@ -156,13 +156,18 @@ class SprykConfig
         $subDirectory = (is_string($subDirectory)) ? $subDirectory . DIRECTORY_SEPARATOR : DIRECTORY_SEPARATOR;
 
         $directories = [];
-        $projectSprykDirectory = realpath($this->getRootDirectory() . 'config/spryk/' . $subDirectory);
-        $sprykModuleDirectory = realpath($this->getSprykCorePath() . 'config/spryk/' . $subDirectory);
 
-        if ($projectSprykDirectory !== false) {
+        // Path to Spryks on suite level
+        $projectSprykDirectory = $this->getProjectRootDirectory() . 'config/spryk/' . $subDirectory;
+
+        // Path to Spryks inside *this* package
+        $sprykModuleDirectory = $this->getSprykRootDirectory() . 'config/spryk/' . $subDirectory;
+
+        if (is_dir($projectSprykDirectory)) {
             $directories[] = $projectSprykDirectory . DIRECTORY_SEPARATOR;
         }
-        if ($sprykModuleDirectory !== false) {
+
+        if (is_dir($sprykModuleDirectory)) {
             $directories[] = $sprykModuleDirectory . DIRECTORY_SEPARATOR;
         }
 
@@ -170,11 +175,24 @@ class SprykConfig
     }
 
     /**
+     * The suite root directory.
+     *
      * @return string
      */
-    public function getRootDirectory(): string
+    public function getProjectRootDirectory(): string
     {
         return rtrim(APPLICATION_ROOT_DIR, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * The `spryker-sdk/spryk` root directory.
+     * When running as PHAR this points to the root inside of the spryk.phar.
+     *
+     * @return string
+     */
+    public function getSprykRootDirectory(): string
+    {
+        return rtrim(SPRYK_ROOT_DIR, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -234,6 +252,7 @@ class SprykConfig
     public function getProjectNamespaces(): array
     {
         $namespaces = [];
+
         /** @var string $namespacesFromEnv */
         $namespacesFromEnv = getenv('PROJECT_NAMESPACES');
 
@@ -252,13 +271,13 @@ class SprykConfig
      */
     public function getArgumentListFilePath(): string
     {
-        $generatedDirectory = $this->getSprykCorePath() . static::NAME_DIRECTORY_GENERATED;
+        $generatedDirectory = $this->getSprykRootDirectory() . 'var' . DIRECTORY_SEPARATOR;
 
         if (!file_exists($generatedDirectory)) {
-            $generatedDirectory = $this->getRootDirectory() . static::NAME_DIRECTORY_GENERATED;
+            $generatedDirectory = $this->getProjectRootDirectory() . static::NAME_DIRECTORY_GENERATED;
         }
 
-        return realpath($generatedDirectory) . DIRECTORY_SEPARATOR . static::NAME_FILE_ARGUMENT_LIST;
+        return $generatedDirectory . DIRECTORY_SEPARATOR . static::NAME_FILE_ARGUMENT_LIST;
     }
 
     /**
@@ -275,30 +294,5 @@ class SprykConfig
     public function getDefaultBuildLevel(): int
     {
         return static::SPRYK_LEVEL_3;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getSprykCorePath(): string
-    {
-        $sprykRelativePath = implode(DIRECTORY_SEPARATOR, [
-            'vendor',
-            static::NAME_ORGANIZATION,
-            static::NAME_PACKAGE,
-        ]);
-
-        return $this->getRootDirectory() . $sprykRelativePath . DIRECTORY_SEPARATOR;
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    public function getTwigConfiguration(): array
-    {
-        return [
-            'debug' => false,
-            'cache' => __DIR__ . '/../../var/cache/twig',
-        ];
     }
 }

@@ -151,13 +151,13 @@ abstract class AbstractBuilder implements SprykBuilderInterface
         $relativeTargetPath = $this->getStringArgument(static::ARGUMENT_TARGET_PATH);
 
         if ($this->arguments->hasArgument('mode') && $this->getStringArgument('mode') === 'project') {
-            $path = rtrim($this->config->getRootDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+            $path = rtrim($this->config->getProjectRootDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
             return $path . $relativeTargetPath;
         }
 
         if (!$this->arguments->hasArgument(static::ARGUMENT_MODULE) || $this->arguments->getArgument(static::ARGUMENT_MODULE)->getValue() === null) {
-            return rtrim($this->config->getRootDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $relativeTargetPath;
+            return rtrim($this->config->getProjectRootDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $relativeTargetPath;
         }
 
         $moduleName = $this->getModuleName();
@@ -171,9 +171,7 @@ abstract class AbstractBuilder implements SprykBuilderInterface
             $relativeTargetPath,
         ];
 
-        $path = rtrim($this->config->getRootDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $targetPathFragments);
-
-        return $path;
+        return rtrim($this->config->getProjectRootDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $targetPathFragments);
     }
 
     /**

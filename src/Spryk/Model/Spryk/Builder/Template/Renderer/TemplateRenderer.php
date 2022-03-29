@@ -7,10 +7,20 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer;
 
-use SprykerSdk\Spryk\SprykConfig;
+use Symfony\Bridge\Twig\Extension\CodeExtension;
+use Symfony\Bridge\Twig\Extension\FormExtension;
+use Symfony\Bridge\Twig\Extension\HttpFoundationExtension;
+use Symfony\Bridge\Twig\Extension\HttpKernelExtension;
+use Symfony\Bridge\Twig\Extension\ProfilerExtension;
+use Symfony\Bridge\Twig\Extension\RoutingExtension;
+use Symfony\Bridge\Twig\Extension\SerializerExtension;
+use Symfony\Bridge\Twig\Extension\StopwatchExtension;
+use Symfony\Bridge\Twig\Extension\TranslationExtension;
+use Symfony\Bridge\Twig\Extension\WebLinkExtension;
+use Symfony\Bridge\Twig\Extension\YamlExtension;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
-use Twig\Loader\FilesystemLoader;
+use Twig\Extension\ExtensionInterface;
 use Twig\Loader\LoaderInterface;
 
 class TemplateRenderer implements TemplateRendererInterface
@@ -18,29 +28,59 @@ class TemplateRenderer implements TemplateRendererInterface
     /**
      * @var \Twig\Environment
      */
-    protected $renderer;
+    protected Environment $renderer;
 
     /**
-     * @var \SprykerSdk\Spryk\SprykConfig
+     * @var array<string, bool>
      */
-    protected SprykConfig $config;
+    protected array $excludedExtensions = [
+        ProfilerExtension::class => true,
+        TranslationExtension::class => true,
+        CodeExtension::class => true,
+        RoutingExtension::class => true,
+        YamlExtension::class => true,
+        StopwatchExtension::class => true,
+        HttpKernelExtension::class => true,
+        HttpFoundationExtension::class => true,
+        DebugExtension::class => true,
+        WebLinkExtension::class => true,
+        SerializerExtension::class => true,
+        FormExtension::class => true,
+    ];
 
     /**
-     * @param \SprykerSdk\Spryk\SprykConfig $config
+     * @param \Twig\Environment $twig
      * @param array<\Twig\Extension\ExtensionInterface> $extensions
      */
-    public function __construct(SprykConfig $config, array $extensions)
+    public function __construct(Environment $twig, array $extensions)
     {
-        $loader = new FilesystemLoader($config->getTemplateDirectories());
-
-        $renderer = new Environment($loader, $config->getTwigConfiguration());
-        $renderer->addExtension(new DebugExtension());
-
         foreach ($extensions as $extension) {
-            $renderer->addExtension($extension);
+            if ($this->isExcludedExtension($extension)) {
+                continue;
+            }
+
+            if (!$twig->hasExtension(get_class($extension))) {
+                $twig->addExtension($extension);
+            }
         }
 
-        $this->renderer = $renderer;
+        $this->renderer = $twig;
+    }
+
+    /**
+     * @param \Twig\Extension\ExtensionInterface $extension
+     *
+     * @return bool
+     */
+    protected function isExcludedExtension(ExtensionInterface $extension): bool
+    {
+        $extensionClassName = get_class($extension);
+
+        if (isset($this->excludedExtensions[$extensionClassName])) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

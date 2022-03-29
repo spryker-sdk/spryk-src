@@ -9,6 +9,7 @@ namespace SprykerSdk;
 
 use SprykerSdk\Spryk\Model\Spryk\Configuration\Extender\SprykConfigurationExtender;
 use SprykerSdk\Spryk\Model\Spryk\Configuration\Extender\SprykConfigurationExtenderPluginInterface;
+use SprykerSdk\Spryk\Twig\TwigCompilerPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -20,6 +21,16 @@ class Kernel extends BaseKernel
     use MicroKernelTrait;
 
     /**
+     * Need to be defined manually as the PHAR doesn't contain a composer.json which is used by Symfony to detect the project root.
+     *
+     * @return string
+     */
+    public function getProjectDir(): string
+    {
+        return __DIR__ . '/../';
+    }
+
+    /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      *
      * @return void
@@ -29,6 +40,7 @@ class Kernel extends BaseKernel
         parent::build($container);
 
         $container->addCompilerPass(new AutowireArrayParameterCompilerPass());
+        $container->addCompilerPass(new TwigCompilerPass());
     }
 
     /**
