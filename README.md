@@ -1,39 +1,26 @@
-# Spryk Module
-[![CI](https://github.com/spryker-sdk/spryk/workflows/CI/badge.svg?branch=master)](https://github.com/spryker-sdk/spryk/actions?query=workflow%3ACI+branch%3Amaster)
-[![Latest Stable Version](https://poser.pugx.org/spryker-sdk/spryk/v/stable.svg)](https://packagist.org/packages/spryker-sdk/spryk)
+# Spryk
+[![CI](https://github.com/spryker-sdk/spryk-src/workflows/CI/badge.svg?branch=master)](https://github.com/spryker-sdk/spryk-src/actions?query=workflow%3ACI+branch%3Amaster)
+[![Latest Stable Version](https://poser.pugx.org/spryker-sdk/spryk-src/v/stable.svg)](https://packagist.org/packages/spryker-sdk/spryk-src)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
 [![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat)](https://github.com/phpstan/phpstan)
 
 ## Installation
 
 ```
-composer require --dev spryker-sdk/spryk
+composer require --dev spryker-sdk/spryk-src
 ```
+
+you can also use `git clone`.
 
 This is a development only "require-dev" module. Please make sure you include it as such.
 
-## How to use Spryks?
-
-Currently we support two ways to work with Spryks.
-
-1. Console based (CLI).
-2. UI based (Zed GUI).
-
-Currently available commands are `SprykDumpConsole`, `SprykBuildConsole` and `SprykRunConsole`.
-
-1. To get a list of top level spryks run `vendor/bin/spryk dump`.
-2. To get a list of all available spryks run `vendor/bin/spryk dump --level=all`.
-3. To get a list of all options available for a specific spryk run `vendor/bin/spryk dump {SPRYK NAME}`.
-4. To execute one Spryk run `vendor/bin/spryk run {SPRYK NAME}`.
-5. To reflect changes in Spryk arguments and generate a new cache for them run `vendor/bin/spryk build`.
-
-When you run a Spryk, the console will ask you for all needed arguments to build the Spryk. You also have the ability to pass all known arguments on the console by using `--{argument name}={argument value}`.
-
-### SprykGui
-
-We also provide a [UI](https://github.com/spryker-sdk/spryk-gui) built inside the Zed application to use Spryks UI based. For the UI you need to run `composer require --dev spryker-sdk/spryk-gui`
-
-When the SprykGui module is installed you can navigation to it inside Zed. The first page you see contains a list of all available Spryks. After you clicked on of the Spryks a form will be displayed and will give you the ability to enter all argument values the Spryk needs to run.
+> **_NOTE:_**
+>
+> This module is a development only package and will not be installed in projects.
+>
+> This package contains all code that will be compiled into a `spryk.phar` which will be installed in projects.
+>
+> See [Compile](#Compile) section for further details.
 
 # What are Spryks?
 
@@ -43,28 +30,6 @@ To take a way the monkey work from writing wir up code and move faster towards w
 Spryks are written with the help of yml files. The filename of the yml file represents also the Spryk name. In most cases the Spryk yml contains arguments which are needed to fullfill the Spryk build run. Almost all Spryks need the module name to run properly. Some Spryks require much more arguments.
 
 The vast majority of the Spryks need to execute other Spryks before the called Spryk can run. For example Add a Zed Business Facade needs to have a properly created module before the Facade itself can be created. Therefore Spryks have pre and post Spryks and with the call of one Spryk many things can and will be created for you.
-
-## Currently we support the following Spryk types:
-
-- template
-- structure
-- method
-
-### Template Spryk
-
-A template Spryk adds a new file to your filesystem and uses twig as render engine. Twig gives you the ability to easily create file from a template with placeholders e.g. for `module` or `organization`. The template Spryk will at least need the `template` argument defined. This argument tells the Spryk what template should be used to fullfill your task.
-
-Template Spryks can have as many arguments defined as you will need in the template which should be build.
-
-### Structure Spryk
-
-A structure Spryk creates directory structure you define. The CreateSprykerModule Spryk e.g. contains the definition of directories the Spryk has to create for you. The main argument in the structure Spryk is the directories argument. Here you can add a list of directories which have to be created.
-
-### Method Spryk
-
-The method Spryk is able to add methods to a specified target e.g. `Spryker\Zed\FooBar\Business\FooBarFacade` it needs some more arguments to fullfill the task as the prior mentioned Spryks.
-
-To get an idea what your Spryk needs take a look into the already existing Spryks.
 
 # How to create a Spryk?
 
@@ -103,3 +68,24 @@ project OR package root directory
 ```
 
 When this is done re-run your tests. Now you should see a green test.
+
+# Compile
+
+---
+> **_NOTE_**
+>
+> You need to have [BOX](https://github.com/box-project/box) installed to create the `spryk.phar` archive.
+>
+> `spryker-sdk/spryk` and `spryker-sdk/spryk-src` need to be installed together.
+
+
+To compile the `spryk.phar` you need to run the following steps:
+
+- `composer update`
+- `php bin/console cache:clear`
+- `php bin/console cache:warmup`
+- `cd compile/build && box compile && cp ../../tmp/spryk.phar ../../../spryk`
+
+This will install the latest dependencies, create a fresh cache, compile the archive and copy it to the `spryker-sdk/spryk` repository.
+
+You also need to push the `spryk.phar` to `spryker-sdk/spryk`.
