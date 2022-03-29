@@ -12,13 +12,13 @@ composer require --dev spryker-sdk/spryk-src
 
 you can also use `git clone`.
 
-This is a development only "require-dev" module. Please make sure you include it as such.
+This is a development only "require-dev" library. Please make sure you include it as such.
 
 > **_NOTE:_**
 >
-> This module is a development only package and will not be installed in projects.
+> This repository is a development only package and will not be installed in projects directly.
 >
-> This package contains all code that will be compiled into a `spryk.phar` which will be installed in projects.
+> This package contains all code that will be compiled into a `spryk.phar` which will be installed instead.
 >
 > See [Compile](#Compile) section for further details.
 
