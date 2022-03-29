@@ -50,7 +50,7 @@ return [
             return str_replace('__DIR__ . \'/..', '\'phar://spryk.phar', $content);
         },
         function (string $filePath, string $prefix, string $content): string {
-            return str_replace('<?php ', '<?php', $content);
+            return preg_replace('<\?php\s\n', '<?php' . PHP_EOL, $content); // A bug produced by the PHPScoper, it adds a whitespace after the opening PHP tag.
         },
         function (string $filePath, string $prefix, string $content): string {
             if (strpos($filePath, 'vendor/twig/twig/src/Node/ModuleNode.php') !== 0) {
