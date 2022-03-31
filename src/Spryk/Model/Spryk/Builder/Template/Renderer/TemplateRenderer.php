@@ -21,7 +21,6 @@ use Symfony\Bridge\Twig\Extension\YamlExtension;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Extension\ExtensionInterface;
-use Twig\Loader\FilesystemLoader;
 use Twig\Loader\LoaderInterface;
 
 class TemplateRenderer implements TemplateRendererInterface
@@ -68,7 +67,7 @@ class TemplateRenderer implements TemplateRendererInterface
         $projectTemplatePath = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'spryk' . DIRECTORY_SEPARATOR . 'templates';
 
         if (is_dir($projectTemplatePath)) {
-            /** @var FilesystemLoader $loader */
+            /** @var \Twig\Loader\FilesystemLoader $loader */
             $loader = $twig->getLoader();
             $loader->addPath($projectTemplatePath);
         }

@@ -31,7 +31,7 @@ interface SprykFacadeInterface
     public function getSprykDefinitions(?int $level = null): array;
 
     /**
-     * @param array $argumentsList
+     * @param array $sprykDefinitions
      *
      * @return int
      */
