@@ -50,7 +50,13 @@ return [
             return str_replace('__DIR__ . \'/..', '\'phar://spryk.phar', $content);
         },
         function (string $filePath, string $prefix, string $content): string {
-            return preg_replace('<\?php\s\n', '<?php' . PHP_EOL, $content); // A bug produced by the PHPScoper, it adds a whitespace after the opening PHP tag.
+            $changedContent = preg_replace('/<\?php\s\n/', '<?php' . PHP_EOL, $content); // A bug produced by the PHPScoper, it adds a whitespace after the opening PHP tag.
+
+            if ($changedContent) {
+                return $changedContent;
+            }
+
+            return $content;
         },
         function (string $filePath, string $prefix, string $content): string {
             if (strpos($filePath, 'vendor/twig/twig/src/Node/ModuleNode.php') !== 0) {

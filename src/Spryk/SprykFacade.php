@@ -81,13 +81,13 @@ class SprykFacade implements SprykFacadeInterface
     }
 
     /**
-     * @param array $argumentsList
+     * @param array $sprykDefinitions
      *
      * @return int
      */
-    public function generateArgumentList(array $argumentsList): int
+    public function generateArgumentList(array $sprykDefinitions): int
     {
-        return $this->getSprykFactory()->getArgumentListGenerator()->generateArgumentList($argumentsList);
+        return $this->getSprykFactory()->getArgumentListGenerator()->generateArgumentList($sprykDefinitions);
     }
 
     /**

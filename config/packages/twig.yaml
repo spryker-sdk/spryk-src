@@ -1,4 +1,5 @@
 twig:
     default_path: '%kernel.project_dir%/config/spryk/templates'
+    path: '%kernel.project_dir%/config/spryk/templates'
     cache: "%kernel.cache_dir%/twig"
     strict_variables: false
