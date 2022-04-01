@@ -3,6 +3,8 @@
 {{ include('Partials/license.twig') }}
 namespace {{ organization }}\Zed\{{ module }}\Business\Validator\{{ domainEntity }};
 
+use {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Identifier\{{ domainEntity }}IdentifierBuilderInterface;
+
 class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}ValidatorInterface
 {
     /**
@@ -18,7 +20,7 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
     /**
      * @var \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Identifier\{{ domainEntity }}IdentifierBuilderInterface
      */
-    protected \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Identifier\{{ domainEntity }}IdentifierBuilderInterface $identifierBuilder;
+    protected {{ domainEntity }}IdentifierBuilderInterface $identifierBuilder;
 
     /**
      * @param \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator\Rules\{{ domainEntity }}ValidatorRuleInterface[] $validatorRules
@@ -28,7 +30,7 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
     public function __constrauct(
         array $validatorRules,
         array $validatorRulePlugins,
-        \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Identifier\{{ domainEntity }}IdentifierBuilderInterface $identifierBuilder
+        {{ domainEntity }}IdentifierBuilderInterface $identifierBuilder
     ) {
         $this->validatorRules = $validatorRules;
         $this->validatorRulePlugins = $validatorRulePlugins;
@@ -138,7 +140,7 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
      *
      * @return \Generated\Shared\Transfer\ErrorTransfer[]
      */
-    protected function addErrorsToErrorCollection(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer, array $errors, array $errorTransfers): array
+    protected function addErrorsToErrorTransfers(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer, array $errors, array $errorTransfers): array
     {
         $identifier = $this->identifierBuilder->buildIdentifier(${{ domainEntity | lcfirst }}Transfer);
 

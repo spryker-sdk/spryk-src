@@ -71,7 +71,7 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
     public function update{{ domainEntity }}Collection(
         {{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
     ): {{ domainEntity }}CollectionResponseTransfer {
-        if (${{ domainEntity | lcfirst }}CollectionRequestTransfer->isTransactional()) {
+        if (${{ domainEntity | lcfirst }}CollectionRequestTransfer->getIsTransactional()) {
             return $this->transactionalUpdate{{ domainEntity }}Collection(${{ domainEntity | lcfirst }}CollectionRequestTransfer);
         }
 
@@ -107,7 +107,7 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
             ${{ domainEntity | lcfirst }}CollectionTransfer = new {{ domainEntity }}CollectionTransfer();
 
             foreach (${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity | pluralize }}() as ${{ domainEntity | lcfirst }}Transfer) {
-                ${{ domainEntity | lcfirst }}CollectionTransfer->add{{ domainEntity }}($this->entityManager->update{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer));
+                ${{ domainEntity | lcfirst }}CollectionTransfer->add{{ domainEntity }}($this->{{ module | lcfirst }}EntityManager->update{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer));
             }
 
             ${{ domainEntity | lcfirst }}CollectionResponseTransfer
@@ -140,7 +140,7 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
 
         foreach (${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity | pluralize }}() as ${{ domainEntity | lcfirst }}Transfer) {
             // Check each SINGLE item before it is saved for errors, if it has some continue with the next one.
-            if (isset($errorTransfers[$this->{{ domainEntity }}IdentifierBuilder->buildIdentifier(${{ domainEntity | lcfirst }}Transfer)])) {
+            if (isset($errorTransfers[$this->{{ domainEntity | lcfirst }}IdentifierBuilder->buildIdentifier(${{ domainEntity | lcfirst }}Transfer)])) {
                 ${{ domainEntity | lcfirst }}CollectionResponseTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
 
                 continue;
@@ -156,7 +156,7 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
                 ->set{{ domainEntity | pluralize }}($this->execute{{ domainEntity }}PreSavePlugins($valid{{ domainEntity }}CollectionTransfer->get{{ domainEntity | pluralize }}()));
 
             foreach ($valid{{ domainEntity }}CollectionTransfer->get{{ domainEntity | pluralize }}() as ${{ domainEntity | lcfirst }}Transfer) {
-                $this->entityManager->update{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
+                $this->{{ module | lcfirst }}EntityManager->update{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
             }
 
             // Run post-save plugins

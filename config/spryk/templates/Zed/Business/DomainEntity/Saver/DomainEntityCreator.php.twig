@@ -69,7 +69,7 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
     public function create{{ domainEntity }}Collection(
         {{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
     ): {{ domainEntity }}CollectionResponseTransfer {
-        if (${{ domainEntity | lcfirst }}CollectionRequestTransfer->isTransactional()) {
+        if (${{ domainEntity | lcfirst }}CollectionRequestTransfer->getIsTransactional()) {
             return $this->transactionalCreate{{ domainEntity }}Collection(${{ domainEntity | lcfirst }}CollectionRequestTransfer);
         }
 
@@ -104,7 +104,7 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
             ${{ domainEntity | lcfirst }}CollectionTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer();
 
             foreach (${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity }}s() as ${{ domainEntity | lcfirst }}Transfer) {
-                ${{ domainEntity | lcfirst }}CollectionTransfer->add{{ domainEntity }}($this->entityManager->update{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer));
+                ${{ domainEntity | lcfirst }}CollectionTransfer->add{{ domainEntity }}($this->{{ module | lcfirst }}EntityManager->update{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer));
             }
 
             ${{ domainEntity | lcfirst }}CollectionResponseTransfer
@@ -136,7 +136,7 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
 
         foreach (${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity }}s() as ${{ domainEntity | lcfirst }}Transfer) {
             // Check each SINGLE item before it is saved for errors, if it has some continue with the next one.
-            if (isset($errorTransfers[$this->{{ domainEntity }}IdentifierBuilder->buildIdentifier(${{ domainEntity | lcfirst }}Transfer)])) {
+            if (isset($errorTransfers[$this->{{ domainEntity | lcfirst }}IdentifierBuilder->buildIdentifier(${{ domainEntity | lcfirst }}Transfer)])) {
                 ${{ domainEntity | lcfirst }}CollectionResponseTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
 
                 continue;
@@ -151,7 +151,7 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
             $valid{{ domainEntity }}CollectionTransfer = $this->execute{{ domainEntity }}PreSavePlugins($valid{{ domainEntity }}CollectionTransfer);
 
             foreach ($valid{{ domainEntity }}CollectionTransfer->get{{ domainEntity }}s as ${{ domainEntity | lcfirst }}Transfer) {
-                $this->entityManager->create{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
+                $this->{{ module | lcfirst }}EntityManager->create{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
             }
 
             // Run post-save plugins

@@ -117,7 +117,7 @@ postSpryks:
             output:
                 value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}CollectionResponseTransfer"
             body:
-                value: "return $this->getFactory()->create{{ domainEntity }}Reader()->get{{ domainEntity }}Collection(${{ domainEntity | lcfirst }}CollectionRequestTransfer);"
+                value: "return $this->getFactory()->create{{ domainEntity }}Reader()->get{{ domainEntity }}Collection(${{ domainEntity | lcfirst }}CriteriaTransfer);"
     - AddZedBusinessFacadeMethod:
         arguments:
             facadeMethod:
@@ -143,7 +143,7 @@ postSpryks:
             facadeMethod:
                 value: "delete{{ domainEntity }}Collection"
             input:
-                value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer"
+                value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer"
             output:
                 value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}CollectionResponseTransfer"
             body:

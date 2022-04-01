@@ -39,7 +39,7 @@ postSpryks:
               className:
                   value: "{{ domainEntity }}Deleter"
               subDirectory:
-                  value: "{{ domainEntity }}/Saver"
+                  value: "{{ domainEntity }}/Deleter"
               modelMethod:
                   value: "delete{{ domainEntity }}Collection"
               input:
@@ -50,7 +50,7 @@ postSpryks:
     - AddZedBusinessFactoryMethod:
           arguments:
               output:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}\\Business\\{{ domainEntity }}\\Saver\\{{ domainEntity }}DeleterInterface"
+                  value: "\\{{ organization }}\\Zed\\{{ module }}\\Business\\{{ domainEntity }}\\Deleter\\{{ domainEntity }}DeleterInterface"
               dependencyMethods:
                   value:
                       - "getEntityManager"

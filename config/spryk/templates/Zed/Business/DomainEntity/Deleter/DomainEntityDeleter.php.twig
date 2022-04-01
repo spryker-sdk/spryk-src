@@ -1,11 +1,12 @@
 <?php
 
 {{ include('Partials/license.twig') }}
-namespace {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Saver;
+namespace {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Deleter;
 
 use Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer;
 use Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
+use Generated\Shared\Transfer\{{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\ValidatorInterface;
 use {{ organization }}\Zed\{{ module }}\Persistence\{{ module }}EntityManagerInterface;
@@ -30,7 +31,7 @@ class {{ domainEntity }}Deleter implements {{ domainEntity }}DeleterInterface
      */
     public function __construct(
         {{ module }}EntityManagerInterface ${{ module | lcfirst }}EntityManager,
-        {{ module }}EntityManagerInterface ${{ module | lcfirst }}Repository
+        {{ module }}RepositoryInterface ${{ module | lcfirst }}Repository
     ) {
         $this->{{ module | lcfirst }}EntityManager = ${{ module | lcfirst }}EntityManager;
         $this->{{ module | lcfirst }}Repository = ${{ module | lcfirst }}Repository;
@@ -62,8 +63,8 @@ class {{ domainEntity }}Deleter implements {{ domainEntity }}DeleterInterface
         ${{ domainEntity | lcfirst }}CollectionResponseTransfer = new {{ domainEntity }}CollectionResponseTransfer();
 
         try {
-            ${{ domainEntity | lcfirst }}CollectionTransfer = $this->repository->get{{ domainEntity }}DeleteCollection(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
-            $this->entityManager->set{{ domainEntity }}IsActiveFalse(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
+            ${{ domainEntity | lcfirst }}CollectionTransfer = $this->{{ module | lcfirst }}Repository->get{{ domainEntity }}DeleteCollection(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
+            $this->{{ module | lcfirst }}EntityManager->set{{ domainEntity }}IsActiveFalse(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
 
             foreach (${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity }}s as ${{ domainEntity | lcfirst }}Transfer) {
                 ${{ domainEntity | lcfirst }}CollectionResponseTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
