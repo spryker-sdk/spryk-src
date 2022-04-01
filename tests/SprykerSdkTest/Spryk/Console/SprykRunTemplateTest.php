@@ -68,7 +68,7 @@ class SprykRunTemplateTest extends Unit
         $fileContent = file_get_contents($this->tester->getVirtualDirectory() . 'vendor/spryker/spryker/Bundles/FooBar/composer.json');
         $fileContent = ($fileContent) ?: '';
 
-        $this->assertRegExp('/"name": "spryker\/FooBar"/', $fileContent);
+        $this->assertRegExp('/"name": "spryker\/foo-bar"/', $fileContent);
     }
 
     /**

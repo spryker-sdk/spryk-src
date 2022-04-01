@@ -64,6 +64,14 @@ class TemplateRenderer implements TemplateRendererInterface
             }
         }
 
+        $projectTemplatePath = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'spryk' . DIRECTORY_SEPARATOR . 'templates';
+
+        if (is_dir($projectTemplatePath)) {
+            /** @var \Twig\Loader\FilesystemLoader $loader */
+            $loader = $twig->getLoader();
+            $loader->addPath($projectTemplatePath);
+        }
+
         $this->renderer = $twig;
     }
 
