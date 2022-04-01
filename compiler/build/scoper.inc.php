@@ -37,6 +37,8 @@ return [
     'prefix' => $prefix,
     'finders' => [],
     'files-whitelist' => $stubs,
+    // Newer box version the one above are renamed, currently failing.
+    // 'exclude-files' => $stubs,
     'patchers' => [
         function (string $filePath, string $prefix, string $content): string {
             if (!in_array($filePath, [
@@ -82,4 +84,7 @@ return [
     ],
     'whitelist-global-functions' => false,
     'whitelist-global-classes' => false,
+    // Newer box version the two above are renamed, currently failing.
+    // 'expose-global-functions' => false,
+    // 'expose-global-classes' => false,
 ];
