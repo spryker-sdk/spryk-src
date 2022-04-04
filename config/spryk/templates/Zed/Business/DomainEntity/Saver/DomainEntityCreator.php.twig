@@ -7,8 +7,8 @@ use Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer;
 use Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Identifier\{{ domainEntity }}IdentifierBuilderInterface;
-use {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\ValidatorInterface;
+use {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\IdentifierBuilder\{{ domainEntity }}IdentifierBuilderInterface;
+use {{ organization }}\Zed\{{ module }}\Business\Validator\{{ domainEntity }}\ValidatorInterface;
 use {{ organization }}\Zed\{{ module }}\Persistence\{{ module }}EntityManagerInterface;
 
 class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
@@ -21,12 +21,12 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
     protected {{ module }}EntityManagerInterface ${{ module | lcfirst }}EntityManager;
 
     /**
-     * @var \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator\{{ domainEntity }}ValidatorInterface
+     * @var \{{ organization }}\Zed\{{ module }}\Business\Validator\{{ domainEntity }}\{{ domainEntity }}ValidatorInterface
      */
     protected {{ domainEntity }}ValidatorInterface ${{ domainEntity | lcfirst }}Validator;
 
     /**
-     * @var \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Identifier\{{ domainEntity }}IdentifierBuilderInterface
+     * @var \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\IdentifierBuilder\{{ domainEntity }}IdentifierBuilderInterface
      */
     protected {{ domainEntity }}IdentifierBuilderInterface ${{ domainEntity | lcfirst }}IdentifierBuilder;
 
@@ -42,8 +42,8 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
 
     /**
      * @param \{{ organization }}\Zed\{{ module }}\Persistence\{{ module }}EntityManagerInterface ${{ module | lcfirst }}EntityManager
-     * @param \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator\{{ domainEntity }}ValidatorInterface ${{ domainEntity | lcfirst }}Validator
-     * @param \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Identifier\{{ domainEntity }}IdentifierBuilderInterface
+     * @param \{{ organization }}\Zed\{{ module }}\Business\Validator\{{ domainEntity }}\{{ domainEntity }}ValidatorInterface ${{ domainEntity | lcfirst }}Validator
+     * @param \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\IdentifierBuilder\{{ domainEntity }}IdentifierBuilderInterface
      * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}PreSavePluginInterface[]
      * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}PostSavePluginInterface[]
      */
@@ -104,11 +104,11 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
             ${{ domainEntity | lcfirst }}CollectionTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer();
 
             foreach (${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity }}s() as ${{ domainEntity | lcfirst }}Transfer) {
-                ${{ domainEntity | lcfirst }}CollectionTransfer->add{{ domainEntity }}($this->{{ module | lcfirst }}EntityManager->update{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer));
+                ${{ domainEntity | lcfirst }}CollectionTransfer->add{{ domainEntity }}($this->{{ module | lcfirst }}EntityManager->create{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer));
             }
 
             ${{ domainEntity | lcfirst }}CollectionResponseTransfer
-                ->set{{ domainEntity | lcfirst }}s(${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity }}s());
+                ->set{{ domainEntity }}s(${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity }}s());
 
             // Run plugins
             ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->execute{{ domainEntity }}PostSavePlugins(${{ domainEntity | lcfirst }}CollectionResponseTransfer);

@@ -6,10 +6,11 @@ namespace {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Delete
 use Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer;
 use Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
-use Generated\Shared\Transfer\{{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\{{ domainEntity }}CollectionDeleteCriteriaTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\ValidatorInterface;
 use {{ organization }}\Zed\{{ module }}\Persistence\{{ module }}EntityManagerInterface;
+use {{ organization }}\Zed\{{ module }}\Persistence\{{ module }}RepositoryInterface;
 
 class {{ domainEntity }}Deleter implements {{ domainEntity }}DeleterInterface
 {
@@ -38,7 +39,7 @@ class {{ domainEntity }}Deleter implements {{ domainEntity }}DeleterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
@@ -54,7 +55,7 @@ class {{ domainEntity }}Deleter implements {{ domainEntity }}DeleterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */

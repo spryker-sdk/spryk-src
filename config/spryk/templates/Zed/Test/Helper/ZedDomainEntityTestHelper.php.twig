@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer;
 use Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer;
 use Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer;
 use Generated\Shared\Transfer\{{ domainEntity }}CriteriaTransfer;
-use Generated\Shared\Transfer\{{ domainEntity }}DeleteCriteriaTransfer;
+use Generated\Shared\Transfer\{{ domainEntity }}CollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\{{ domainEntity }}Transfer;
 use {{ organization }}\Zed\{{ module }}\Business\{{ module }}FacadeInterface;
 use {{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Expander\{{ domainEntity }}ExpanderPluginInterface;
@@ -62,16 +62,16 @@ class {{ domainEntity }}Helper extends Module
     }
 
     /**
-     * @return \Generated\Shared\Transfer\{{ domainEntity }}DeleteCriteriaTransfer
+     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionDeleteCriteriaTransfer
      */
-    public function have{{ domainEntity }}DeleteCriteriaTransferWithIsActiveTrueCriteria(): {{ domainEntity }}DeleteCriteriaTransfer
+    public function have{{ domainEntity }}DeleteCriteriaTransferWithIsActiveTrueCriteria(): {{ domainEntity }}CollectionDeleteCriteriaTransfer
     {
-        ${{ domainEntity | lcfirst }}DeleteCriteriaTransfer = new {{ domainEntity }}DeleteCriteriaTransfer();
+        ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer = new {{ domainEntity }}CollectionDeleteCriteriaTransfer();
         ${{ domainEntity | lcfirst }}ConditionsTransfer = new {{ domainEntity }}ConditionsTransfer();
         ${{ domainEntity | lcfirst }}ConditionsTransfer->setIsActive(true);
-        ${{ domainEntity | lcfirst }}DeleteCriteriaTransfer->set{{ domainEntity }}Conditions(${{ domainEntity | lcfirst }}ConditionsTransfer);
+        ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->set{{ domainEntity }}Conditions(${{ domainEntity | lcfirst }}ConditionsTransfer);
 
-        return ${{ domainEntity | lcfirst }}DeleteCriteriaTransfer;
+        return ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer;
     }
 
     /**
