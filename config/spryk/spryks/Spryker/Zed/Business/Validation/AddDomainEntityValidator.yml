@@ -43,7 +43,7 @@ postSpryks:
               className:
                   value: "{{ domainEntity }}Validator"
               interfaceName:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}\\Business\\{{ domainEntity }}\\Validator\\{{ domainEntity }}ValidatorInterface"
+                  value: "\\{{ organization }}\\Zed\\{{ module }}\\Business\\Validator\\{{ domainEntity }}ValidatorInterface"
               subDirectory:
                   value: "{{ domainEntity }}/Validator"
               dependencyMethods:

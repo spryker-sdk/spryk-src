@@ -115,7 +115,7 @@ postSpryks:
             input:
                 value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}CriteriaTransfer ${{ domainEntity | lcfirst }}CriteriaTransfer"
             output:
-                value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}CollectionResponseTransfer"
+                value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}CollectionTransfer"
             body:
                 value: "return $this->getFactory()->create{{ domainEntity }}Reader()->get{{ domainEntity }}Collection(${{ domainEntity | lcfirst }}CriteriaTransfer);"
     - AddZedBusinessFacadeMethod:
@@ -444,7 +444,7 @@ postSpryks:
             template:
                 value: "Zed/Business/CrudFacadeTest.php.twig"
             targetFilename:
-                value: "{{ domainEntity }}CrudFacade"
+                value: "{{ domainEntity }}CrudFacade.php"
 
     # Add {{ domainEntity }}EntityManager into Persistence layer
     - AddZedPersistenceEntityManagerMethod:
