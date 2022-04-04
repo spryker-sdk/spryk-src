@@ -9,7 +9,6 @@
         "ext-simplexml": "*",
         "jfcherng/php-diff": "^6.11",
         "nikic/php-parser": "^4.13",
-        "ramsey/uuid": "^4.2",
         "doctrine/inflector": "^2.0",
         "laminas/laminas-filter": "^2.14",
         "symfony/console": "^5.2.5 || ^6.0.0",
