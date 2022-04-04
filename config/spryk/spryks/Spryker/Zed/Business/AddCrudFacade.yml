@@ -445,3 +445,134 @@ postSpryks:
                 value: "Zed/Business/CrudFacadeTest.php.twig"
             targetFilename:
                 value: "{{ domainEntity }}CrudFacade"
+
+    # Add {{ domainEntity }}EntityManager into Persistence layer
+    - AddZedPersistenceEntityManagerMethod:
+        arguments:
+            domainEntity:
+                inherit: true
+            entityManagerMethod:
+                value: "create{{ domainEntity }}"
+            body:
+                value: Zed/Persistence/EntityManager/DomainEntity/CreateMethod.php.twig
+            input:
+                value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer"
+            output:
+                value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer"
+
+    - AddZedPersistenceEntityManagerMethod:
+        arguments:
+          domainEntity:
+              inherit: true
+          entityManagerMethod:
+              value: "delete{{ domainEntity }}"
+          body:
+              value: Zed/Persistence/EntityManager/DomainEntity/DeleteMethod.php.twig
+          input:
+              value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer"
+          output:
+              value: "void"
+
+    - AddZedPersistenceEntityManagerMethod:
+        arguments:
+            domainEntity:
+                inherit: true
+            entityManagerMethod:
+                value: "set{{ domainEntity }}IsActiveFalse"
+            input:
+                value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer"
+            output:
+                value: "void"
+            body:
+                value: Zed/Persistence/EntityManager/DomainEntity/SetIsActiveFalseMethod.php.twig
+
+    - AddZedPersistenceEntityManagerMethod:
+        arguments:
+            domainEntity:
+                inherit: true
+            entityManagerMethod:
+                value: "apply{{ domainEntity }}DeleteFilters"
+            body:
+                value: Zed/Persistence/EntityManager/DomainEntity/ApplyDeleteFiltersMethod.php.twig
+            input:
+                value:
+                    - "\\Orm\\Zed\\{{ module }}\\Persistence\\Spy{{ domainEntity }}Query ${{ domainEntity | lcfirst }}Query"
+                    - "\\Generated\\Shared\\Transfer\\{{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer"
+            output:
+                value: "\\Orm\\Zed\\{{ module }}\\Persistence\\Spy{{ domainEntity }}Query"
+
+    #Add "{{ domainEntity }}Mapper" into Persistence layer.
+    - AddZedDomainEntityMethod:
+          arguments:
+              layer:
+                  value: Persistence
+              className:
+                  value: "{{ domainEntity }}Mapper"
+              subDirectory:
+                  value: "{{ domainEntity }}/Mapper"
+              modelMethod:
+                  value: "map{{ domainEntity }}TransferTo{{ domainEntity }}Entity"
+              input:
+                  value:
+                      - "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer ${{ domainEntity }}Transfer"
+                      - "\\Orm\\Zed\\{{ module }}\\Persistence\\Spy{{ domainEntity }} ${{ domainEntity }}Entity"
+              output:
+                  value: "\\Orm\\Zed\\{{ module }}\\Persistence\\Spy{{ domainEntity }}"
+              body:
+                  value: "return ${{ domainEntity }}Entity->fromArray(${{ domainEntity }}Transfer->modifiedToArray());"
+
+    - AddZedDomainEntityMethod:
+        arguments:
+            layer:
+                value: Persistence
+            className:
+                value: "{{ domainEntity }}Mapper"
+            subDirectory:
+                value: "{{ domainEntity }}/Mapper"
+            modelMethod:
+                value: "map{{ domainEntity }}EntityTo{{ domainEntity }}Transfer"
+            input:
+                value:
+                    - "\\Orm\\Zed\\{{ module }}\\Persistence\\Spy{{ domainEntity }} ${{ domainEntity | lcfirst }}Entity"
+                    - "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer"
+            output:
+                value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer"
+            body:
+                value: "return ${{ domainEntity | lcfirst }}Transfer->fromArray(${{ domainEntity | lcfirst }}Entity->toArray(), true);"
+
+    - AddZedDomainEntityMethod:
+        arguments:
+            layer:
+                value: Persistence
+            className:
+                value: "{{ domainEntity }}Mapper"
+            subDirectory:
+                value: "{{ domainEntity }}/Mapper"
+            modelMethod:
+                value: "map{{ domainEntity }}EntityCollectionTo{{ domainEntity }}CollectionResponseTransfer"
+            input:
+                value:
+                    - "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\{{ module }}\\Persistence\\Spy{{ domainEntity }}[] ${{ domainEntity | lcfirst }}EntityCollection"
+                    - "\\Generated\\Shared\\Transfer\\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer"
+            output:
+                value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}CollectionResponseTransfer"
+            body:
+                value:
+                    - "foreach (${{ domainEntity | lcfirst }}EntityCollection as ${{ domainEntity | lcfirst }}Entity) {"
+                    - "    ${{ domainEntity | lcfirst }}CollectionResponseTransfer->add{{ domainEntity }}($this->map{{ domainEntity }}EntityTo{{ domainEntity }}Transfer(${{ domainEntity | lcfirst }}Entity, new {{ domainEntity }}Transfer()));"
+                    - "}"
+                    - ""
+                    - "return ${{ domainEntity | lcfirst }}CollectionResponseTransfer;"
+
+    - AddZedDomainEntityPersistenceFactoryMethod:
+        arguments:
+            application:
+                value: "Zed"
+            fqcnClassName:
+                value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\Propel\\Mapper\\{{ domainEntity }}Mapper"
+            factoryMethod:
+                value: "create{{ domainEntity }}Mapper"
+            output:
+                value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\Propel\\Mapper\\{{ domainEntity }}MapperInterface"
+            body:
+                value: "return new \\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\Propel\\Mapper\\{{ domainEntity }}Mapper();"

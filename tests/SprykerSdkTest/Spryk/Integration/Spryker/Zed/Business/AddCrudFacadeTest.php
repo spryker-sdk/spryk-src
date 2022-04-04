@@ -294,5 +294,83 @@ class AddCrudFacadeTest extends Unit
         ]);
 
         $this->tester->assertClassHasMethod(ClassName::ZED_PERSISTENCE_FACTORY, 'createZipZapQuery');
+        $this->tester->assertClassHasMethod(ClassName::ZED_PERSISTENCE_FACTORY, 'createZipZapMapper');
+    }
+
+    /**
+     * @return void
+     */
+    public function testPersistenceMapperExists(): void
+    {
+        $this->tester->run($this, [
+            '--organization' => 'Spryker',
+            '--module' => 'FooBar',
+            '--domainEntity' => 'ZipZap',
+        ]);
+
+        $this->assertFileExists(
+            $this->tester->getSprykerModuleDirectory()
+            . 'src/Spryker/Zed/FooBar/Persistence/ZipZap/Mapper/ZipZapMapper.php',
+        );
+
+        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Persistence\ZipZap\Mapper\ZipZapMapper', 'mapZipZapTransferToZipZapEntity');
+        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Persistence\ZipZap\Mapper\ZipZapMapper', 'mapZipZapEntityToZipZapTransfer');
+        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Persistence\ZipZap\Mapper\ZipZapMapper', 'mapZipZapEntityCollectionToZipZapCollectionResponseTransfer');
+
+        $this->assertFileExists(
+            $this->tester->getSprykerModuleDirectory()
+            . 'src/Spryker/Zed/FooBar/Persistence/ZipZap/Mapper/ZipZapMapperInterface.php',
+        );
+
+        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Persistence\ZipZap\Mapper\ZipZapMapperInterface', 'mapZipZapTransferToZipZapEntity');
+        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Persistence\ZipZap\Mapper\ZipZapMapperInterface', 'mapZipZapEntityToZipZapTransfer');
+        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Persistence\ZipZap\Mapper\ZipZapMapperInterface', 'mapZipZapEntityCollectionToZipZapCollectionResponseTransfer');
+    }
+
+    /**
+     * @return void
+     */
+    public function testPersistenceEntityManagerExists(): void
+    {
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--domainEntity' => 'ZipZap',
+        ]);
+
+        $this->assertFileExists(
+            $this->tester->getSprykerModuleDirectory()
+            . 'src/Spryker/Zed/FooBar/Persistence/FooBarEntityManager.php',
+        );
+
+        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Persistence\FooBarEntityManager', 'createZipZap');
+        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Persistence\FooBarEntityManager', 'deleteZipZap');
+        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Persistence\FooBarEntityManager', 'setZipZapIsActiveFalse');
+        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Persistence\FooBarEntityManager', 'applyZipZapDeleteFilters');
+
+        $this->assertFileExists(
+            $this->tester->getSprykerModuleDirectory()
+            . 'src/Spryker/Zed/FooBar/Persistence/FooBarEntityManagerInterface.php',
+        );
+
+        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Persistence\FooBarEntityManagerInterface', 'createZipZap');
+        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Persistence\FooBarEntityManagerInterface', 'deleteZipZap');
+        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Persistence\FooBarEntityManagerInterface', 'setZipZapIsActiveFalse');
+        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Persistence\FooBarEntityManagerInterface', 'applyZipZapDeleteFilters');
+    }
+
+    /**
+     * @return void
+     */
+    public function testPersistenceEntityManagerFactoryExists(): void
+    {
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--domainEntity' => 'ZipZap',
+        ]);
+
+        $this->assertFileExists(
+            $this->tester->getSprykerModuleDirectory()
+            . 'src/Spryker/Zed/FooBar/Persistence/FooBarPersistenceFactory.php',
+        );
     }
 }
