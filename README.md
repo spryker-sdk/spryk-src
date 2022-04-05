@@ -82,8 +82,8 @@ To compile the `spryk.phar` you need to run the following steps:
 
 - `composer update`
 - `bin/console spryk:build`
-- `php bin/console cache:clear`
-- `php bin/console cache:warmup`
+- `php bin/console cache:clear -e prod`
+- `php bin/console cache:warmup -e prod`
 - `cd compile/build && box compile && cp ../../tmp/spryk.phar ../../../spryk`
 
 This will install the latest dependencies, create a fresh cache, compile the archive and copy it to the `spryker-sdk/spryk` repository.

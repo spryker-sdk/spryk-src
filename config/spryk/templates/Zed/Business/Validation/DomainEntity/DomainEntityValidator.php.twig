@@ -3,10 +3,12 @@
 {{ include('Partials/license.twig') }}
 namespace {{ organization }}\Zed\{{ module }}\Business\Validator\{{ domainEntity }};
 
-use {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Identifier\{{ domainEntity }}IdentifierBuilderInterface;
+use {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\IdentifierBuilder\{{ domainEntity }}IdentifierBuilderInterface;
 
 class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}ValidatorInterface
 {
+
+# \Pyz\Zed\AyExtension\Dependency\Entity\Validator\EntityValidatorRulePluginInterface
     /**
      * @var \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator\Rules\{{ domainEntity }}ValidatorRuleInterface[]
      */
@@ -18,16 +20,16 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
     protected array $validatorRulePlugins = [];
 
     /**
-     * @var \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Identifier\{{ domainEntity }}IdentifierBuilderInterface
+     * @var \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\IdentifierBuilder\{{ domainEntity }}IdentifierBuilderInterface
      */
     protected {{ domainEntity }}IdentifierBuilderInterface $identifierBuilder;
 
     /**
      * @param \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator\Rules\{{ domainEntity }}ValidatorRuleInterface[] $validatorRules
      * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Validator\{{ domainEntity }}ValidatorRulePluginInterface[] $validatorRulePlugins
-     * @param \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Identifier\{{ domainEntity }}IdentifierBuilderInterface $identifierBuilder
+     * @param \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\IdentifierBuilder\{{ domainEntity }}IdentifierBuilderInterface $identifierBuilder
      */
-    public function __constrauct(
+    public function __construct(
         array $validatorRules,
         array $validatorRulePlugins,
         {{ domainEntity }}IdentifierBuilderInterface $identifierBuilder
@@ -122,7 +124,7 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
      *
      * @return \Generated\Shared\Transfer\ErrorTransfer[]
      */
-    protected function executeValidationRulePlugins(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer, array $errorTransfers): array
+    protected function executeValidatorRulePlugins(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer, array $errorTransfers): array
     {
         foreach ($this->validationRules as $validationRule) {
             $errors = $validationRule->validate(${{ domainEntity | lcfirst }}Transfer);

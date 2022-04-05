@@ -444,7 +444,7 @@ postSpryks:
             template:
                 value: "Zed/Business/CrudFacadeTest.php.twig"
             targetFilename:
-                value: "{{ domainEntity }}CrudFacade.php"
+                value: "{{ domainEntity }}CrudFacadeTest.php"
 
     # Add {{ domainEntity }}EntityManager into Persistence layer
     - AddZedPersistenceEntityManagerMethod:

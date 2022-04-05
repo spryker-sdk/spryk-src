@@ -18,13 +18,13 @@ class {{ domainEntity }}Reader implements {{ domainEntity }}ReaderInterface
     protected {{ module }}RepositoryInterface ${{ module | lcfirst }}Repository;
 
     /**
-     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\Entity\{{ domainEntity }}ExpanderPluginInterface[]
+     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Expander\{{ domainEntity }}ExpanderPluginInterface[]
      */
     protected array ${{ domainEntity | lcfirst }}ExpanderPlugins;
 
     /**
      * @param \{{ organization }}\Zed\{{ module }}\Persistence\{{ module }}RepositoryInterface ${{ module | lcfirst }}Repository
-     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\Entity\{{ domainEntity }}ExpanderPluginInterface[] ${{ domainEntity | lcfirst }}ExpanderPlugins
+     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Expander\{{ domainEntity }}ExpanderPluginInterface[] ${{ domainEntity | lcfirst }}ExpanderPlugins
      */
     public function __construct(
         {{ module }}RepositoryInterface ${{ module | lcfirst }}Repository,

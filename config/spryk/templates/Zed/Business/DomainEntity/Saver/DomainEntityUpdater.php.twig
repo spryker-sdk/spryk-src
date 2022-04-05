@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\IdentifierBuilder\{{ domainEntity }}IdentifierBuilderInterface;
-use {{ organization }}\Zed\{{ module }}\Business\Validator{{ domainEntity }}\ValidatorInterface;
+use {{ organization }}\Zed\{{ module }}\Business\Validator\{{ domainEntity }}\{{ domainEntity }}ValidatorInterface;
 use {{ organization }}\Zed\{{ module }}\Persistence\{{ module }}EntityManagerInterface;
 
 class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
@@ -23,7 +23,7 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
     protected {{ module }}EntityManagerInterface ${{ module | lcfirst }}EntityManager;
 
     /**
-     * @var \{{ organization }}\Zed\{{ module }}\Business\Validator\{{ domainEntity }}ValidatorInterface
+     * @var \{{ organization }}\Zed\{{ module }}\Business\Validator\{{ domainEntity }}\{{ domainEntity }}ValidatorInterface
      */
     protected {{ domainEntity }}ValidatorInterface ${{ domainEntity | lcfirst }}Validator;
 
@@ -44,7 +44,7 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
 
     /**
      * @param \{{ organization }}\Zed\{{ module }}\Persistence\{{ module }}EntityManagerInterface ${{ module | lcfirst }}EntityManager
-     * @param \{{ organization }}\Zed\{{ module }}\Business\Validator\{{ domainEntity }}ValidatorInterface ${{ domainEntity | lcfirst }}Validator
+     * @param \{{ organization }}\Zed\{{ module }}\Business\Validator\{{ domainEntity }}\{{ domainEntity }}ValidatorInterface ${{ domainEntity | lcfirst }}Validator
      * @param \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\IdentifierBuilder\{{ domainEntity }}IdentifierBuilderInterface
      * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}PreSavePluginInterface[]
      * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}PostSavePluginInterface[]
