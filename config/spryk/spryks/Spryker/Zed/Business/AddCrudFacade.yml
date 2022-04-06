@@ -62,7 +62,7 @@ postSpryks:
                 value: "apply{{ domainEntity }}Filters"
             input:
                 value:
-                    - "\\Orm\\Zed\\{{ module }}\\Persistence\\Spy{{ domainEntity }}Query ${{ domainEntity | lcfirst }}Query"
+                    - "\\Orm\\Zed\\{{ module }}\\Persistence\\Spy{{ module }}Query ${{ module | lcfirst }}Query"
                     - "\\Generated\\Shared\\Transfer\\{{ domainEntity }}CriteriaTransfer ${{ domainEntity | lcfirst }}CriteriaTransfer"
             output:
                 value: "\\Orm\\Zed\\{{ module }}\\Persistence\\Spy{{ domainEntity }}Query"
@@ -100,7 +100,7 @@ postSpryks:
                 value: "apply{{ domainEntity }}DeleteFilters"
             input:
                 value:
-                    - "\\Orm\\Zed\\{{ module }}\\Persistence\\Spy{{ domainEntity }}Query ${{ domainEntity | lcfirst }}Query"
+                    - "\\Orm\\Zed\\{{ module }}\\Persistence\\Spy{{ module }}Query ${{ module | lcfirst }}Query"
                     - "\\Generated\\Shared\\Transfer\\{{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer"
             output:
                 value: "\\Orm\\Zed\\{{ module }}\\Persistence\\Spy{{ domainEntity }}Query"
@@ -439,6 +439,19 @@ postSpryks:
                 value: "string"
             body:
                 value: "return ${{ domainEntity | lcfirst}}Transfer->getId{{ domainEntity }}();"
+    - AddZedDomainEntityInterface:
+        arguments:
+            className: 
+                value: "{{ domainEntity }}IdentifierBuilderInterface"
+            subDirectory:
+                value: "{{ domainEntity }}/IdentifierBuilder"
+            modelMethod:
+                value: "buildIdentifier"
+            input:
+                value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst}}Transfer"
+            output:
+                value: "string"
+
     - AddZedBusinessFacadeTest:
         arguments:
             template:
@@ -496,7 +509,7 @@ postSpryks:
                 value: Zed/Persistence/EntityManager/DomainEntity/ApplyDeleteFiltersMethod.php.twig
             input:
                 value:
-                    - "\\Orm\\Zed\\{{ module }}\\Persistence\\Spy{{ domainEntity }}Query ${{ domainEntity | lcfirst }}Query"
+                    - "\\Orm\\Zed\\{{ module }}\\Persistence\\Spy{{ module }}Query ${{ module | lcfirst }}Query"
                     - "\\Generated\\Shared\\Transfer\\{{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer"
             output:
                 value: "\\Orm\\Zed\\{{ module }}\\Persistence\\Spy{{ domainEntity }}Query"
@@ -514,12 +527,12 @@ postSpryks:
                   value: "map{{ domainEntity }}TransferTo{{ domainEntity }}Entity"
               input:
                   value:
-                      - "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer ${{ domainEntity }}Transfer"
-                      - "\\Orm\\Zed\\{{ module }}\\Persistence\\Spy{{ domainEntity }} ${{ domainEntity }}Entity"
+                      - "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer"
+                      - "\\Orm\\Zed\\{{ module }}\\Persistence\\Spy{{ domainEntity }} ${{ domainEntity | lcfirst }}Entity"
               output:
                   value: "\\Orm\\Zed\\{{ module }}\\Persistence\\Spy{{ domainEntity }}"
               body:
-                  value: "return ${{ domainEntity }}Entity->fromArray(${{ domainEntity }}Transfer->modifiedToArray());"
+                  value: "return ${{ domainEntity | lcfirst }}Entity->fromArray(${{ domainEntity | lcfirst }}Transfer->modifiedToArray());"
 
     - AddZedDomainEntityMethod:
         arguments:

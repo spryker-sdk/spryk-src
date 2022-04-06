@@ -67,7 +67,7 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
     ): ?array {
         $errorTransfers = [];
 
-        foreach (${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity }}s as ${{ domainEntity | lcfirst }}Transfer) {
+        foreach (${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity | pluralize}}() as ${{ domainEntity | lcfirst }}Transfer) {
             $errorTransfers = $this->validate(${{ domainEntity | lcfirst }}Transfer, $errorTransfers);
 
             if ($breakOnFirstError && !empty($errorTransfers)) {
