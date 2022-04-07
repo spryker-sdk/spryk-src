@@ -1,4 +1,4 @@
-$paginationModel = ${{ module }}Query->paginate(
+$paginationModel = ${{ module | lcfirst }}Query->paginate(
     $paginationTransfer->getPageOrFail(),
     $paginationTransfer->getMaxPerPageOrFail()
 );
