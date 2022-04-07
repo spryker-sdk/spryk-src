@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\IdentifierBuilder\{{ domainEntity }}IdentifierBuilderInterface;
-use {{ organization }}\Zed\{{ module }}\Business\Validator\{{ domainEntity }}\{{ domainEntity }}ValidatorInterface;
+use {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator\{{ domainEntity }}ValidatorInterface;
 use {{ organization }}\Zed\{{ module }}\Persistence\{{ module }}EntityManagerInterface;
 
 class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
@@ -23,7 +23,7 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
     protected {{ module }}EntityManagerInterface ${{ module | lcfirst }}EntityManager;
 
     /**
-     * @var \{{ organization }}\Zed\{{ module }}\Business\Validator\{{ domainEntity }}\{{ domainEntity }}ValidatorInterface
+     * @var \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator\{{ domainEntity }}ValidatorInterface
      */
     protected {{ domainEntity }}ValidatorInterface ${{ domainEntity | lcfirst }}Validator;
 
@@ -33,21 +33,21 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
     protected {{ domainEntity }}IdentifierBuilderInterface ${{ domainEntity | lcfirst }}IdentifierBuilder;
 
     /**
-     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}PreSavePluginInterface[]
+     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface[]
      */
     protected array ${{ domainEntity | lcfirst }}PreSavePlugins;
 
     /**
-     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}PostSavePluginInterface[]
+     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface[]
      */
     protected array ${{ domainEntity | lcfirst }}PostSavePlugins;
 
     /**
      * @param \{{ organization }}\Zed\{{ module }}\Persistence\{{ module }}EntityManagerInterface ${{ module | lcfirst }}EntityManager
-     * @param \{{ organization }}\Zed\{{ module }}\Business\Validator\{{ domainEntity }}\{{ domainEntity }}ValidatorInterface ${{ domainEntity | lcfirst }}Validator
+     * @param \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator\{{ domainEntity }}ValidatorInterface ${{ domainEntity | lcfirst }}Validator
      * @param \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\IdentifierBuilder\{{ domainEntity }}IdentifierBuilderInterface
-     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}PreSavePluginInterface[]
-     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}PostSavePluginInterface[]
+     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface[] ${{ domainEntity | lcfirst }}PreSavePlugins
+     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface[] ${{ domainEntity | lcfirst }}PostSavePlugins
      */
     public function __construct(
         {{ module }}EntityManagerInterface ${{ module | lcfirst }}EntityManager,
@@ -82,6 +82,10 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
      * Specification:
      * - Validates ALL entities BEFORE saving, returns as soon as one is invalid.
      * - Saves a list of ALL entities in ONE transaction.
+     *
+     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
     protected function transactionalUpdate{{ domainEntity }}Collection(
         {{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
@@ -127,6 +131,10 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
      * Specification:
      * - Validates entities before saving, if invalid it won't save the entity and continue with the next one.
      * - Saves ONLY valid entities that passed validation.
+     *
+     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
     protected function nonTransactionalUpdate{{ domainEntity }}Collection(
         {{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
@@ -176,7 +184,7 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
      */
-    public function execute{{ domainEntity }}PreSavePlugins(
+    protected function execute{{ domainEntity }}PreSavePlugins(
         ArrayObject ${{ domainEntity | lcfirst }}Transfers
     ): ArrayObject {
         foreach ($this->{{ domainEntity | lcfirst }}PreSavePlugins as ${{ domainEntity | lcfirst }}PreSavePlugin) {
@@ -191,7 +199,7 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
      */
-    public function execute{{ domainEntity }}PostSavePlugins(
+    protected function execute{{ domainEntity }}PostSavePlugins(
         ArrayObject ${{ domainEntity | lcfirst }}Transfers
     ): ArrayObject {
         foreach ($this->{{ domainEntity | lcfirst }}PostSavePlugins as ${{ domainEntity | lcfirst }}PostSavePlugin) {

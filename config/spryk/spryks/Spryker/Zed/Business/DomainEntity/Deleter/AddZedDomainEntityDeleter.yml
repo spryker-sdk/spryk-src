@@ -20,6 +20,9 @@ arguments:
 
     className:
         value: "{{ domainEntity }}Deleter"
+        
+    subDirectory:
+        value: "{{ domainEntity }}/Deleter"
 
     template:
         value: Zed/Business/DomainEntity/Deleter/DomainEntityDeleter.php.twig
@@ -28,7 +31,7 @@ arguments:
         value: "{{ domainEntity }}Deleter.php"
 
     targetPath:
-        value: "src/{{ organization }}/Zed/{{ module }}/Business/{{ domainEntity }}/Deleter/"
+        value: "src/{{ organization }}/Zed/{{ module }}/Business/"
 
 preSpryks:
     - AddModule

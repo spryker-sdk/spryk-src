@@ -1,0 +1,8 @@
+$paginationModel = ${{ module }}Query->paginate(
+    $paginationTransfer->getPageOrFail(),
+    $paginationTransfer->getMaxPerPageOrFail()
+);
+
+// Map the propel pagination model data to the transfer as needed
+
+return $paginationModel->results();

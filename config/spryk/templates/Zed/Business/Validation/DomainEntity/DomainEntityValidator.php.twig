@@ -1,14 +1,13 @@
 <?php
 
 {{ include('Partials/license.twig') }}
-namespace {{ organization }}\Zed\{{ module }}\Business\Validator\{{ domainEntity }};
+namespace {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator;
 
+use Generated\Shared\Transfer\ErrorTransfer;
 use {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\IdentifierBuilder\{{ domainEntity }}IdentifierBuilderInterface;
 
 class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}ValidatorInterface
 {
-
-# \Pyz\Zed\AyExtension\Dependency\Entity\Validator\EntityValidatorRulePluginInterface
     /**
      * @var \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator\Rules\{{ domainEntity }}ValidatorRuleInterface[]
      */
@@ -40,7 +39,7 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
     }
 
     /**
-     * Use this method to breakOnFirstError instead of validating all transfers
+     * Use this method to breakOnFirstError instead of validating all transfers.
      *
      * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
      *
@@ -109,9 +108,11 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
     {
         foreach ($this->validatorRules as $validatorRule) {
             $errors = $validatorRule->validate(${{ domainEntity | lcfirst }}Transfer);
+
+            $errorTransfers = $this->addErrorsToErrorTransfers(${{ domainEntity | lcfirst }}Transfer, $errors, $errorTransfers);
         }
 
-        return $this->addErrorsToErrorTransfers(${{ domainEntity | lcfirst }}Transfer, $errors, $errorTransfers);
+        return $errorTransfers;
     }
 
     /**
@@ -126,11 +127,13 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
      */
     protected function executeValidatorRulePlugins(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer, array $errorTransfers): array
     {
-        foreach ($this->validationRules as $validationRule) {
-            $errors = $validationRule->validate(${{ domainEntity | lcfirst }}Transfer);
+        foreach ($this->validatorRules as $validatorRule) {
+            $errors = $validatorRule->validate(${{ domainEntity | lcfirst }}Transfer);
+
+            $errorTransfers = $this->addErrorsToErrorTransfers(${{ domainEntity | lcfirst }}Transfer, $errors, $errorTransfers);
         }
 
-        return $this->addErrorsToErrorTransfers(${{ domainEntity | lcfirst }}Transfer, $errors, $errorTransfers);
+        return $errorTransfers;
     }
 
     /**

@@ -1,19 +1,29 @@
-${{ domainEntity | lcfirst }}CollectionTransfer = new {{ domainEntity }}CollectionTransfer();
-${{ domainEntity | lcfirst }}Query = $this->getFactory()
-    ->create{{ domainEntity }}Query();
-    
-${{ domainEntity | lcfirst }}Entities = $this->apply{{ domainEntity }}Filters(
-    ${{ domainEntity | lcfirst }}Query,
-    ${{ domainEntity | lcfirst }}CriteriaTransfer,
-)->find();
+${{ domainEntity | lcfirst }}Collection = new {{ domainEntity }}CollectionTransfer();
+${{ domainEntity | lcfirst }}Query = $this->getFactory()->create{{ domainEntity }}Query();
 
-if (!${{ domainEntity | lcfirst }}Entities->count()) {
-    return ${{ domainEntity | lcfirst }}CollectionTransfer;
+// Filter
+${{ domainEntity | lcfirst }}Conditions = ${{ domainEntity | lcfirst }}CriteriaTransfer->get{{ domainEntity }}Conditions();
+if (!empty(${{ domainEntity | lcfirst }}Conditions)) {
+    ${{ domainEntity | lcfirst }}Query = $this->applyFilterCriteria(${{ domainEntity | lcfirst }}Query, ${{ domainEntity | lcfirst }}Conditions);
 }
 
-return $this->getFactory()
-    ->create{{ domainEntity }}Mapper()
-    ->map{{ domainEntity }}EntityCollectionTo{{ domainEntity }}CollectionTransfer(
-        ${{ domainEntity | lcfirst }}Entities,
-        ${{ domainEntity | lcfirst }}CollectionTransfer,
-    );
+// Sort
+$sortCollection = ${{ domainEntity | lcfirst }}CriteriaTransfer->getSortCollection();
+if (!empty($sortCollection)) {
+    ${{ domainEntity | lcfirst }}Query = $this->applySorting(${{ domainEntity | lcfirst }}Query, $sortCollection);
+}
+
+// Paginate only if the transfer is present
+// This can be different as well, if it not present you might want to fall back to "page 1" by default
+// Again, this is an EXAMPLE, the concrete implementation will depend on each case
+$paginationTransfer = ${{ domainEntity | lcfirst }}CriteriaTransfer->getPagination();
+if ($paginationTransfer !== null) {
+    $objectCollection = $this->applyPagination(${{ domainEntity | lcfirst }}Query, $paginationTransfer);
+    ${{ domainEntity | lcfirst }}Collection->setPagination($paginationTransfer);
+
+    return $this->${{ domainEntity | lcfirst }}Mapper->map{{ domainEntity }}CollectionTo{{ domainEntity }}EntityCollection($objectCollection, ${{ domainEntity | lcfirst }}Collection);
+}
+
+$objectCollection = ${{ domainEntity | lcfirst }}Query->find();
+
+return $this->getFactory()->create{{ domainEntity }}Mapper()->map{{ domainEntity }}CollectionTo{{ domainEntity }}EntityCollection($objectCollection, ${{ domainEntity | lcfirst }}Collection);

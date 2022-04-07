@@ -19,7 +19,7 @@ class YmlDumper implements YmlDumperInterface
     public function dump(array $resolvedFiles): void
     {
         foreach ($resolvedFiles as $resolvedYmlFile) {
-            $resolvedYmlFile->setContent(Yaml::dump($resolvedYmlFile->getDecodedYml()));
+            $resolvedYmlFile->setContent(Yaml::dump($resolvedYmlFile->getDecodedYml(), 10));
         }
     }
 }

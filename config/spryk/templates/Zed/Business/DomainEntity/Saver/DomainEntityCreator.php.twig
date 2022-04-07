@@ -8,7 +8,7 @@ use Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\IdentifierBuilder\{{ domainEntity }}IdentifierBuilderInterface;
-use {{ organization }}\Zed\{{ module }}\Business\Validator\{{ domainEntity }}\{{ domainEntity }}ValidatorInterface;
+use {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator\{{ domainEntity }}ValidatorInterface;
 use {{ organization }}\Zed\{{ module }}\Persistence\{{ module }}EntityManagerInterface;
 
 class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
@@ -21,7 +21,7 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
     protected {{ module }}EntityManagerInterface ${{ module | lcfirst }}EntityManager;
 
     /**
-     * @var \{{ organization }}\Zed\{{ module }}\Business\Validator\{{ domainEntity }}\{{ domainEntity }}ValidatorInterface
+     * @var \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator\{{ domainEntity }}ValidatorInterface
      */
     protected {{ domainEntity }}ValidatorInterface ${{ domainEntity | lcfirst }}Validator;
 
@@ -31,21 +31,21 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
     protected {{ domainEntity }}IdentifierBuilderInterface ${{ domainEntity | lcfirst }}IdentifierBuilder;
 
     /**
-     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}PreSavePluginInterface[]
+     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface[]
      */
     protected array ${{ domainEntity | lcfirst }}PreSavePlugins;
 
     /**
-     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}PostSavePluginInterface[]
+     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface[]
      */
     protected array ${{ domainEntity | lcfirst }}PostSavePlugins;
 
     /**
      * @param \{{ organization }}\Zed\{{ module }}\Persistence\{{ module }}EntityManagerInterface ${{ module | lcfirst }}EntityManager
-     * @param \{{ organization }}\Zed\{{ module }}\Business\Validator\{{ domainEntity }}\{{ domainEntity }}ValidatorInterface ${{ domainEntity | lcfirst }}Validator
+     * @param \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator\{{ domainEntity }}ValidatorInterface ${{ domainEntity | lcfirst }}Validator
      * @param \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\IdentifierBuilder\{{ domainEntity }}IdentifierBuilderInterface
-     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}PreSavePluginInterface[]
-     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}PostSavePluginInterface[]
+     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface[] ${{ domainEntity | lcfirst }}PreSavePlugins
+     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface[] ${{ domainEntity | lcfirst }}PostSavePlugins
      */
     public function __construct(
         {{ module }}EntityManagerInterface ${{ module | lcfirst }}EntityManager,
@@ -80,6 +80,10 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
      * Specification:
      * - Validates ALL entities BEFORE saving, returns as soon as one is invalid.
      * - Saves a list of ALL entities in ONE transaction.
+     *
+     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
     protected function transactionalCreate{{ domainEntity }}Collection(
         {{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
@@ -98,7 +102,7 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
         // This will save ALL entites in ONE transaction. If ANY of the entities in the collection fails to be persisted
         // it will roll ALL of them back. And we DON'T catch exceptions here intentionally!
         ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->getTransactionHandler()->handleTransaction(function () use (${{ domainEntity | lcfirst }}CollectionRequestTransfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer) {
-            // Run plugins
+            // Run pre-save plugins
             $this->execute{{ domainEntity }}PreSavePlugins(${{ domainEntity | lcfirst }}CollectionRequestTransfer);
 
             ${{ domainEntity | lcfirst }}CollectionTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer();
@@ -110,7 +114,7 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
             ${{ domainEntity | lcfirst }}CollectionResponseTransfer
                 ->set{{ domainEntity | pluralize}}(${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize }}());
 
-            // Run plugins
+            // Run post-save plugins
             ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->execute{{ domainEntity }}PostSavePlugins(${{ domainEntity | lcfirst }}CollectionResponseTransfer);
 
             return ${{ domainEntity | lcfirst }}CollectionResponseTransfer;
@@ -123,6 +127,10 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
      * Specification:
      * - Validates entities before saving, if invalid it won't save the entity and continue with the next one.
      * - Saves ONLY valid entities that passed validation.
+     *
+     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
     protected function nonTransactionalCreate{{ domainEntity }}Collection(
         {{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer

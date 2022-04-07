@@ -22,6 +22,9 @@ arguments:
     domainEntity:
         inherit: true
 
+    subDirectory:
+        value: "{{ domainEntity }}/Reader"
+
     template:
         value: Zed/Business/DomainEntity/Reader/DomainEntityReader.php.twig
 
@@ -29,7 +32,7 @@ arguments:
         value: "{{ domainEntity }}Reader.php"
 
     targetPath:
-        value: "src/{{ organization }}/Zed/{{ module }}/Business/{{ domainEntity }}/Reader/"
+        value: "src/{{ organization }}/Zed/{{ module }}/Business/"
 
 preSpryks:
     - AddModule
@@ -55,4 +58,4 @@ postSpryks:
               dependencyMethods:
                   value:
                       - "getRepository"
-                      - "get{{ domainEntity }}ExtenderPlugins"
+                      - "get{{ domainEntity }}ExpanderPlugins"

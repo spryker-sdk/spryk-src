@@ -165,7 +165,7 @@ class {{ domainEntity }}Helper extends Module
      */
     protected function mock{{ domainEntity }}PreSavePluginSetIsActiveFalse(string $factoryMethod): void
     {
-        ${{ domainEntity | lcfirst }}PreSavePlugin = new class implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}PreSavePluginInterface {
+        ${{ domainEntity | lcfirst }}PreSavePlugin = new class implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface {
             /**
              * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
              *
@@ -191,7 +191,7 @@ class {{ domainEntity }}Helper extends Module
      */
     protected function mock{{ domainEntity }}PostSavePluginSetIsActiveFalse(string $factoryMethod): void
     {
-        ${{ domainEntity | lcfirst }}PostSavePlugin = new class implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}PostSavePluginInterface {
+        ${{ domainEntity | lcfirst }}PostSavePlugin = new class implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface {
             /**
              * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
              *

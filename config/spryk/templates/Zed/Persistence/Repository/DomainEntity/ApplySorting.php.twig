@@ -1,0 +1,8 @@
+foreach ($sortCollection as $sortTransfer) {
+    ${{ module | lcfirst }}Query->orderBy(
+        $sortTransfer->getField(),
+        $sortTransfer->getIsAscending() ? static::SORT_ASC : static::SORT_DESC
+    );
+}
+
+return ${{ module | lcfirst }}Query;

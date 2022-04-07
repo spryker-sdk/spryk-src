@@ -1,0 +1,14 @@
+$i = 0;
+$conditions = ${{ domainEntity | lcfirst }}Conditions->toArray();
+$conditionNames = [];
+
+foreach ($conditions as $field => $values) {
+    foreach ($values as $value) {
+        $conditionName = $field . $i;
+        $conditionNames[] = $conditionName;
+        ${{ module | lcfirst}}Query->condition($conditionName, $field . ' = ?', $value);
+    }
+    $i++;
+}
+
+return ${{ module | lcfirst }}Query->where($conditionNames, static::OPERATOR_AND);

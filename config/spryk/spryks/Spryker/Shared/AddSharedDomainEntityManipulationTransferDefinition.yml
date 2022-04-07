@@ -18,6 +18,23 @@ arguments:
         value: "src/{{ organization }}/Shared/{{ module }}/Transfer/{{ module | underscored }}.transfer.xml"
 
 postSpryks:
+    - AddSharedTransferProperty:
+        arguments:
+            name:
+                value: "{{ domainEntity | ucfirst }}"
+            propertyName:
+                value: "id{{ domainEntity | ucfirst }}"
+            propertyType:
+                value: "int"
+    - AddSharedTransferProperty:
+        arguments:
+            name:
+                value: "{{ domainEntity | ucfirst }}"
+            propertyName:
+                value: "isActive"
+            propertyType:
+                value: "bool"
+
     # *domainEntity*CollectionRequest
     -   AddSharedTransferProperty:
             arguments:
