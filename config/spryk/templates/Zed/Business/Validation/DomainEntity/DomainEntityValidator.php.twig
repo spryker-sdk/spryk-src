@@ -152,7 +152,7 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
         foreach ($errors as $error) {
             $errorTransfers[] = (new ErrorTransfer())
                 ->setMessage($error)
-                ->setIdentifier($identifier);
+                ->setEntityIdentifier($identifier);
         }
 
         return $errorTransfers;

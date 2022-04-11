@@ -369,11 +369,23 @@ postSpryks:
               className:
                   value: "{{ domainEntity }}Validator"
               interfaceName:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}\\Business\\{{ domainEntity }}\\Validator\\{{ domainEntity }}ValidatorRuleInterface[]"
+                  value: "\\{{ organization }}\\Zed\\{{ module }}\\Business\\{{ domainEntity }}\\Validator\\Rules\\{{ domainEntity }}ValidatorRuleInterface[]"
               output:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}\\Business\\{{ domainEntity }}\\Validator\\{{ domainEntity }}ValidatorRuleInterface[]"
+                  value: "\\{{ organization }}\\Zed\\{{ module }}\\Business\\{{ domainEntity }}\\Validator\\Rules\\{{ domainEntity }}ValidatorRuleInterface[]"
               body:
                   value: "return [];"
+    - AddZedBusinessFactoryMethod:
+        arguments:
+            factoryMethod:
+                value: "get{{ domainEntity }}CreateValidatorRulePlugins"
+            className:
+                value: "{{ domainEntity }}Validator"
+            interfaceName:
+                value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\{{ domainEntity }}\\Expander\\{{ domainEntity }}ExpanderPluginInterface[]"
+            output:
+                value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\{{ domainEntity }}\\Expander\\{{ domainEntity }}ExpanderPluginInterface[]"
+            body:
+                value: "return [];"
     - AddZedBusinessFactoryMethod:
           arguments:
               factoryMethod:
@@ -401,11 +413,27 @@ postSpryks:
               className:
                   value: "{{ domainEntity }}Validator"
               interfaceName:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}\\Business\\{{ domainEntity }}\\Validator\\{{ domainEntity }}ValidatorRuleInterface[]"
+                  value: "\\{{ organization }}\\Zed\\{{ module }}\\Business\\{{ domainEntity }}\\Validator\\Rules\\{{ domainEntity }}ValidatorRuleInterface[]"
               output:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}\\Business\\{{ domainEntity }}\\Validator\\{{ domainEntity }}ValidatorRuleInterface[]"
+                  value: "\\{{ organization }}\\Zed\\{{ module }}\\Business\\{{ domainEntity }}\\Validator\\Rules\\{{ domainEntity }}ValidatorRuleInterface[]"
               body:
                   value: "return [];"
+
+    - AddZedBusinessFactoryMethod:
+        arguments:
+            factoryMethod:
+                value: "get{{ domainEntity }}UpdateValidatorRulePlugins"
+            subDirectory:
+                value: "{{ domainEntity }}/Validator"
+            className:
+                value: "{{ domainEntity }}Validator"
+            interfaceName:
+                value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\{{ domainEntity }}\\Expander\\{{ domainEntity }}ExpanderPluginInterface[]"
+            output:
+                value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\{{ domainEntity }}\\Expander\\{{ domainEntity }}ExpanderPluginInterface[]"
+            body:
+                value: "return [];"
+
     - AddZedBusinessFactoryGetProvidedDependencyMethod:
           arguments:
               factoryMethod:
@@ -505,6 +533,19 @@ postSpryks:
 
     - AddZedPersistenceEntityManagerMethod:
         arguments:
+            domainEntity:
+                inherit: true
+            entityManagerMethod:
+                value: "update{{ domainEntity }}"
+            body:
+                value: Zed/Persistence/EntityManager/DomainEntity/UpdateMethod.php.twig
+            input:
+                value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer"
+            output:
+                value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer"
+
+    - AddZedPersistenceEntityManagerMethod:
+        arguments:
           domainEntity:
               inherit: true
           entityManagerMethod:
@@ -552,7 +593,7 @@ postSpryks:
               className:
                   value: "{{ domainEntity }}Mapper"
               subDirectory:
-                  value: "Propel/Mapper"
+                  value: "{{ domainEntity }}/Mapper"
               modelMethod:
                   value: "map{{ domainEntity }}TransferTo{{ domainEntity }}Entity"
               input:
@@ -568,7 +609,7 @@ postSpryks:
               className:
                   value: "{{ domainEntity }}Mapper"
               subDirectory:
-                  value: "Propel/Mapper"
+                  value: "{{ domainEntity }}/Mapper"
               modelMethod:
                   value: "map{{ domainEntity }}TransferTo{{ domainEntity }}Entity"
               input:
@@ -587,7 +628,7 @@ postSpryks:
               className:
                   value: "{{ domainEntity }}Mapper"
               subDirectory:
-                  value: "Propel/Mapper"
+                  value: "{{ domainEntity }}/Mapper"
               modelMethod:
                   value: "map{{ domainEntity }}EntityTo{{ domainEntity }}Transfer"
               input:
@@ -604,7 +645,7 @@ postSpryks:
             className:
                 value: "{{ domainEntity }}Mapper"
             subDirectory:
-                value: "Propel/Mapper"
+                value: "{{ domainEntity }}/Mapper"
             modelMethod:
                 value: "map{{ domainEntity }}EntityTo{{ domainEntity }}Transfer"
             input:
@@ -623,7 +664,7 @@ postSpryks:
               className:
                   value: "{{ domainEntity }}Mapper"
               subDirectory:
-                  value: "Propel/Mapper"
+                  value: "{{ domainEntity }}/Mapper"
               modelMethod:
                   value: "map{{ domainEntity }}EntityCollectionTo{{ domainEntity }}CollectionResponseTransfer"
               input:
@@ -640,7 +681,7 @@ postSpryks:
             className:
                 value: "{{ domainEntity }}Mapper"
             subDirectory:
-                value: "Propel/Mapper"
+                value: "{{ domainEntity }}/Mapper"
             modelMethod:
                 value: "map{{ domainEntity }}EntityCollectionTo{{ domainEntity }}CollectionResponseTransfer"
             input:
@@ -664,7 +705,7 @@ postSpryks:
                 className:
                     value: "{{ domainEntity }}Mapper"
                 subDirectory:
-                    value: "Propel/Mapper"
+                    value: "{{ domainEntity }}/Mapper"
                 modelMethod:
                     value: "map{{ domainEntity }}EntityCollectionTo{{ domainEntity }}CollectionTransfer"
                 input:
@@ -681,7 +722,7 @@ postSpryks:
                 className:
                     value: "{{ domainEntity }}Mapper"
                 subDirectory:
-                    value: "Propel/Mapper"
+                    value: "{{ domainEntity }}/Mapper"
                 modelMethod:
                     value: "map{{ domainEntity }}EntityCollectionTo{{ domainEntity }}CollectionTransfer"
                 input:
@@ -703,13 +744,13 @@ postSpryks:
             application:
                 value: "Zed"
             fqcnClassName:
-                value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\Propel\\Mapper\\{{ domainEntity }}Mapper"
+                value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\{{ domainEntity }}\\Mapper\\{{ domainEntity }}Mapper"
             factoryMethod:
                 value: "create{{ domainEntity }}Mapper"
             output:
-                value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\Propel\\Mapper\\{{ domainEntity }}MapperInterface"
+                value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\{{ domainEntity }}\\Mapper\\{{ domainEntity }}MapperInterface"
             body:
-                value: "return new \\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\Propel\\Mapper\\{{ domainEntity }}Mapper();"
+                value: "return new \\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\{{ domainEntity }}\\Mapper\\{{ domainEntity }}Mapper();"
     - AddConstant:
           arguments:
               name:

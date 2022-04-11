@@ -103,7 +103,7 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
         // it will roll ALL of them back. And we DON'T catch exceptions here intentionally!
         ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->getTransactionHandler()->handleTransaction(function () use (${{ domainEntity | lcfirst }}CollectionRequestTransfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer) {
             // Run pre-save plugins
-            $this->execute{{ domainEntity }}PreSavePlugins(${{ domainEntity | lcfirst }}CollectionRequestTransfer);
+            ${{ domainEntity | lcfirst }}CollectionRequestTransfer->set{{ domainEntity | pluralize }}($this->execute{{ domainEntity }}PreSavePlugins(${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity | pluralize }}()));
 
             ${{ domainEntity | lcfirst }}CollectionTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer();
 
@@ -115,7 +115,7 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
                 ->set{{ domainEntity | pluralize}}(${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize }}());
 
             // Run post-save plugins
-            ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->execute{{ domainEntity }}PostSavePlugins(${{ domainEntity | lcfirst }}CollectionResponseTransfer);
+            ${{ domainEntity | lcfirst }}CollectionResponseTransfer->set{{ domainEntity | pluralize }}($this->execute{{ domainEntity }}PostSavePlugins(${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}()));
 
             return ${{ domainEntity | lcfirst }}CollectionResponseTransfer;
         });
@@ -156,14 +156,14 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
         // Process only the non-errored entities
         $this->getTransactionHandler()->handleTransaction(function () use ($valid{{ domainEntity }}CollectionTransfer) {
             // Run pre-save plugins
-            $valid{{ domainEntity }}CollectionTransfer = $this->execute{{ domainEntity }}PreSavePlugins($valid{{ domainEntity }}CollectionTransfer);
+            $valid{{ domainEntity }}CollectionTransfer->set{{ domainEntity | pluralize }}($this->execute{{ domainEntity }}PreSavePlugins($valid{{ domainEntity }}CollectionTransfer->get{{ domainEntity | pluralize }}()));
 
-            foreach ($valid{{ domainEntity }}CollectionTransfer->get{{ domainEntity | pluralize}}() as ${{ domainEntity | lcfirst }}Transfer) {
+            foreach ($valid{{ domainEntity }}CollectionTransfer->get{{ domainEntity | pluralize }}() as ${{ domainEntity | lcfirst }}Transfer) {
                 $this->{{ module | lcfirst }}EntityManager->create{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
             }
 
             // Run post-save plugins
-            $valid{{ domainEntity }}CollectionTransfer = $this->execute{{ domainEntity }}PostSavePlugins($valid{{ domainEntity }}CollectionTransfer);
+            $valid{{ domainEntity }}CollectionTransfer->set{{ domainEntity | pluralize }}($this->execute{{ domainEntity }}PostSavePlugins($valid{{ domainEntity }}CollectionTransfer->get{{ domainEntity | pluralize }}()));
         });
 
         foreach ($valid{{ domainEntity }}CollectionTransfer->get{{ domainEntity | pluralize}}() as ${{ domainEntity | lcfirst }}Transfer) {
@@ -174,30 +174,32 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer ${{ domainEntity | lcfirst }}CollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer
-     */
-    protected function execute{{ domainEntity }}PreSavePlugins(array ${{ domainEntity | lcfirst }}CollectionTransfer): \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer
-    {
+    * @param \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
+    *
+    * @return \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
+    */
+    protected function execute{{ domainEntity }}PreSavePlugins(
+        ArrayObject ${{ domainEntity | lcfirst }}Transfers
+    ): ArrayObject {
         foreach ($this->{{ domainEntity | lcfirst }}PreSavePlugins as ${{ domainEntity | lcfirst }}PreSavePlugin) {
-            ${{ domainEntity | lcfirst }}PreSavePlugin->process(${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize}}());
+            ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}PreSavePlugin->process(${{ domainEntity | lcfirst }}Transfers);
         }
 
-        return ${{ domainEntity | lcfirst }}CollectionTransfer;
+        return ${{ domainEntity | lcfirst }}Transfers;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer ${{ domainEntity | lcfirst }}CollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer
-     */
-    protected function execute{{ domainEntity }}PostSavePlugins(array ${{ domainEntity | lcfirst }}CollectionTransfer): \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer
-    {
+    * @param \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
+    *
+    * @return \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
+    */
+    protected function execute{{ domainEntity }}PostSavePlugins(
+        ArrayObject ${{ domainEntity | lcfirst }}Transfers
+    ): ArrayObject {
         foreach ($this->{{ domainEntity | lcfirst }}PostSavePlugins as ${{ domainEntity | lcfirst }}PostSavePlugin) {
-            ${{ domainEntity | lcfirst }}PostSavePlugin->process(${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize}}());
+            ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}PostSavePlugin->process(${{ domainEntity | lcfirst }}Transfers);
         }
 
-        return ${{ domainEntity | lcfirst }}CollectionTransfer;
+        return ${{ domainEntity | lcfirst }}Transfers;
     }
 }

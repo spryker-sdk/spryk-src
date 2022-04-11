@@ -93,7 +93,7 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
         ${{ domainEntity | lcfirst }}CollectionResponseTransfer = new {{ domainEntity }}CollectionResponseTransfer();
 
         // Validate ALL of the entities before update, if one is invalid break and return errors!
-        $errorTransfers = $this->{{ domainEntity | lcfirst }}Validator->validateCollectionTransactional(${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity | pluralize }}());
+        $errorTransfers = $this->{{ domainEntity | lcfirst }}Validator->validateCollectionTransactional(${{ domainEntity | lcfirst }}CollectionRequestTransfer);
 
         if ($errorTransfers) {
             return ${{ domainEntity | lcfirst }}CollectionResponseTransfer
@@ -143,7 +143,7 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
         $valid{{ domainEntity }}CollectionTransfer = new {{ domainEntity }}CollectionTransfer();
 
         // Validate ALL of the entities before update, if one is invalid break and return errors
-        $errorTransfers = $this->{{ domainEntity | lcfirst }}Validator->validate(${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity | pluralize }}());
+        $errorTransfers = $this->{{ domainEntity | lcfirst }}Validator->validateCollection(${{ domainEntity | lcfirst }}CollectionRequestTransfer);
         ${{ domainEntity | lcfirst }}CollectionResponseTransfer->setErrors($errorTransfers);
 
         foreach (${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity | pluralize }}() as ${{ domainEntity | lcfirst }}Transfer) {

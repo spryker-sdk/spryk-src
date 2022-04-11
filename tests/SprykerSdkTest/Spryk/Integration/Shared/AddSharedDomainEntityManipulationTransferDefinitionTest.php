@@ -41,6 +41,11 @@ class AddSharedDomainEntityManipulationTransferDefinitionTest extends Unit
             '<?xml version="1.0"?>
 <transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
+  <transfer name="FooBarModel">
+    <property name="idFooBarModel" type="int"/>
+    <property name="isActive" type="bool"/>
+  </transfer>
+
   <transfer name="FooBarModelCollectionRequest">
     <property name="isTransactional" type="bool"/>
     <property name="fooBarModels" singular="fooBarModel" type="FooBarModel[]"/>
@@ -80,6 +85,11 @@ class AddSharedDomainEntityManipulationTransferDefinitionTest extends Unit
             $this->tester->getProjectModuleDirectory('FooBar', 'Shared') . 'Transfer/foo_bar.transfer.xml',
             '<?xml version="1.0"?>
 <transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+  <transfer name="FooBarModel">
+    <property name="idFooBarModel" type="int"/>
+    <property name="isActive" type="bool"/>
+  </transfer>
 
   <transfer name="FooBarModelCollectionRequest">
     <property name="isTransactional" type="bool"/>

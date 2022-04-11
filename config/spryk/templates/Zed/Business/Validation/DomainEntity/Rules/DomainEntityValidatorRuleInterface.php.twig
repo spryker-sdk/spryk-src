@@ -1,0 +1,14 @@
+<?php
+
+{{ include('Partials/license.twig') }}
+namespace {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator\Rules;
+
+interface {{ domainEntity }}ValidatorRuleInterface
+{
+    /**
+     * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer
+     *
+     * @return array
+     */
+    public function validate(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer): array;
+}
