@@ -164,6 +164,10 @@ class MethodSpryk extends AbstractBuilder
 
         $classMethodNode = $this->getClassMethodNode();
 
+        if ($classMethodNode === null) {
+            return;
+        }
+
         $bodyArgument = $this->arguments->hasArgument('body') ? $this->arguments->getArgument('body') : false;
 
         if ($bodyArgument && $bodyArgument->getAllowOverride() && $methodExists) {
@@ -191,9 +195,9 @@ class MethodSpryk extends AbstractBuilder
     }
 
     /**
-     * @return \PhpParser\Node\Stmt\ClassMethod
+     * @return \PhpParser\Node\Stmt\ClassMethod|null
      */
-    protected function getClassMethodNode(): ClassMethod
+    protected function getClassMethodNode(): ?ClassMethod
     {
         $this->renderBody();
         $templateName = $this->getTemplateName();
@@ -202,6 +206,11 @@ class MethodSpryk extends AbstractBuilder
             $templateName,
             $this->arguments->getArguments(),
         ));
+
+        if ($methodContent === '<?php class Foo {}') {
+            // Method content can be empty e.g. when trying to render a protected/private method into an interface.
+            return null;
+        }
 
         /** @var array<\PhpParser\Node\Stmt> $methodContentToken */
         $methodContentToken = $this->parser->parse($methodContent);
