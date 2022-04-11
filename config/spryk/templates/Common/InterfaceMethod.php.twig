@@ -1,3 +1,5 @@
+{# Only render the method when it's public. This check prevents from protected or private methods being added to the interface. #}
+{% if visibility is not defined or visibility.value == 'public' %}
 {% set inputString = input.value %}
 {% if input.value is not empty %}
     {% if input.value is iterable %}
@@ -37,3 +39,4 @@
      * @return {{ output | returnValueToDocParameter }}
      */
     public function {{ method }}({% if inputString is not empty %}{{ inputString | typedArrayConvert }}{% endif %}): {{ output | typedArrayConvert }};
+{% endif %}

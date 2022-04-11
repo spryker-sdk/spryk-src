@@ -44,8 +44,10 @@ postSpryks:
                 inherit: true
             body:
                 value: Zed/Persistence/Repository/DomainEntity/GetCollectionMethod.php.twig
-    - AddZedPersistenceRepositoryProtectedMethod:
+    - AddZedPersistenceRepositoryMethod:
         arguments:
+            visbility:
+                value: "protected"
             repositoryMethod:
                 value: "apply{{ domainEntity }}Filters"
             input:
@@ -124,6 +126,7 @@ postSpryks:
                 inherit: true
             body:
                 value: Zed/Persistence/Repository/DomainEntity/ApplyDeleteFiltersMethod.php.twig
+    # TODO: Why this got added?
     - AddZedBusinessFacadeInterfaceMethod:
           arguments:
               facadeMethod:
@@ -140,6 +143,8 @@ postSpryks:
                       - ""
                       - "@api"
     - AddZedBusinessFacadeMethod:
+        excludedSpryks:
+            - AddZedBusinessFacadeMethodTest
         arguments:
             facadeMethod:
                 value: "get{{ domainEntity }}Collection"
@@ -165,6 +170,8 @@ postSpryks:
                     - ""
                     - "@api"
     - AddZedBusinessFacadeMethod:
+        excludedSpryks:
+            - AddZedBusinessFacadeMethodTest
         arguments:
             facadeMethod:
                 value: "create{{ domainEntity }}Collection"
@@ -190,6 +197,8 @@ postSpryks:
                     - ""
                     - "@api"
     - AddZedBusinessFacadeMethod:
+        excludedSpryks:
+            - AddZedBusinessFacadeMethodTest
         arguments:
             facadeMethod:
                 value: "update{{ domainEntity }}Collection"
@@ -215,6 +224,8 @@ postSpryks:
                     - ""
                     - "@api"
     - AddZedBusinessFacadeMethod:
+        excludedSpryks:
+            - AddZedBusinessFacadeMethodTest
         arguments:
             facadeMethod:
                 value: "delete{{ domainEntity }}Collection"

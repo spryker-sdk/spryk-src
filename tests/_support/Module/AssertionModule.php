@@ -17,15 +17,47 @@ use SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface;
 
 class AssertionModule extends Module
 {
- /**
-  * @return \SprykerSdkTest\Module\SprykHelper
-  */
+    /**
+     * @return \SprykerSdkTest\Module\SprykHelper
+     */
     protected function getSprykHelper(): SprykHelper
     {
         /** @var \SprykerSdkTest\Module\SprykHelper $sprykHelper */
         $sprykHelper = $this->getModule(SprykHelper::class);
 
         return $sprykHelper;
+    }
+
+    /**
+     * @param string $className
+     *
+     * @return void
+     */
+    public function assertClassExists(string $className): void
+    {
+        $this->assertNotNull(
+            $this->getSprykHelper()->getFileResolver()->resolve($className),
+            sprintf(
+                'Expected that class "%s" exists but class was not found.',
+                $className,
+            ),
+        );
+    }
+
+    /**
+     * @param string $className
+     *
+     * @return void
+     */
+    public function assertClassDoesNotExist(string $className): void
+    {
+        $this->assertNull(
+            $this->getSprykHelper()->getFileResolver()->resolve($className),
+            sprintf(
+                'Expected that class "%s" does not exist but class was found.',
+                $className,
+            ),
+        );
     }
 
     /**
