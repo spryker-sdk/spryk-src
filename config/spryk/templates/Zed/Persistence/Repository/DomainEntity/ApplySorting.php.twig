@@ -1,4 +1,4 @@
-$sortCollection = $entityCriteriaTransfer->getSortCollection();
+$sortCollection = ${{ domainEntity | lcfirst }}CriteriaTransfer->getSortCollection();
 
 if ($sortCollection === null) {
     return ${{ domainEntity | lcfirst }}Query;

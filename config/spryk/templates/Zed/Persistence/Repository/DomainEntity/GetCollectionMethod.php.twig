@@ -2,10 +2,10 @@ ${{ domainEntity | lcfirst }}CollectionTransfer = new {{ domainEntity }}Collecti
 ${{ domainEntity | lcfirst }}Query = $this->getFactory()->create{{ domainEntity }}Query();
 
 // Filter
-${{ domainEntity | lcfirst }}Query = $this->applyEntityFilters(${{ domainEntity | lcfirst }}Query, ${{ domainEntity | lcfirst }}CriteriaTransfer);
+${{ domainEntity | lcfirst }}Query = $this->apply{{ domainEntity }}Filters(${{ domainEntity | lcfirst }}Query, ${{ domainEntity | lcfirst }}CriteriaTransfer);
 
 // Sort
-${{ domainEntity | lcfirst }}Query = $this->applyEntitySorting(${{ domainEntity | lcfirst }}Query, ${{ domainEntity | lcfirst }}CriteriaTransfer);
+${{ domainEntity | lcfirst }}Query = $this->apply{{ domainEntity }}Sorting(${{ domainEntity | lcfirst }}Query, ${{ domainEntity | lcfirst }}CriteriaTransfer);
 
 // Paginate only if the transfer is present
 // This can be different as well, if it not present you might want to fall back to "page 1" by default

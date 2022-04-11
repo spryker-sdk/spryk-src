@@ -57,6 +57,14 @@ postSpryks:
                     value: "int[]"
                 singular:
                     value: "{{ domainEntity | lcfirst }}Id"
+    -   AddSharedTransferProperty:
+            arguments:
+                name:
+                    value: "{{ domainEntity | ucfirst }}Conditions"
+                propertyName:
+                    value: "isActive"
+                propertyType:
+                    value: "bool"
 
     # *domainEntity*Collection
     -   AddSharedTransferProperty:

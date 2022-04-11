@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\{{ domainEntity }}CollectionDeleteCriteriaTransfer
 use Generated\Shared\Transfer\{{ domainEntity }}Transfer;
 use {{ organization }}\Zed\{{ module }}\Business\{{ module }}FacadeInterface;
 use {{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Expander\{{ domainEntity }}ExpanderPluginInterface;
-use {{ organization }}Test\Zed\Testify\Helper\Business\BusinessHelperTrait;
+use SprykerTest\Zed\Testify\Helper\Business\BusinessHelperTrait;
 
 class {{ domainEntity }}Helper extends Module
 {
@@ -95,11 +95,11 @@ class {{ domainEntity }}Helper extends Module
     protected function persist{{ domainEntity }}({{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer): {{ domainEntity }}Transfer
     {
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new {{ domainEntity }}CollectionRequestTransfer();
-        ${{ domainEntity | lcfirst }}CollectionRequestTransfer->set{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
+        ${{ domainEntity | lcfirst }}CollectionRequestTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
 
-        ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->getFacade()->create{{ domainEntity }}Collection();
+        ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->getFacade()->create{{ domainEntity }}Collection(${{ domainEntity | lcfirst }}CollectionRequestTransfer);
 
-        return current(${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity }}s());
+        return current(${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}());
     }
 
     /**
@@ -109,11 +109,11 @@ class {{ domainEntity }}Helper extends Module
     {
         ${{ domainEntity | lcfirst }}ExpanderPluginSetIsActiveFalse = new class implements {{ domainEntity }}ExpanderPluginInterface {
             /**
-             * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
+             * @param \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
              *
-             * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
+             * @return \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
              */
-            public function expand(array ${{ domainEntity | lcfirst }}Transfers): array
+            public function expand(\ArrayObject ${{ domainEntity | lcfirst }}Transfers): \ArrayObject
             {
                 foreach (${{ domainEntity | lcfirst }}Transfers as ${{ domainEntity | lcfirst }}Transfer) {
                     ${{ domainEntity | lcfirst }}Transfer->setIsActive(false);
@@ -167,11 +167,11 @@ class {{ domainEntity }}Helper extends Module
     {
         ${{ domainEntity | lcfirst }}PreSavePlugin = new class implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface {
             /**
-             * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
+             * @param \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
              *
-             * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
+             * @return \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
              */
-            public function process(array ${{ domainEntity | lcfirst }}Transfers): array
+            public function process(\ArrayObject ${{ domainEntity | lcfirst }}Transfers): \ArrayObject
             {
                 foreach (${{ domainEntity | lcfirst }}Transfers as ${{ domainEntity | lcfirst }}Transfer) {
                     ${{ domainEntity | lcfirst }}Transfer->setIsActive(false);
@@ -193,11 +193,11 @@ class {{ domainEntity }}Helper extends Module
     {
         ${{ domainEntity | lcfirst }}PostSavePlugin = new class implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface {
             /**
-             * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
+             * @param \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
              *
-             * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
+             * @return \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
              */
-            public function process(array ${{ domainEntity | lcfirst }}Transfers): array
+            public function process(\ArrayObject ${{ domainEntity | lcfirst }}Transfers): \ArrayObject
             {
                 foreach (${{ domainEntity | lcfirst }}Transfers as ${{ domainEntity | lcfirst }}Transfer) {
                     ${{ domainEntity | lcfirst }}Transfer->setIsActive(false);
@@ -233,13 +233,13 @@ class {{ domainEntity }}Helper extends Module
      */
     protected function mock{{ domainEntity }}AlwaysFailingValidatorRule(string $factoryMethod): void
     {
-        ${{ domainEntity | lcfirst }}ValidatorRule = new class implements \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator\Rule\{{ domainEntity }}ValidatorRuleInterface {
+        ${{ domainEntity | lcfirst }}ValidatorRule = new class implements \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator\Rules\{{ domainEntity }}ValidatorRuleInterface {
             /**
              * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer
              *
              * @return array<string>
              */
-            public function validate(array ${{ domainEntity | lcfirst }}Transfer): array
+            public function validate(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer): array
             {
                 return ['Validation failed'];
             }
@@ -277,7 +277,7 @@ class {{ domainEntity }}Helper extends Module
              *
              * @return array<string>
              */
-            public function validate(array ${{ domainEntity | lcfirst }}Transfer): array
+            public function validate(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer): array
             {
                 return ['Validation failed'];
             }
@@ -293,7 +293,7 @@ class {{ domainEntity }}Helper extends Module
      */
     public function assert{{ domainEntity }}CollectionIsEmpty({{ domainEntity }}CollectionTransfer ${{ domainEntity | lcfirst }}CollectionTransfer): void
     {
-        $this->assertCount(0, ${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity }}s(), sprintf('Expected to have an empty collection but found "%s" items', ${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity }}s()->count()));
+        $this->assertCount(0, ${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize }}(), sprintf('Expected to have an empty collection but found "%s" items', ${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize }}()->count()));
     }
 
     /**
@@ -303,7 +303,7 @@ class {{ domainEntity }}Helper extends Module
      */
     public function assert{{ domainEntity }}CollectionResponseIsEmpty({{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): void
     {
-        $this->assertCount(0, ${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity }}s(), sprintf('Expected to have an empty response collection but found "%s" items', ${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity }}s()->count()));
+        $this->assertCount(0, ${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}(), sprintf('Expected to have an empty response collection but found "%s" items', ${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}()->count()));
     }
 
     /**
@@ -316,7 +316,7 @@ class {{ domainEntity }}Helper extends Module
     {
         $transferFound = false;
 
-        foreach (${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity }}s() as ${{ domainEntity | lcfirst }}TransferFromCollection) {
+        foreach (${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize }}() as ${{ domainEntity | lcfirst }}TransferFromCollection) {
             if (${{ domainEntity | lcfirst }}TransferFromCollection->getId{{ domainEntity }}() === ${{ domainEntity | lcfirst }}Transfer->getId{{ domainEntity }}()) {
                 $transferFound = true;
             }
@@ -337,7 +337,7 @@ class {{ domainEntity }}Helper extends Module
     ): void {
         $transferFound = false;
 
-        foreach (${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity }}s() as ${{ domainEntity | lcfirst }}TransferFromCollection) {
+        foreach (${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}() as ${{ domainEntity | lcfirst }}TransferFromCollection) {
             if (${{ domainEntity | lcfirst }}TransferFromCollection->getId{{ domainEntity }}() === ${{ domainEntity | lcfirst }}Transfer->getId{{ domainEntity }}()) {
                 $transferFound = true;
             }
