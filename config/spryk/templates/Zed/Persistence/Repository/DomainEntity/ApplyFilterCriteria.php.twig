@@ -1,3 +1,7 @@
+if (empty($conditions)) {
+    return ${{ module | lcfirst }}Query;
+}
+
 $i = 0;
 $conditions = ${{ domainEntity | lcfirst }}Conditions->toArray();
 $conditionNames = [];

@@ -1,9 +1,22 @@
 ${{ domainEntity | lcfirst }}ConditionsTransfer = ${{ domainEntity | lcfirst }}CriteriaTransfer->get{{ domainEntity }}Conditions();
 
-if (!${{ domainEntity | lcfirst }}ConditionsTransfer) {
-    return ${{ module | lcfirst }}Query;
+if (${{ domainEntity | lcfirst }}ConditionsTransfer === null) {
+    return ${{ domainEntity | lcfirst }}Query;
 }
 
 // Apply filters here
 
-return ${{ module | lcfirst }}Query;
+$i = 0;
+$conditions = ${{ domainEntity | lcfirst }}ConditionsTransfer->toArray();
+$conditionNames = [];
+
+foreach ($conditions as $field => $values) {
+    foreach ($values as $value) {
+        $conditionName = $field . $i;
+        $conditionNames[] = $conditionName;
+        ${{ domainEntity | lcfirst}}Query->condition($conditionName, $field . ' = ?', $value);
+    }
+    $i++;
+}
+
+return ${{ domainEntity | lcfirst }}Query->where($conditionNames, static::OPERATOR_AND);

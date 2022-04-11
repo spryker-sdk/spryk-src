@@ -20,6 +20,16 @@ class TypedArrayFilter implements FilterInterface
     /**
      * @var string
      */
+    protected const ARRAY_TYPE_HINT = 'array';
+
+    /**
+     * @var string
+     */
+    protected const NULLABLE_TYPE_HINT = '?';
+
+    /**
+     * @var string
+     */
     protected const FILTER_NAME = 'typedArrayConvert';
 
     /**
@@ -45,17 +55,40 @@ class TypedArrayFilter implements FilterInterface
         $filteredParameters = [];
         foreach ($initialParameters as $parameter) {
             $parameterExploded = explode(' ', $parameter, 2);
-            if ($this->isTypedArray($parameterExploded[0])) {
-                $parameterExploded[0] = $this->convertToArrayTypeHint($parameterExploded[0]);
-                $parameter = count($parameterExploded) > 1
-                    ? implode(' ', $parameterExploded)
-                    : $parameterExploded[0];
-            }
+            $parameterExploded[0] = $this->convertParameterToTypeHint($parameterExploded[0]);
+            $parameter = implode(' ', $parameterExploded);
 
             $filteredParameters[] = $parameter;
         }
 
         return implode(', ', $filteredParameters);
+    }
+
+    /**
+     * @param string $parametersString
+     *
+     * @return string
+     */
+    protected function convertParameterToTypeHint(string $parametersString): string
+    {
+        $parameters = array_map('trim', explode('|', $parametersString));
+        $filteredParameter = '';
+
+        foreach ($parameters as $parameter) {
+            if ($this->isNullType($parameter)) {
+                continue;
+            }
+
+            if ($this->isTypedArray($parameter)) {
+                $filteredParameter = static::ARRAY_TYPE_HINT;
+            } else {
+                $filteredParameter = $parameter;
+
+                break;
+            }
+        }
+
+        return $this->isNullableParameter($parametersString) ? $this->makeParameterNullable($filteredParameter) : $filteredParameter;
     }
 
     /**
@@ -69,12 +102,32 @@ class TypedArrayFilter implements FilterInterface
     }
 
     /**
-     * @param string $typedArray
+     * @param string $value
+     *
+     * @return bool
+     */
+    protected function isNullType(string $value): bool
+    {
+        return $value === 'null';
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return bool
+     */
+    protected function isNullableParameter(string $value): bool
+    {
+        return strpos($value, static::NULLABLE_TYPE_HINT) === 0 || (bool)preg_match('/(\|null$)|(\|null\|)|(^null\|)/', $value);
+    }
+
+    /**
+     * @param string $parameter
      *
      * @return string
      */
-    protected function convertToArrayTypeHint(string $typedArray): string
+    protected function makeParameterNullable(string $parameter): string
     {
-        return (strpos($typedArray, '?') === 0 ? '?' : '') . 'array';
+        return strpos($parameter, static::NULLABLE_TYPE_HINT) === 0 ? $parameter : static::NULLABLE_TYPE_HINT . $parameter;
     }
 }

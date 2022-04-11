@@ -69,7 +69,7 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
     public function create{{ domainEntity }}Collection(
         {{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
     ): {{ domainEntity }}CollectionResponseTransfer {
-        if (${{ domainEntity | lcfirst }}CollectionRequestTransfer->getIsTransactional()) {
+        if (${{ domainEntity | lcfirst }}CollectionRequestTransfer->getIsTransactional() === true) {
             return $this->transactionalCreate{{ domainEntity }}Collection(${{ domainEntity | lcfirst }}CollectionRequestTransfer);
         }
 
@@ -91,7 +91,7 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
         ${{ domainEntity | lcfirst }}CollectionResponseTransfer = new {{ domainEntity }}CollectionResponseTransfer();
 
         // Validate ALL of the entities before, if one is invalid break and return errors!
-        $errorTransfers = $this->{{ domainEntity | lcfirst }}Validator->validateCollectionTransactional(${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity | pluralize }}());
+        $errorTransfers = $this->{{ domainEntity | lcfirst }}Validator->validateCollectionTransactional(${{ domainEntity | lcfirst }}CollectionRequestTransfer);
 
         if ($errorTransfers) {
             return ${{ domainEntity | lcfirst }}CollectionResponseTransfer
@@ -139,7 +139,7 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
         $valid{{ domainEntity }}CollectionTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer();
 
         // Validate ALL of the entities before update, if one is invalid break and return errors
-        $errorTransfers = $this->{{ domainEntity | lcfirst }}Validator->validate(${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity | pluralize}}());
+        $errorTransfers = $this->{{ domainEntity | lcfirst }}Validator->validateCollection(${{ domainEntity | lcfirst }}CollectionRequestTransfer);
         ${{ domainEntity | lcfirst }}CollectionResponseTransfer->setErrors($errorTransfers);
 
         foreach (${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity | pluralize}}() as ${{ domainEntity | lcfirst }}Transfer) {
@@ -178,7 +178,7 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
      *
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer
      */
-    public function execute{{ domainEntity }}PreSavePlugins(array ${{ domainEntity | lcfirst }}CollectionTransfer): \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer
+    protected function execute{{ domainEntity }}PreSavePlugins(array ${{ domainEntity | lcfirst }}CollectionTransfer): \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer
     {
         foreach ($this->{{ domainEntity | lcfirst }}PreSavePlugins as ${{ domainEntity | lcfirst }}PreSavePlugin) {
             ${{ domainEntity | lcfirst }}PreSavePlugin->process(${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize}}());
@@ -192,7 +192,7 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
      *
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer
      */
-    public function execute{{ domainEntity }}PostSavePlugins(array ${{ domainEntity | lcfirst }}CollectionTransfer): \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer
+    protected function execute{{ domainEntity }}PostSavePlugins(array ${{ domainEntity | lcfirst }}CollectionTransfer): \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer
     {
         foreach ($this->{{ domainEntity | lcfirst }}PostSavePlugins as ${{ domainEntity | lcfirst }}PostSavePlugin) {
             ${{ domainEntity | lcfirst }}PostSavePlugin->process(${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize}}());

@@ -1,29 +1,23 @@
-${{ domainEntity | lcfirst }}Collection = new {{ domainEntity }}CollectionTransfer();
+${{ domainEntity | lcfirst }}CollectionTransfer = new {{ domainEntity }}CollectionTransfer();
 ${{ domainEntity | lcfirst }}Query = $this->getFactory()->create{{ domainEntity }}Query();
 
 // Filter
-${{ domainEntity | lcfirst }}Conditions = ${{ domainEntity | lcfirst }}CriteriaTransfer->get{{ domainEntity }}Conditions();
-if (!empty(${{ domainEntity | lcfirst }}Conditions)) {
-    ${{ domainEntity | lcfirst }}Query = $this->applyFilterCriteria(${{ domainEntity | lcfirst }}Query, ${{ domainEntity | lcfirst }}Conditions);
-}
+${{ domainEntity | lcfirst }}Query = $this->applyEntityFilters(${{ domainEntity | lcfirst }}Query, ${{ domainEntity | lcfirst }}CriteriaTransfer);
 
 // Sort
-$sortCollection = ${{ domainEntity | lcfirst }}CriteriaTransfer->getSortCollection();
-if (!empty($sortCollection)) {
-    ${{ domainEntity | lcfirst }}Query = $this->applySorting(${{ domainEntity | lcfirst }}Query, $sortCollection);
-}
+${{ domainEntity | lcfirst }}Query = $this->applyEntitySorting(${{ domainEntity | lcfirst }}Query, ${{ domainEntity | lcfirst }}CriteriaTransfer);
 
 // Paginate only if the transfer is present
 // This can be different as well, if it not present you might want to fall back to "page 1" by default
 // Again, this is an EXAMPLE, the concrete implementation will depend on each case
 $paginationTransfer = ${{ domainEntity | lcfirst }}CriteriaTransfer->getPagination();
 if ($paginationTransfer !== null) {
-    $objectCollection = $this->applyPagination(${{ domainEntity | lcfirst }}Query, $paginationTransfer);
-    ${{ domainEntity | lcfirst }}Collection->setPagination($paginationTransfer);
+    $objectCollection = $this->applyEntityPagination(${{ domainEntity | lcfirst }}Query, $paginationTransfer);
+    ${{ domainEntity | lcfirst }}CollectionTransfer->setPagination($paginationTransfer);
 
-    return $this->${{ domainEntity | lcfirst }}Mapper->map{{ domainEntity }}CollectionTo{{ domainEntity }}EntityCollection($objectCollection, ${{ domainEntity | lcfirst }}Collection);
+    return $this->getFactory()->create{{ domainEntity }}Mapper()->map{{ domainEntity }}EntityCollectionTo{{ domainEntity }}CollectionTransfer($objectCollection, ${{ domainEntity | lcfirst }}CollectionTransfer);
 }
 
 $objectCollection = ${{ domainEntity | lcfirst }}Query->find();
 
-return $this->getFactory()->create{{ domainEntity }}Mapper()->map{{ domainEntity }}CollectionTo{{ domainEntity }}EntityCollection($objectCollection, ${{ domainEntity | lcfirst }}Collection);
+return $this->getFactory()->create{{ domainEntity }}Mapper()->map{{ domainEntity }}EntityCollectionTo{{ domainEntity }}CollectionTransfer($objectCollection, ${{ domainEntity | lcfirst }}CollectionTransfer);

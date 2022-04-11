@@ -145,6 +145,72 @@ class TypedArrayFilterTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testComplexTypeWithCollectionAndArraysShouldConvertToCollectionType(): void
+    {
+        $inputParameters = 'SomeCollection|string[]|int[]';
+        $expectedResult = 'SomeCollection';
+
+        $this->assertFilterResult($inputParameters, $expectedResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testComplexTypeWithCollectionAndArraysWithNullShouldConvertToCollectionType(): void
+    {
+        $inputParameters = '?SomeCollection|string[]|int[]|null';
+        $expectedResult = '?SomeCollection';
+
+        $this->assertFilterResult($inputParameters, $expectedResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testComplexTypeWithCollectionAndArraysWithQuestionNullShouldConvertToCollectionType(): void
+    {
+        $inputParameters = '?SomeCollection|string[]|int[]';
+        $expectedResult = '?SomeCollection';
+
+        $this->assertFilterResult($inputParameters, $expectedResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testComplexTypeWithArraysShouldConvertArrayType(): void
+    {
+        $inputParameters = 'string[]|int[]|bool[]';
+        $expectedResult = 'array';
+
+        $this->assertFilterResult($inputParameters, $expectedResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testComplexTypeWithArraysAndNullShouldConvertArrayType(): void
+    {
+        $inputParameters = 'string[]|int[]|bool[]|null';
+        $expectedResult = '?array';
+
+        $this->assertFilterResult($inputParameters, $expectedResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testComplexTypeWithArraysAndQuestionNullShouldConvertArrayType(): void
+    {
+        $inputParameters = '?string[]|int[]|bool[]';
+        $expectedResult = '?array';
+
+        $this->assertFilterResult($inputParameters, $expectedResult);
+    }
+
+    /**
      * @param string $inputParameters
      * @param string $expectedResult
      *

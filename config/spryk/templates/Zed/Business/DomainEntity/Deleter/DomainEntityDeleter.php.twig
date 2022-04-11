@@ -59,24 +59,15 @@ class {{ domainEntity }}Deleter implements {{ domainEntity }}DeleterInterface
      *
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
-    public function executeDelete{{ domainEntity }}Collection({{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer): {{ domainEntity }}CollectionResponseTransfer
+    protected function executeDelete{{ domainEntity }}Collection({{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer): {{ domainEntity }}CollectionResponseTransfer
     {
         ${{ domainEntity | lcfirst }}CollectionResponseTransfer = new {{ domainEntity }}CollectionResponseTransfer();
 
-        try {
-            ${{ domainEntity | lcfirst }}CollectionTransfer = $this->{{ module | lcfirst }}Repository->get{{ domainEntity }}DeleteCollection(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
-            $this->{{ module | lcfirst }}EntityManager->set{{ domainEntity }}IsActiveFalse(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
+        ${{ domainEntity | lcfirst }}CollectionTransfer = $this->{{ module | lcfirst }}Repository->get{{ domainEntity }}DeleteCollection(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
+        $this->{{ module | lcfirst }}EntityManager->set{{ domainEntity }}IsActiveFalse(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
 
-            foreach (${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize}}() as ${{ domainEntity | lcfirst }}Transfer) {
-                ${{ domainEntity | lcfirst }}CollectionResponseTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
-            }
-
-            return ${{ domainEntity | lcfirst }}CollectionResponseTransfer;
-        } catch(\Throwable $exception) {
-            $errorTransfer = new ErrorTransfer();
-            $errorTransfer->setMessage($exception->getMessage());
-
-            ${{ domainEntity | lcfirst }}CollectionResponseTransfer->addError($errorTransfer);
+        foreach (${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize}}() as ${{ domainEntity | lcfirst }}Transfer) {
+            ${{ domainEntity | lcfirst }}CollectionResponseTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
         }
 
         return ${{ domainEntity | lcfirst }}CollectionResponseTransfer;
