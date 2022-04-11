@@ -1,0 +1,13 @@
+
+${{ domainEntity | lcfirst }}Entity = $this->getFactory()->create{{ domainEntity }}Query()
+->filterBy{{ domainEntity }}Identifier(${{ domainEntity | lcfirst }}Transfer->getId{{ domainEntity }}OrFail())
+->findOne();
+
+${{ domainEntity | lcfirst }}Mapper = $this->getFactory()
+->create{{ domainEntity }}Mapper();
+
+${{ domainEntity | lcfirst }}Entity = ${{ domainEntity | lcfirst }}Mapper->map{{ domainEntity }}TransferTo{{ domainEntity }}Entity(${{ domainEntity | lcfirst }}Transfer, ${{ domainEntity | lcfirst }}Entity);
+
+${{ domainEntity | lcfirst }}Entity->save();
+
+return ${{ domainEntity | lcfirst }}Mapper->map{{ domainEntity }}EntityTo{{ domainEntity }}Transfer(${{ domainEntity | lcfirst }}Entity, new {{ domainEntity }}Transfer());

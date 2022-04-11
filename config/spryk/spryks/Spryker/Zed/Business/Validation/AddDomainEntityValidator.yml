@@ -27,7 +27,7 @@ arguments:
 
     targetFilename:
         value: "{{ domainEntity }}{{ type }}Validator.php"
-        
+
     subDirectory:
         value: "{{ domainEntity }}/Validator/"
 
@@ -38,4 +38,5 @@ preSpryks:
     - AddModule
 
 postSpryks:
+    - AddDomainEntityValidatorRuleInterface
     - AddDomainEntityValidatorInterface
