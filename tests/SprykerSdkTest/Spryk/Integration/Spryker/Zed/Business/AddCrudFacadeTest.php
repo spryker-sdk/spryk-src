@@ -144,8 +144,6 @@ class AddCrudFacadeTest extends Unit
         $this->assertPluginsExist();
         $this->assertFacadeContainsCrudMethods();
         $this->assertRepositoryContainsCrudMethods();
-        $this->assertCreateValidatorExists();
-        $this->assertUpdateValidatorExists();
         $this->assertValidatorExists();
         $this->assertPersistenceFactoryContainsMethods();
         $this->assertPersistenceEntityManagerExists();
