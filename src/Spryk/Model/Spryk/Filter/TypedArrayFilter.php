@@ -75,7 +75,7 @@ class TypedArrayFilter implements FilterInterface
         $filteredParameter = '';
 
         foreach ($parameters as $parameter) {
-            if ($this->isNullType($parameter)) {
+            if ($this->isNullType($parameter) | $this->isMixedType($parameter)) {
                 continue;
             }
 
@@ -109,6 +109,16 @@ class TypedArrayFilter implements FilterInterface
     protected function isNullType(string $value): bool
     {
         return $value === 'null';
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return bool
+     */
+    protected function isMixedType(string $value): bool
+    {
+        return $value === 'mixed';
     }
 
     /**

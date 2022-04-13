@@ -4,19 +4,4 @@ if (${{ domainEntity | lcfirst }}ConditionsTransfer === null) {
     return ${{ domainEntity | lcfirst }}Query;
 }
 
-// Apply filters here
-
-$i = 0;
-$conditions = ${{ domainEntity | lcfirst }}ConditionsTransfer->toArray();
-$conditionNames = [];
-
-foreach ($conditions as $field => $values) {
-    foreach ($values as $value) {
-        $conditionName = $field . $i;
-        $conditionNames[] = $conditionName;
-        ${{ domainEntity | lcfirst}}Query->condition($conditionName, $field . ' = ?', $value);
-    }
-    $i++;
-}
-
-return ${{ domainEntity | lcfirst }}Query->where($conditionNames, static::OPERATOR_AND);
+return $this->buildQueryByConditions(${{ domainEntity | lcfirst }}ConditionsTransfer->modifiedToArray(), ${{ domainEntity | lcfirst }}Query);

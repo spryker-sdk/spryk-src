@@ -1,5 +1,3 @@
-$conditions = ${{ domainEntity | lcfirst}}CollectionDeleteCriteriaTransfer->modifiedToArray();
-
 if (isset($conditions['{{ domainEntity | lcfirst }}_ids'])) {
     ${{ domainEntity | lcfirst }}Query->filterById{{ domainEntity }}($conditions['{{ domainEntity | lcfirst }}_ids'], \Propel\Runtime\ActiveQuery\Criteria::IN);
     unset($conditions['{{ domainEntity | lcfirst }}_ids']);

@@ -7,7 +7,7 @@ if ($sortCollection === null) {
 foreach ($sortCollection as $sortTransfer) {
     ${{ domainEntity | lcfirst }}Query->orderBy(
         $sortTransfer->getField(),
-        $sortTransfer->getIsAscending() ? static::SORT_ASC : static::SORT_DESC
+        $sortTransfer->getIsAscending() ? \Propel\Runtime\ActiveQuery\Criteria::ASC : \Propel\Runtime\ActiveQuery\Criteria::DESC
     );
 }
 

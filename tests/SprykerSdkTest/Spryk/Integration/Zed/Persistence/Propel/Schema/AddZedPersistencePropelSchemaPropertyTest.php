@@ -42,6 +42,7 @@ class AddZedPersistencePropelSchemaPropertyTest extends Unit
 
         $this->tester->run($this, [
             '--module' => 'FooBar',
+            '--domainEntity' => 'FooBar',
             '--name' => 'spy_foo_bar',
             '--propertyName' => 'testProperty',
             '--propertyType' => 'STRING',

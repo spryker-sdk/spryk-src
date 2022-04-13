@@ -15,4 +15,4 @@ foreach ($conditions as $field => $values) {
     $i++;
 }
 
-return ${{ module | lcfirst }}Query->where($conditionNames, static::OPERATOR_AND);
+return ${{ module | lcfirst }}Query->where($conditionNames, \Propel\Runtime\ActiveQuery\Criteria::LOGICAL_AND);

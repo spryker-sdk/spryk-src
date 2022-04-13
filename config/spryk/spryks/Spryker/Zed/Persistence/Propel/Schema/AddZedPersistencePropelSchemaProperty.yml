@@ -10,6 +10,9 @@ arguments:
         inherit: true
         default: Spryker
 
+    domainEntity:
+        inherit: true
+
     name:
         inherit: true
 
@@ -36,6 +39,6 @@ preSpryks:
     - AddZedPersistencePropelSchemaTable:
           arguments:
               tableName:
-                  value: "spy_{{ module | underscored }}"
+                  value: "spy_{{ domainEntity | underscored }}"
               targetModule:
                   value: "{{ module | underscored }}"

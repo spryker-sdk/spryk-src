@@ -211,6 +211,17 @@ class TypedArrayFilterTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testMixedTypeShouldIgnore(): void
+    {
+        $inputParameters = 'mixed';
+        $expectedResult = '';
+
+        $this->assertFilterResult($inputParameters, $expectedResult);
+    }
+
+    /**
      * @param string $inputParameters
      * @param string $expectedResult
      *

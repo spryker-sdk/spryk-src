@@ -96,6 +96,14 @@ postSpryks:
                     value: "int[]"
                 singular:
                     value: "id{{ domainEntity | ucfirst }}"
+    -   AddSharedTransferProperty:
+            arguments:
+                name:
+                    value: "{{ domainEntity | ucfirst }}CollectionDeleteCriteria"
+                propertyName:
+                    value: "isActive"
+                propertyType:
+                    value: "bool"
 
     # Error
     -   AddSharedTransferProperty:

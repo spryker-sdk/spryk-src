@@ -13,10 +13,10 @@ use Generated\Shared\Transfer\{{ domainEntity }}CriteriaTransfer;
 use Generated\Shared\Transfer\{{ domainEntity }}CollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\{{ domainEntity }}Transfer;
 use {{ organization }}\Zed\{{ module }}\Business\{{ module }}FacadeInterface;
-use {{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Expander\{{ domainEntity }}ExpanderPluginInterface;
+use {{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Expander\{{ domainEntity }}ExpanderPluginInterface;
 use SprykerTest\Zed\Testify\Helper\Business\BusinessHelperTrait;
 
-class {{ domainEntity }}Helper extends Module
+class {{ domainEntity }}CrudHelper extends Module
 {
     use BusinessHelperTrait;
 
@@ -29,11 +29,27 @@ class {{ domainEntity }}Helper extends Module
     }
 
     /**
+    * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer
+    */
+    public function have{{ domainEntity }}TransferWithActiveFalse(): {{ domainEntity }}Transfer
+    {
+        return $this->have{{ domainEntity }}Transfer(['is_active' => false]);
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer
      */
     public function have{{ domainEntity }}TransferWithActiveTruePersisted(): {{ domainEntity }}Transfer
     {
         return $this->persist{{ domainEntity }}($this->have{{ domainEntity }}Transfer(['is_active' => true]));
+    }
+
+    /**
+    * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer
+    */
+    public function have{{ domainEntity }}TransferWithActiveTrue(): {{ domainEntity }}Transfer
+    {
+        return $this->have{{ domainEntity }}Transfer(['is_active' => true]);
     }
 
     /**
@@ -67,9 +83,18 @@ class {{ domainEntity }}Helper extends Module
     public function have{{ domainEntity }}DeleteCriteriaTransferWithIsActiveTrueCriteria(): {{ domainEntity }}CollectionDeleteCriteriaTransfer
     {
         ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer = new {{ domainEntity }}CollectionDeleteCriteriaTransfer();
-        ${{ domainEntity | lcfirst }}ConditionsTransfer = new {{ domainEntity }}ConditionsTransfer();
-        ${{ domainEntity | lcfirst }}ConditionsTransfer->setIsActive(true);
-        ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->set{{ domainEntity }}Conditions(${{ domainEntity | lcfirst }}ConditionsTransfer);
+        ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->setIsActive(true);
+
+        return ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer;
+    }
+
+    /**
+    * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionDeleteCriteriaTransfer
+    */
+    public function have{{ domainEntity }}DeleteCriteriaTransferWithIsActiveFalseCriteria(): {{ domainEntity }}CollectionDeleteCriteriaTransfer
+    {
+        ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer = new {{ domainEntity }}CollectionDeleteCriteriaTransfer();
+        ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->setIsActive(false);
 
         return ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer;
     }
@@ -99,7 +124,7 @@ class {{ domainEntity }}Helper extends Module
 
         ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->getFacade()->create{{ domainEntity }}Collection(${{ domainEntity | lcfirst }}CollectionRequestTransfer);
 
-        return current(${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}());
+        return ${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}()->getIterator()->current();
     }
 
     /**
@@ -107,7 +132,7 @@ class {{ domainEntity }}Helper extends Module
      */
     public function have{{ domainEntity }}ExpanderPluginSetIsActiveFalseEnabled(): void
     {
-        ${{ domainEntity | lcfirst }}ExpanderPluginSetIsActiveFalse = new class implements {{ domainEntity }}ExpanderPluginInterface {
+        ${{ domainEntity | lcfirst }}ExpanderPluginSetIsActiveFalse = new class implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Expander\{{ domainEntity }}ExpanderPluginInterface {
             /**
              * @param \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
              *
@@ -165,7 +190,7 @@ class {{ domainEntity }}Helper extends Module
      */
     protected function mock{{ domainEntity }}PreSavePluginSetIsActiveFalse(string $factoryMethod): void
     {
-        ${{ domainEntity | lcfirst }}PreSavePlugin = new class implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface {
+        ${{ domainEntity | lcfirst }}PreSavePlugin = new class implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface {
             /**
              * @param \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
              *
@@ -191,7 +216,7 @@ class {{ domainEntity }}Helper extends Module
      */
     protected function mock{{ domainEntity }}PostSavePluginSetIsActiveFalse(string $factoryMethod): void
     {
-        ${{ domainEntity | lcfirst }}PostSavePlugin = new class implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface {
+        ${{ domainEntity | lcfirst }}PostSavePlugin = new class implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface {
             /**
              * @param \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
              *
@@ -271,7 +296,7 @@ class {{ domainEntity }}Helper extends Module
      */
     protected function mock{{ domainEntity }}AlwaysFailingValidatorRulePlugin(string $factoryMethod): void
     {
-        ${{ domainEntity | lcfirst }}ValidatorRulePlugin = new class implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Validator\{{ domainEntity }}ValidatorRulePluginInterface {
+        ${{ domainEntity | lcfirst }}ValidatorRulePlugin = new class implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Validator\{{ domainEntity }}ValidatorRulePluginInterface {
             /**
              * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer|array ${{ domainEntity | lcfirst }}Transfer
              *
@@ -347,6 +372,28 @@ class {{ domainEntity }}Helper extends Module
     }
 
     /**
+    * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
+    *
+    * @return void
+    */
+    public function assert{{ domainEntity }}CollectionResponseContainsOneNonActiveTransfer({{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): void
+    {
+        $this->assertCount(1, ${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}());
+        $this->assertFalse(${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}()[0]->getIsActive());
+    }
+
+    /**
+    * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
+    *
+    * @return void
+    */
+    public function assert{{ domainEntity }}CollectionResponseContainsOneActiveTransfer({{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): void
+    {
+        $this->assertCount(1, ${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}());
+        $this->assertTrue(${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}()[0]->getIsActive());
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
      * @param string $message
      *
@@ -373,6 +420,6 @@ class {{ domainEntity }}Helper extends Module
     protected function getFacade(): {{ module }}FacadeInterface
     {
         /** @var \{{ organization }}\Zed\{{ module }}\Business\{{ module }}FacadeInterface */
-        return $this->getBusinessHelper()->getModule('{{ module }}');
+        return $this->getBusinessHelper()->getFacade('{{ module }}');
     }
 }

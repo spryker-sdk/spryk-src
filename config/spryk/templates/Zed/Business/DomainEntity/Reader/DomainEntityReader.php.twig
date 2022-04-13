@@ -18,13 +18,13 @@ class {{ domainEntity }}Reader implements {{ domainEntity }}ReaderInterface
     protected {{ module }}RepositoryInterface ${{ module | lcfirst }}Repository;
 
     /**
-     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Expander\{{ domainEntity }}ExpanderPluginInterface[]
+     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Expander\{{ domainEntity }}ExpanderPluginInterface[]
      */
     protected array ${{ domainEntity | lcfirst }}ExpanderPlugins;
 
     /**
      * @param \{{ organization }}\Zed\{{ module }}\Persistence\{{ module }}RepositoryInterface ${{ module | lcfirst }}Repository
-     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Expander\{{ domainEntity }}ExpanderPluginInterface[] ${{ domainEntity | lcfirst }}ExpanderPlugins
+     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Expander\{{ domainEntity }}ExpanderPluginInterface[] ${{ domainEntity | lcfirst }}ExpanderPlugins
      */
     public function __construct(
         {{ module }}RepositoryInterface ${{ module | lcfirst }}Repository,
@@ -57,8 +57,8 @@ class {{ domainEntity }}Reader implements {{ domainEntity }}ReaderInterface
         {{ domainEntity }}CollectionTransfer ${{ domainEntity | lcfirst }}CollectionTransfer
     ): {{ domainEntity }}CollectionTransfer {
         foreach ($this->{{ domainEntity | lcfirst }}ExpanderPlugins as ${{ domainEntity | lcfirst }}ExpanderPlugin) {
-            ${{ domainEntity | lcfirst }}CollectionTransfer = ${{ domainEntity | lcfirst }}ExpanderPlugin
-                ->expand(${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize}}());
+            ${{ domainEntity | lcfirst }}CollectionTransfer->set{{ domainEntity | pluralize}}(${{ domainEntity | lcfirst }}ExpanderPlugin
+                ->expand(${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize}}()));
         }
 
         return ${{ domainEntity | lcfirst }}CollectionTransfer;

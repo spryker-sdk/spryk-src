@@ -44,11 +44,6 @@ class AddCrudFacadeTest extends Unit
         $this->tester->assertClassHasConstant(ClassName::ZED_DEPENDENCY_PROVIDER, 'PLUGINS_ZIP_ZAP_UPDATE_PRE_SAVE', 'PLUGINS_ZIP_ZAP_UPDATE_PRE_SAVE', 'public');
         $this->tester->assertClassHasConstant(ClassName::ZED_DEPENDENCY_PROVIDER, 'PLUGINS_ZIP_ZAP_UPDATE_POST_SAVE', 'PLUGINS_ZIP_ZAP_UPDATE_POST_SAVE', 'public');
         $this->tester->assertClassHasConstant(ClassName::ZED_DEPENDENCY_PROVIDER, 'PLUGINS_ZIP_ZAP_EXPANDER', 'PLUGINS_ZIP_ZAP_EXPANDER', 'public');
-        $this->tester->assertClassHasConstant(ClassName::ZED_DEPENDENCY_PROVIDER, 'PLUGINS_ZIP_ZAP_PRE_CREATE', 'PLUGINS_ZIP_ZAP_PRE_CREATE', 'public');
-        $this->tester->assertClassHasConstant(ClassName::ZED_DEPENDENCY_PROVIDER, 'PLUGINS_ZIP_ZAP_POST_CREATE', 'PLUGINS_ZIP_ZAP_POST_CREATE', 'public');
-        $this->tester->assertClassHasConstant(ClassName::ZED_DEPENDENCY_PROVIDER, 'PLUGINS_ZIP_ZAP_PRE_UPDATE', 'PLUGINS_ZIP_ZAP_PRE_UPDATE', 'public');
-        $this->tester->assertClassHasConstant(ClassName::ZED_DEPENDENCY_PROVIDER, 'PLUGINS_ZIP_ZAP_POST_UPDATE', 'PLUGINS_ZIP_ZAP_POST_UPDATE', 'public');
-
         // DependencyProvider provide method
         $this->tester->assertClassHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'provideBusinessLayerDependencies');
 
@@ -72,10 +67,6 @@ class AddCrudFacadeTest extends Unit
         $this->tester->assertClassHasMethod(ClassName::ZED_BUSINESS_FACTORY, 'getZipZapCreateValidatorRules');
         $this->tester->assertClassHasMethod(ClassName::ZED_BUSINESS_FACTORY, 'createZipZapUpdateValidator');
         $this->tester->assertClassHasMethod(ClassName::ZED_BUSINESS_FACTORY, 'getZipZapUpdateValidatorRules');
-        $this->tester->assertClassHasMethod(ClassName::ZED_BUSINESS_FACTORY, 'getZipZapPreCreatePlugins');
-        $this->tester->assertClassHasMethod(ClassName::ZED_BUSINESS_FACTORY, 'getZipZapPostCreatePlugins');
-        $this->tester->assertClassHasMethod(ClassName::ZED_BUSINESS_FACTORY, 'getZipZapPreUpdatePlugins');
-        $this->tester->assertClassHasMethod(ClassName::ZED_BUSINESS_FACTORY, 'getZipZapPostUpdatePlugins');
         $this->tester->assertClassHasMethod(ClassName::ZED_BUSINESS_FACTORY, 'getZipZapUpdateValidatorRulePlugins');
         $this->tester->assertClassHasMethod(ClassName::ZED_BUSINESS_FACTORY, 'getZipZapCreateValidatorRulePlugins');
 
@@ -160,12 +151,12 @@ class AddCrudFacadeTest extends Unit
     {
         $this->assertFileExists(
             $this->tester->getSprykerModuleDirectory()
-            . 'src/Spryker/Zed/FooBarExtension/Dependency/ZipZap/Expander/ZipZapExpanderPluginInterface.php',
+            . 'src/Spryker/Zed/FooBarExtension/Dependency/Plugin/ZipZap/Expander/ZipZapExpanderPluginInterface.php',
         );
 
         $this->assertFileExists(
             $this->tester->getSprykerModuleDirectory()
-            . 'src/Spryker/Zed/FooBarExtension/Dependency/ZipZap/Validator/ZipZapValidatorRulePluginInterface.php',
+            . 'src/Spryker/Zed/FooBarExtension/Dependency/Plugin/ZipZap/Validator/ZipZapValidatorRulePluginInterface.php',
         );
     }
 

@@ -51,7 +51,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
     {
         // Arrange
         ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferWithActiveTruePersisted();
-        ${{ domainEntity | lcfirst }}CriteriaTransfer = $this->tester->have{{ domainEntity }}CriteriaTransferWithIsActiveFalseCriteria();
+        ${{ domainEntity | lcfirst }}CriteriaTransfer = $this->tester->have{{ domainEntity }}CriteriaTransferWithIsActiveTrueCriteria();
 
         // Act
         ${{ domainEntity | lcfirst }}CollectionTransfer = $this->tester->getFacade()->get{{ domainEntity }}Collection(${{ domainEntity | lcfirst }}CriteriaTransfer);
@@ -71,7 +71,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
         $this->tester->have{{ domainEntity }}ExpanderPluginSetIsActiveFalseEnabled(); // This will set the loaded isActive:true entity to `false` to see if expanders are working
         ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferWithActiveTruePersisted();
 
-        ${{ domainEntity | lcfirst }}CriteriaTransfer = $this->tester->have{{ domainEntity }}CriteriaTransferWithIsActiveFalseCriteria();
+        ${{ domainEntity | lcfirst }}CriteriaTransfer = $this->tester->have{{ domainEntity }}CriteriaTransferWithIsActiveTrueCriteria();
 
         // Act
         ${{ domainEntity | lcfirst }}CollectionTransfer = $this->tester->getFacade()->get{{ domainEntity }}Collection(${{ domainEntity | lcfirst }}CriteriaTransfer);
@@ -86,7 +86,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
     public function testCreate{{ domainEntity }}CollectionReturnsCollectionWithOne{{ domainEntity }}EntityWhenEntityWasSaved(): void
     {
         // Arrange
-        ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferWithActiveTruePersisted();
+        ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferWithActiveTrue();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new {{ domainEntity }}CollectionRequestTransfer();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
 
@@ -94,7 +94,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
         ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->tester->getFacade()->create{{ domainEntity }}Collection(${{ domainEntity | lcfirst }}CollectionRequestTransfer);
 
         // Assert
-        $this->tester->assert{{ domainEntity }}CollectionResponseContainsTransferWithId(${{ domainEntity | lcfirst }}CollectionResponseTransfer, ${{ domainEntity | lcfirst }}Transfer);
+        $this->tester->assert{{ domainEntity | lcfirst }}CollectionResponseContainsOneActiveTransfer(${{ domainEntity | lcfirst }}CollectionResponseTransfer);
     }
 
     /**
@@ -106,7 +106,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
     {
         // Arrange
         $this->tester->have{{ domainEntity }}CreatePreSavePluginSetIsActiveFalseEnabled(); // This will set the loaded isActive:true entity to `false` to see if pre save plugins are working
-        ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferWithActiveTruePersisted();
+        ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferWithActiveTrue();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new {{ domainEntity }}CollectionRequestTransfer();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
 
@@ -114,8 +114,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
         ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->tester->getFacade()->create{{ domainEntity }}Collection(${{ domainEntity | lcfirst }}CollectionRequestTransfer);
 
         // Assert
-        ${{ domainEntity | lcfirst }}Transfer->setIsActive(false); // Created transfer was isActive:true before plugin was applied.
-        $this->tester->assert{{ domainEntity }}CollectionResponseContainsTransferWithId(${{ domainEntity | lcfirst }}CollectionResponseTransfer, ${{ domainEntity | lcfirst }}Transfer);
+        $this->tester->assert{{ domainEntity | lcfirst }}CollectionResponseContainsOneNonActiveTransfer(${{ domainEntity | lcfirst }}CollectionResponseTransfer);
     }
 
     /**
@@ -127,7 +126,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
     {
         // Arrange
         $this->tester->have{{ domainEntity }}CreatePostSavePluginSetIsActiveFalseEnabled(); // This will set the loaded isActive:true entity to `false` to see if pre save plugins are working
-        ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferWithActiveTruePersisted();
+        ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferWithActiveTrue();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new {{ domainEntity }}CollectionRequestTransfer();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
 
@@ -135,8 +134,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
         ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->tester->getFacade()->create{{ domainEntity }}Collection(${{ domainEntity | lcfirst }}CollectionRequestTransfer);
 
         // Assert
-        ${{ domainEntity | lcfirst }}Transfer->setIsActive(false); // Created transfer was isActive:true before plugin was applied.
-        $this->tester->assert{{ domainEntity }}CollectionResponseContainsTransferWithId(${{ domainEntity | lcfirst }}CollectionResponseTransfer, ${{ domainEntity | lcfirst }}Transfer);
+        $this->tester->assert{{ domainEntity | lcfirst }}CollectionResponseContainsOneNonActiveTransfer(${{ domainEntity | lcfirst }}CollectionResponseTransfer);
     }
 
     /**
@@ -168,7 +166,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
     {
         // Arrange
         $this->tester->have{{ domainEntity }}AlwaysFailingCreateValidatorRulePluginEnabled(); // This will always return a validation error
-        ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferWithActiveTruePersisted();
+        ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferWithActiveTrue();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new {{ domainEntity }}CollectionRequestTransfer();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
 
@@ -305,7 +303,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
     {
         // Arrange
         ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferWithActiveTruePersisted();
-        ${{ domainEntity | lcfirst }}DeleteCriteriaTransfer = $this->tester->have{{ domainEntity }}CriteriaTransferWithIsActiveFalseCriteria();
+        ${{ domainEntity | lcfirst }}DeleteCriteriaTransfer = $this->tester->have{{ domainEntity }}DeleteCriteriaTransferWithIsActiveTrueCriteria();
 
         // Act
         ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->tester->getFacade()->delete{{ domainEntity }}Collection(${{ domainEntity | lcfirst }}DeleteCriteriaTransfer);

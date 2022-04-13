@@ -31,12 +31,12 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
     protected {{ domainEntity }}IdentifierBuilderInterface ${{ domainEntity | lcfirst }}IdentifierBuilder;
 
     /**
-     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface[]
+     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface[]
      */
     protected array ${{ domainEntity | lcfirst }}PreSavePlugins;
 
     /**
-     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface[]
+     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface[]
      */
     protected array ${{ domainEntity | lcfirst }}PostSavePlugins;
 
@@ -44,8 +44,8 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
      * @param \{{ organization }}\Zed\{{ module }}\Persistence\{{ module }}EntityManagerInterface ${{ module | lcfirst }}EntityManager
      * @param \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator\{{ domainEntity }}ValidatorInterface ${{ domainEntity | lcfirst }}Validator
      * @param \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\IdentifierBuilder\{{ domainEntity }}IdentifierBuilderInterface
-     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface[] ${{ domainEntity | lcfirst }}PreSavePlugins
-     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface[] ${{ domainEntity | lcfirst }}PostSavePlugins
+     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface[] ${{ domainEntity | lcfirst }}PreSavePlugins
+     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface[] ${{ domainEntity | lcfirst }}PostSavePlugins
      */
     public function __construct(
         {{ module }}EntityManagerInterface ${{ module | lcfirst }}EntityManager,
@@ -140,11 +140,15 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
 
         // Validate ALL of the entities before update, if one is invalid break and return errors
         $errorTransfers = $this->{{ domainEntity | lcfirst }}Validator->validateCollection(${{ domainEntity | lcfirst }}CollectionRequestTransfer);
-        ${{ domainEntity | lcfirst }}CollectionResponseTransfer->setErrors($errorTransfers);
+        ${{ domainEntity | lcfirst }}IdsWithErrors = [];
+        if ($errorTransfers) {
+            ${{ domainEntity | lcfirst }}CollectionResponseTransfer->setErrors(new \ArrayObject($errorTransfers));
+            ${{ domainEntity | lcfirst }}IdsWithErrors = $this->get{{ domainEntity }}IdsWithErrors($errorTransfers);
+        }
 
         foreach (${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity | pluralize}}() as ${{ domainEntity | lcfirst }}Transfer) {
             // Check each SINGLE item before it is saved for errors, if it has some continue with the next one.
-            if (isset($errorTransfers[$this->{{ domainEntity | lcfirst }}IdentifierBuilder->buildIdentifier(${{ domainEntity | lcfirst }}Transfer)])) {
+            if (in_array($this->{{ domainEntity | lcfirst }}IdentifierBuilder->buildIdentifier(${{ domainEntity | lcfirst }}Transfer), ${{ domainEntity | lcfirst }}IdsWithErrors, true)) {
                 ${{ domainEntity | lcfirst }}CollectionResponseTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
 
                 continue;
@@ -158,9 +162,13 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
             // Run pre-save plugins
             $valid{{ domainEntity }}CollectionTransfer->set{{ domainEntity | pluralize }}($this->execute{{ domainEntity }}PreSavePlugins($valid{{ domainEntity }}CollectionTransfer->get{{ domainEntity | pluralize }}()));
 
+            ${{ domainEntity | lcfirst }}CollectionTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer();
+
             foreach ($valid{{ domainEntity }}CollectionTransfer->get{{ domainEntity | pluralize }}() as ${{ domainEntity | lcfirst }}Transfer) {
-                $this->{{ module | lcfirst }}EntityManager->create{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
+                ${{ domainEntity | lcfirst }}CollectionTransfer->add{{ domainEntity }}($this->{{ module | lcfirst }}EntityManager->create{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer));
             }
+
+            $valid{{ domainEntity }}CollectionTransfer->set{{ domainEntity | pluralize }}(${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize }}());
 
             // Run post-save plugins
             $valid{{ domainEntity }}CollectionTransfer->set{{ domainEntity | pluralize }}($this->execute{{ domainEntity }}PostSavePlugins($valid{{ domainEntity }}CollectionTransfer->get{{ domainEntity | pluralize }}()));
@@ -179,8 +187,8 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
     * @return \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
     */
     protected function execute{{ domainEntity }}PreSavePlugins(
-        ArrayObject ${{ domainEntity | lcfirst }}Transfers
-    ): ArrayObject {
+        \ArrayObject ${{ domainEntity | lcfirst }}Transfers
+    ): \ArrayObject {
         foreach ($this->{{ domainEntity | lcfirst }}PreSavePlugins as ${{ domainEntity | lcfirst }}PreSavePlugin) {
             ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}PreSavePlugin->process(${{ domainEntity | lcfirst }}Transfers);
         }
@@ -194,12 +202,23 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
     * @return \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
     */
     protected function execute{{ domainEntity }}PostSavePlugins(
-        ArrayObject ${{ domainEntity | lcfirst }}Transfers
-    ): ArrayObject {
+        \ArrayObject ${{ domainEntity | lcfirst }}Transfers
+    ): \ArrayObject {
         foreach ($this->{{ domainEntity | lcfirst }}PostSavePlugins as ${{ domainEntity | lcfirst }}PostSavePlugin) {
             ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}PostSavePlugin->process(${{ domainEntity | lcfirst }}Transfers);
         }
 
         return ${{ domainEntity | lcfirst }}Transfers;
+    }
+
+    /**
+    * @param \Generated\Shared\Transfer\ErrorTransfer[] $errorTransfers
+    * @return string[]
+    */
+    protected function get{{ domainEntity }}IdsWithErrors(array $errorTransfers): array
+    {
+        return array_unique(array_map(static function (ErrorTransfer $errorTransfer): ?string {
+            return $errorTransfer->getEntityIdentifier();
+            }, $errorTransfers));
     }
 }

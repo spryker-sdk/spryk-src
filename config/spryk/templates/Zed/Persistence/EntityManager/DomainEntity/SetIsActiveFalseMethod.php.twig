@@ -9,3 +9,6 @@ foreach (${{ domainEntity | lcfirst }}Entities as ${{ domainEntity | lcfirst }}E
 }
 
 ${{ domainEntity | lcfirst }}Entities->save();
+
+
+return $this->getFactory()->create{{ domainEntity }}Mapper()->map{{ domainEntity }}EntityCollectionTo{{ domainEntity }}CollectionTransfer(${{ domainEntity | lcfirst }}Entities, new {{ domainEntity }}CollectionTransfer());

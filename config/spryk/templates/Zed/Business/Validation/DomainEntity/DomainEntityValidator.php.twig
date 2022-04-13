@@ -14,7 +14,7 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
     protected array $validatorRules = [];
 
     /**
-     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Validator\{{ domainEntity }}ValidatorRulePluginInterface[]
+     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Validator\{{ domainEntity }}ValidatorRulePluginInterface[]
      */
     protected array $validatorRulePlugins = [];
 
@@ -25,7 +25,7 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
 
     /**
      * @param \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator\Rules\{{ domainEntity }}ValidatorRuleInterface[] $validatorRules
-     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Validator\{{ domainEntity }}ValidatorRulePluginInterface[] $validatorRulePlugins
+     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Validator\{{ domainEntity }}ValidatorRulePluginInterface[] $validatorRulePlugins
      * @param \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\IdentifierBuilder\{{ domainEntity }}IdentifierBuilderInterface $identifierBuilder
      */
     public function __construct(
@@ -127,7 +127,7 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
      */
     protected function executeValidatorRulePlugins(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer, array $errorTransfers): array
     {
-        foreach ($this->validatorRules as $validatorRule) {
+        foreach ($this->validatorRulePlugins as $validatorRule) {
             $errors = $validatorRule->validate(${{ domainEntity | lcfirst }}Transfer);
 
             $errorTransfers = $this->addErrorsToErrorTransfers(${{ domainEntity | lcfirst }}Transfer, $errors, $errorTransfers);

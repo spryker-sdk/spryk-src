@@ -60,5 +60,5 @@ postSpryks:
                       - "getEntityManager"
                       - "create{{ domainEntity }}UpdateValidator"
                       - "create{{ domainEntity }}IdentifierBuilder"
-                      - "get{{ domainEntity }}PreUpdatePlugins"
-                      - "get{{ domainEntity }}PostUpdatePlugins"
+                      - "get{{ domainEntity }}UpdatePreSavePlugins"
+                      - "get{{ domainEntity }}UpdatePostSavePlugins"
