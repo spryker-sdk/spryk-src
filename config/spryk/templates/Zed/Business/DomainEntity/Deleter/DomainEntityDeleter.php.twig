@@ -63,9 +63,9 @@ class {{ domainEntity }}Deleter implements {{ domainEntity }}DeleterInterface
     {
         ${{ domainEntity | lcfirst }}CollectionResponseTransfer = new {{ domainEntity }}CollectionResponseTransfer();
 
-        ${{ domainEntity | lcfirst }}CollectionTransfer = $this->{{ module | lcfirst }}EntityManager->set{{ domainEntity }}IsActiveFalse(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
+        ${{ domainEntity | lcfirst }}CollectionTransfer = $this->{{ module | lcfirst }}EntityManager->deactivate{{ domainEntity | pluralize }}(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
 
-        foreach (${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize}}() as ${{ domainEntity | lcfirst }}Transfer) {
+        foreach (${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize }}() as ${{ domainEntity | lcfirst }}Transfer) {
             ${{ domainEntity | lcfirst }}CollectionResponseTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
         }
 

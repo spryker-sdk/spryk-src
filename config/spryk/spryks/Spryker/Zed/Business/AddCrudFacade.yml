@@ -206,7 +206,7 @@ postSpryks:
                 value:
                     - "- Stores collection of {{ domainEntity | pluralize }} to the storage."
                     - "- Validates entities before saving using {{ domainEntity }}ValidatorInterface and {{ domainEntity }}ValidatorRulePluginInterface."
-                    - "- Executes {{ domainEntity }}SavePluginInterface before and after saving the {{ domainEntity }}Transfer."
+                    - "- Executes {{ domainEntity }}SaverPluginInterface before and after saving the {{ domainEntity }}Transfer."
     - AddZedBusinessFacadeMethod:
         excludedSpryks:
             - AddZedBusinessFacadeMethodTest
@@ -223,7 +223,7 @@ postSpryks:
                 value:
                     - "- Updates collection of {{ domainEntity | pluralize }} in the storage."
                     - "- Validates entities before saving using {{ domainEntity }}ValidatorInterface and {{ domainEntity }}ValidatorRulePluginInterface."
-                    - "- Executes {{ domainEntity }}SavePluginInterface before and after saving the {{ domainEntity }}Transfer."
+                    - "- Executes {{ domainEntity }}SaverPluginInterface before and after saving the {{ domainEntity }}Transfer."
     - AddZedBusinessFacadeInterfaceMethod:
         arguments:
             facadeMethod:
@@ -256,7 +256,7 @@ postSpryks:
               type:
                   value: "{{ domainEntity }}CreatePreSave"
               output:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\Plugin\\{{ domainEntity }}\\Saver\\{{ domainEntity }}SavePluginInterface[]"
+                  value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\Plugin\\{{ domainEntity }}\\Saver\\{{ domainEntity }}SaverPluginInterface[]"
 
     # Add add{{ domainEntity }}CreatePostSavePlugins, get{{ domainEntity }}CreatePostSavePlugins and const for the plugins to the DependencyProvider
     - AddZedDependencyPlugins:
@@ -264,7 +264,7 @@ postSpryks:
               type:
                   value: "{{ domainEntity }}CreatePostSave"
               output:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\Plugin\\{{ domainEntity }}\\Saver\\{{ domainEntity }}SavePluginInterface[]"
+                  value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\Plugin\\{{ domainEntity }}\\Saver\\{{ domainEntity }}SaverPluginInterface[]"
 
     # Add add{{ domainEntity }}UpdatePreSavePlugins, get{{ domainEntity }}UpdatePreSavePlugins and const for the plugins to the DependencyProvider
     - AddZedDependencyPlugins:
@@ -272,7 +272,7 @@ postSpryks:
               type:
                   value: "{{ domainEntity }}UpdatePreSave"
               output:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\Plugin\\{{ domainEntity }}\\Saver\\{{ domainEntity }}SavePluginInterface[]"
+                  value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\Plugin\\{{ domainEntity }}\\Saver\\{{ domainEntity }}SaverPluginInterface[]"
 
     # Add add{{ domainEntity }}UpdatePostSavePlugins, get{{ domainEntity }}UpdatePostSavePlugins and const for the plugins to the DependencyProvider
     - AddZedDependencyPlugins:
@@ -280,7 +280,7 @@ postSpryks:
               type:
                   value: "{{ domainEntity }}UpdatePostSave"
               output:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\Plugin\\{{ domainEntity }}\\Saver\\{{ domainEntity }}SavePluginInterface[]"
+                  value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\Plugin\\{{ domainEntity }}\\Saver\\{{ domainEntity }}SaverPluginInterface[]"
 
     # Add add{{ domainEntity }}ExpanderPlugins, get{{ domainEntity }}ExpanderPlugins and const for the plugins to the DependencyProvider
     - AddZedDependencyPlugins:
@@ -304,15 +304,15 @@ postSpryks:
               output:
                   value: "\\ArrayObject|\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer[]"
 
-    # Creates {{ domainEntity }}SavePluginInterface
+    # Creates {{ domainEntity }}SaverPluginInterface
     - AddDomainEntityExtensionInterfaceMethod:
           arguments:
               className:
-                  value: "{{ domainEntity }}SavePlugin"
+                  value: "{{ domainEntity }}SaverPlugin"
               subDirectory:
                   value: "Plugin/{{ domainEntity }}/Saver"
               modelMethod:
-                  value: "process"
+                  value: "save"
               input:
                   value: "\\ArrayObject|\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers"
               output:
@@ -475,7 +475,7 @@ postSpryks:
               constantName:
                   value: "PLUGINS_{{ domainEntity | camelCaseToUnderscore | upper }}_CREATE_PRE_SAVE"
               output:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\Plugin\\{{ domainEntity }}\\Saver\\{{ domainEntity }}SavePluginInterface[]"
+                  value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\Plugin\\{{ domainEntity }}\\Saver\\{{ domainEntity }}SaverPluginInterface[]"
           excludedSpryks:
               - AddZedDependencyProviderConstant
     - AddZedBusinessFactoryGetProvidedDependencyMethod:
@@ -485,7 +485,7 @@ postSpryks:
               constantName:
                   value: "PLUGINS_{{ domainEntity | camelCaseToUnderscore | upper }}_CREATE_POST_SAVE"
               output:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\Plugin\\{{ domainEntity }}\\Saver\\{{ domainEntity }}SavePluginInterface[]"
+                  value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\Plugin\\{{ domainEntity }}\\Saver\\{{ domainEntity }}SaverPluginInterface[]"
           excludedSpryks:
               - AddZedDependencyProviderConstant
     - AddZedBusinessFactoryGetProvidedDependencyMethod:
@@ -495,7 +495,7 @@ postSpryks:
               constantName:
                   value: "PLUGINS_{{ domainEntity | camelCaseToUnderscore | upper }}_UPDATE_PRE_SAVE"
               output:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\Plugin\\{{ domainEntity }}\\Saver\\{{ domainEntity }}SavePluginInterface[]"
+                  value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\Plugin\\{{ domainEntity }}\\Saver\\{{ domainEntity }}SaverPluginInterface[]"
           excludedSpryks:
               - AddZedDependencyProviderConstant
     - AddZedBusinessFactoryGetProvidedDependencyMethod:
@@ -505,7 +505,7 @@ postSpryks:
               constantName:
                   value: "PLUGINS_{{ domainEntity | camelCaseToUnderscore | upper }}_UPDATE_POST_SAVE"
               output:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\Plugin\\{{ domainEntity }}\\Saver\\{{ domainEntity }}SavePluginInterface[]"
+                  value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\Plugin\\{{ domainEntity }}\\Saver\\{{ domainEntity }}SaverPluginInterface[]"
           excludedSpryks:
               - AddZedDependencyProviderConstant
     # Add Spy{{ domainEntity }}Query method to persistence factory
@@ -542,7 +542,7 @@ postSpryks:
             output:
                 value: "string"
             body:
-                value: "return ${{ domainEntity | lcfirst}}Transfer->getId{{ domainEntity }}() !== null ? (string)${{ domainEntity | lcfirst}}Transfer->getId{{ domainEntity }}() : md5(serialize(${{ domainEntity | lcfirst}}Transfer->modifiedToArray()));"
+                value: "return ${{ domainEntity | lcfirst}}Transfer->getId{{ domainEntity }}() !== null ? (string)${{ domainEntity | lcfirst}}Transfer->getId{{ domainEntity }}() : spl_object_hash(${{ domainEntity | lcfirst}}Transfer);"
 
     - AddZedBusinessFacadeTest:
         arguments:
@@ -596,13 +596,13 @@ postSpryks:
             domainEntity:
                 inherit: true
             entityManagerMethod:
-                value: "set{{ domainEntity }}IsActiveFalse"
+                value: "deactivate{{ domainEntity | pluralize }}"
             input:
                 value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer"
             output:
                 value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}CollectionTransfer"
             body:
-                value: Zed/Persistence/EntityManager/DomainEntity/SetIsActiveFalseMethod.php.twig
+                value: Zed/Persistence/EntityManager/DomainEntity/DeactivateMethod.php.twig
 
     - AddZedPersistenceEntityManagerMethod:
         arguments:

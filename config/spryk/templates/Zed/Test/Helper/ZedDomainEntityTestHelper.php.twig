@@ -190,13 +190,13 @@ class {{ domainEntity }}CrudHelper extends Module
      */
     protected function mock{{ domainEntity }}PreSavePluginSetIsActiveFalse(string $factoryMethod): void
     {
-        ${{ domainEntity | lcfirst }}PreSavePlugin = new class implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface {
+        ${{ domainEntity | lcfirst }}PreSavePlugin = new class implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Saver\{{ domainEntity }}SaverPluginInterface {
             /**
              * @param \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
              *
              * @return \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
              */
-            public function process(\ArrayObject ${{ domainEntity | lcfirst }}Transfers): \ArrayObject
+            public function save(\ArrayObject ${{ domainEntity | lcfirst }}Transfers): \ArrayObject
             {
                 foreach (${{ domainEntity | lcfirst }}Transfers as ${{ domainEntity | lcfirst }}Transfer) {
                     ${{ domainEntity | lcfirst }}Transfer->setIsActive(false);
@@ -216,13 +216,13 @@ class {{ domainEntity }}CrudHelper extends Module
      */
     protected function mock{{ domainEntity }}PostSavePluginSetIsActiveFalse(string $factoryMethod): void
     {
-        ${{ domainEntity | lcfirst }}PostSavePlugin = new class implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Saver\{{ domainEntity }}SavePluginInterface {
+        ${{ domainEntity | lcfirst }}PostSavePlugin = new class implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Saver\{{ domainEntity }}SaverPluginInterface {
             /**
              * @param \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
              *
              * @return \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
              */
-            public function process(\ArrayObject ${{ domainEntity | lcfirst }}Transfers): \ArrayObject
+            public function save(\ArrayObject ${{ domainEntity | lcfirst }}Transfers): \ArrayObject
             {
                 foreach (${{ domainEntity | lcfirst }}Transfers as ${{ domainEntity | lcfirst }}Transfer) {
                     ${{ domainEntity | lcfirst }}Transfer->setIsActive(false);
