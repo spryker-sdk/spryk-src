@@ -12,7 +12,7 @@ ${{ domainEntity | lcfirst }}Query = $this->apply{{ domainEntity }}Sorting(${{ d
 // Again, this is an EXAMPLE, the concrete implementation will depend on each case
 $paginationTransfer = ${{ domainEntity | lcfirst }}CriteriaTransfer->getPagination();
 if ($paginationTransfer !== null) {
-    $objectCollection = $this->applyEntityPagination(${{ domainEntity | lcfirst }}Query, $paginationTransfer);
+    $objectCollection = $this->apply{{ domainEntity }}Pagination(${{ domainEntity | lcfirst }}Query, $paginationTransfer);
     ${{ domainEntity | lcfirst }}CollectionTransfer->setPagination($paginationTransfer);
 
     return $this->getFactory()->create{{ domainEntity }}Mapper()->map{{ domainEntity }}EntityCollectionTo{{ domainEntity }}CollectionTransfer($objectCollection, ${{ domainEntity | lcfirst }}CollectionTransfer);
