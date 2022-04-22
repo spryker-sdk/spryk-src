@@ -165,24 +165,24 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
     * @param \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
     *
-    * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer
+    * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
     */
     protected function update{{ domainEntity | pluralize }}(\ArrayObject ${{ domainEntity | lcfirst }}Transfers, {{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): {{ domainEntity }}CollectionResponseTransfer
     {
         // Run pre-save plugins
         ${{ domainEntity | lcfirst }}Transfers = $this->execute{{ domainEntity }}PreSavePlugins(${{ domainEntity | lcfirst }}Transfers);
 
-        $new{{ domainEntity }}Transfers = new \ArrayObject();
+        $persisted{{ domainEntity }}Transfers = new \ArrayObject();
 
         foreach (${{ domainEntity | lcfirst }}Transfers as ${{ domainEntity | lcfirst }}Transfer) {
-            $new{{ domainEntity }}Transfers->append($this->{{ module | lcfirst }}EntityManager->update{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer));
+            $persisted{{ domainEntity }}Transfers->append($this->{{ module | lcfirst }}EntityManager->update{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer));
         }
 
         // Run post-save plugins
-        $new{{ domainEntity }}Transfers = $this->execute{{ domainEntity }}PostSavePlugins($new{{ domainEntity }}Transfers);
+        $persisted{{ domainEntity }}Transfers = $this->execute{{ domainEntity }}PostSavePlugins($persisted{{ domainEntity }}Transfers);
 
-        foreach ($new{{ domainEntity }}Transfers as $new{{ domainEntity }}Transfer) {
-            ${{ domainEntity | lcfirst }}CollectionResponseTransfer->add{{ domainEntity }}($new{{ domainEntity }}Transfer);
+        foreach ($persisted{{ domainEntity }}Transfers as $persisted{{ domainEntity }}Transfer) {
+            ${{ domainEntity | lcfirst }}CollectionResponseTransfer->add{{ domainEntity }}($persisted{{ domainEntity }}Transfer);
         }
 
         return ${{ domainEntity | lcfirst }}CollectionResponseTransfer;
