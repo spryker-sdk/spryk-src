@@ -20,17 +20,19 @@ interface ArgumentCollectionInterface
 
     /**
      * @param string $name
+     * @param bool $lookupPreviousSprykArgumentCollection
      *
      * @return bool
      */
-    public function hasArgument(string $name): bool;
+    public function hasArgument(string $name, bool $lookupPreviousSprykArgumentCollection = false): bool;
 
     /**
      * @param string $name
+     * @param bool $lookupPreviousSprykArgumentCollection
      *
      * @return \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\ArgumentInterface
      */
-    public function getArgument(string $name): ArgumentInterface;
+    public function getArgument(string $name, bool $lookupPreviousSprykArgumentCollection = false): ArgumentInterface;
 
     /**
      * @return array<\SprykerSdk\Spryk\Model\Spryk\Definition\Argument\ArgumentInterface>
@@ -46,4 +48,18 @@ interface ArgumentCollectionInterface
      * @return string
      */
     public function getFingerprint(): string;
+
+    /**
+     * @param string $sprykName
+     *
+     * @return $this
+     */
+    public function setSprykName(string $sprykName);
+
+    /**
+     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $argumentCollection
+     *
+     * @return $this
+     */
+    public function setPreviousSprykArguments(ArgumentCollectionInterface $argumentCollection);
 }

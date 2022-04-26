@@ -76,7 +76,7 @@ class FileResolver implements FileResolverInterface
         }
 
         foreach ($this->all() as $resolved) {
-            if ($resolved instanceof ResolvedClassInterface && ($resolved->getClassName() === $name || $resolved->getFullyQualifiedClassName() === $name)) {
+            if ($resolved instanceof ResolvedClassInterface && ($resolved->getClassName() === $name || $resolved->getFullyQualifiedClassName() === $name || $resolved->getFilePath() === $name)) {
                 return $resolved;
             }
         }

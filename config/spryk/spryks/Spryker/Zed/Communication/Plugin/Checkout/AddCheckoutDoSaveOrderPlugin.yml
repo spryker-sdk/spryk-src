@@ -16,10 +16,10 @@ arguments:
     className:
         value: "{{ classNamePrefix }}CheckoutDoSaveOrderPlugin"
 
-    implementerInterfaceName:
+    implements:
         value: \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface
 
-    expanderClassName:
+    extends:
         value: "Spryker/Zed/Kernel/Communication/AbstractPlugin"
 
     subDirectory:

@@ -12,7 +12,6 @@ use SprykerSdk\Spryk\Model\Spryk\Dumper\SprykDefinitionDumperInterface;
 use SprykerSdk\Spryk\SprykConfig;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Yaml\Yaml;
-use Symfony\Contracts\Cache\ItemInterface;
 
 class ArgumentListReader implements ArgumentListReaderInterface
 {
@@ -59,13 +58,9 @@ class ArgumentListReader implements ArgumentListReaderInterface
      */
     public function getArgumentList(): array
     {
-        return $this->cache->get('argument_list_cache', function (ItemInterface $item) {
-            $item->expiresAfter(3600);
+        $sprykDefinition = $this->definitionDumper->dump();
 
-            $sprykDefinition = $this->definitionDumper->dump();
-
-            return $this->argumentListBuilder->buildArgumentList($sprykDefinition);
-        });
+        return $this->argumentListBuilder->buildArgumentList($sprykDefinition);
     }
 
     /**

@@ -1,6 +1,8 @@
 spryk: template
 description: "Adds a new *Module*ServiceFactory to the Service application."
 mode: both
+level: 3
+condition: "application === 'Service'"
 
 arguments:
     module:
@@ -9,6 +11,9 @@ arguments:
     organization:
         inherit: true
         default: Spryker
+
+    application:
+        value: "Service"
 
     template:
         value: Service/ServiceFactory.php.twig

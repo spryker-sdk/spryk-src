@@ -3,6 +3,7 @@ description: "Adds a new method to the *module* dependency Client bridge."
 priority: 1
 mode: core
 level: 2
+deprecated: Use AddDependencyBridgeMethod instead.
 
 arguments:
     module:

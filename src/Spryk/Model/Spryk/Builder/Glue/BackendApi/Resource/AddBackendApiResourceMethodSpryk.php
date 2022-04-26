@@ -7,9 +7,7 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Builder\Glue\BackendApi\Resource;
 
-use PhpParser\BuilderFactory;
 use PhpParser\Lexer;
-use PhpParser\Node\Expr\MethodCall;
 use PhpParser\NodeTraverser;
 use PhpParser\Parser;
 use SprykerSdk\Spryk\Exception\NotAFullyQualifiedClassNameException;
@@ -105,6 +103,7 @@ class AddBackendApiResourceMethodSpryk extends AbstractBuilder
      */
     protected function build(): void
     {
+        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolvedClass */
         $resolvedClass = $this->getTargetClass();
 
         $methodName = $this->getMethodName();

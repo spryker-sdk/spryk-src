@@ -16,11 +16,11 @@ arguments:
     className:
         value: "{{ classNamePrefix }}PaymentMethodFilterPlugin"
 
-    implementerInterfaceName:
+    implements:
         inherit: true
         value: \Spryker\Zed\PaymentExtension\Dependency\Plugin\PaymentMethodFilterPluginInterface
 
-    expanderClassName:
+    extends:
         inherit: true
         value: "Spryker/Zed/Kernel/Communication/AbstractPlugin"
 

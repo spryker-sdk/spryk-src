@@ -75,6 +75,9 @@ class ArgumentResolver implements ArgumentResolverInterface
             $resolvedArgumentCollection = clone $argumentCollection;
         }
 
+        $argumentCollection->setSprykName($sprykName);
+        $argumentCollection->setPreviousSprykArguments($resolvedArgumentCollection);
+
         foreach ($arguments as $argumentName => $argumentDefinition) {
             $argument = $this->resolveArgument(
                 $argumentName,

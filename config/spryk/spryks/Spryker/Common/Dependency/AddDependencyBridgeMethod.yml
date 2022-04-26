@@ -1,0 +1,42 @@
+spryk: bridgeMethods
+description: "Adds a bridge on core level for a dependency defined methods to the *module* dependency bridge."
+priority: 1
+mode: core
+level: 1
+
+arguments:
+    module:
+        inherit: true
+
+    organization:
+        inherit: true
+        default: Spryker
+
+    application:
+        inherit: true
+
+    dependentModule:
+        inherit: true
+
+    methods:
+        isMultiple: true
+
+    template:
+        value: Common/Dependency/DependencyBridgeMethod.php.twig
+
+    dependencyType:
+        description: "Can be one of: Facade, Client, Service"
+        inherit: true
+
+    sourceClass:
+        description: "Loads method definitions from this class."
+        value: "{{ organization }}\\{% if dependencyType == 'Facade' %}Zed{% else %}{{ dependencyType }}\\{{ dependentModule }}{% if dependencyType == 'Facade' %}\\Business\\{% endif %}\\{{ dependentModule }}{{ dependencyType }}"
+
+    target:
+        value: "{{ organization }}\\{{ application }}\\{{ module }}\\Dependency\\{{ dependencyType }}\\{{ module }}To{{ dependentModule }}{{ dependencyType }}Bridge"
+
+preSpryks:
+    - AddDependencyBridge
+
+postSpryks:
+    - AddDependencyBridgeInterfaceMethod

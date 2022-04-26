@@ -1,6 +1,7 @@
 spryk: template
 description: "Adds a new *module*To*dependentModule*ServiceBridge."
 mode: core
+deprecated: Use AddDependencyBridgeMethod instead.
 
 arguments:
     organization:

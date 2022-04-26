@@ -16,11 +16,11 @@ arguments:
     className:
         value: "{{ classNamePrefix }}CheckoutPostSavePlugin"
 
-    implementerInterfaceName:
+    implements:
         inherit: true
         value: \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPostSaveInterface
 
-    expanderClassName:
+    extends:
         inherit: true
         value: "Spryker/Zed/Kernel/Communication/AbstractPlugin"
 

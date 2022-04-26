@@ -133,12 +133,9 @@ class DependencyProviderSpryk extends AbstractBuilder
      */
     protected function getExpression(): Expression
     {
-        $templateName = $this->getTemplateName();
+        $expressionContent = $this->getContentForExpression();
 
-        $expressionContent = sprintf('<?php %s', $this->renderer->render(
-            $templateName,
-            $this->arguments->getArguments(),
-        ));
+        $expressionContent = sprintf('<?php %s', $expressionContent);
 
         /** @var array<\PhpParser\Node\Stmt> $expressions */
         $expressions = $this->parser->parse($expressionContent);
@@ -147,6 +144,23 @@ class DependencyProviderSpryk extends AbstractBuilder
         $expression = $expressions[0];
 
         return $expression;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getContentForExpression(): string
+    {
+        if ($this->arguments->hasArgument('body')) {
+            return $this->arguments->getArgument('body');
+        }
+
+        $templateName = $this->getTemplateName();
+
+        return $this->renderer->render(
+            $templateName,
+            $this->arguments->getArguments(),
+        );
     }
 
     /**
