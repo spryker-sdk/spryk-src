@@ -1,22 +1,9 @@
-$conditions = ${{ domainEntity | lcfirst}}CollectionDeleteCriteriaTransfer->modifiedToArray();
-
-if (isset($conditions['{{ domainEntity | lcfirst }}_ids'])) {
-    ${{ domainEntity | lcfirst }}Query->filterById{{ domainEntity }}($conditions['{{ domainEntity | lcfirst }}_ids'], \Propel\Runtime\ActiveQuery\Criteria::IN);
-    unset($conditions['{{ domainEntity | lcfirst }}_ids']);
+if (${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->get{{ domainEntity }}Ids()) {
+    ${{ domainEntity | lcfirst }}Query->filterById{{ domainEntity }}(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->get{{ domainEntity }}Ids(), \Propel\Runtime\ActiveQuery\Criteria::IN);
 }
 
-$i = 0;
-$conditionNames = [];
-foreach ($conditions as $field => $value) {
-    $conditionName = $field . $i;
-    $conditionNames[] = $conditionName;
-    $valueWithType = $this->getParameterValueWithType($value);
-    ${{ domainEntity | lcfirst }}Query->condition($conditionName, $field . ' = ?', $valueWithType['val'], $valueWithType['type']);
-    $i++;
-}
-
-if ($conditionNames) {
-    ${{ domainEntity | lcfirst }}Query->where($conditionNames, \Propel\Runtime\ActiveQuery\Criteria::LOGICAL_AND);
+if (${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->getUuids()) {
+    ${{ domainEntity | lcfirst }}Query->filterByUuid(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->getUuids(), \Propel\Runtime\ActiveQuery\Criteria::IN);
 }
 
 return ${{ domainEntity | lcfirst }}Query;

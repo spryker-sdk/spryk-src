@@ -1,20 +1,9 @@
 if (isset($conditions['{{ domainEntity | lcfirst }}_ids'])) {
     ${{ domainEntity | lcfirst }}Query->filterById{{ domainEntity }}($conditions['{{ domainEntity | lcfirst }}_ids'], \Propel\Runtime\ActiveQuery\Criteria::IN);
-    unset($conditions['{{ domainEntity | lcfirst }}_ids']);
 }
 
-$i = 0;
-$conditionNames = [];
-foreach ($conditions as $field => $value) {
-    $conditionName = $field . $i;
-    $conditionNames[] = $conditionName;
-    $valueWithType = $this->getParameterValueWithType($value);
-    ${{ domainEntity | lcfirst }}Query->condition($conditionName, $field . ' = ?', $valueWithType['val'], $valueWithType['type']);
-    $i++;
-}
-
-if ($conditionNames) {
-    ${{ domainEntity | lcfirst }}Query->where($conditionNames, \Propel\Runtime\ActiveQuery\Criteria::LOGICAL_AND);
+if (isset($conditions['uuids'])) {
+    ${{ domainEntity | lcfirst }}Query->filterByUuid($conditions['uuids'], \Propel\Runtime\ActiveQuery\Criteria::IN);
 }
 
 return ${{ domainEntity | lcfirst }}Query;

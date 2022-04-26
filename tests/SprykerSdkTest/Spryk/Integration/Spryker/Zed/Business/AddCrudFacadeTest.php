@@ -38,25 +38,24 @@ class AddCrudFacadeTest extends Unit
         $this->tester->assertClassDoesNotExist(ClassName::ZED_FACADE_TEST);
 
         // DependencyProvider constants
-        $this->tester->assertClassHasConstant(ClassName::ZED_DEPENDENCY_PROVIDER, 'PLUGINS_ZIP_ZAP_CREATE_PRE_SAVE', 'PLUGINS_ZIP_ZAP_CREATE_PRE_SAVE', 'public');
-        $this->tester->assertClassHasConstant(ClassName::ZED_DEPENDENCY_PROVIDER, 'PLUGINS_ZIP_ZAP_CREATE_PRE_SAVE', 'PLUGINS_ZIP_ZAP_CREATE_PRE_SAVE', 'public');
-        $this->tester->assertClassHasConstant(ClassName::ZED_DEPENDENCY_PROVIDER, 'PLUGINS_ZIP_ZAP_CREATE_POST_SAVE', 'PLUGINS_ZIP_ZAP_CREATE_POST_SAVE', 'public');
-        $this->tester->assertClassHasConstant(ClassName::ZED_DEPENDENCY_PROVIDER, 'PLUGINS_ZIP_ZAP_UPDATE_PRE_SAVE', 'PLUGINS_ZIP_ZAP_UPDATE_PRE_SAVE', 'public');
-        $this->tester->assertClassHasConstant(ClassName::ZED_DEPENDENCY_PROVIDER, 'PLUGINS_ZIP_ZAP_UPDATE_POST_SAVE', 'PLUGINS_ZIP_ZAP_UPDATE_POST_SAVE', 'public');
+        $this->tester->assertClassHasConstant(ClassName::ZED_DEPENDENCY_PROVIDER, 'PLUGINS_ZIP_ZAP_PRE_CREATE', 'PLUGINS_ZIP_ZAP_PRE_CREATE', 'public');
+        $this->tester->assertClassHasConstant(ClassName::ZED_DEPENDENCY_PROVIDER, 'PLUGINS_ZIP_ZAP_POST_CREATE', 'PLUGINS_ZIP_ZAP_POST_CREATE', 'public');
+        $this->tester->assertClassHasConstant(ClassName::ZED_DEPENDENCY_PROVIDER, 'PLUGINS_ZIP_ZAP_PRE_UPDATE', 'PLUGINS_ZIP_ZAP_PRE_UPDATE', 'public');
+        $this->tester->assertClassHasConstant(ClassName::ZED_DEPENDENCY_PROVIDER, 'PLUGINS_ZIP_ZAP_POST_UPDATE', 'PLUGINS_ZIP_ZAP_POST_UPDATE', 'public');
         $this->tester->assertClassHasConstant(ClassName::ZED_DEPENDENCY_PROVIDER, 'PLUGINS_ZIP_ZAP_EXPANDER', 'PLUGINS_ZIP_ZAP_EXPANDER', 'public');
         // DependencyProvider provide method
         $this->tester->assertClassHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'provideBusinessLayerDependencies');
 
         // DependencyProvider add/get methods
-        $this->tester->assertClassHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'addZipZapCreatePreSavePlugins');
-        $this->tester->assertClassHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'getZipZapCreatePreSavePlugins');
-        $this->tester->assertClassHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'addZipZapCreatePostSavePlugins');
-        $this->tester->assertClassHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'getZipZapCreatePostSavePlugins');
+        $this->tester->assertClassHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'addZipZapPreCreatePlugins');
+        $this->tester->assertClassHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'getZipZapPreCreatePlugins');
+        $this->tester->assertClassHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'addZipZapPostCreatePlugins');
+        $this->tester->assertClassHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'getZipZapPostCreatePlugins');
 
-        $this->tester->assertClassHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'addZipZapUpdatePreSavePlugins');
-        $this->tester->assertClassHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'getZipZapUpdatePreSavePlugins');
-        $this->tester->assertClassHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'addZipZapUpdatePostSavePlugins');
-        $this->tester->assertClassHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'getZipZapUpdatePostSavePlugins');
+        $this->tester->assertClassHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'addZipZapPreUpdatePlugins');
+        $this->tester->assertClassHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'getZipZapPreUpdatePlugins');
+        $this->tester->assertClassHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'addZipZapPostUpdatePlugins');
+        $this->tester->assertClassHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'getZipZapPostUpdatePlugins');
 
         $this->tester->assertClassHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'addZipZapExpanderPlugins');
         $this->tester->assertClassHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'getZipZapExpanderPlugins');
@@ -80,11 +79,11 @@ class AddCrudFacadeTest extends Unit
         );
         $this->assertFileExists(
             $this->tester->getSprykerModuleDirectory()
-            . 'src/Spryker/Zed/FooBar/Business/ZipZap/Saver/ZipZapCreator.php',
+            . 'src/Spryker/Zed/FooBar/Business/ZipZap/Writer/ZipZapCreator.php',
         );
         $this->assertFileExists(
             $this->tester->getSprykerModuleDirectory()
-            . 'src/Spryker/Zed/FooBar/Business/ZipZap/Saver/ZipZapCreatorInterface.php',
+            . 'src/Spryker/Zed/FooBar/Business/ZipZap/Writer/ZipZapCreatorInterface.php',
         );
 
         $this->assertFileExists(
@@ -104,14 +103,14 @@ class AddCrudFacadeTest extends Unit
         # Updater Model
         $this->assertFileExists(
             $this->tester->getSprykerModuleDirectory()
-            . 'src/Spryker/Zed/FooBar/Business/ZipZap/Saver/ZipZapUpdater.php',
+            . 'src/Spryker/Zed/FooBar/Business/ZipZap/Writer/ZipZapUpdater.php',
         );
         $this->assertFileExists(
             $this->tester->getSprykerModuleDirectory()
-            . 'src/Spryker/Zed/FooBar/Business/ZipZap/Saver/ZipZapUpdaterInterface.php',
+            . 'src/Spryker/Zed/FooBar/Business/ZipZap/Writer/ZipZapUpdaterInterface.php',
         );
-        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Business\ZipZap\Saver\ZipZapUpdater', 'updateZipZapCollection');
-        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Business\ZipZap\Saver\ZipZapUpdaterInterface', 'updateZipZapCollection');
+        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Business\ZipZap\Writer\ZipZapUpdater', 'updateZipZapCollection');
+        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Business\ZipZap\Writer\ZipZapUpdaterInterface', 'updateZipZapCollection');
         $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Business\FooBarBusinessFactory', 'createZipZapUpdater');
 
         // Transfers
@@ -242,8 +241,8 @@ class AddCrudFacadeTest extends Unit
         );
 
         $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Persistence\FooBarEntityManager', 'createZipZap');
+        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Persistence\FooBarEntityManager', 'updateZipZap');
         $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Persistence\FooBarEntityManager', 'deleteZipZap');
-        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Persistence\FooBarEntityManager', 'deactivateZipZaps');
 
         $this->assertFileExists(
             $this->tester->getSprykerModuleDirectory()
@@ -251,8 +250,8 @@ class AddCrudFacadeTest extends Unit
         );
 
         $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Persistence\FooBarEntityManagerInterface', 'createZipZap');
+        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Persistence\FooBarEntityManagerInterface', 'updateZipZap');
         $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Persistence\FooBarEntityManagerInterface', 'deleteZipZap');
-        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Persistence\FooBarEntityManagerInterface', 'deactivateZipZaps');
     }
 
     /**

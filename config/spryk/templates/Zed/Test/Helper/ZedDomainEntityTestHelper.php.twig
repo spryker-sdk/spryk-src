@@ -14,42 +14,54 @@ use Generated\Shared\Transfer\{{ domainEntity }}CollectionDeleteCriteriaTransfer
 use Generated\Shared\Transfer\{{ domainEntity }}Transfer;
 use {{ organization }}\Zed\{{ module }}\Business\{{ module }}FacadeInterface;
 use {{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Expander\{{ domainEntity }}ExpanderPluginInterface;
+use {{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Writer\{{ domainEntity }}CreatePluginInterface;
+use {{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Writer\{{ domainEntity }}UpdatePluginInterface;
 use SprykerTest\Zed\Testify\Helper\Business\BusinessHelperTrait;
 
 class {{ domainEntity }}CrudHelper extends Module
 {
+    /**
+    * @var string
+    */
+    protected const UUID_TYPE_ONE = 'ebad5042-0db1-498e-9981-42f45f98ad3d';
+
+    /**
+    * @var string
+    */
+    protected const UUID_TYPE_TWO = 'b7b94e0f-ec4d-4341-9132-07342b45f659';
+
     use BusinessHelperTrait;
 
     /**
      * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer
      */
-    public function have{{ domainEntity }}TransferWithActiveFalsePersisted(): {{ domainEntity }}Transfer
+    public function have{{ domainEntity }}TransferWithUuidTypeTwoPersisted(): {{ domainEntity }}Transfer
     {
-        return $this->persist{{ domainEntity }}($this->have{{ domainEntity }}Transfer(['is_active' => false]));
+        return $this->persist{{ domainEntity }}($this->have{{ domainEntity }}Transfer(['uuid' => static::UUID_TYPE_TWO]));
     }
 
     /**
     * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer
     */
-    public function have{{ domainEntity }}TransferWithActiveFalse(): {{ domainEntity }}Transfer
+    public function have{{ domainEntity }}TransferWithUuidTypeTwo(): {{ domainEntity }}Transfer
     {
-        return $this->have{{ domainEntity }}Transfer(['is_active' => false]);
+        return $this->have{{ domainEntity }}Transfer(['uuid' => static::UUID_TYPE_ONE]);
     }
 
     /**
      * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer
      */
-    public function have{{ domainEntity }}TransferWithActiveTruePersisted(): {{ domainEntity }}Transfer
+    public function have{{ domainEntity }}TransferWithUuidTypeOnePersisted(): {{ domainEntity }}Transfer
     {
-        return $this->persist{{ domainEntity }}($this->have{{ domainEntity }}Transfer(['is_active' => true]));
+        return $this->persist{{ domainEntity }}($this->have{{ domainEntity }}Transfer(['uuid' => static::UUID_TYPE_ONE]));
     }
 
     /**
     * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer
     */
-    public function have{{ domainEntity }}TransferWithActiveTrue(): {{ domainEntity }}Transfer
+    public function have{{ domainEntity }}TransferWithUuidTypeOne(): {{ domainEntity }}Transfer
     {
-        return $this->have{{ domainEntity }}Transfer(['is_active' => true]);
+        return $this->have{{ domainEntity }}Transfer(['uuid' => static::UUID_TYPE_ONE]);
     }
 
     /**
@@ -67,11 +79,11 @@ class {{ domainEntity }}CrudHelper extends Module
     /**
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CriteriaTransfer
      */
-    public function have{{ domainEntity }}CriteriaTransferWithIsActiveTrueCriteria(): {{ domainEntity }}CriteriaTransfer
+    public function have{{ domainEntity }}CriteriaTransferWithUuidTypeOneCriteria(): {{ domainEntity }}CriteriaTransfer
     {
         ${{ domainEntity | lcfirst }}CriteriaTransfer = new {{ domainEntity }}CriteriaTransfer();
         ${{ domainEntity | lcfirst }}ConditionsTransfer = new {{ domainEntity }}ConditionsTransfer();
-        ${{ domainEntity | lcfirst }}ConditionsTransfer->setIsActive(true);
+        ${{ domainEntity | lcfirst }}ConditionsTransfer->setUuids([static::UUID_TYPE_ONE]);
         ${{ domainEntity | lcfirst }}CriteriaTransfer->set{{ domainEntity }}Conditions(${{ domainEntity | lcfirst }}ConditionsTransfer);
 
         return ${{ domainEntity | lcfirst }}CriteriaTransfer;
@@ -80,10 +92,10 @@ class {{ domainEntity }}CrudHelper extends Module
     /**
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionDeleteCriteriaTransfer
      */
-    public function have{{ domainEntity }}DeleteCriteriaTransferWithIsActiveTrueCriteria(): {{ domainEntity }}CollectionDeleteCriteriaTransfer
+    public function have{{ domainEntity }}DeleteCriteriaTransferWithUuidTypeOneCriteria(): {{ domainEntity }}CollectionDeleteCriteriaTransfer
     {
         ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer = new {{ domainEntity }}CollectionDeleteCriteriaTransfer();
-        ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->setIsActive(true);
+        ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->setUuids([static::UUID_TYPE_ONE]);
 
         return ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer;
     }
@@ -91,10 +103,10 @@ class {{ domainEntity }}CrudHelper extends Module
     /**
     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionDeleteCriteriaTransfer
     */
-    public function have{{ domainEntity }}DeleteCriteriaTransferWithIsActiveFalseCriteria(): {{ domainEntity }}CollectionDeleteCriteriaTransfer
+    public function have{{ domainEntity }}DeleteCriteriaTransferWithUuidTypeTwoCriteria(): {{ domainEntity }}CollectionDeleteCriteriaTransfer
     {
         ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer = new {{ domainEntity }}CollectionDeleteCriteriaTransfer();
-        ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->setIsActive(false);
+        ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->setUuids([static::UUID_TYPE_TWO]);
 
         return ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer;
     }
@@ -102,11 +114,11 @@ class {{ domainEntity }}CrudHelper extends Module
     /**
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CriteriaTransfer
      */
-    public function have{{ domainEntity }}CriteriaTransferWithIsActiveFalseCriteria(): {{ domainEntity }}CriteriaTransfer
+    public function have{{ domainEntity }}CriteriaTransferWithUuidTypeTwoCriteria(): {{ domainEntity }}CriteriaTransfer
     {
         ${{ domainEntity | lcfirst }}CriteriaTransfer = new {{ domainEntity }}CriteriaTransfer();
         ${{ domainEntity | lcfirst }}ConditionsTransfer = new {{ domainEntity }}ConditionsTransfer();
-        ${{ domainEntity | lcfirst }}ConditionsTransfer->setIsActive(false);
+        ${{ domainEntity | lcfirst }}ConditionsTransfer->setUuids([static::UUID_TYPE_TWO]);
         ${{ domainEntity | lcfirst }}CriteriaTransfer->set{{ domainEntity }}Conditions(${{ domainEntity | lcfirst }}ConditionsTransfer);
 
         return ${{ domainEntity | lcfirst }}CriteriaTransfer;
@@ -130,9 +142,22 @@ class {{ domainEntity }}CrudHelper extends Module
     /**
      * @return void
      */
-    public function have{{ domainEntity }}ExpanderPluginSetIsActiveFalseEnabled(): void
+    public function have{{ domainEntity }}ExpanderPluginSetUuidTypeTwoEnabled(): void
     {
-        ${{ domainEntity | lcfirst }}ExpanderPluginSetIsActiveFalse = new class implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Expander\{{ domainEntity }}ExpanderPluginInterface {
+        ${{ domainEntity | lcfirst }}ExpanderPluginSetUuidTypeTwo = new class(static::UUID_TYPE_TWO) implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Expander\{{ domainEntity }}ExpanderPluginInterface {
+           /**
+            * @var string
+            */
+            private $uuid;
+
+           /**
+            * @param string $uuid
+            */
+            public function __construct(string $uuid)
+            {
+                $this->uuid = $uuid;
+            }
+
             /**
              * @param \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
              *
@@ -141,98 +166,124 @@ class {{ domainEntity }}CrudHelper extends Module
             public function expand(\ArrayObject ${{ domainEntity | lcfirst }}Transfers): \ArrayObject
             {
                 foreach (${{ domainEntity | lcfirst }}Transfers as ${{ domainEntity | lcfirst }}Transfer) {
-                    ${{ domainEntity | lcfirst }}Transfer->setIsActive(false);
+                    ${{ domainEntity | lcfirst }}Transfer->setUuid($this->uuid);
                 }
 
                 return ${{ domainEntity | lcfirst }}Transfers;
             }
         };
 
-        $this->getBusinessHelper()->mockFactoryMethod('get{{ domainEntity }}ExpanderPlugins', [${{ domainEntity | lcfirst }}ExpanderPluginSetIsActiveFalse], '{{ module }}');
+        $this->getBusinessHelper()->mockFactoryMethod('get{{ domainEntity }}ExpanderPlugins', [${{ domainEntity | lcfirst }}ExpanderPluginSetUuidTypeTwo], '{{ module }}');
     }
 
     /**
      * @return void
      */
-    public function have{{ domainEntity }}CreatePreSavePluginSetIsActiveFalseEnabled(): void
+    public function have{{ domainEntity }}PreCreatePluginSetUuidTypeTwoEnabled(): void
     {
-        $this->mock{{ domainEntity }}PreSavePluginSetIsActiveFalse('get{{ domainEntity }}CreatePreSavePlugins');
+        ${{ domainEntity | lcfirst }}PreCreatePlugin = $this->mockCreatePlugin();
+
+        $this->getBusinessHelper()->mockFactoryMethod('get{{ domainEntity }}PreCreatePlugins', [${{ domainEntity | lcfirst }}PreCreatePlugin], '{{ module }}');
     }
 
     /**
      * @return void
      */
-    public function have{{ domainEntity }}CreatePostSavePluginSetIsActiveFalseEnabled(): void
+    public function have{{ domainEntity }}PostCreatePluginSetUuidTypeTwoEnabled(): void
     {
-        $this->mock{{ domainEntity }}PostSavePluginSetIsActiveFalse('get{{ domainEntity }}CreatePostSavePlugins');
+        ${{ domainEntity | lcfirst }}PostCreatePlugin = $this->mockCreatePlugin();
+
+        $this->getBusinessHelper()->mockFactoryMethod('get{{ domainEntity }}PostCreatePlugins', [${{ domainEntity | lcfirst }}PostCreatePlugin], '{{ module }}');
     }
 
-    /**
-     * @return void
-     */
-    public function have{{ domainEntity }}UpdatePreSavePluginSetIsActiveFalseEnabled(): void
+   /**
+    * @return {{ domainEntity }}CreatePluginInterface
+    */
+    protected function mockCreatePlugin(): {{ domainEntity }}CreatePluginInterface
     {
-        $this->mock{{ domainEntity }}PreSavePluginSetIsActiveFalse('get{{ domainEntity }}UpdatePreSavePlugins');
-    }
-
-    /**
-     * @return void
-     */
-    public function have{{ domainEntity }}UpdatePostSavePluginSetIsActiveFalseEnabled(): void
-    {
-        $this->mock{{ domainEntity }}PostSavePluginSetIsActiveFalse('get{{ domainEntity }}UpdatePostSavePlugins');
-    }
-
-    /**
-     * @param string $factoryMethod
-     *
-     * @return void
-     */
-    protected function mock{{ domainEntity }}PreSavePluginSetIsActiveFalse(string $factoryMethod): void
-    {
-        ${{ domainEntity | lcfirst }}PreSavePlugin = new class implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Saver\{{ domainEntity }}SaverPluginInterface {
+        return new class(static::UUID_TYPE_TWO) implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Writer\{{ domainEntity }}CreatePluginInterface {
             /**
-             * @param \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
-             *
-             * @return \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
-             */
+            * @var string
+            */
+            private $uuid;
+
+            /**
+            * @param string $uuid
+            */
+            public function __construct(string $uuid)
+            {
+                $this->uuid = $uuid;
+            }
+
+            /**
+            * @param \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
+            *
+            * @return \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
+            */
             public function save(\ArrayObject ${{ domainEntity | lcfirst }}Transfers): \ArrayObject
             {
                 foreach (${{ domainEntity | lcfirst }}Transfers as ${{ domainEntity | lcfirst }}Transfer) {
-                    ${{ domainEntity | lcfirst }}Transfer->setIsActive(false);
+                    ${{ domainEntity | lcfirst }}Transfer->setUuid($this->uuid);
                 }
 
                 return ${{ domainEntity | lcfirst }}Transfers;
             }
         };
-
-        $this->getBusinessHelper()->mockFactoryMethod($factoryMethod, [${{ domainEntity | lcfirst }}PreSavePlugin], '{{ module }}');
     }
 
     /**
-     * @param string $factoryMethod
-     *
      * @return void
      */
-    protected function mock{{ domainEntity }}PostSavePluginSetIsActiveFalse(string $factoryMethod): void
+    public function have{{ domainEntity }}PreUpdatePluginSetUuidTypeTwoEnabled(): void
     {
-        ${{ domainEntity | lcfirst }}PostSavePlugin = new class implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Saver\{{ domainEntity }}SaverPluginInterface {
-            /**
-             * @param \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
-             *
-             * @return \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
-             */
+        ${{ domainEntity | lcfirst }}PreUpdatePlugin = $this->mockUpdatePlugin();
+
+        $this->getBusinessHelper()->mockFactoryMethod('get{{ domainEntity }}PreUpdatePlugins', [${{ domainEntity | lcfirst }}PreUpdatePlugin], '{{ module }}');
+    }
+
+    /**
+     * @return void
+     */
+    public function have{{ domainEntity }}PostUpdatePluginSetUuidTypeTwoEnabled(): void
+    {
+        ${{ domainEntity | lcfirst }}PostUpdatePlugin = $this->mockUpdatePlugin();
+
+        $this->getBusinessHelper()->mockFactoryMethod('get{{ domainEntity }}PostUpdatePlugins', [${{ domainEntity | lcfirst }}PostUpdatePlugin], '{{ module }}');
+    }
+
+   /**
+    * @return {{ domainEntity }}UpdatePluginInterface
+    */
+    protected function mockUpdatePlugin(): {{ domainEntity }}UpdatePluginInterface
+    {
+        return new class(static::UUID_TYPE_TWO) implements \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Writer\{{ domainEntity }}UpdatePluginInterface {
+           /**
+            * @var string
+            */
+            private $uuid;
+
+           /**
+            * @param string $uuid
+            */
+            public function __construct(string $uuid)
+            {
+                $this->uuid = $uuid;
+            }
+
+           /**
+            * @param \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
+            *
+            * @return \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
+            */
             public function save(\ArrayObject ${{ domainEntity | lcfirst }}Transfers): \ArrayObject
             {
                 foreach (${{ domainEntity | lcfirst }}Transfers as ${{ domainEntity | lcfirst }}Transfer) {
-                    ${{ domainEntity | lcfirst }}Transfer->setIsActive(false);
+                    ${{ domainEntity | lcfirst }}Transfer->setUuid($this->uuid);
                 }
 
                 return ${{ domainEntity | lcfirst }}Transfers;
             }
         };
-
-        $this->getBusinessHelper()->mockFactoryMethod($factoryMethod, [${{ domainEntity | lcfirst }}PostSavePlugin], '{{ module }}');
     }
 
     /**
@@ -331,12 +382,62 @@ class {{ domainEntity }}CrudHelper extends Module
         $this->assertCount(0, ${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}(), sprintf('Expected to have an empty response collection but found "%s" items', ${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}()->count()));
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer ${{ domainEntity | lcfirst }}CollectionTransfer
-     * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer
-     *
-     * @return void
-     */
+   /**
+    * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
+    * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer
+    *
+    * @return void
+    */
+    public function assert{{ domainEntity }}CollectionResponseContainsOneWithUuidTypeOneTransferWithId({{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer, {{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer): void
+    {
+        ${{ domainEntity | lcfirst }}CollectionTransfer = (new {{ domainEntity }}CollectionTransfer())->set{{ domainEntity | pluralize }}(${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}());
+
+        $this->assert{{ domainEntity }}CollectionContainsTransferWithId(${{ domainEntity | lcfirst }}CollectionTransfer, ${{ domainEntity | lcfirst }}Transfer);
+        $this->assert{{ domainEntity }}CollectionResponseContainsOneWithUuidTypeOneTransfer(${{ domainEntity | lcfirst }}CollectionResponseTransfer);
+    }
+
+   /**
+    * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
+    *
+    * @return void
+    */
+    public function assert{{ domainEntity }}CollectionResponseContainsOneWithUuidTypeOneTransfer({{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): void
+    {
+        $this->assertCount(1, ${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}());
+        $this->assertEquals(static::UUID_TYPE_ONE, ${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}()[0]->getUuid());
+    }
+
+   /**
+    * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
+    * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer
+    *
+    * @return void
+    */
+    public function assert{{ domainEntity }}CollectionResponseContainsOneWithUuidTypeTwoTransferWithId({{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer, {{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer): void
+    {
+        ${{ domainEntity | lcfirst }}CollectionTransfer = (new {{ domainEntity }}CollectionTransfer())->set{{ domainEntity | pluralize }}(${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}());
+
+        $this->assert{{ domainEntity }}CollectionContainsTransferWithId(${{ domainEntity | lcfirst }}CollectionTransfer, ${{ domainEntity | lcfirst }}Transfer);
+        $this->assert{{ domainEntity }}CollectionResponseContainsOneWithUuidTypeTwoTransfer(${{ domainEntity | lcfirst }}CollectionResponseTransfer);
+    }
+
+   /**
+    * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
+    *
+    * @return void
+    */
+    public function assert{{ domainEntity }}CollectionResponseContainsOneWithUuidTypeTwoTransfer({{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): void
+    {
+        $this->assertCount(1, ${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}());
+        $this->assertEquals(static::UUID_TYPE_TWO, ${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}()[0]->getUuid());
+    }
+
+   /**
+    * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer ${{ domainEntity | lcfirst }}CollectionTransfer
+    * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer
+    *
+    * @return void
+    */
     public function assert{{ domainEntity }}CollectionContainsTransferWithId({{ domainEntity }}CollectionTransfer ${{ domainEntity | lcfirst }}CollectionTransfer, {{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer): void
     {
         $transferFound = false;
@@ -348,49 +449,6 @@ class {{ domainEntity }}CrudHelper extends Module
         }
 
         $this->assertTrue($transferFound, sprintf('Expected to have a transfer in the collection but transfer by id "%s" was not found in the collection', ${{ domainEntity | lcfirst }}Transfer->getId{{ domainEntity }}()));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
-     * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer
-     *
-     * @return void
-     */
-    public function assert{{ domainEntity }}CollectionResponseContainsTransferWithId(
-        {{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer,
-        {{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer
-    ): void {
-        $transferFound = false;
-
-        foreach (${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}() as ${{ domainEntity | lcfirst }}TransferFromCollection) {
-            if (${{ domainEntity | lcfirst }}TransferFromCollection->getId{{ domainEntity }}() === ${{ domainEntity | lcfirst }}Transfer->getId{{ domainEntity }}()) {
-                $transferFound = true;
-            }
-        }
-
-        $this->assertTrue($transferFound, sprintf('Expected to have a transfer in the collection but transfer by id "%s" was not found in the collection', ${{ domainEntity | lcfirst }}Transfer->getId{{ domainEntity }}()));
-    }
-
-    /**
-    * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
-    *
-    * @return void
-    */
-    public function assert{{ domainEntity }}CollectionResponseContainsOneNonActiveTransfer({{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): void
-    {
-        $this->assertCount(1, ${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}());
-        $this->assertFalse(${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}()[0]->getIsActive());
-    }
-
-    /**
-    * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
-    *
-    * @return void
-    */
-    public function assert{{ domainEntity }}CollectionResponseContainsOneActiveTransfer({{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): void
-    {
-        $this->assertCount(1, ${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}());
-        $this->assertTrue(${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}()[0]->getIsActive());
     }
 
     /**

@@ -43,7 +43,7 @@ class AddSharedDomainEntityManipulationTransferDefinitionTest extends Unit
 
   <transfer name="FooBarModel">
     <property name="idFooBarModel" type="int"/>
-    <property name="isActive" type="bool"/>
+    <property name="uuid" type="string"/>
   </transfer>
 
   <transfer name="FooBarModelCollectionRequest">
@@ -59,7 +59,7 @@ class AddSharedDomainEntityManipulationTransferDefinitionTest extends Unit
   <transfer name="FooBarModelCollectionDeleteCriteria">
     <property name="isTransactional" type="bool"/>
     <property name="fooBarModelIds" singular="idFooBarModel" type="int[]"/>
-    <property name="isActive" type="bool"/>
+    <property name="uuids" singular="uuid" type="string[]"/>
   </transfer>
 
   <transfer name="Error">
@@ -89,7 +89,7 @@ class AddSharedDomainEntityManipulationTransferDefinitionTest extends Unit
 
   <transfer name="FooBarModel">
     <property name="idFooBarModel" type="int"/>
-    <property name="isActive" type="bool"/>
+    <property name="uuid" type="string"/>
   </transfer>
 
   <transfer name="FooBarModelCollectionRequest">
@@ -105,7 +105,7 @@ class AddSharedDomainEntityManipulationTransferDefinitionTest extends Unit
   <transfer name="FooBarModelCollectionDeleteCriteria">
     <property name="isTransactional" type="bool"/>
     <property name="fooBarModelIds" singular="idFooBarModel" type="int[]"/>
-    <property name="isActive" type="bool"/>
+    <property name="uuids" singular="uuid" type="string[]"/>
   </transfer>
 
   <transfer name="Error">

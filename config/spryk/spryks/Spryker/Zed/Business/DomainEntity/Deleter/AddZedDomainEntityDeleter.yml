@@ -20,7 +20,7 @@ arguments:
 
     className:
         value: "{{ domainEntity }}Deleter"
-        
+
     subDirectory:
         value: "{{ domainEntity }}/Deleter"
 

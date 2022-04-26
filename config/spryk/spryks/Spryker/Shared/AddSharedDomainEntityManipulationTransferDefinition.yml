@@ -31,9 +31,9 @@ postSpryks:
             name:
                 value: "{{ domainEntity | ucfirst }}"
             propertyName:
-                value: "isActive"
+                value: "uuid"
             propertyType:
-                value: "bool"
+                value: "string"
 
     # *domainEntity*CollectionRequest
     -   AddSharedTransferProperty:
@@ -101,9 +101,11 @@ postSpryks:
                 name:
                     value: "{{ domainEntity | ucfirst }}CollectionDeleteCriteria"
                 propertyName:
-                    value: "isActive"
+                    value: "uuids"
                 propertyType:
-                    value: "bool"
+                    value: "string[]"
+                singular:
+                    value: "uuid"
 
     # Error
     -   AddSharedTransferProperty:

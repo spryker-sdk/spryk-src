@@ -10,10 +10,8 @@ ${{ domainEntity | lcfirst }}Query = $this->apply{{ domainEntity }}Sorting(${{ d
 // Paginate only if the transfer is present
 $paginationTransfer = ${{ domainEntity | lcfirst }}CriteriaTransfer->getPagination();
 if ($paginationTransfer !== null) {
-    $objectCollection = $this->apply{{ domainEntity }}Pagination(${{ domainEntity | lcfirst }}Query, $paginationTransfer);
+    ${{ domainEntity | lcfirst }}Query = $this->apply{{ domainEntity }}Pagination(${{ domainEntity | lcfirst }}Query, $paginationTransfer);
     ${{ domainEntity | lcfirst }}CollectionTransfer->setPagination($paginationTransfer);
-
-    return $this->getFactory()->create{{ domainEntity }}Mapper()->map{{ domainEntity }}EntityCollectionTo{{ domainEntity }}CollectionTransfer($objectCollection, ${{ domainEntity | lcfirst }}CollectionTransfer);
 }
 
 $objectCollection = ${{ domainEntity | lcfirst }}Query->find();

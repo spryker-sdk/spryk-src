@@ -1,7 +1,7 @@
 <?php
 
 {{ include('Partials/license.twig') }}
-namespace {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Saver;
+namespace {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Writer;
 
 use ArrayObject;
 use Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer;
@@ -33,34 +33,34 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
     protected {{ domainEntity }}IdentifierBuilderInterface ${{ domainEntity | lcfirst }}IdentifierBuilder;
 
     /**
-     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Saver\{{ domainEntity }}SaverPluginInterface[]
+     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Writer\{{ domainEntity }}UpdatePluginInterface[]
      */
-    protected array ${{ domainEntity | lcfirst }}PreSavePlugins;
+    protected array ${{ domainEntity | lcfirst }}PreUpdatePlugins;
 
     /**
-     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Saver\{{ domainEntity }}SaverPluginInterface[]
+     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Writer\{{ domainEntity }}UpdatePluginInterface[]
      */
-    protected array ${{ domainEntity | lcfirst }}PostSavePlugins;
+    protected array ${{ domainEntity | lcfirst }}PostUpdatePlugins;
 
     /**
      * @param \{{ organization }}\Zed\{{ module }}\Persistence\{{ module }}EntityManagerInterface ${{ module | lcfirst }}EntityManager
      * @param \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator\{{ domainEntity }}ValidatorInterface ${{ domainEntity | lcfirst }}Validator
      * @param \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\IdentifierBuilder\{{ domainEntity }}IdentifierBuilderInterface
-     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Saver\{{ domainEntity }}SaverPluginInterface[] ${{ domainEntity | lcfirst }}PreSavePlugins
-     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Saver\{{ domainEntity }}SaverPluginInterface[] ${{ domainEntity | lcfirst }}PostSavePlugins
+     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Writer\{{ domainEntity }}UpdatePluginInterface[] ${{ domainEntity | lcfirst }}PreUpdatePlugins
+     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Writer\{{ domainEntity }}UpdatePluginInterface[] ${{ domainEntity | lcfirst }}PostUpdatePlugins
      */
     public function __construct(
         {{ module }}EntityManagerInterface ${{ module | lcfirst }}EntityManager,
         {{ domainEntity }}ValidatorInterface ${{ domainEntity | lcfirst }}Validator,
         {{ domainEntity }}IdentifierBuilderInterface ${{ domainEntity | lcfirst }}IdentifierBuilder,
-        array ${{ domainEntity | lcfirst }}PreSavePlugins,
-        array ${{ domainEntity | lcfirst }}PostSavePlugins
+        array ${{ domainEntity | lcfirst }}PreUpdatePlugins,
+        array ${{ domainEntity | lcfirst }}PostUpdatePlugins
     ) {
         $this->{{ module | lcfirst }}EntityManager = ${{ module | lcfirst }}EntityManager;
         $this->{{ domainEntity | lcfirst }}Validator = ${{ domainEntity | lcfirst }}Validator;
         $this->{{ domainEntity | lcfirst }}IdentifierBuilder = ${{ domainEntity | lcfirst }}IdentifierBuilder;
-        $this->{{ domainEntity | lcfirst }}PreSavePlugins = ${{ domainEntity | lcfirst }}PreSavePlugins;
-        $this->{{ domainEntity | lcfirst }}PostSavePlugins = ${{ domainEntity | lcfirst }}PostSavePlugins;
+        $this->{{ domainEntity | lcfirst }}PreUpdatePlugins = ${{ domainEntity | lcfirst }}PreUpdatePlugins;
+        $this->{{ domainEntity | lcfirst }}PostUpdatePlugins = ${{ domainEntity | lcfirst }}PostUpdatePlugins;
     }
 
     /**
@@ -98,13 +98,13 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
         if ($errorTransfers) {
             return ${{ domainEntity | lcfirst }}CollectionResponseTransfer
                 ->set{{ domainEntity | pluralize }}(${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity | pluralize }}())
-                ->setErrors($errorTransfers);
+                ->setErrors(new \ArrayObject($errorTransfers));
         }
 
         // This will save ALL entities in ONE transaction. If ANY of the entities in the collection fails to be persisted
         // it will roll ALL of them back. And we DON'T catch exceptions here intentionally!
         return $this->getTransactionHandler()->handleTransaction(function () use (${{ domainEntity | lcfirst }}CollectionRequestTransfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer) {
-            return $this->update{{ domainEntity | pluralize }}(${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity | pluralize}}(), ${{ domainEntity | lcfirst }}CollectionResponseTransfer);
+            return $this->executeUpdate{{ domainEntity | pluralize }}CollectionResponseTransaction(${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity | pluralize}}(), ${{ domainEntity | lcfirst }}CollectionResponseTransfer);
         });
     }
 
@@ -121,11 +121,11 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
         {{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
     ): {{ domainEntity }}CollectionResponseTransfer {
         ${{ domainEntity | lcfirst }}CollectionResponseTransfer = new {{ domainEntity }}CollectionResponseTransfer();
-        $valid{{ domainEntity }}CollectionTransfer = $this->validate{{ domainEntity }}CollectionRequestBeforeSave(${{ domainEntity | lcfirst }}CollectionRequestTransfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer);
+        $valid{{ domainEntity }}CollectionTransfer = $this->validate{{ domainEntity }}CollectionRequestBeforeUpdate(${{ domainEntity | lcfirst }}CollectionRequestTransfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer);
 
         // Process only the non-errored entities
         return $this->getTransactionHandler()->handleTransaction(function () use ($valid{{ domainEntity }}CollectionTransfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer) {
-            return $this->update{{ domainEntity | pluralize }}($valid{{ domainEntity }}CollectionTransfer->get{{ domainEntity | pluralize}}(), ${{ domainEntity | lcfirst }}CollectionResponseTransfer);
+            return $this->executeUpdate{{ domainEntity | pluralize }}CollectionResponseTransaction($valid{{ domainEntity }}CollectionTransfer->get{{ domainEntity | pluralize}}(), ${{ domainEntity | lcfirst }}CollectionResponseTransfer);
         });
     }
 
@@ -135,7 +135,7 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
     *
     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer
     */
-    protected function validate{{ domainEntity }}CollectionRequestBeforeSave({{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer, {{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): {{ domainEntity }}CollectionTransfer
+    protected function validate{{ domainEntity }}CollectionRequestBeforeUpdate({{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer, {{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): {{ domainEntity }}CollectionTransfer
     {
         $errorTransfers = $this->{{ domainEntity | lcfirst }}Validator->validateCollection(${{ domainEntity | lcfirst }}CollectionRequestTransfer);
 
@@ -145,6 +145,18 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
             ${{ domainEntity | lcfirst }}IdsWithErrors = $this->get{{ domainEntity }}IdsWithErrors($errorTransfers);
         }
 
+        return $this->filterOutInvalid{{ domainEntity | pluralize }}(${{ domainEntity | lcfirst }}CollectionRequestTransfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer, ${{ domainEntity | lcfirst }}IdsWithErrors);
+    }
+
+    /**
+    * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
+    * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
+    * @param string[] ${{ domainEntity | lcfirst }}IdsWithErrors
+    *
+    * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer
+    */
+    protected function filterOutInvalid{{ domainEntity | pluralize }}({{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer, {{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer, array ${{ domainEntity | lcfirst }}IdsWithErrors): {{ domainEntity }}CollectionTransfer
+    {
         $valid{{ domainEntity }}CollectionTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer();
 
         foreach (${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity | pluralize}}() as ${{ domainEntity | lcfirst }}Transfer) {
@@ -167,10 +179,10 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
     *
     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
     */
-    protected function update{{ domainEntity | pluralize }}(\ArrayObject ${{ domainEntity | lcfirst }}Transfers, {{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): {{ domainEntity }}CollectionResponseTransfer
+    protected function executeUpdate{{ domainEntity | pluralize }}CollectionResponseTransaction(\ArrayObject ${{ domainEntity | lcfirst }}Transfers, {{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): {{ domainEntity }}CollectionResponseTransfer
     {
         // Run pre-save plugins
-        ${{ domainEntity | lcfirst }}Transfers = $this->execute{{ domainEntity }}PreSavePlugins(${{ domainEntity | lcfirst }}Transfers);
+        ${{ domainEntity | lcfirst }}Transfers = $this->execute{{ domainEntity }}PreUpdatePlugins(${{ domainEntity | lcfirst }}Transfers);
 
         $persisted{{ domainEntity }}Transfers = new \ArrayObject();
 
@@ -179,7 +191,7 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
         }
 
         // Run post-save plugins
-        $persisted{{ domainEntity }}Transfers = $this->execute{{ domainEntity }}PostSavePlugins($persisted{{ domainEntity }}Transfers);
+        $persisted{{ domainEntity }}Transfers = $this->execute{{ domainEntity }}PostUpdatePlugins($persisted{{ domainEntity }}Transfers);
 
         foreach ($persisted{{ domainEntity }}Transfers as $persisted{{ domainEntity }}Transfer) {
             ${{ domainEntity | lcfirst }}CollectionResponseTransfer->add{{ domainEntity }}($persisted{{ domainEntity }}Transfer);
@@ -193,11 +205,11 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
      */
-    protected function execute{{ domainEntity }}PreSavePlugins(
+    protected function execute{{ domainEntity }}PreUpdatePlugins(
         \ArrayObject ${{ domainEntity | lcfirst }}Transfers
     ): \ArrayObject {
-        foreach ($this->{{ domainEntity | lcfirst }}PreSavePlugins as ${{ domainEntity | lcfirst }}PreSavePlugin) {
-            ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}PreSavePlugin->save(${{ domainEntity | lcfirst }}Transfers);
+        foreach ($this->{{ domainEntity | lcfirst }}PreUpdatePlugins as ${{ domainEntity | lcfirst }}PreUpdatePlugin) {
+            ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}PreUpdatePlugin->save(${{ domainEntity | lcfirst }}Transfers);
         }
 
         return ${{ domainEntity | lcfirst }}Transfers;
@@ -208,11 +220,11 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
      */
-    protected function execute{{ domainEntity }}PostSavePlugins(
+    protected function execute{{ domainEntity }}PostUpdatePlugins(
         \ArrayObject ${{ domainEntity | lcfirst }}Transfers
     ): \ArrayObject {
-        foreach ($this->{{ domainEntity | lcfirst }}PostSavePlugins as ${{ domainEntity | lcfirst }}PostSavePlugin) {
-            ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}PostSavePlugin->save(${{ domainEntity | lcfirst }}Transfers);
+        foreach ($this->{{ domainEntity | lcfirst }}PostUpdatePlugins as ${{ domainEntity | lcfirst }}PostUpdatePlugin) {
+            ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}PostUpdatePlugin->save(${{ domainEntity | lcfirst }}Transfers);
         }
 
         return ${{ domainEntity | lcfirst }}Transfers;

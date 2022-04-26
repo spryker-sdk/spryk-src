@@ -62,9 +62,11 @@ postSpryks:
                 name:
                     value: "{{ domainEntity | ucfirst }}Conditions"
                 propertyName:
-                    value: "isActive"
+                    value: "uuids"
                 propertyType:
-                    value: "bool"
+                    value: "string[]"
+                singular:
+                    value: "uuid"
 
     # *domainEntity*Collection
     -   AddSharedTransferProperty:

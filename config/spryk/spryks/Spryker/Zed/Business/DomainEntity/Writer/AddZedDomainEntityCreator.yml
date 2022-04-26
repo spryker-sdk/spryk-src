@@ -23,10 +23,10 @@ arguments:
         inherit: true
 
     subDirectory:
-        value: "{{ domainEntity }}/Saver"
+        value: "{{ domainEntity }}/Writer"
 
     template:
-        value: Zed/Business/DomainEntity/Saver/DomainEntityCreator.php.twig
+        value: Zed/Business/DomainEntity/Writer/DomainEntityCreator.php.twig
 
     targetFilename:
         value: "{{ domainEntity }}Creator.php"
@@ -43,7 +43,7 @@ postSpryks:
               className:
                   value: "{{ domainEntity }}Creator"
               subDirectory:
-                  value: "{{ domainEntity }}/Saver"
+                  value: "{{ domainEntity }}/Writer"
               modelMethod:
                   value: "create{{ domainEntity }}Collection"
               input:
@@ -54,11 +54,11 @@ postSpryks:
     - AddZedBusinessFactoryMethod:
           arguments:
               output:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}\\Business\\{{ domainEntity }}\\Saver\\{{ domainEntity }}CreatorInterface"
+                  value: "\\{{ organization }}\\Zed\\{{ module }}\\Business\\{{ domainEntity }}\\Writer\\{{ domainEntity }}CreatorInterface"
               dependencyMethods:
                   value:
                       - "getEntityManager"
                       - "create{{ domainEntity }}CreateValidator"
                       - "create{{ domainEntity }}IdentifierBuilder"
-                      - "get{{ domainEntity }}CreatePreSavePlugins"
-                      - "get{{ domainEntity }}CreatePostSavePlugins"
+                      - "get{{ domainEntity }}PreCreatePlugins"
+                      - "get{{ domainEntity }}PostCreatePlugins"
