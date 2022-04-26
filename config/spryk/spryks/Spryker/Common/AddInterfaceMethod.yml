@@ -1,0 +1,36 @@
+spryk: method
+description: "Adds a new interface method for the target class."
+mode: both
+level: 3
+
+arguments:
+    organization:
+        inherit: true
+        default: Spryker
+
+    module:
+        inherit: true
+
+    method: ~
+
+    body:
+        default: ""
+
+    visibility:
+        inherit: true
+        default: public
+
+    input:
+        isOptional: true
+
+    output:
+        default: void
+
+    template:
+        value: Common/InterfaceMethod.php.twig
+
+    target:
+        inherit: true
+
+preSpryks:
+    - AddInterface

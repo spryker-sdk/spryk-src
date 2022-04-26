@@ -1,0 +1,27 @@
+spryk: template
+description: "Adds a new interface for the target class."
+mode: both
+level: 3
+
+arguments:
+    organization:
+        inherit: true
+        default: Spryker
+
+    module:
+        inherit: true
+
+    method:
+        inherit: true
+
+    input:
+        isOptional: true
+
+    output:
+        default: void
+
+    template:
+        value: Common/Interface.php.twig
+
+    target:
+        inherit: true
