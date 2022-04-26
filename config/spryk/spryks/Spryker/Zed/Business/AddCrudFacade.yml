@@ -665,7 +665,7 @@ postSpryks:
               className:
                   value: "{{ domainEntity }}Mapper"
               subDirectory:
-                  value: "{{ domainEntity }}/Propel/Mapper"
+                  value: "Propel/{{ domainEntity }}/Mapper"
               modelMethod:
                   value: "map{{ domainEntity }}TransferTo{{ domainEntity }}Entity"
           excludedSpryks:
@@ -678,7 +678,7 @@ postSpryks:
               className:
                   value: "{{ domainEntity }}Mapper"
               subDirectory:
-                  value: "{{ domainEntity }}/Propel/Mapper"
+                  value: "Propel/{{ domainEntity }}/Mapper"
               modelMethod:
                   value: "map{{ domainEntity }}TransferTo{{ domainEntity }}Entity"
               input:
@@ -701,7 +701,7 @@ postSpryks:
             className:
                 value: "{{ domainEntity }}Mapper"
             subDirectory:
-                value: "{{ domainEntity }}/Propel/Mapper"
+                value: "Propel/{{ domainEntity }}/Mapper"
             modelMethod:
                 value: "map{{ domainEntity }}EntityTo{{ domainEntity }}Transfer"
             input:
@@ -724,7 +724,7 @@ postSpryks:
             className:
                 value: "{{ domainEntity }}Mapper"
             subDirectory:
-                value: "{{ domainEntity }}/Propel/Mapper"
+                value: "Propel/{{ domainEntity }}/Mapper"
             modelMethod:
                 value: "map{{ domainEntity }}EntityCollectionTo{{ domainEntity }}CollectionResponseTransfer"
             input:
@@ -752,7 +752,7 @@ postSpryks:
                 className:
                     value: "{{ domainEntity }}Mapper"
                 subDirectory:
-                    value: "{{ domainEntity }}/Propel/Mapper"
+                    value: "Propel/{{ domainEntity }}/Mapper"
                 modelMethod:
                     value: "map{{ domainEntity }}EntityCollectionTo{{ domainEntity }}CollectionTransfer"
                 input:
@@ -778,10 +778,10 @@ postSpryks:
             application:
                 value: "Zed"
             fqcnClassName:
-                value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\{{ domainEntity }}\\Propel\\Mapper\\{{ domainEntity }}Mapper"
+                value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\Propel\\{{ domainEntity }}\\Mapper\\{{ domainEntity }}Mapper"
             factoryMethod:
                 value: "create{{ domainEntity }}Mapper"
             output:
-                value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\{{ domainEntity }}\\Propel\\Mapper\\{{ domainEntity }}Mapper"
+                value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\Propel\\{{ domainEntity }}\\Mapper\\{{ domainEntity }}Mapper"
             body:
-                value: "return new \\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\{{ domainEntity }}\\Propel\\Mapper\\{{ domainEntity }}Mapper();"
+                value: "return new \\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\Propel\\{{ domainEntity }}\\Mapper\\{{ domainEntity }}Mapper();"

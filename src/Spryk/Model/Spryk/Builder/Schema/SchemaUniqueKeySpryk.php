@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerSdk\Spryk\Model\Spryk\Builder\Schema;
 
 use SimpleXMLElement;
@@ -116,7 +121,7 @@ class SchemaUniqueKeySpryk extends AbstractBuilder
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getUniqueKeyColumns(): array
     {
@@ -125,7 +130,7 @@ class SchemaUniqueKeySpryk extends AbstractBuilder
 
     /**
      * @param \SimpleXMLElement $simpleXmlElement
-     * @param string $columnName
+     * @param string $uniqueKeyName
      *
      * @return bool
      */
