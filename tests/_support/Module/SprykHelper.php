@@ -16,6 +16,7 @@ use SprykerSdk\Spryk\Console\SprykRunConsole;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\Dumper\ClassDumperInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\FileDumperInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface;
+use SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface;
 use SprykerSdk\Spryk\SprykConfig;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -230,6 +231,17 @@ class SprykHelper extends Module
         $fileResolver = $this->getContainer()->get(FileResolverInterface::class);
 
         return $fileResolver;
+    }
+
+    /**
+     * @return \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface
+     */
+    public function getNodeFinder(): NodeFinderInterface
+    {
+        /** @var \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface $nodeFinder */
+        $nodeFinder = $this->getContainer()->get(NodeFinderInterface::class);
+
+        return $nodeFinder;
     }
 
     /**
