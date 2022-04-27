@@ -22,7 +22,7 @@ arguments:
     pluginClassName:
         value: "{{ resourceType | dashToCamelCase | singularize }}By{{ relationshipParameter | dashToCamelCase }}ResourceRelationshipPlugin"
 
-    expanderClassName:
+    extends:
         value: "{{ resourceType | dashToCamelCase | singularize }}By{{ relationshipParameter | dashToCamelCase }}Expander"
 
     targetFilename:
@@ -52,11 +52,11 @@ preSpryks:
             subDirectory:
                 value: "Expander"
             className:
-                value: "{{ expanderClassName }}"
+                value: "{{ extends }}"
     - AddGlueProcessorModelMethod:
         arguments:
             className:
-                value: "{{ expanderClassName }}"
+                value: "{{ extends }}"
             subDirectory:
                 value: "Expander"
             modelSuffix:

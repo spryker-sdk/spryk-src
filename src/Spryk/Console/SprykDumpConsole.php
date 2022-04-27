@@ -7,6 +7,7 @@
 
 namespace SprykerSdk\Spryk\Console;
 
+use Exception;
 use SprykerSdk\Spryk\SprykConfig;
 use Symfony\Component\Console\Helper\FormatterHelper;
 use Symfony\Component\Console\Helper\Table;
@@ -161,12 +162,17 @@ class SprykDumpConsole extends AbstractSprykConsole
     /**
      * @param array $sprykDefinitions
      *
+     * @throws \Exception
+     *
      * @return array
      */
     protected function formatSpryks(array $sprykDefinitions): array
     {
         $formatted = [];
         foreach ($sprykDefinitions as $sprykName => $sprykDefinition) {
+            if (!isset($sprykDefinition['description'])) {
+                throw new Exception(sprintf('The Spryk "%s" doesn\'t have a description.', $sprykName));
+            }
             $formatted[$sprykName] = [$sprykName, $sprykDefinition['description']];
         }
         sort($formatted);

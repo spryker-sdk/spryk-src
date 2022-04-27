@@ -14,67 +14,72 @@ class SprykDefinition implements SprykDefinitionInterface
     /**
      * @var string
      */
-    protected $builder;
+    protected string $builder;
 
     /**
      * @var string
      */
-    protected $sprykName;
+    protected string $sprykName;
 
     /**
      * @var string
      */
-    protected $sprykDefinitionKey;
+    protected string $sprykDefinitionKey;
 
     /**
      * @var string
      */
-    protected $description;
+    protected string $description;
 
     /**
      * @var array
      */
-    protected $config = [];
+    protected array $config = [];
 
     /**
      * @var \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface
      */
-    protected $argumentCollection;
+    protected ArgumentCollectionInterface $argumentCollection;
 
     /**
      * @var bool
      */
-    protected $isCalled = false;
+    protected bool $isCalled = false;
 
     /**
      * @var array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition>
      */
-    protected $excludedSpryks = [];
+    protected array $excludedSpryks = [];
 
     /**
      * @var array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition>
      */
-    protected $preSpryks = [];
+    protected array $preSpryks = [];
 
     /**
      * @var array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition>
      */
-    protected $postSpryks = [];
+    protected array $postSpryks = [];
 
     /**
      * @var array<string>
      */
-    protected $preCommands = [];
+    protected array $preCommands = [];
 
     /**
      * @var array<string>
      */
-    protected $postCommands = [];
+    protected array $postCommands = [];
 
     /**
      * @var string
      */
-    protected $mode;
+    protected string $mode;
+
+    /**
+     * @var string
+     */
+    protected string $condition;
 
     /**
      * @return string
@@ -294,5 +299,25 @@ class SprykDefinition implements SprykDefinitionInterface
         $this->mode = $mode;
 
         return $this;
+    }
+
+    /**
+     * @param string $condition
+     *
+     * @return $this
+     */
+    public function setCondition(string $condition)
+    {
+        $this->condition = $condition;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCondition(): string
+    {
+        return $this->condition;
     }
 }

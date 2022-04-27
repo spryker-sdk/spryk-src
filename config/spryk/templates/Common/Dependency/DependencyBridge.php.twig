@@ -1,0 +1,24 @@
+<?php
+
+{{ include('Partials/license.twig') }}
+{%- set dependentApplication = dependencyType -%}
+{%- if dependencyType == 'Facade' -%}
+    {%- set dependentApplication = 'Zed' -%}
+{%- endif -%}
+namespace Spryker\{{ application }}\{{ module }}\Dependency\{{ dependencyType }};
+
+class {{ module }}To{{ dependentModule }}{{ dependencyType }}Bridge implements \Spryker\{{ application }}\{{ module }}\Dependency\{{ dependencyType }}\{{ module }}To{{ dependentModule }}{{ dependencyType }}Interface
+{
+    /**
+     * @var \Spryker\{{ dependentApplication }}\{{ dependentModule }}{% if dependencyType == 'Facade' %}\Business{% endif %}\{{ dependentModule }}{{ dependencyType }}Interface
+     */
+    protected \Spryker\{{ dependentApplication }}\{{ dependentModule }}{% if dependencyType == 'Facade' %}\Business{% endif %}\{{ dependentModule }}{{ dependencyType }}Interface ${{ dependentModule | lcfirst }}{{ dependencyType }};
+
+    /**
+     * @param \Spryker\{{ dependentApplication }}\{{ dependentModule }}{% if dependencyType == 'Facade' %}\Business{% endif %}\{{ dependentModule }}{{ dependencyType }}Interface ${{ dependentModule | lcfirst }}{{ dependencyType }}
+     */
+    public function __construct(${{ dependentModule | lcfirst }}{{ dependencyType }})
+    {
+        $this->{{ dependentModule | lcfirst }}{{ dependencyType }} = ${{ dependentModule | lcfirst }}{{ dependencyType }};
+    }
+}

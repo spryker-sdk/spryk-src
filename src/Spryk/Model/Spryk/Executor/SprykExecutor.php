@@ -7,6 +7,7 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Executor;
 
+use Exception;
 use Jfcherng\Diff\DiffHelper;
 use SprykerSdk\Spryk\Exception\SprykWrongDevelopmentLayerException;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Collection\SprykBuilderCollectionInterface;
@@ -158,7 +159,7 @@ class SprykExecutor implements SprykExecutorInterface
      */
     protected function buildSpryk(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): void
     {
-        if ($sprykDefinition->getMode() !== $this->mainSprykDefinitionMode) {
+        if ($sprykDefinition->getMode() !== $this->mainSprykDefinitionMode || !$this->conditionMatched($sprykDefinition)) {
             return;
         }
 
@@ -171,6 +172,52 @@ class SprykExecutor implements SprykExecutorInterface
         $this->executePostCommands($sprykDefinition, $style);
 
         $style->endSpryk($sprykDefinition);
+    }
+
+    /**
+     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
+     *
+     * @throws \Exception
+     *
+     * @return bool
+     */
+    protected function conditionMatched(SprykDefinitionInterface $sprykDefinition): bool
+    {
+        $condition = $sprykDefinition->getCondition();
+
+        if (!$condition) {
+            return true;
+        }
+
+        $conditions = explode('&&', $condition);
+
+        $conditionMatched = true;
+
+        foreach ($conditions as $condition) {
+            [$argument, $comparison, $expectedValue] = explode(' ', trim($condition));
+
+            if (!in_array($comparison, ['!==', '==='])) {
+                throw new Exception(sprintf('Allowed comparison types "!==" and "===" found "%s"', $comparison));
+            }
+
+            if (!$sprykDefinition->getArgumentCollection()->hasArgument($argument)) {
+                throw new Exception(sprintf('Could not find the argument "%s" in the argument collection of "%s"', $argument, $sprykDefinition->getSprykName()));
+            }
+
+            $argumentValue = $sprykDefinition->getArgumentCollection()->getArgument($argument)->getValue();
+
+            $expectedValue = trim($expectedValue, '\'"');
+
+            if ($comparison === '===' && $argumentValue !== $expectedValue) {
+                $conditionMatched = false;
+            }
+
+            if ($comparison === '!==' && $argumentValue === $expectedValue) {
+                $conditionMatched = false;
+            }
+        }
+
+        return $conditionMatched;
     }
 
     /**

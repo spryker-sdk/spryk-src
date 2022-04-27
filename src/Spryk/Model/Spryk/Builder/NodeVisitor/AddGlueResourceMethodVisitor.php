@@ -12,10 +12,9 @@ namespace SprykerSdk\Spryk\Model\Spryk\Builder\NodeVisitor;
 use PhpParser\BuilderFactory;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\Stmt\Return_;
 use PhpParser\NodeVisitorAbstract;
 use SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface;
-use PhpParser\Node\Stmt\Return_;
-use PhpParser\Node\Arg;
 
 class AddGlueResourceMethodVisitor extends NodeVisitorAbstract
 {
@@ -35,7 +34,7 @@ class AddGlueResourceMethodVisitor extends NodeVisitorAbstract
     protected NodeFinderInterface $nodeFinder;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $methodNamesRequireDomainEntityTransfer = [
         'setPost',
@@ -62,7 +61,7 @@ class AddGlueResourceMethodVisitor extends NodeVisitorAbstract
     public function enterNode(Node $node)
     {
         if (!($node instanceof ClassMethod) || (string)$node->name !== 'getDeclaredMethods') {
-            return $node;
+            return null;
         }
 
         // Statements differ from the way the method body is defined.
@@ -101,25 +100,33 @@ class AddGlueResourceMethodVisitor extends NodeVisitorAbstract
 
         $stmts = $node->stmts;
 
+        if (!$stmts) {
+            return null;
+        }
+
         // Return when the method already exists
         if ($this->nodeFinder->findMethodCallNode($stmts, $this->methodName)) {
             return $node;
         }
 
-        // Assumption for Case 1
-        $stmts[0]->expr = (new BuilderFactory())->methodCall(
-            $stmts[0]->expr,
-            $this->methodName,
-            $this->getArgumentsForMethodCall()
-        );
+        $return = $stmts[0];
 
-        $node->stmts = $stmts;
+        if ($return instanceof Return_ && $return->expr !== null) {
+            // Assumption for Case 1
+            $return->expr = (new BuilderFactory())->methodCall(
+                $return->expr,
+                $this->methodName,
+                $this->getArgumentsForMethodCall(),
+            );
+
+            $node->stmts = $stmts;
+        }
 
         return $node;
     }
 
     /**
-     * @return array<Arg>
+     * @return array<\PhpParser\Node\Arg>
      */
     protected function getArgumentsForMethodCall(): array
     {
@@ -132,9 +139,9 @@ class AddGlueResourceMethodVisitor extends NodeVisitorAbstract
                     $builderFactory->new('\Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer'),
                     'setAttributes',
                     $builderFactory->args([
-                        $builderFactory->classConstFetch($this->resourceDataObjectName, 'class')
-                    ])
-                )
+                        $builderFactory->classConstFetch($this->resourceDataObjectName, 'class'),
+                    ]),
+                ),
             ]);
         }
 

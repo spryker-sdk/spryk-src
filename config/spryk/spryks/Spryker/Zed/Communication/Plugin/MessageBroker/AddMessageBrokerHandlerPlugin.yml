@@ -16,11 +16,11 @@ arguments:
     className:
         value: "{{ module }}{{ messageName }}MessageHandlerPlugin"
 
-    implementerInterfaceName:
+    implements:
         inherit: true
         value: "Spryker/Zed/MessageBrokerExtension/Dependency/Plugin/MessageHandlerPluginInterface"
 
-    expanderClassName:
+    extends:
         inherit: true
         value: "Spryker/Zed/Kernel/Communication/AbstractPlugin"
 
