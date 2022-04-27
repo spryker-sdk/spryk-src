@@ -27,7 +27,7 @@ class {{ pluginClassName }} extends AbstractPlugin implements ResourceRelationsh
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->create{{ expanderClassName }}()
+            ->create{{ extends }}()
             ->addResourceRelationships($resources, $restRequest);
     }
 

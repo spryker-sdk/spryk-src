@@ -4,17 +4,17 @@
 
 namespace {{ organization }}\{{ subDirectory | replace({'/': '\\'}) }};
 
-{% if expanderClassName %}
-use {{ expanderClassName | replace({'/': '\\'}) | trim('\\') }};
+{% if extends %}
+use {{ extends | replace({'/': '\\'}) | trim('\\') }};
 {% endif %}
-{% if implementerInterfaceName %}
-use {{ implementerInterfaceName | replace({'/': '\\'}) | trim('\\') }};
+{% if implements %}
+use {{ implements | replace({'/': '\\'}) | trim('\\') }};
 {% endif %}
 
 /**
  * @method \{{ organization }}\Zed\{{ module }}\Business\{{ module }}FacadeInterface getFacade()
  */
-class {{ className }}{% if expanderClassName %} extends {{ expanderClassName | replace({'/': '\\'}) | classNameShort }}{% endif %}{% if implementerInterfaceName %} implements {{ implementerInterfaceName | replace({'/': '\\'}) | classNameShort }}{% endif ~%}
+class {{ className }}{% if extends %} extends {{ extends | replace({'/': '\\'}) | classNameShort }}{% endif %}{% if implements %} implements {{ implements | replace({'/': '\\'}) | classNameShort }}{% endif ~%}
 {
     /**
      * @param \Generated\Shared\Transfer\{{ messageName }}Transfer ${{ messageName | lcfirst }}Transfer

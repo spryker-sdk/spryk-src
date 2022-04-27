@@ -19,6 +19,6 @@ arguments:
 preSpryks:
     - AddModule
 
-postCommands:
-    - ComposerReplaceGenerate
-    - ComposerDumpAutoload
+#postCommands:
+#    - ComposerReplaceGenerate
+#    - ComposerDumpAutoload

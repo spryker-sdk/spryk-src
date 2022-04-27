@@ -26,7 +26,7 @@ class SprykDefinitionFinder implements SprykDefinitionFinderInterface
     }
 
     /**
-     * @return \Symfony\Component\Finder\SplFileInfo[]|\Symfony\Component\Finder\Finder
+     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
      */
     public function find(): iterable
     {

@@ -1,0 +1,26 @@
+spryk: template
+description: "Adds a dependency provider to the *module*."
+mode: both
+level: 3
+
+arguments:
+    module:
+        inherit: true
+
+    organization:
+        inherit: true
+
+    application:
+        inherit: true
+
+    template:
+        value: Common/Dependency/DependencyProvider.php.twig
+
+    targetFilename:
+        value: "{{ module }}DependencyProvider.php"
+
+    targetPath:
+        value: "src/{{ organization }}/{{ application }}/{{ module }}/"
+
+#preSpryks:
+#    - AddModule

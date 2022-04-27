@@ -16,11 +16,11 @@ arguments:
     className:
         value: "{{ classNamePrefix }}CheckoutPreConditionPlugin"
 
-    implementerInterfaceName:
+    implements:
         inherit: true
         value: \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface
 
-    expanderClassName:
+    extends:
         inherit: true
         value: "Spryker/Zed/Kernel/Communication/AbstractPlugin"
 

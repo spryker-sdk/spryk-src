@@ -49,6 +49,11 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
     protected const CONFIGURATION_KEY_POST_COMMANDS = 'postCommands';
 
     /**
+     * @var string
+     */
+    protected const CONFIGURATION_KEY_CONDITION = 'condition';
+
+    /**
      * @var \SprykerSdk\Spryk\Model\Spryk\Configuration\Loader\SprykConfigurationLoaderInterface
      */
     protected SprykConfigurationLoaderInterface $sprykLoader;
@@ -168,7 +173,8 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
                 ->setPreSpryks($this->getPreSpryks($sprykConfiguration, $sprykDefinitionKey))
                 ->setPostSpryks($this->getPostSpryks($sprykConfiguration, $sprykDefinitionKey))
                 ->setPostCommands($this->getPostCommands($sprykConfiguration))
-                ->setConfig($this->getConfig($sprykConfiguration, $preDefinedDefinition));
+                ->setConfig($this->getConfig($sprykConfiguration, $preDefinedDefinition))
+                ->setCondition($this->getCondition($sprykConfiguration, $preDefinedDefinition));
         }
 
         return $this->definitionCollection[$sprykDefinitionKey];
@@ -275,6 +281,27 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         }
 
         return $configuration;
+    }
+
+    /**
+     * @param array $sprykConfiguration
+     * @param array|null $preDefinedDefinition
+     *
+     * @return string
+     */
+    protected function getCondition(array $sprykConfiguration, ?array $preDefinedDefinition = null): string
+    {
+        $condition = '';
+
+        if (isset($sprykConfiguration[static::CONFIGURATION_KEY_CONDITION])) {
+            $condition = $sprykConfiguration[static::CONFIGURATION_KEY_CONDITION];
+        }
+
+        if (isset($preDefinedDefinition[static::CONFIGURATION_KEY_CONDITION])) {
+            $condition = $preDefinedDefinition[static::CONFIGURATION_KEY_CONDITION];
+        }
+
+        return $condition;
     }
 
     /**

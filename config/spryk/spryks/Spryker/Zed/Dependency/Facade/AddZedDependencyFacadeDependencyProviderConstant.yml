@@ -1,6 +1,7 @@
 spryk: constant
 description: "Adds a facade dependency constant to the *module*DependencyProvider."
 mode: both
+deprecated: Use AddDependencyBridgeMethod instead.
 
 arguments:
     module:

@@ -1,0 +1,35 @@
+spryk: dependencyProvider
+description: "Adds a add* method to the provide* method to the *module*DependencyProvider."
+mode: both
+level: 3
+
+arguments:
+    module:
+        inherit: true
+
+    organization:
+        inherit: true
+        default: Spryker
+
+    application:
+        inherit: true
+
+    dependentModule:
+        inherit: true
+
+    provideMethod:
+        description: "The callback decides based on the application + the optional layer which method will be used."
+        callback: DependencyProviderProvideMethod
+
+    providerMethod:
+        inherit: true
+        value: "add{{ dependentModule | ucfirst }}{{ dependencyType | ucfirst }}"
+
+    body:
+        value: "$container = $this->{{ providerMethod }}($container);"
+
+    target:
+        value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\{{ module }}DependencyProvider"
+
+preSpryks:
+    - AddDependencyProviderProvideMethod

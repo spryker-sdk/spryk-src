@@ -1,16 +1,26 @@
 <?php
 
 {{ include('Partials/license.twig') }}
-
+{% block namespace %}
 namespace {{ organization }}\{{ subDirectory | replace({'/': '\\'}) }};
-
-{% if expanderClassName %}
-use {{ expanderClassName | replace({'/': '\\'}) | trim('\\') }};
+{% endblock %}
+{% if extends %}
+use {{ extends | replace({'/': '\\'}) | trim('\\') }};
 {% endif %}
-{% if implementerInterfaceName %}
-use {{ implementerInterfaceName | replace({'/': '\\'}) | trim('\\') }};
+{% if implements %}
+use {{ implements | replace({'/': '\\'}) | trim('\\') }};
 {% endif %}
+{% block useStatements %}
+{% endblock %}
 
-class {{ className }}{% if expanderClassName %} extends {{ expanderClassName | replace({'/': '\\'}) | classNameShort }}{% endif %}{% if implementerInterfaceName %} implements {{ implementerInterfaceName | replace({'/': '\\'}) | classNameShort }}{% endif ~%}
+class {{ className }}{% if extends %} extends {{ extends | replace({'/': '\\'}) | classNameShort }}{% endif %}{% if implements %} implements {{ implements | replace({'/': '\\'}) | classNameShort }}{% endif ~%}
 {
+{% block body %}
+    {% block properties %}
+    {% endblock  %}
+    {% block constructor %}
+    {% endblock  %}
+    {% block methods %}
+    {% endblock  %}
+{% endblock %}
 }
