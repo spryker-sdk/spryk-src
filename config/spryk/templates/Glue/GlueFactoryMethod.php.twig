@@ -8,19 +8,19 @@
 
 {% if not dependencyMethods.value %}
     /**
-     * @return \{{ organization }}\Glue\{{ module }}\Processor{{ subDirectory }}\{{ className }}Interface
+     * @return \{{ organization }}\Glue\{{ module }}{{ subDirectory }}\{{ className }}Interface
      */
-    public function {{ factoryMethod }}(): \{{ organization }}\Glue\{{ module }}\Processor{{ subDirectory }}\{{ className }}Interface
+    public function {{ factoryMethod }}(): \{{ organization }}\Glue\{{ module }}{{ subDirectory }}\{{ className }}Interface
     {
-        return new \{{ organization }}\Glue\{{ module }}\Processor{{ subDirectory }}\{{ className }}();
+        return new \{{ organization }}\Glue\{{ module }}{{ subDirectory }}\{{ className }}();
     }
 {% else %}
     /**
-     * @return \{{ organization }}\Glue\{{ module }}\Processor{{ subDirectory }}\{{ className }}Interface
+     * @return \{{ organization }}\Glue\{{ module }}{{ subDirectory }}\{{ className }}Interface
      */
-    public function {{ factoryMethod }}(): \{{ organization }}\Glue\{{ module }}\Processor{{ subDirectory }}\{{ className }}Interface
+    public function {{ factoryMethod }}(): \{{ organization }}\Glue\{{ module }}{{ subDirectory }}\{{ className }}Interface
     {
-        return new \{{ organization }}\Glue\{{ module }}\Processor{{ subDirectory }}\{{ className }}(
+        return new \{{ organization }}\Glue\{{ module }}{{ subDirectory }}\{{ className }}(
         {% for dependencyMethod in dependencyMethods.value -%}
             {%- apply spaceless -%}
                 {% set endOfLine = '' %}

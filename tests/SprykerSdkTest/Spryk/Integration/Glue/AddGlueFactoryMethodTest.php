@@ -57,23 +57,23 @@ class AddGlueFactoryMethodTest extends Unit
                     '--module' => 'FooBar',
                     '--subDirectory' => 'Foo',
                     '--className' => 'Bar',
-                    '--output' => 'Spryker\Glue\FooBar\Processor\Foo\Bar',
+                    '--output' => 'Spryker\Glue\FooBar\Foo\Bar',
                 ],
                 'Spryker\Glue\FooBar\FooBarFactory',
                 'createBar',
-                'return new \Spryker\Glue\FooBar\Processor\Foo\Bar();',
+                'return new \Spryker\Glue\FooBar\Foo\Bar();',
             ],
             [
                 [
                     '--module' => 'FooBar',
                     '--subDirectory' => 'Foo',
                     '--className' => 'Bar',
-                    '--output' => 'Pyz\Glue\FooBar\Processor\Foo\Bar',
+                    '--output' => 'Pyz\Glue\FooBar\Foo\Bar',
                     '--mode' => 'project',
                 ],
                 'Pyz\Glue\FooBar\FooBarFactory',
                 'createBar',
-                'return new \Pyz\Glue\FooBar\Processor\Foo\Bar();',
+                'return new \Pyz\Glue\FooBar\Foo\Bar();',
             ],
             [
                 [
@@ -84,11 +84,11 @@ class AddGlueFactoryMethodTest extends Unit
                         'createZip',
                         'createZap',
                     ],
-                    '--output' => 'Spryker\Glue\FooBar\Processor\Foo\Bar',
+                    '--output' => 'Spryker\Glue\FooBar\Foo\Bar',
                 ],
                 'Spryker\Glue\FooBar\FooBarFactory',
                 'createBar',
-                'return new \Spryker\Glue\FooBar\Processor\Foo\Bar($this->createZip(), $this->createZap());',
+                'return new \Spryker\Glue\FooBar\Foo\Bar($this->createZip(), $this->createZap());',
             ],
             [
                 [
@@ -99,12 +99,12 @@ class AddGlueFactoryMethodTest extends Unit
                         'createZip',
                         'createZap',
                     ],
-                    '--output' => 'Pyz\Glue\FooBar\Processor\Foo\Bar',
+                    '--output' => 'Pyz\Glue\FooBar\Foo\Bar',
                     '--mode' => 'project',
                 ],
                 'Pyz\Glue\FooBar\FooBarFactory',
                 'createBar',
-                'return new \Pyz\Glue\FooBar\Processor\Foo\Bar($this->createZip(), $this->createZap());',
+                'return new \Pyz\Glue\FooBar\Foo\Bar($this->createZip(), $this->createZap());',
             ],
         ];
     }
