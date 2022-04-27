@@ -10,7 +10,6 @@ namespace SprykerTest\Spryk\Model\Spryk\Builder\Method;
 use Codeception\Test\Unit;
 use PhpParser\Node\Expr\MethodCall;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Glue\BackendApi\Resource\AddBackendApiResourceMethodSpryk;
-use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface;
 
 /**
  * Auto-generated group annotations
@@ -54,7 +53,7 @@ class AddBackendApiResourceMethodSprykTest extends Unit
 
         $fileResolver = $this->tester->getFileResolver();
 
-        /** @var ResolvedClassInterface $resolved */
+        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolved */
         $resolved = $fileResolver->resolve('\SprykerTest\GlueBackendApiResource');
         $nodeFinder = $this->tester->getNodeFinder();
 

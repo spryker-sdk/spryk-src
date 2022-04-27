@@ -1,3 +1,4 @@
+description: "Used for setting some defaults for all Spryks."
 arguments:
   sprykerVendorPath:
       value: "spryker/"

@@ -10,21 +10,30 @@ arguments:
     module:
         inherit: true
 
-    method: ~
+    application:
+        inherit: true
 
-    body: ~
+    method:
+        description: "Name of the method."
+
+    body:
+        description: "Body of the method. Can also be a template."
+        isOptional: true
 
     visibility:
         inherit: true
         default: public
 
-    input: ~
+    input:
+        description: "Input (arguments) for the method. Can be an array or a list separated by comma."
 
     output:
+        description: "Output (return) for the method."
         default: void
 
     template:
         value: Common/Method.php.twig
 
-    target: ~
+    target:
+        description: "Class where the method should be added to."
 

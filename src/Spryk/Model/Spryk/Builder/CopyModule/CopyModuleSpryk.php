@@ -77,7 +77,7 @@ class CopyModuleSpryk extends AbstractBuilder
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
      */
     protected function getSourceFiles(): Finder
     {

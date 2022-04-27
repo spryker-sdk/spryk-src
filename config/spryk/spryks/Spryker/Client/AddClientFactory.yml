@@ -1,6 +1,8 @@
 spryk: template
 description: "Adds a new *Module*ClientFactory to the Client application."
 mode: both
+level: 3
+condition: "application === 'Client'"
 
 arguments:
     module:
@@ -9,6 +11,9 @@ arguments:
     organization:
         inherit: true
         default: Spryker
+
+    application:
+        default: "Client"
 
     template:
         value: Client/ClientFactory.php.twig

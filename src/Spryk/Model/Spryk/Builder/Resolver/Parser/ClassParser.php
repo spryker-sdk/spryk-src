@@ -13,6 +13,7 @@ use PhpParser\NodeVisitor\CloningVisitor;
 use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\Parser;
 use ReflectionClass;
+use ReflectionException;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClass;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface;
 use SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface;
@@ -78,8 +79,12 @@ class ClassParser implements ParserInterface
         $resolved->setClassName($className);
         $resolved->setFullyQualifiedClassName('\\' . $className);
 
-        $reflectionClass = new ReflectionClass($className);
-        $resolved->setReflectionClass($reflectionClass);
+        try {
+            $reflectionClass = new ReflectionClass($className);
+            $resolved->setReflectionClass($reflectionClass);
+        } catch (ReflectionException $e) {
+            $foo = 'bar';
+        }
 
         $fileName = $reflectionClass->getFileName();
 

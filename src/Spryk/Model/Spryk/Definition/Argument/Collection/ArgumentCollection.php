@@ -16,7 +16,17 @@ class ArgumentCollection implements ArgumentCollectionInterface
     /**
      * @var array<\SprykerSdk\Spryk\Model\Spryk\Definition\Argument\ArgumentInterface>
      */
-    protected $arguments = [];
+    protected array $arguments = [];
+
+    /**
+     * @var string
+     */
+    protected string $sprykName;
+
+    /**
+     * @var \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface|null
+     */
+    protected ?ArgumentCollectionInterface $previousSprykArgumentCollection = null;
 
     /**
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\ArgumentInterface $argument
@@ -37,28 +47,48 @@ class ArgumentCollection implements ArgumentCollectionInterface
 
     /**
      * @param string $name
+     * @param bool $lookupPreviousSprykArgumentCollection When set to true we try to resolve from previous Spryk definitions.
      *
      * @return bool
      */
-    public function hasArgument(string $name): bool
+    public function hasArgument(string $name, bool $lookupPreviousSprykArgumentCollection = false): bool
     {
-        return isset($this->arguments[$name]);
+        if (isset($this->arguments[$name])) {
+            return true;
+        }
+
+        if ($lookupPreviousSprykArgumentCollection && $this->previousSprykArgumentCollection !== null && $this->previousSprykArgumentCollection->hasArgument($name)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
+     * Method first look up in to the current Spryk known arguments, if it has it will return this otherwise it bubbles up to the previous one until it finds one.
+     *
      * @param string $name
+     * @param bool $lookupPreviousSprykArgumentCollection When set to true we try to resolve from previous Spryk definitions.
      *
      * @throws \SprykerSdk\Spryk\Exception\ArgumentNotFoundException
      *
      * @return \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\ArgumentInterface
      */
-    public function getArgument(string $name): ArgumentInterface
+    public function getArgument(string $name, bool $lookupPreviousSprykArgumentCollection = false): ArgumentInterface
     {
-        if (!$this->hasArgument($name)) {
+        if (!$this->hasArgument($name, $lookupPreviousSprykArgumentCollection)) {
             throw new ArgumentNotFoundException(sprintf('Argument "%s" could not be found. Maybe there is a typo in your spryk definition.', $name));
         }
 
-        return $this->arguments[$name];
+        if (isset($this->arguments[$name])) {
+            return $this->arguments[$name];
+        }
+
+        if ($lookupPreviousSprykArgumentCollection && $this->previousSprykArgumentCollection instanceof ArgumentCollectionInterface) {
+            return $this->previousSprykArgumentCollection->getArgument($name);
+        }
+
+        throw new ArgumentNotFoundException(sprintf('Argument "%s" could not be found. Maybe there is a typo in your spryk definition.', $name));
     }
 
     /**
@@ -92,5 +122,29 @@ class ArgumentCollection implements ArgumentCollectionInterface
         ksort($argumentsArray);
 
         return sha1((string)json_encode($argumentsArray));
+    }
+
+    /**
+     * @param string $sprykName
+     *
+     * @return $this
+     */
+    public function setSprykName(string $sprykName)
+    {
+        $this->sprykName = $sprykName;
+
+        return $this;
+    }
+
+    /**
+     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $argumentCollection
+     *
+     * @return $this
+     */
+    public function setPreviousSprykArguments(ArgumentCollectionInterface $argumentCollection)
+    {
+        $this->previousSprykArgumentCollection = $argumentCollection;
+
+        return $this;
     }
 }

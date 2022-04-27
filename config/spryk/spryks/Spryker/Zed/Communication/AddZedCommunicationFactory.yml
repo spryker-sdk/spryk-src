@@ -1,6 +1,8 @@
 spryk: template
 description: "Adds a new *module*CommunicationFactory to the Zed application."
 mode: both
+level: 3
+condition: "application === 'Zed' && layer === 'Communication'"
 
 arguments:
     module:
@@ -9,6 +11,13 @@ arguments:
     organization:
         inherit: true
         default: Spryker
+
+    application:
+        value: "Zed"
+
+    layer:
+        inherit: false
+        default: "Communication"
 
     template:
         value: Zed/Communication/ZedCommunicationFactory.php.twig

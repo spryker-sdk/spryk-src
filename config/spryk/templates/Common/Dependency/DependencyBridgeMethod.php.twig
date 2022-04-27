@@ -1,0 +1,7 @@
+
+{# We need to use raw here otherwise "array<string>" and alike would be changed to array&lt;string&gt;  #}
+{{ docBlock | raw }}
+    public function {{ methodName }}({{ parameter }}){{ methodReturnType }}
+    {
+        {% if return  %}return {%  endif %}$this->{{ dependentModule | lcfirst }}{{ dependencyType }}->{{ methodName }}({{ parameterWithoutTypes }});
+    }
