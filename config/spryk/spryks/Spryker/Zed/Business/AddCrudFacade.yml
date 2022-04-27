@@ -46,7 +46,7 @@ postSpryks:
                 value: Zed/Persistence/Repository/DomainEntity/GetCollectionMethod.php.twig
     - AddZedPersistenceRepositoryMethod:
         arguments:
-            visbility:
+            visibility:
                 value: "protected"
             repositoryMethod:
                 value: "apply{{ domainEntity }}Filters"
@@ -60,6 +60,8 @@ postSpryks:
                 inherit: true
             body:
                 value: Zed/Persistence/Repository/DomainEntity/ApplyFiltersMethod.php.twig
+        excludedSpryks:
+            - AddZedPersistenceRepositoryInterfaceMethod
     - AddZedPersistenceRepositoryMethod:
         arguments:
             repositoryMethod:
