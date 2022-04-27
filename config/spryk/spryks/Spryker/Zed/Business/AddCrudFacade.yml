@@ -322,9 +322,9 @@ postSpryks:
               modelMethod:
                   value: "expand"
               input:
-                  value: "\\ArrayObject|\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers"
+                  value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers"
               output:
-                  value: "\\ArrayObject|\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer[]"
+                  value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer[]"
 
     # Creates {{ domainEntity }}WriterCreatePluginInterface
     - AddDomainEntityExtensionInterfaceMethod:
@@ -336,9 +336,9 @@ postSpryks:
               modelMethod:
                   value: "execute"
               input:
-                  value: "\\ArrayObject|\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers"
+                  value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers"
               output:
-                  value: "\\ArrayObject|\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer[]"
+                  value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer[]"
 
     # Creates {{ domainEntity }}WriterUpdatePluginInterface
     - AddDomainEntityExtensionInterfaceMethod:
@@ -350,9 +350,9 @@ postSpryks:
                 modelMethod:
                     value: "execute"
                 input:
-                    value: "\\ArrayObject|\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers"
+                    value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers"
                 output:
-                    value: "\\ArrayObject|\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer[]"
+                    value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer[]"
 
     # Creates {{ domainEntity }}ValidatorRulePluginInterface
     - AddDomainEntityExtensionInterfaceMethod:
@@ -393,10 +393,12 @@ postSpryks:
                 size:
                     value: 36
 
-    - AddZedPersistencePropelSchemaSingleColumnUniqueKey:
+    - AddZedPersistencePropelSchemaUuid:
             arguments:
                 propertyName:
                     value: "uuid"
+                uuidBehaviorKeyColumnsParameter:
+                    value: "id_{{ domainEntity | underscored }}"
 
     # Add add{{ domainEntity }}DataBuilderDefinition for the tests transfer builder
     -   AddDataBuilderDefinition:

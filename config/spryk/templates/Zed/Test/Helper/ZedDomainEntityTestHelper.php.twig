@@ -33,9 +33,9 @@ class {{ domainEntity }}CrudHelper extends Module
     use BusinessHelperTrait;
 
     /**
-     * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer
+     * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer|null
      */
-    public function have{{ domainEntity }}TransferWithUuidTwoPersisted(): {{ domainEntity }}Transfer
+    public function have{{ domainEntity }}TransferWithUuidTwoPersisted(): ?{{ domainEntity }}Transfer
     {
         return $this->persist{{ domainEntity }}($this->have{{ domainEntity }}Transfer(['uuid' => static::UUID_TWO]));
     }
@@ -49,9 +49,9 @@ class {{ domainEntity }}CrudHelper extends Module
     }
 
     /**
-     * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer
+     * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer|null
      */
-    public function have{{ domainEntity }}TransferWithUuidOnePersisted(): {{ domainEntity }}Transfer
+    public function have{{ domainEntity }}TransferWithUuidOnePersisted(): ?{{ domainEntity }}Transfer
     {
         return $this->persist{{ domainEntity }}($this->have{{ domainEntity }}Transfer(['uuid' => static::UUID_ONE]));
     }
@@ -127,9 +127,9 @@ class {{ domainEntity }}CrudHelper extends Module
     /**
      * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer
      *
-     * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer
+     * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer|null
      */
-    protected function persist{{ domainEntity }}({{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer): {{ domainEntity }}Transfer
+    protected function persist{{ domainEntity }}({{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer): ?{{ domainEntity }}Transfer
     {
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new {{ domainEntity }}CollectionRequestTransfer();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
@@ -159,11 +159,11 @@ class {{ domainEntity }}CrudHelper extends Module
             }
 
             /**
-             * @param \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
+             * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
              *
-             * @return \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
+             * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
              */
-            public function expand(\ArrayObject ${{ domainEntity | lcfirst }}Transfers): \ArrayObject
+            public function expand(array ${{ domainEntity | lcfirst }}Transfers): array
             {
                 foreach (${{ domainEntity | lcfirst }}Transfers as ${{ domainEntity | lcfirst }}Transfer) {
                     ${{ domainEntity | lcfirst }}Transfer->setUuid($this->uuid);
@@ -216,11 +216,11 @@ class {{ domainEntity }}CrudHelper extends Module
             }
 
             /**
-            * @param \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
+            * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
             *
-            * @return \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
+            * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
             */
-            public function execute(\ArrayObject ${{ domainEntity | lcfirst }}Transfers): \ArrayObject
+            public function execute(array ${{ domainEntity | lcfirst }}Transfers): array
             {
                 foreach (${{ domainEntity | lcfirst }}Transfers as ${{ domainEntity | lcfirst }}Transfer) {
                     ${{ domainEntity | lcfirst }}Transfer->setUuid($this->uuid);
@@ -271,11 +271,11 @@ class {{ domainEntity }}CrudHelper extends Module
             }
 
            /**
-            * @param \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
+            * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
             *
-            * @return \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
+            * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
             */
-            public function execute(\ArrayObject ${{ domainEntity | lcfirst }}Transfers): \ArrayObject
+            public function execute(array ${{ domainEntity | lcfirst }}Transfers): array
             {
                 foreach (${{ domainEntity | lcfirst }}Transfers as ${{ domainEntity | lcfirst }}Transfer) {
                     ${{ domainEntity | lcfirst }}Transfer->setUuid($this->uuid);

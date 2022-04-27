@@ -136,60 +136,61 @@ class {{ domainEntity }}{{ className }} implements {{ domainEntity }}{{ classNam
         {{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
     ): {{ domainEntity }}CollectionResponseTransfer {
         // Run pre-save plugins
-        ${{ domainEntity | lcfirst }}Transfers = $this->execute{{ domainEntity }}Pre{{ type }}Plugins(${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}());
+        ${{ domainEntity | lcfirst }}Transfers = $this->execute{{ domainEntity }}Pre{{ type }}Plugins(${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}()->getArrayCopy());
 
-        $persisted{{ domainEntity }}Transfers = new ArrayObject();
+        $persisted{{ domainEntity }}Transfers = [];
 
         foreach (${{ domainEntity | lcfirst }}Transfers as ${{ domainEntity | lcfirst }}Transfer) {
-            $persisted{{ domainEntity }}Transfers->append($this->ayEntityManager->{{ type | lcfirst }}{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer));
+            $persisted{{ domainEntity }}Transfers[] = $this->ayEntityManager->{{ type | lcfirst }}{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
         }
 
         // Run post-save plugins
         $persisted{{ domainEntity }}Transfers = $this->execute{{ domainEntity }}Post{{ type }}Plugins($persisted{{ domainEntity }}Transfers);
 
-        ${{ domainEntity | lcfirst }}CollectionResponseTransfer->set{{ domainEntity | pluralize }}($persisted{{ domainEntity }}Transfers);
+        ${{ domainEntity | lcfirst }}CollectionResponseTransfer->set{{ domainEntity | pluralize }}(new \ArrayObject($persisted{{ domainEntity }}Transfers));
 
         return ${{ domainEntity | lcfirst }}CollectionResponseTransfer;
     }
 
     /**
-    * @param \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
+    * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
     *
-    * @return \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
+    * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
     */
     protected function execute{{ domainEntity }}Pre{{ type }}Plugins(
-        \ArrayObject ${{ domainEntity | lcfirst }}Transfers
-    ): \ArrayObject {
+        array ${{ domainEntity | lcfirst }}Transfers
+    ): array {
         foreach ($this->{{ domainEntity | lcfirst }}Pre{{ type }}Plugins as ${{ domainEntity | lcfirst }}Pre{{ type }}Plugin) {
-            ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}Pre{{ type }}Plugin->save(${{ domainEntity | lcfirst }}Transfers);
+            ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}Pre{{ type }}Plugin->execute(${{ domainEntity | lcfirst }}Transfers);
         }
 
         return ${{ domainEntity | lcfirst }}Transfers;
     }
 
     /**
-    * @param \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
+    * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers
     *
-    * @return \ArrayObject|\Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
+    * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer[]
     */
     protected function execute{{ domainEntity }}Post{{ type }}Plugins(
-        \ArrayObject ${{ domainEntity | lcfirst }}Transfers
-    ): \ArrayObject {
+        array ${{ domainEntity | lcfirst }}Transfers
+    ): array {
         foreach ($this->{{ domainEntity | lcfirst }}Post{{ type }}Plugins as ${{ domainEntity | lcfirst }}Post{{ type }}Plugin) {
-            ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}Post{{ type }}Plugin->save(${{ domainEntity | lcfirst }}Transfers);
+            ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}Post{{ type }}Plugin->execute(${{ domainEntity | lcfirst }}Transfers);
         }
 
         return ${{ domainEntity | lcfirst }}Transfers;
     }
 
     /**
-    * @param \Generated\Shared\Transfer\ErrorTransfer[] $errorTransfers
+    * @param \ArrayObject|\Generated\Shared\Transfer\ErrorTransfer[] $errorTransfers
+    *
     * @return string[]
     */
-    protected function get{{ domainEntity }}IdsWithErrors(array $errorTransfers): array
+    protected function get{{ domainEntity }}IdsWithErrors(\ArrayObject $errorTransfers): array
     {
         return array_unique(array_map(static function (ErrorTransfer $errorTransfer): ?string {
             return $errorTransfer->getEntityIdentifier();
-        }, $errorTransfers));
+        }, $errorTransfers->getArrayCopy()));
     }
 }

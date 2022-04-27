@@ -145,8 +145,9 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
     public function testCreate{{ domainEntity }}CollectionReturnsErroredCollectionResponseWhenValidationRuleFailed(): void
     {
         // Arrange
-        $this->tester->have{{ domainEntity }}AlwaysFailingCreateValidatorRuleEnabled(); // This will always return a validation error
         ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferWithUuidOnePersisted();
+
+        $this->tester->have{{ domainEntity }}AlwaysFailingCreateValidatorRuleEnabled(); // This will always return a validation error
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new {{ domainEntity }}CollectionRequestTransfer();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
 

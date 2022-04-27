@@ -10,22 +10,27 @@ namespace SprykerSdk\Spryk\Model\Spryk\Builder\Schema;
 use SimpleXMLElement;
 use SprykerSdk\Spryk\Model\Spryk\Builder\AbstractBuilder;
 
-class SchemaUniqueKeySpryk extends AbstractBuilder
+class SchemaBehaviorSpryk extends AbstractBuilder
 {
     /**
      * @var string
      */
-    public const KEY_NAME = 'keyName';
+    public const PARAMETER_NAMES = 'parameterNames';
 
     /**
      * @var string
      */
-    public const COLUMNS = 'columns';
+    public const PARAMETER_VALUES = 'parameterValues';
 
     /**
      * @var string
      */
-    protected const SPRYK_NAME = 'SchemaUniqueKey';
+    public const BEHAVIOR_NAME = 'behaviorName';
+
+    /**
+     * @var string
+     */
+    protected const SPRYK_NAME = 'SchemaBehavior';
 
     /**
      * @var string
@@ -62,7 +67,7 @@ class SchemaUniqueKeySpryk extends AbstractBuilder
             return;
         }
 
-        $this->addUniqueKey($tableXmlElement);
+        $this->addBehavior($tableXmlElement);
     }
 
     /**
@@ -95,52 +100,71 @@ class SchemaUniqueKeySpryk extends AbstractBuilder
      *
      * @return void
      */
-    protected function addUniqueKey(SimpleXMLElement $tableXmlElement): void
+    protected function addBehavior(SimpleXMLElement $tableXmlElement): void
     {
-        $uniqueKeyName = $this->getUniqueKeyName();
+        $behaviorNameName = $this->getBehaviorName();
 
-        if ($this->isUniqueKeyDefinedInTable($tableXmlElement, $uniqueKeyName)) {
+        if ($this->isBehaviorDefinedInTable($tableXmlElement, $behaviorNameName)) {
             return;
         }
 
-        $uniqueKeyXmlElement = $tableXmlElement->addChild('unique');
-        $uniqueKeyXmlElement->addAttribute('name', $uniqueKeyName);
+        $uniqueKeyXmlElement = $tableXmlElement->addChild('behavior');
+        $uniqueKeyXmlElement->addAttribute('name', $behaviorNameName);
 
-        foreach ($this->getUniqueKeyColumns() as $column) {
-            $uniqueKeyColumnXmlElement = $uniqueKeyXmlElement->addChild('unique-column');
-            $uniqueKeyColumnXmlElement->addAttribute('name', $column);
+        $parameterNames = $this->getParameterNames();
+        $parameterValues = $this->getParameterValues();
+
+        foreach ($parameterNames as $index => $parameterName) {
+            if (!isset($parameterValues[$index])) {
+                $this->log(sprintf(
+                    'Could not find parameter value for parameter name <fg=green>%s</>',
+                    $parameterName,
+                ));
+            }
+
+            $uniqueKeyColumnXmlElement = $uniqueKeyXmlElement->addChild('parameter');
+            $uniqueKeyColumnXmlElement->addAttribute('name', $parameterName);
+            $uniqueKeyColumnXmlElement->addAttribute('value', $parameterValues[$index]);
         }
     }
 
     /**
      * @return string
      */
-    protected function getUniqueKeyName(): string
+    protected function getBehaviorName(): string
     {
-        return $this->arguments->getArgument(static::KEY_NAME)->getValue();
+        return $this->arguments->getArgument(static::BEHAVIOR_NAME)->getValue();
     }
 
     /**
      * @return array<string>
      */
-    protected function getUniqueKeyColumns(): array
+    protected function getParameterNames(): array
     {
-        return $this->arguments->getArgument(static::COLUMNS)->getValue();
+        return $this->arguments->getArgument(static::PARAMETER_NAMES)->getValue();
+    }
+
+    /**
+     * @return array<string>
+     */
+    protected function getParameterValues(): array
+    {
+        return $this->arguments->getArgument(static::PARAMETER_VALUES)->getValue();
     }
 
     /**
      * @param \SimpleXMLElement $simpleXmlElement
-     * @param string $uniqueKeyName
+     * @param string $behaviorName
      *
      * @return bool
      */
-    protected function isUniqueKeyDefinedInTable(SimpleXMLElement $simpleXmlElement, string $uniqueKeyName): bool
+    protected function isBehaviorDefinedInTable(SimpleXMLElement $simpleXmlElement, string $behaviorName): bool
     {
-        $columnXmlElements = $simpleXmlElement->xpath('//unique');
+        $columnXmlElements = $simpleXmlElement->xpath('//behavior');
 
         if ($columnXmlElements !== false) {
             foreach ($columnXmlElements as $tableXmlElement) {
-                if ((string)$tableXmlElement['name'] === $uniqueKeyName) {
+                if ((string)$tableXmlElement['name'] === $behaviorName) {
                     return true;
                 }
             }

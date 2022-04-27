@@ -16,6 +16,9 @@ arguments:
     propertyName:
         inherit: true
 
+    uuidBehaviorKeyColumnsParameter:
+        inherit: true
+
 postSpryks:
     - AddZedPersistencePropelSchemaUniqueKey:
         arguments:
@@ -26,3 +29,16 @@ postSpryks:
             columns:
                 value:
                     - "{{ propertyName }}"
+    - AddZedPersistencePropelSchemaBehavior:
+        arguments:
+            name:
+                value: "spy_{{ domainEntity | underscored }}"
+            behaviorName:
+                value: "uuid"
+            parameterNames:
+                value:
+                    - "key_columns"
+            parameterValues:
+                value:
+                    - "{{ uuidBehaviorKeyColumnsParameter }}"
+

@@ -58,7 +58,9 @@ class {{ domainEntity }}Reader implements {{ domainEntity }}ReaderInterface
     ): {{ domainEntity }}CollectionTransfer {
         foreach ($this->{{ domainEntity | lcfirst }}ExpanderPlugins as ${{ domainEntity | lcfirst }}ExpanderPlugin) {
             ${{ domainEntity | lcfirst }}CollectionTransfer->set{{ domainEntity | pluralize}}(
-                ${{ domainEntity | lcfirst }}ExpanderPlugin->expand(${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize}}())
+                new \ArrayObject(
+                    ${{ domainEntity | lcfirst }}ExpanderPlugin->expand(${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize}}()->getArrayCopy())
+                )
             );
         }
 
