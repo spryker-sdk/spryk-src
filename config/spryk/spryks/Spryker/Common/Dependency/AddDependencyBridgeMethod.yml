@@ -30,7 +30,7 @@ arguments:
 
     sourceClass:
         description: "Loads method definitions from this class."
-        value: "{{ organization }}\\{% if dependencyType == 'Facade' %}Zed{% else %}{{ dependencyType }}\\{{ dependentModule }}{% if dependencyType == 'Facade' %}\\Business\\{% endif %}\\{{ dependentModule }}{{ dependencyType }}"
+        value: "{{ organization }}\\{% if dependencyType == 'Facade' %}Zed{% else %}{{ dependencyType }}{% endif %}\\{{ dependentModule }}{% if dependencyType == 'Facade' %}\\Business{% endif %}\\{{ dependentModule }}{{ dependencyType }}"
 
     target:
         value: "{{ organization }}\\{{ application }}\\{{ module }}\\Dependency\\{{ dependencyType }}\\{{ module }}To{{ dependentModule }}{{ dependencyType }}Bridge"

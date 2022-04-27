@@ -27,9 +27,10 @@ arguments:
         description: "The callback decides based on the application + the optional layer which provide* method will be used."
         callback: DependencyProviderProvideMethod
 
-    bridgeMethod:
+    methods:
         description: "The methods from the dependency type (Facade, Client, Service) that needs to be added to the bridge (only on core level)."
         isOptional: true
+        isMultiple: true
 
     input:
         value: "\\Spryker\\{{ application }}\\Kernel\\Container $container"
@@ -56,7 +57,7 @@ preSpryks:
 
 postSpryks:
     # Adds a bridge and the defined methods when mode is core otherwise not.
-    - AddDependencyBridge # Method
+    - AddDependencyBridgeMethod
     # Add factory, conditions in those will decide whether they need to be added or not.
     - AddClientFactory
     - AddGlueFactory

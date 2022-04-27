@@ -48,8 +48,8 @@ $autoloadProjectAutoloaderFile('/../../autoload.php');
 $devOrPharLoader->register(true);
 
 define('SPRYK_ROOT_DIR', __DIR__ . '/../');
-define('APPLICATION_ROOT_DIR', getcwd() . DIRECTORY_SEPARATOR);
-define('APPLICATION_SOURCE_DIR', APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR);
-define('APPLICATION_ENV', getenv('APPLICATION_ENV') ?? 'prod');
-define('APPLICATION', 'Spryk');
-define('APPLICATION_STORE', '');
+defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', getcwd() . DIRECTORY_SEPARATOR);
+defined('APPLICATION_SOURCE_DIR') || define('APPLICATION_SOURCE_DIR', APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR);
+//defined('APPLICATION_STORE') || define('APPLICATION_STORE', '');
+//define('APPLICATION_ENV', getenv('APPLICATION_ENV') ?? 'prod');
+//define('APPLICATION', 'Spryk');
