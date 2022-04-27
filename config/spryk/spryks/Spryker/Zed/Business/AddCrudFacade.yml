@@ -89,7 +89,7 @@ postSpryks:
     - AddZedPersistenceRepositoryMethod:
         arguments:
             repositoryMethod:
-                value: "applyEntityPagination"
+                value: "apply{{ domainEntity }}Pagination"
             visibility:
                 value: "protected"
             input:
