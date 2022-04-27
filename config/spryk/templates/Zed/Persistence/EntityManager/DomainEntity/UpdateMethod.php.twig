@@ -9,4 +9,4 @@ ${{ domainEntity | lcfirst }}Entity = ${{ domainEntity | lcfirst }}Mapper->map{{
 
 ${{ domainEntity | lcfirst }}Entity->save();
 
-return ${{ domainEntity | lcfirst }}Mapper->map{{ domainEntity }}EntityTo{{ domainEntity }}Transfer(${{ domainEntity | lcfirst }}Entity, new {{ domainEntity }}Transfer());
+return ${{ domainEntity | lcfirst }}Mapper->map{{ domainEntity }}EntityTo{{ domainEntity }}Transfer(${{ domainEntity | lcfirst }}Entity, ${{ domainEntity | lcfirst }}Transfer);

@@ -65,18 +65,6 @@ postSpryks:
     - AddZedPersistenceRepositoryMethod:
         arguments:
             repositoryMethod:
-                value: "has{{ domainEntity }}"
-            input:
-                value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}CriteriaTransfer ${{ domainEntity | lcfirst }}CriteriaTransfer"
-            output:
-                value: "bool"
-            domainEntity:
-                inherit: true
-            body:
-                value: Zed/Persistence/Repository/DomainEntity/HasMethod.php.twig
-    - AddZedPersistenceRepositoryMethod:
-        arguments:
-            repositoryMethod:
                 value: "get{{ domainEntity }}DeleteCollection"
             input:
                 value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer"
@@ -89,7 +77,7 @@ postSpryks:
     - AddZedPersistenceRepositoryMethod:
         arguments:
             repositoryMethod:
-                value: "applyEntityPagination"
+                value: "apply{{ domainEntity }}Pagination"
             visibility:
                 value: "protected"
             input:
@@ -282,7 +270,7 @@ postSpryks:
               type:
                   value: "{{ domainEntity }}PreUpdate"
               output:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\Plugin\\{{ domainEntity }}\\Writer\\{{ domainEntity }}CreatePluginInterface[]"
+                  value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\Plugin\\{{ domainEntity }}\\Writer\\{{ domainEntity }}UpdatePluginInterface[]"
 
     # Add add{{ domainEntity }}UpdatePostUpdate, get{{ domainEntity }}PostUpdatePlugins and const for the plugins to the DependencyProvider
     - AddZedDependencyPlugins:
@@ -292,7 +280,7 @@ postSpryks:
               type:
                   value: "{{ domainEntity }}PostUpdate"
               output:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\Plugin\\{{ domainEntity }}\\Writer\\{{ domainEntity }}CreatePluginInterface[]"
+                  value: "\\{{ organization }}\\Zed\\{{ module }}Extension\\Dependency\\Plugin\\{{ domainEntity }}\\Writer\\{{ domainEntity }}UpdatePluginInterface[]"
 
     # Add add{{ domainEntity }}ExpanderPlugins, get{{ domainEntity }}ExpanderPlugins and const for the plugins to the DependencyProvider
     - AddZedDependencyPlugins:
@@ -346,7 +334,7 @@ postSpryks:
               subDirectory:
                   value: "Plugin/{{ domainEntity }}/Writer"
               modelMethod:
-                  value: "save"
+                  value: "execute"
               input:
                   value: "\\ArrayObject|\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers"
               output:
@@ -360,7 +348,7 @@ postSpryks:
                 subDirectory:
                     value: "Plugin/{{ domainEntity }}/Writer"
                 modelMethod:
-                    value: "save"
+                    value: "execute"
                 input:
                     value: "\\ArrayObject|\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers"
                 output:

@@ -57,8 +57,9 @@ class {{ domainEntity }}Reader implements {{ domainEntity }}ReaderInterface
         {{ domainEntity }}CollectionTransfer ${{ domainEntity | lcfirst }}CollectionTransfer
     ): {{ domainEntity }}CollectionTransfer {
         foreach ($this->{{ domainEntity | lcfirst }}ExpanderPlugins as ${{ domainEntity | lcfirst }}ExpanderPlugin) {
-            ${{ domainEntity | lcfirst }}CollectionTransfer->set{{ domainEntity | pluralize}}(${{ domainEntity | lcfirst }}ExpanderPlugin
-                ->expand(${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize}}()));
+            ${{ domainEntity | lcfirst }}CollectionTransfer->set{{ domainEntity | pluralize}}(
+                ${{ domainEntity | lcfirst }}ExpanderPlugin->expand(${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize}}())
+            );
         }
 
         return ${{ domainEntity | lcfirst }}CollectionTransfer;

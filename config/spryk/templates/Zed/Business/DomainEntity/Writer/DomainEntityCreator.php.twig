@@ -103,7 +103,7 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
         // This will save ALL entites in ONE transaction. If ANY of the entities in the collection fails to be persisted
         // it will roll ALL of them back. And we DON'T catch exceptions here intentionally!
         return $this->getTransactionHandler()->handleTransaction(function () use (${{ domainEntity | lcfirst }}CollectionRequestTransfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer) {
-            return $this->executeCreate{{ domainEntity | pluralize }}CollectionResponseTransaction(${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity | pluralize}}(), ${{ domainEntity | lcfirst }}CollectionResponseTransfer);
+            return $this->executeCreate{{ domainEntity }}CollectionResponseTransaction(${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity | pluralize}}(), ${{ domainEntity | lcfirst }}CollectionResponseTransfer);
         });
     }
 
@@ -124,7 +124,7 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
 
         // Process only the non-errored entities
         return $this->getTransactionHandler()->handleTransaction(function () use ($valid{{ domainEntity }}CollectionTransfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer) {
-            return $this->executeCreate{{ domainEntity | pluralize }}CollectionResponseTransaction($valid{{ domainEntity }}CollectionTransfer->get{{ domainEntity | pluralize}}(), ${{ domainEntity | lcfirst }}CollectionResponseTransfer);
+            return $this->executeCreate{{ domainEntity }}CollectionResponseTransaction($valid{{ domainEntity }}CollectionTransfer->get{{ domainEntity | pluralize}}(), ${{ domainEntity | lcfirst }}CollectionResponseTransfer);
         });
     }
 
@@ -144,7 +144,7 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
             ${{ domainEntity | lcfirst }}IdsWithErrors = $this->get{{ domainEntity }}IdsWithErrors($errorTransfers);
         }
 
-        return $this->filterOutInvalid{{ domainEntity | pluralize }}(${{ domainEntity | lcfirst }}CollectionRequestTransfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer, ${{ domainEntity | lcfirst }}IdsWithErrors);
+        return $this->filterInvalid{{ domainEntity | pluralize }}(${{ domainEntity | lcfirst }}CollectionRequestTransfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer, ${{ domainEntity | lcfirst }}IdsWithErrors);
     }
 
     /**
@@ -154,7 +154,7 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
     *
     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer
     */
-    protected function filterOutInvalid{{ domainEntity | pluralize }}({{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer, {{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer, array ${{ domainEntity | lcfirst }}IdsWithErrors): {{ domainEntity }}CollectionTransfer
+    protected function filterInvalid{{ domainEntity | pluralize }}({{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer, {{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer, array ${{ domainEntity | lcfirst }}IdsWithErrors): {{ domainEntity }}CollectionTransfer
     {
         $valid{{ domainEntity }}CollectionTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer();
 
@@ -178,7 +178,7 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
      *
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
-    protected function executeCreate{{ domainEntity | pluralize }}CollectionResponseTransaction(\ArrayObject ${{ domainEntity | lcfirst }}Transfers, {{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): {{ domainEntity }}CollectionResponseTransfer
+    protected function executeCreate{{ domainEntity }}CollectionResponseTransaction(\ArrayObject ${{ domainEntity | lcfirst }}Transfers, {{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): {{ domainEntity }}CollectionResponseTransfer
     {
         // Run pre-save plugins
         ${{ domainEntity | lcfirst }}Transfers = $this->execute{{ domainEntity }}PreCreatePlugins(${{ domainEntity | lcfirst }}Transfers);
@@ -208,7 +208,7 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
         \ArrayObject ${{ domainEntity | lcfirst }}Transfers
     ): \ArrayObject {
         foreach ($this->{{ domainEntity | lcfirst }}PreCreatePlugins as ${{ domainEntity | lcfirst }}PreCreatePlugin) {
-            ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}PreCreatePlugin->save(${{ domainEntity | lcfirst }}Transfers);
+            ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}PreCreatePlugin->execute(${{ domainEntity | lcfirst }}Transfers);
         }
 
         return ${{ domainEntity | lcfirst }}Transfers;
@@ -223,7 +223,7 @@ class {{ domainEntity }}Creator implements {{ domainEntity }}CreatorInterface
         \ArrayObject ${{ domainEntity | lcfirst }}Transfers
     ): \ArrayObject {
         foreach ($this->{{ domainEntity | lcfirst }}PostCreatePlugins as ${{ domainEntity | lcfirst }}PostCreatePlugin) {
-            ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}PostCreatePlugin->save(${{ domainEntity | lcfirst }}Transfers);
+            ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}PostCreatePlugin->execute(${{ domainEntity | lcfirst }}Transfers);
         }
 
         return ${{ domainEntity | lcfirst }}Transfers;

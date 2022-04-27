@@ -104,7 +104,7 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
         // This will save ALL entities in ONE transaction. If ANY of the entities in the collection fails to be persisted
         // it will roll ALL of them back. And we DON'T catch exceptions here intentionally!
         return $this->getTransactionHandler()->handleTransaction(function () use (${{ domainEntity | lcfirst }}CollectionRequestTransfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer) {
-            return $this->executeUpdate{{ domainEntity | pluralize }}CollectionResponseTransaction(${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity | pluralize}}(), ${{ domainEntity | lcfirst }}CollectionResponseTransfer);
+            return $this->executeUpdate{{ domainEntity }}CollectionResponseTransaction(${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity | pluralize}}(), ${{ domainEntity | lcfirst }}CollectionResponseTransfer);
         });
     }
 
@@ -125,7 +125,7 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
 
         // Process only the non-errored entities
         return $this->getTransactionHandler()->handleTransaction(function () use ($valid{{ domainEntity }}CollectionTransfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer) {
-            return $this->executeUpdate{{ domainEntity | pluralize }}CollectionResponseTransaction($valid{{ domainEntity }}CollectionTransfer->get{{ domainEntity | pluralize}}(), ${{ domainEntity | lcfirst }}CollectionResponseTransfer);
+            return $this->executeUpdate{{ domainEntity }}CollectionResponseTransaction($valid{{ domainEntity }}CollectionTransfer->get{{ domainEntity | pluralize}}(), ${{ domainEntity | lcfirst }}CollectionResponseTransfer);
         });
     }
 
@@ -145,7 +145,7 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
             ${{ domainEntity | lcfirst }}IdsWithErrors = $this->get{{ domainEntity }}IdsWithErrors($errorTransfers);
         }
 
-        return $this->filterOutInvalid{{ domainEntity | pluralize }}(${{ domainEntity | lcfirst }}CollectionRequestTransfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer, ${{ domainEntity | lcfirst }}IdsWithErrors);
+        return $this->filterInvalid{{ domainEntity | pluralize }}(${{ domainEntity | lcfirst }}CollectionRequestTransfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer, ${{ domainEntity | lcfirst }}IdsWithErrors);
     }
 
     /**
@@ -155,7 +155,7 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
     *
     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer
     */
-    protected function filterOutInvalid{{ domainEntity | pluralize }}({{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer, {{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer, array ${{ domainEntity | lcfirst }}IdsWithErrors): {{ domainEntity }}CollectionTransfer
+    protected function filterInvalid{{ domainEntity | pluralize }}({{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer, {{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer, array ${{ domainEntity | lcfirst }}IdsWithErrors): {{ domainEntity }}CollectionTransfer
     {
         $valid{{ domainEntity }}CollectionTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer();
 
@@ -179,7 +179,7 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
     *
     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
     */
-    protected function executeUpdate{{ domainEntity | pluralize }}CollectionResponseTransaction(\ArrayObject ${{ domainEntity | lcfirst }}Transfers, {{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): {{ domainEntity }}CollectionResponseTransfer
+    protected function executeUpdate{{ domainEntity }}CollectionResponseTransaction(\ArrayObject ${{ domainEntity | lcfirst }}Transfers, {{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): {{ domainEntity }}CollectionResponseTransfer
     {
         // Run pre-save plugins
         ${{ domainEntity | lcfirst }}Transfers = $this->execute{{ domainEntity }}PreUpdatePlugins(${{ domainEntity | lcfirst }}Transfers);
@@ -209,7 +209,7 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
         \ArrayObject ${{ domainEntity | lcfirst }}Transfers
     ): \ArrayObject {
         foreach ($this->{{ domainEntity | lcfirst }}PreUpdatePlugins as ${{ domainEntity | lcfirst }}PreUpdatePlugin) {
-            ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}PreUpdatePlugin->save(${{ domainEntity | lcfirst }}Transfers);
+            ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}PreUpdatePlugin->execute(${{ domainEntity | lcfirst }}Transfers);
         }
 
         return ${{ domainEntity | lcfirst }}Transfers;
@@ -224,7 +224,7 @@ class {{ domainEntity }}Updater implements {{ domainEntity }}UpdaterInterface
         \ArrayObject ${{ domainEntity | lcfirst }}Transfers
     ): \ArrayObject {
         foreach ($this->{{ domainEntity | lcfirst }}PostUpdatePlugins as ${{ domainEntity | lcfirst }}PostUpdatePlugin) {
-            ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}PostUpdatePlugin->save(${{ domainEntity | lcfirst }}Transfers);
+            ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}PostUpdatePlugin->execute(${{ domainEntity | lcfirst }}Transfers);
         }
 
         return ${{ domainEntity | lcfirst }}Transfers;

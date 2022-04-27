@@ -6,4 +6,4 @@ ${{ domainEntity | lcfirst }}Entity->save();
 
 return $this->getFactory()
     ->create{{ domainEntity }}Mapper()
-    ->map{{ domainEntity }}EntityTo{{ domainEntity }}Transfer(${{ domainEntity | lcfirst }}Entity, (new \Generated\Shared\Transfer\{{ domainEntity }}Transfer()));
+    ->map{{ domainEntity }}EntityTo{{ domainEntity }}Transfer(${{ domainEntity | lcfirst }}Entity, ${{ domainEntity | lcfirst }}Transfer);
