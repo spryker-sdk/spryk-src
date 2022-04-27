@@ -79,12 +79,12 @@ class {{ domainEntity }}{{ className }} implements {{ domainEntity }}{{ classNam
             return ${{ domainEntity | lcfirst }}CollectionResponseTransfer;
         }
 
-        ${{ domainEntity | lcfirst }}CollectionTransfer = $this->filterInvalid{{ domainEntity | pluralize }}(${{ domainEntity | lcfirst }}CollectionRequestTransfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer);
+        ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->filterInvalid{{ domainEntity | pluralize }}(${{ domainEntity | lcfirst }}CollectionResponseTransfer);
 
         // This will save all entities in one transaction. If any of the entities in the collection fails to be persisted
         // it will roll all of them back. And we don't catch exceptions here intentionally!
-        return $this->getTransactionHandler()->handleTransaction(function () use (${{ domainEntity | lcfirst }}CollectionTransfer) {
-            return $this->execute{{ type }}{{ domainEntity }}CollectionResponseTransaction(${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize }}());
+        return $this->getTransactionHandler()->handleTransaction(function () use (${{ domainEntity | lcfirst }}CollectionResponseTransfer) {
+            return $this->execute{{ type }}{{ domainEntity }}CollectionResponseTransaction(${{ domainEntity | lcfirst }}CollectionResponseTransfer);
         });
     }
 
@@ -97,7 +97,7 @@ class {{ domainEntity }}{{ className }} implements {{ domainEntity }}{{ classNam
     protected function validateCollection(
         {{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer,
         {{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
-    ): {{ domainEntity }}CollectionResponseTransfer {
+    ): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer {
         if (${{ domainEntity | lcfirst }}CollectionRequestTransfer->getIsTransactional()) {
             return $this->{{ domainEntity | lcfirst }}Validator->validateCollectionTransactional(${{ domainEntity | lcfirst }}CollectionResponseTransfer);
         }
@@ -108,25 +108,23 @@ class {{ domainEntity }}{{ className }} implements {{ domainEntity }}{{ classNam
     /**
      * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer
+     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
-    protected function filterInvalid{{ domainEntity | pluralize }}({{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer, {{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): {{ domainEntity }}CollectionTransfer
+    protected function filterInvalid{{ domainEntity | pluralize }}({{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
     {
-        ${{ domainEntity | lcfirst }}CollectionTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer();
         ${{ domainEntity | lcfirst }}IdsWithErrors = $this->get{{ domainEntity }}IdsWithErrors(${{ domainEntity | lcfirst }}CollectionResponseTransfer->getErrors());
 
-        foreach (${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity | pluralize}}() as ${{ domainEntity | lcfirst }}Transfer) {
+        ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize}}();
+        ${{ domainEntity | lcfirst }}CollectionResponseTransfer->set{{ domainEntity | pluralize}}(new \ArrayObject());
+
+        foreach (${{ domainEntity | lcfirst }}Transfers as ${{ domainEntity | lcfirst }}Transfer) {
             // Check each SINGLE item before it is saved for errors, if it has some continue with the next one.
-            if (in_array($this->{{ domainEntity | lcfirst }}IdentifierBuilder->buildIdentifier(${{ domainEntity | lcfirst }}Transfer), ${{ domainEntity | lcfirst }}IdsWithErrors, true)) {
+            if (!in_array($this->{{ domainEntity | lcfirst }}IdentifierBuilder->buildIdentifier(${{ domainEntity | lcfirst }}Transfer), ${{ domainEntity | lcfirst }}IdsWithErrors, true)) {
                 ${{ domainEntity | lcfirst }}CollectionResponseTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
-
-                continue;
             }
-
-            ${{ domainEntity | lcfirst }}CollectionTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
         }
 
-        return ${{ domainEntity | lcfirst }}CollectionTransfer;
+        return ${{ domainEntity | lcfirst }}CollectionResponseTransfer;
     }
 
     /**
