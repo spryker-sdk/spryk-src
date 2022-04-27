@@ -107,7 +107,7 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
         foreach ($this->validatorRules as $validatorRule) {
             $errors = $validatorRule->validate(${{ domainEntity | lcfirst }}Transfer);
 
-            ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->addErrorsToErrorTransfers(${{ domainEntity | lcfirst }}Transfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer, $errors);
+            ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->addErrorsToCollectionResponseTransfer(${{ domainEntity | lcfirst }}Transfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer, $errors);
         }
 
         return ${{ domainEntity | lcfirst }}CollectionResponseTransfer;
@@ -128,7 +128,7 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
         foreach ($this->validatorRulePlugins as $validatorRule) {
             $errors = $validatorRule->validate(${{ domainEntity | lcfirst }}Transfer);
 
-            ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->addErrorsToErrorTransfers(${{ domainEntity | lcfirst }}Transfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer, $errors);
+            ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->addErrorsToCollectionResponseTransfer(${{ domainEntity | lcfirst }}Transfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer, $errors);
         }
 
         return ${{ domainEntity | lcfirst }}CollectionResponseTransfer;
@@ -142,7 +142,7 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
      *
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
-    protected function addErrorsToErrorResponseCollection(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer, \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer, array $errors): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
+    protected function addErrorsToCollectionResponseTransfer(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer, \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer, array $errors): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
     {
         $identifier = $this->identifierBuilder->buildIdentifier(${{ domainEntity | lcfirst }}Transfer);
 
