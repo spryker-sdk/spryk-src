@@ -41,8 +41,8 @@ class AddGlueResourceRelationshipPluginTest extends Unit
         ]);
 
         $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/Plugin/GlueApplication/FooBarByBazResourceRelationshipPlugin.php');
-        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/Processor/Expander/FooBarByBazExpanderInterface.php');
-        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/Processor/Expander/FooBarByBazExpander.php');
+        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/Expander/FooBarByBazExpanderInterface.php');
+        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/Expander/FooBarByBazExpander.php');
     }
 
     /**
@@ -58,7 +58,7 @@ class AddGlueResourceRelationshipPluginTest extends Unit
         ]);
 
         $this->assertFileExists($this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'Plugin/GlueApplication/FooBarByBazResourceRelationshipPlugin.php');
-        $this->assertFileExists($this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'Processor/Expander/FooBarByBazExpanderInterface.php');
-        $this->assertFileExists($this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'Processor/Expander/FooBarByBazExpander.php');
+        $this->assertFileExists($this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'Processor/FooBarByBazExpanderInterface.php');
+        $this->assertFileExists($this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'Processor/FooBarByBazExpander.php');
     }
 }

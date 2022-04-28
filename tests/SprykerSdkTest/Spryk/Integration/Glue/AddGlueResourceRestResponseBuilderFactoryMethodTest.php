@@ -57,23 +57,23 @@ class AddGlueResourceRestResponseBuilderFactoryMethodTest extends Unit
                     '--module' => 'FooBar',
                     '--subDirectory' => 'RestResponseBuilder',
                     '--className' => 'FooBarRestResponseBuilder',
-                    '--output' => 'Spryker\Glue\FooBar\Processor\RestResponseBuilder\FooBarRestResponseBuilder',
+                    '--output' => 'Spryker\Glue\FooBar\RestResponseBuilder\FooBarRestResponseBuilder',
                 ],
                 'Spryker\Glue\FooBar\FooBarFactory',
                 'createFooBarRestResponseBuilder',
-                'return new \Spryker\Glue\FooBar\Processor\RestResponseBuilder\FooBarRestResponseBuilder();',
+                'return new \Spryker\Glue\FooBar\RestResponseBuilder\FooBarRestResponseBuilder();',
             ],
             [
                 [
                     '--module' => 'FooBar',
                     '--subDirectory' => 'RestResponseBuilder',
                     '--className' => 'FooBarRestResponseBuilder',
-                    '--output' => 'Pyz\Glue\FooBar\Processor\RestResponseBuilder\FooBarRestResponseBuilder',
+                    '--output' => 'Pyz\Glue\FooBar\RestResponseBuilder\FooBarRestResponseBuilder',
                     '--mode' => 'project',
                 ],
                 'Pyz\Glue\FooBar\FooBarFactory',
                 'createFooBarRestResponseBuilder',
-                'return new \Pyz\Glue\FooBar\Processor\RestResponseBuilder\FooBarRestResponseBuilder();',
+                'return new \Pyz\Glue\FooBar\RestResponseBuilder\FooBarRestResponseBuilder();',
             ],
         ];
     }
