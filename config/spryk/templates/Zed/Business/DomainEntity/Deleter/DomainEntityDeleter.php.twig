@@ -42,13 +42,9 @@ class {{ domainEntity }}Deleter implements {{ domainEntity }}DeleterInterface
      */
     public function delete{{ domainEntity }}Collection({{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer): {{ domainEntity }}CollectionResponseTransfer
     {
-        if(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->getIsTransactional()) {
-            return $this->getTransactionHandler()->handleTransaction(function () use (${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer) {
-                return $this->executeDelete{{ domainEntity }}Collection(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
-            });
-        }
-
-        return $this->executeDelete{{ domainEntity }}Collection(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
+        return $this->getTransactionHandler()->handleTransaction(function () use (${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer) {
+            return $this->executeDelete{{ domainEntity }}CollectionTransaction(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
+        });
     }
 
     /**
@@ -56,14 +52,17 @@ class {{ domainEntity }}Deleter implements {{ domainEntity }}DeleterInterface
      *
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
-    protected function executeDelete{{ domainEntity }}Collection({{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer): {{ domainEntity }}CollectionResponseTransfer
+    protected function executeDelete{{ domainEntity }}CollectionTransaction({{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer): {{ domainEntity }}CollectionResponseTransfer
     {
         ${{ domainEntity | lcfirst }}CollectionTransfer = $this->{{ module | lcfirst }}Repository->get{{ domainEntity }}DeleteCollection(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
 
         ${{ domainEntity | lcfirst }}CollectionResponseTransfer = new {{ domainEntity }}CollectionResponseTransfer();
-        ${{ domainEntity | lcfirst }}CollectionResponseTransfer->set{{ domainEntity | pluralize }}(${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize }}());
 
-        $this->{{ module | lcfirst }}EntityManager->delete{{ domainEntity }}(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
+        foreach(${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize }}() as ${{ domainEntity | lcfirst }}Transfer) {
+            ${{ domainEntity | lcfirst }}CollectionResponseTransfer->add{{ domainEntity }}(
+                $this->{{ module | lcfirst }}EntityManager->delete{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer)
+            );
+        }
 
         return ${{ domainEntity | lcfirst }}CollectionResponseTransfer;
     }

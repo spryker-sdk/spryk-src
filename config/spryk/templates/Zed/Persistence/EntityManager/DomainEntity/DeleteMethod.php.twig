@@ -1,5 +1,11 @@
-${{ domainEntity | lcfirst }}Query = $this->getFactory()
-    ->create{{ domainEntity }}Query();
+${{ domainEntity | lcfirst }}Entity = $this->getFactory()->create{{ domainEntity }}Query()
+->filterById{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer->getId{{ domainEntity }}OrFail())
+->findOne();
 
-${{ domainEntity | lcfirst }}Query = $this->apply{{ domainEntity }}DeleteFilters(${{ domainEntity | lcfirst }}Query, ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
-${{ domainEntity | lcfirst }}Query->delete();
+${{ domainEntity | lcfirst }}Mapper = $this->getFactory()->create{{ domainEntity }}Mapper();
+
+${{ domainEntity | lcfirst }}Entity = ${{ domainEntity | lcfirst }}Mapper->map{{ domainEntity }}TransferTo{{ domainEntity }}Entity(${{ domainEntity | lcfirst }}Transfer, ${{ domainEntity | lcfirst }}Entity);
+
+${{ domainEntity | lcfirst }}Entity->delete();
+
+return ${{ domainEntity | lcfirst }}Mapper->map{{ domainEntity }}EntityTo{{ domainEntity }}Transfer(${{ domainEntity | lcfirst }}Entity, ${{ domainEntity | lcfirst }}Transfer);

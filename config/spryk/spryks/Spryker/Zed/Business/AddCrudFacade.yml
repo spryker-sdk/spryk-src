@@ -626,9 +626,9 @@ postSpryks:
           body:
               value: Zed/Persistence/EntityManager/DomainEntity/DeleteMethod.php.twig
           input:
-              value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer"
+              value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer"
           output:
-              value: "void"
+              value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer"
 
     - AddZedPersistenceEntityManagerMethod:
         arguments:
