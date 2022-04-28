@@ -58,7 +58,7 @@ class AddGlueResourceRelationshipPluginTest extends Unit
         ]);
 
         $this->assertFileExists($this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'Plugin/GlueApplication/FooBarByBazResourceRelationshipPlugin.php');
-        $this->assertFileExists($this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'Processor/FooBarByBazExpanderInterface.php');
-        $this->assertFileExists($this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'Processor/FooBarByBazExpander.php');
+        $this->assertFileExists($this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'FooBarByBazExpanderInterface.php');
+        $this->assertFileExists($this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'FooBarByBazExpander.php');
     }
 }

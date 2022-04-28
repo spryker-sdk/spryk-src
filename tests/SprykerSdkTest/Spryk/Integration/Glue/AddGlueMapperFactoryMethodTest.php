@@ -57,23 +57,23 @@ class AddGlueMapperFactoryMethodTest extends Unit
                     '--module' => 'FooBar',
                     '--subDirectory' => 'Mapper',
                     '--className' => 'FooBarMapper',
-                    '--output' => 'Spryker\Glue\FooBar\Processor\Mapper\FooBarMapper',
+                    '--output' => 'Spryker\Glue\FooBar\Mapper\FooBarMapper',
                 ],
                 'Spryker\Glue\FooBar\FooBarFactory',
                 'createFooBarMapper',
-                'return new \Spryker\Glue\FooBar\Processor\Mapper\FooBarMapper();',
+                'return new \Spryker\Glue\FooBar\Mapper\FooBarMapper();',
             ],
             [
                 [
                     '--module' => 'FooBar',
                     '--subDirectory' => 'Mapper',
                     '--className' => 'FooBarMapper',
-                    '--output' => 'Pyz\Glue\FooBar\Processor\Mapper\FooBarMapper',
+                    '--output' => 'Pyz\Glue\FooBar\Mapper\FooBarMapper',
                     '--mode' => 'project',
                 ],
                 'Pyz\Glue\FooBar\FooBarFactory',
                 'createFooBarMapper',
-                'return new \Pyz\Glue\FooBar\Processor\Mapper\FooBarMapper();',
+                'return new \Pyz\Glue\FooBar\Mapper\FooBarMapper();',
             ],
         ];
     }
