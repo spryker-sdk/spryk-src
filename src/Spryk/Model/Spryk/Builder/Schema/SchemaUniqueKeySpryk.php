@@ -10,47 +10,22 @@ namespace SprykerSdk\Spryk\Model\Spryk\Builder\Schema;
 use SimpleXMLElement;
 use SprykerSdk\Spryk\Model\Spryk\Builder\AbstractBuilder;
 
-class SchemaPropertySpryk extends AbstractBuilder
+class SchemaUniqueKeySpryk extends AbstractBuilder
 {
     /**
      * @var string
      */
-    public const PROPERTY_NAME = 'propertyName';
+    public const KEY_NAME = 'keyName';
 
     /**
      * @var string
      */
-    public const PROPERTY_TYPE = 'propertyType';
+    public const COLUMNS = 'columns';
 
     /**
      * @var string
      */
-    public const REQUIRED = 'required';
-
-    /**
-     * @var string
-     */
-    public const AUTO_INCREMENT = 'autoIncrement';
-
-    /**
-     * @var string
-     */
-    public const PRIMARY_KEY = 'primaryKey';
-
-    /**
-     * @var string
-     */
-    public const DEFAULT_VALUE = 'defaultValue';
-
-    /**
-     * @var string
-     */
-    public const SIZE = 'size';
-
-    /**
-     * @var string
-     */
-    protected const SPRYK_NAME = 'schemaProperty';
+    protected const SPRYK_NAME = 'SchemaUniqueKey';
 
     /**
      * @var string
@@ -87,7 +62,7 @@ class SchemaPropertySpryk extends AbstractBuilder
             return;
         }
 
-        $this->addColumn($tableXmlElement);
+        $this->addUniqueKey($tableXmlElement);
     }
 
     /**
@@ -120,73 +95,57 @@ class SchemaPropertySpryk extends AbstractBuilder
      *
      * @return void
      */
-    protected function addColumn(SimpleXMLElement $tableXmlElement): void
+    protected function addUniqueKey(SimpleXMLElement $tableXmlElement): void
     {
-        $columnName = $this->getPropertyByName(static::PROPERTY_NAME);
+        $uniqueKeyName = $this->getUniqueKeyName();
 
-        if ($this->isColumnDefinedInTable($tableXmlElement, $columnName)) {
+        if ($this->isUniqueKeyDefinedInTable($tableXmlElement, $uniqueKeyName)) {
             return;
         }
 
-        $columnXmlElement = $tableXmlElement->addChild('column');
+        $uniqueKeyXmlElement = $tableXmlElement->addChild('unique');
+        $uniqueKeyXmlElement->addAttribute('name', $uniqueKeyName);
 
-        $columnXmlElement->addAttribute('name', $columnName);
-        $columnXmlElement->addAttribute('type', $this->getPropertyByName(static::PROPERTY_TYPE));
-
-        $this->fillNonRequiredAttributes($columnXmlElement);
+        foreach ($this->getUniqueKeyColumns() as $column) {
+            $uniqueKeyColumnXmlElement = $uniqueKeyXmlElement->addChild('unique-column');
+            $uniqueKeyColumnXmlElement->addAttribute('name', $column);
+        }
     }
 
     /**
-     * @param string $propertyName
-     *
      * @return string
      */
-    protected function getPropertyByName(string $propertyName): string
+    protected function getUniqueKeyName(): string
     {
-        return $this->arguments->getArgument($propertyName)->getValue();
+        return $this->arguments->getArgument(static::KEY_NAME)->getValue();
+    }
+
+    /**
+     * @return array<string>
+     */
+    protected function getUniqueKeyColumns(): array
+    {
+        return $this->arguments->getArgument(static::COLUMNS)->getValue();
     }
 
     /**
      * @param \SimpleXMLElement $simpleXmlElement
-     * @param string $columnName
+     * @param string $uniqueKeyName
      *
      * @return bool
      */
-    protected function isColumnDefinedInTable(SimpleXMLElement $simpleXmlElement, string $columnName): bool
+    protected function isUniqueKeyDefinedInTable(SimpleXMLElement $simpleXmlElement, string $uniqueKeyName): bool
     {
-        $columnXmlElements = $simpleXmlElement->xpath('//column');
+        $columnXmlElements = $simpleXmlElement->xpath('//unique');
 
         if ($columnXmlElements !== false) {
             foreach ($columnXmlElements as $tableXmlElement) {
-                if ((string)$tableXmlElement['name'] === $columnName) {
+                if ((string)$tableXmlElement['name'] === $uniqueKeyName) {
                     return true;
                 }
             }
         }
 
         return false;
-    }
-
-    /**
-     * @param \SimpleXMLElement $columnXmlElement
-     *
-     * @return void
-     */
-    protected function fillNonRequiredAttributes(SimpleXMLElement $columnXmlElement): void
-    {
-        $nonRequiredProperties = [
-            static::REQUIRED,
-            static::AUTO_INCREMENT,
-            static::PRIMARY_KEY,
-            static::DEFAULT_VALUE,
-            static::SIZE,
-        ];
-
-        foreach ($nonRequiredProperties as $propertyName) {
-            $propertyValue = $this->getPropertyByName($propertyName);
-            if ($propertyValue) {
-                $columnXmlElement->addAttribute($propertyName, $propertyValue);
-            }
-        }
     }
 }

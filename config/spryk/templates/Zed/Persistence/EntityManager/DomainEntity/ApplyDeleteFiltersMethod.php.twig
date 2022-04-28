@@ -1,1 +1,9 @@
+if (${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->get{{ domainEntity }}Ids()) {
+    ${{ domainEntity | lcfirst }}Query->filterById{{ domainEntity }}(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->get{{ domainEntity }}Ids(), \Propel\Runtime\ActiveQuery\Criteria::IN);
+}
+
+if (${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->getUuids()) {
+    ${{ domainEntity | lcfirst }}Query->filterByUuid(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->getUuids(), \Propel\Runtime\ActiveQuery\Criteria::IN);
+}
+
 return ${{ domainEntity | lcfirst }}Query;

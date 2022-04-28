@@ -41,6 +41,11 @@ class AddSharedDomainEntityManipulationTransferDefinitionTest extends Unit
             '<?xml version="1.0"?>
 <transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
+  <transfer name="FooBarModel">
+    <property name="idFooBarModel" type="int"/>
+    <property name="uuid" type="string"/>
+  </transfer>
+
   <transfer name="FooBarModelCollectionRequest">
     <property name="isTransactional" type="bool"/>
     <property name="fooBarModels" singular="fooBarModel" type="FooBarModel[]"/>
@@ -54,6 +59,7 @@ class AddSharedDomainEntityManipulationTransferDefinitionTest extends Unit
   <transfer name="FooBarModelCollectionDeleteCriteria">
     <property name="isTransactional" type="bool"/>
     <property name="fooBarModelIds" singular="idFooBarModel" type="int[]"/>
+    <property name="uuids" singular="uuid" type="string[]"/>
   </transfer>
 
   <transfer name="Error">
@@ -81,6 +87,11 @@ class AddSharedDomainEntityManipulationTransferDefinitionTest extends Unit
             '<?xml version="1.0"?>
 <transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
+  <transfer name="FooBarModel">
+    <property name="idFooBarModel" type="int"/>
+    <property name="uuid" type="string"/>
+  </transfer>
+
   <transfer name="FooBarModelCollectionRequest">
     <property name="isTransactional" type="bool"/>
     <property name="fooBarModels" singular="fooBarModel" type="FooBarModel[]"/>
@@ -94,6 +105,7 @@ class AddSharedDomainEntityManipulationTransferDefinitionTest extends Unit
   <transfer name="FooBarModelCollectionDeleteCriteria">
     <property name="isTransactional" type="bool"/>
     <property name="fooBarModelIds" singular="idFooBarModel" type="int[]"/>
+    <property name="uuids" singular="uuid" type="string[]"/>
   </transfer>
 
   <transfer name="Error">

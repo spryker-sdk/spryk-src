@@ -10,47 +10,27 @@ namespace SprykerSdk\Spryk\Model\Spryk\Builder\Schema;
 use SimpleXMLElement;
 use SprykerSdk\Spryk\Model\Spryk\Builder\AbstractBuilder;
 
-class SchemaPropertySpryk extends AbstractBuilder
+class SchemaBehaviorSpryk extends AbstractBuilder
 {
     /**
      * @var string
      */
-    public const PROPERTY_NAME = 'propertyName';
+    public const PARAMETER_NAMES = 'parameterNames';
 
     /**
      * @var string
      */
-    public const PROPERTY_TYPE = 'propertyType';
+    public const PARAMETER_VALUES = 'parameterValues';
 
     /**
      * @var string
      */
-    public const REQUIRED = 'required';
+    public const BEHAVIOR_NAME = 'behaviorName';
 
     /**
      * @var string
      */
-    public const AUTO_INCREMENT = 'autoIncrement';
-
-    /**
-     * @var string
-     */
-    public const PRIMARY_KEY = 'primaryKey';
-
-    /**
-     * @var string
-     */
-    public const DEFAULT_VALUE = 'defaultValue';
-
-    /**
-     * @var string
-     */
-    public const SIZE = 'size';
-
-    /**
-     * @var string
-     */
-    protected const SPRYK_NAME = 'schemaProperty';
+    protected const SPRYK_NAME = 'SchemaBehavior';
 
     /**
      * @var string
@@ -87,7 +67,7 @@ class SchemaPropertySpryk extends AbstractBuilder
             return;
         }
 
-        $this->addColumn($tableXmlElement);
+        $this->addBehavior($tableXmlElement);
     }
 
     /**
@@ -120,73 +100,76 @@ class SchemaPropertySpryk extends AbstractBuilder
      *
      * @return void
      */
-    protected function addColumn(SimpleXMLElement $tableXmlElement): void
+    protected function addBehavior(SimpleXMLElement $tableXmlElement): void
     {
-        $columnName = $this->getPropertyByName(static::PROPERTY_NAME);
+        $behaviorNameName = $this->getBehaviorName();
 
-        if ($this->isColumnDefinedInTable($tableXmlElement, $columnName)) {
+        if ($this->isBehaviorDefinedInTable($tableXmlElement, $behaviorNameName)) {
             return;
         }
 
-        $columnXmlElement = $tableXmlElement->addChild('column');
+        $uniqueKeyXmlElement = $tableXmlElement->addChild('behavior');
+        $uniqueKeyXmlElement->addAttribute('name', $behaviorNameName);
 
-        $columnXmlElement->addAttribute('name', $columnName);
-        $columnXmlElement->addAttribute('type', $this->getPropertyByName(static::PROPERTY_TYPE));
+        $parameterNames = $this->getParameterNames();
+        $parameterValues = $this->getParameterValues();
 
-        $this->fillNonRequiredAttributes($columnXmlElement);
+        foreach ($parameterNames as $index => $parameterName) {
+            if (!isset($parameterValues[$index])) {
+                $this->log(sprintf(
+                    'Could not find parameter value for parameter name <fg=green>%s</>',
+                    $parameterName,
+                ));
+            }
+
+            $uniqueKeyColumnXmlElement = $uniqueKeyXmlElement->addChild('parameter');
+            $uniqueKeyColumnXmlElement->addAttribute('name', $parameterName);
+            $uniqueKeyColumnXmlElement->addAttribute('value', $parameterValues[$index]);
+        }
     }
 
     /**
-     * @param string $propertyName
-     *
      * @return string
      */
-    protected function getPropertyByName(string $propertyName): string
+    protected function getBehaviorName(): string
     {
-        return $this->arguments->getArgument($propertyName)->getValue();
+        return $this->arguments->getArgument(static::BEHAVIOR_NAME)->getValue();
+    }
+
+    /**
+     * @return array<string>
+     */
+    protected function getParameterNames(): array
+    {
+        return $this->arguments->getArgument(static::PARAMETER_NAMES)->getValue();
+    }
+
+    /**
+     * @return array<string>
+     */
+    protected function getParameterValues(): array
+    {
+        return $this->arguments->getArgument(static::PARAMETER_VALUES)->getValue();
     }
 
     /**
      * @param \SimpleXMLElement $simpleXmlElement
-     * @param string $columnName
+     * @param string $behaviorName
      *
      * @return bool
      */
-    protected function isColumnDefinedInTable(SimpleXMLElement $simpleXmlElement, string $columnName): bool
+    protected function isBehaviorDefinedInTable(SimpleXMLElement $simpleXmlElement, string $behaviorName): bool
     {
-        $columnXmlElements = $simpleXmlElement->xpath('//column');
+        $columnXmlElements = $simpleXmlElement->xpath('//behavior');
 
         if ($columnXmlElements !== false) {
             foreach ($columnXmlElements as $tableXmlElement) {
-                if ((string)$tableXmlElement['name'] === $columnName) {
+                if ((string)$tableXmlElement['name'] === $behaviorName) {
                     return true;
                 }
             }
         }
 
         return false;
-    }
-
-    /**
-     * @param \SimpleXMLElement $columnXmlElement
-     *
-     * @return void
-     */
-    protected function fillNonRequiredAttributes(SimpleXMLElement $columnXmlElement): void
-    {
-        $nonRequiredProperties = [
-            static::REQUIRED,
-            static::AUTO_INCREMENT,
-            static::PRIMARY_KEY,
-            static::DEFAULT_VALUE,
-            static::SIZE,
-        ];
-
-        foreach ($nonRequiredProperties as $propertyName) {
-            $propertyValue = $this->getPropertyByName($propertyName);
-            if ($propertyValue) {
-                $columnXmlElement->addAttribute($propertyName, $propertyValue);
-            }
-        }
     }
 }

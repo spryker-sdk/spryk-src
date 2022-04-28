@@ -1,19 +1,19 @@
 ${{ domainEntity | lcfirst }}CollectionTransfer = new {{ domainEntity }}CollectionTransfer();
-${{ domainEntity | lcfirst }}Query = $this->getFactory()
-    ->create{{ domainEntity }}Query();
-    
-${{ domainEntity | lcfirst }}Entities = $this->apply{{ domainEntity }}Filters(
-    ${{ domainEntity | lcfirst }}Query,
-    ${{ domainEntity | lcfirst }}CriteriaTransfer,
-)->find();
+${{ domainEntity | lcfirst }}Query = $this->getFactory()->create{{ domainEntity }}Query();
 
-if (!${{ domainEntity | lcfirst }}Entities->count()) {
-    return ${{ domainEntity | lcfirst }}CollectionTransfer;
+// Filter
+${{ domainEntity | lcfirst }}Query = $this->apply{{ domainEntity }}Filters(${{ domainEntity | lcfirst }}Query, ${{ domainEntity | lcfirst }}CriteriaTransfer);
+
+// Sort
+${{ domainEntity | lcfirst }}Query = $this->apply{{ domainEntity }}Sorting(${{ domainEntity | lcfirst }}Query, ${{ domainEntity | lcfirst }}CriteriaTransfer);
+
+// Paginate only if the transfer is present
+$paginationTransfer = ${{ domainEntity | lcfirst }}CriteriaTransfer->getPagination();
+if ($paginationTransfer !== null) {
+    ${{ domainEntity | lcfirst }}Query = $this->apply{{ domainEntity }}Pagination(${{ domainEntity | lcfirst }}Query, $paginationTransfer);
+    ${{ domainEntity | lcfirst }}CollectionTransfer->setPagination($paginationTransfer);
 }
 
-return $this->getFactory()
-    ->create{{ domainEntity }}Mapper()
-    ->map{{ domainEntity }}EntityCollectionTo{{ domainEntity }}CollectionTransfer(
-        ${{ domainEntity | lcfirst }}Entities,
-        ${{ domainEntity | lcfirst }}CollectionTransfer,
-    );
+$objectCollection = ${{ domainEntity | lcfirst }}Query->find();
+
+return $this->getFactory()->create{{ domainEntity }}Mapper()->map{{ domainEntity }}EntityCollectionTo{{ domainEntity }}CollectionTransfer($objectCollection, ${{ domainEntity | lcfirst }}CollectionTransfer);

@@ -1,5 +1,5 @@
 spryk: template
-description: "Adds a new Business model validator interface to the Zed application."
+description: "Adds a new Business model validator rule interface to the Zed application."
 mode: both
 level: 2
 
@@ -20,16 +20,13 @@ arguments:
         inherit: true
 
     template:
-        value: Zed/Business/Validation/DomainEntity/DomainEntityValidatorInterface.php.twig
+        value: Zed/Business/Validation/DomainEntity/Rules/DomainEntityValidatorRuleInterface.php.twig
 
     targetFilename:
-        value: "{{ domainEntity }}ValidatorInterface.php"
+        value: "{{ domainEntity }}ValidatorRuleInterface.php"
 
     subDirectory:
-        value: "{{ domainEntity }}/Validator/"
+        value: "{{ domainEntity }}/Validator/Rules/"
 
     targetPath:
         value: "src/{{ organization }}/Zed/{{ module }}/Business/"
-
-preSpryks:
-    - AddDomainEntityValidator

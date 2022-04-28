@@ -1,43 +1,25 @@
 <?php
 
 {{ include('Partials/license.twig') }}
-namespace {{ organization }}\Zed\{{ module }}\Business\Validator\{{ domainEntity }};
+
+namespace {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator;
 
 interface {{ domainEntity }}ValidatorInterface
 {
     /**
-     * Use this method to breakOnFirstError instead of validating all transfers
+     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
      *
-     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ErrorTransfer[]|null Null indicates that no validation error occured.
-     */
-    public function validateCollectionTransactional(
-        \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
-    ): ?array;
-
-    /**
-     * Specification:
-     * - Validates all {{ domainEntity }} transfers in the collection.
-     *
-     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
-     * @param bool $breakOnFirstError = false
-     *
-     * @return \Generated\Shared\Transfer\ErrorTransfer[]|null Null indicates that no validation error occurred.
+     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
     public function validateCollection(
-        \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer,
-        bool $breakOnFirstError = false
-    ): ?array;
+        \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
+    ): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer;
 
     /**
-     * This method will do the validation of a single item. If you need to validate
-     * associated entities, then you should validate them in their module and model.
-     *
      * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer
-     * @param \Generated\Shared\Transfer\ErrorTransfer[] $errorTransfers
+     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\ErrorTransfer[]
+     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
-    public function validate(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer, array $errorTransfers): array;
+    public function validate(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer, \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer;
 }

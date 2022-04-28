@@ -1,5 +1,5 @@
 spryk: template
-description: "Adds a new Business DomainEntity creator to the Zed application."
+description: "Adds a new Business DomainEntity updater to the Zed application."
 mode: both
 level: 2
 
@@ -17,19 +17,19 @@ arguments:
         default: Spryker
 
     className:
-        value: "{{ domainEntity }}Creator"
+        value: "{{ domainEntity }}Updater"
 
     domainEntity:
         inherit: true
 
     subDirectory:
-        value: "{{ domainEntity }}/Saver"
+        value: "{{ domainEntity }}/Writer"
 
     template:
-        value: Zed/Business/DomainEntity/Saver/DomainEntityCreator.php.twig
+        value: Zed/Business/DomainEntity/Writer/DomainEntityUpdater.php.twig
 
     targetFilename:
-        value: "{{ domainEntity }}Creator.php"
+        value: "{{ domainEntity }}Updater.php"
 
     targetPath:
         value: "src/{{ organization }}/Zed/{{ module }}/Business/"
@@ -41,11 +41,11 @@ postSpryks:
     - AddZedBusinessModelInterfaceMethod:
           arguments:
               className:
-                  value: "{{ domainEntity }}Creator"
+                  value: "{{ domainEntity }}Updater"
               subDirectory:
-                  value: "{{ domainEntity }}/Saver"
+                  value: "{{ domainEntity }}/Writer"
               modelMethod:
-                  value: "create{{ domainEntity }}Collection"
+                  value: "update{{ domainEntity }}Collection"
               input:
                   value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer"
               output:
@@ -54,9 +54,11 @@ postSpryks:
     - AddZedBusinessFactoryMethod:
           arguments:
               output:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}\\Business\\{{ domainEntity }}\\Saver\\{{ domainEntity }}CreatorInterface"
+                  value: "\\{{ organization }}\\Zed\\{{ module }}\\Business\\{{ domainEntity }}\\Writer\\{{ domainEntity }}UpdaterInterface"
               dependencyMethods:
                   value:
                       - "getEntityManager"
-                      - "create{{ domainEntity }}CreateValidator"
+                      - "create{{ domainEntity }}UpdateValidator"
                       - "create{{ domainEntity }}IdentifierBuilder"
+                      - "get{{ domainEntity }}PreUpdatePlugins"
+                      - "get{{ domainEntity }}PostUpdatePlugins"

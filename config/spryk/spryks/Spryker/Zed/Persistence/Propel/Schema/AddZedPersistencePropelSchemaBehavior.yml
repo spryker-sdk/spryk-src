@@ -1,4 +1,4 @@
-spryk: schemaProperty
+spryk: SchemaBehavior
 description: "Adds a Persistence schema to *module*.schema.xml in the Zed application."
 mode: both
 
@@ -16,24 +16,13 @@ arguments:
     name:
         inherit: true
 
-    propertyName: ~
+    behaviorName: ~
 
-    propertyType: ~
+    parameterNames:
+        isMultiple: true
 
-    required:
-        default: false
-
-    autoIncrement:
-        default: false
-
-    primaryKey:
-        default: false
-
-    size:
-        default: false
-
-    defaultValue:
-        default: ""
+    parameterValues:
+        isMultiple: true
 
     targetPath:
         value: "src/{{ organization }}/Zed/{{ module }}/Persistence/Propel/Schema/spy_{{ module | underscored }}.schema.xml"

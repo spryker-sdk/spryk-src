@@ -1,7 +1,11 @@
 <?php
 
 {{ include('Partials/license.twig') }}
-namespace {{ organization }}\Zed\{{ module }}\Business\Validator\{{ domainEntity }};
+
+namespace {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator;
+
+use Generated\Shared\Transfer\ErrorTransfer;
+use {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\IdentifierBuilder\{{ domainEntity }}IdentifierBuilderInterface;
 
 class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}ValidatorInterface
 {
@@ -11,24 +15,24 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
     protected array $validatorRules = [];
 
     /**
-     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Validator\{{ domainEntity }}ValidatorRulePluginInterface[]
+     * @var \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Validator\{{ domainEntity }}ValidatorRulePluginInterface[]
      */
     protected array $validatorRulePlugins = [];
 
     /**
-     * @var \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Identifier\{{ domainEntity }}IdentifierBuilderInterface
+     * @var \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\IdentifierBuilder\{{ domainEntity }}IdentifierBuilderInterface
      */
-    protected \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Identifier\{{ domainEntity }}IdentifierBuilderInterface $identifierBuilder;
+    protected {{ domainEntity }}IdentifierBuilderInterface $identifierBuilder;
 
     /**
      * @param \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator\Rules\{{ domainEntity }}ValidatorRuleInterface[] $validatorRules
-     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\{{ domainEntity }}\Validator\{{ domainEntity }}ValidatorRulePluginInterface[] $validatorRulePlugins
-     * @param \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Identifier\{{ domainEntity }}IdentifierBuilderInterface $identifierBuilder
+     * @param \{{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Validator\{{ domainEntity }}ValidatorRulePluginInterface[] $validatorRulePlugins
+     * @param \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\IdentifierBuilder\{{ domainEntity }}IdentifierBuilderInterface $identifierBuilder
      */
-    public function __constrauct(
+    public function __construct(
         array $validatorRules,
         array $validatorRulePlugins,
-        \{{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Identifier\{{ domainEntity }}IdentifierBuilderInterface $identifierBuilder
+        {{ domainEntity }}IdentifierBuilderInterface $identifierBuilder
     ) {
         $this->validatorRules = $validatorRules;
         $this->validatorRulePlugins = $validatorRulePlugins;
@@ -36,118 +40,86 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
     }
 
     /**
-     * Use this method to breakOnFirstError instead of validating all transfers
+     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
      *
-     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ErrorTransfer[]|null Null indicates that no validation error occured.
-     */
-    public function validateCollectionTransactional(
-        \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
-    ): ?array {
-        return $this->validateCollection(${{ domainEntity | lcfirst }}CollectionRequestTransfer, true);
-    }
-
-    /**
-     * Specification:
-     * - Validates all {{ domainEntity }} transfers in the collection.
-     *
-     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
-     * @param bool $breakOnFirstError = false
-     *
-     * @return \Generated\Shared\Transfer\ErrorTransfer[]|null Null indicates that no validation error occurred.
+     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
     public function validateCollection(
-        \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer,
-        bool $breakOnFirstError = false
-    ): ?array {
-        $errorTransfers = [];
-
-        foreach (${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity }}s as ${{ domainEntity | lcfirst }}Transfer) {
-            $errorTransfers = $this->validate(${{ domainEntity | lcfirst }}Transfer, $errorTransfers);
-
-            if ($breakOnFirstError && !empty($errorTransfers)) {
-                return $errorTransfers;
-            }
+        \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
+    ): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer {
+        foreach (${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize}}() as ${{ domainEntity | lcfirst }}Transfer) {
+            ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->validate(${{ domainEntity | lcfirst }}Transfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer);
         }
 
-        return empty($errorTransfers) ? null : $errorTransfers;
+        return ${{ domainEntity | lcfirst }}CollectionResponseTransfer;
     }
 
     /**
-     * This method will do the validation of a single item. If you need to validate
-     * associated entities, then you should validate them in their module and model.
-     *
      * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer
-     * @param \Generated\Shared\Transfer\ErrorTransfer[] $errorTransfers
+     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\ErrorTransfer[]
+     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
-    public function validate(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer, array $errorTransfers): array
+    public function validate(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer, \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
     {
-        $errorTransfers = $this->executeValidatorRules(${{ domainEntity | lcfirst }}Transfer, $errorTransfers);
-        $errorTransfers = $this->executeValidatorRulePlugins(${{ domainEntity | lcfirst }}Transfer, $errorTransfers);
+        ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->executeValidatorRules(${{ domainEntity | lcfirst }}Transfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer);
+        ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->executeValidatorRulePlugins(${{ domainEntity | lcfirst }}Transfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer);
 
-        return $errorTransfers;
+        return ${{ domainEntity | lcfirst }}CollectionResponseTransfer;
     }
 
     /**
-     * Specification:
-     * - Validates a single {{ domainEntity }} transfer.
-     * - Runs validator rules.
-     *
      * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer
-     * @param \Generated\Shared\Transfer\ErrorTransfer[] $errorTransfers
+     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\ErrorTransfer[]
+     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
-    protected function executeValidatorRules(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer, array $errorTransfers): array
+    protected function executeValidatorRules(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer, \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
     {
         foreach ($this->validatorRules as $validatorRule) {
             $errors = $validatorRule->validate(${{ domainEntity | lcfirst }}Transfer);
+
+            ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->addErrorsToCollectionResponseTransfer(${{ domainEntity | lcfirst }}Transfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer, $errors);
         }
 
-        return $this->addErrorsToErrorTransfers(${{ domainEntity | lcfirst }}Transfer, $errors, $errorTransfers);
+        return ${{ domainEntity | lcfirst }}CollectionResponseTransfer;
     }
 
     /**
-     * Specification:
-     * - Validates a single {{ domainEntity }} transfer.
-     * - Runs validator rule plugins.
-     *
      * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer
-     * @param \Generated\Shared\Transfer\ErrorTransfer[] $errorTransfers
+     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\ErrorTransfer[]
+     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
-    protected function executeValidationRulePlugins(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer, array $errorTransfers): array
+    protected function executeValidatorRulePlugins(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer, \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
     {
-        foreach ($this->validationRules as $validationRule) {
-            $errors = $validationRule->validate(${{ domainEntity | lcfirst }}Transfer);
+        foreach ($this->validatorRulePlugins as $validatorRule) {
+            $errors = $validatorRule->validate(${{ domainEntity | lcfirst }}Transfer);
+
+            ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->addErrorsToCollectionResponseTransfer(${{ domainEntity | lcfirst }}Transfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer, $errors);
         }
 
-        return $this->addErrorsToErrorTransfers(${{ domainEntity | lcfirst }}Transfer, $errors, $errorTransfers);
+        return ${{ domainEntity | lcfirst }}CollectionResponseTransfer;
     }
 
     /**
-     * Helper method to reduce repeating the instantiation of the error transfer.
-     *
      * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer
-     * @param array $errors
-     * @param \Generated\Shared\Transfer\ErrorTransfer[] $errorTransfers
+     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\ErrorTransfer[]
+     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
-    protected function addErrorsToErrorCollection(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer, array $errors, array $errorTransfers): array
+    protected function addErrorsToCollectionResponseTransfer(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer, \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer, array $errors): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
     {
         $identifier = $this->identifierBuilder->buildIdentifier(${{ domainEntity | lcfirst }}Transfer);
 
         foreach ($errors as $error) {
-            $errorTransfers[] = (new ErrorTransfer())
-                ->setMessage($error)
-                ->setIdentifier($identifier);
+            ${{ domainEntity | lcfirst }}CollectionResponseTransfer->addError(
+                (new ErrorTransfer())
+                    ->setMessage($error)
+                    ->setEntityIdentifier($identifier)
+            );
         }
 
-        return $errorTransfers;
+        return ${{ domainEntity | lcfirst }}CollectionResponseTransfer;
     }
 }

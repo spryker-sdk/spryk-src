@@ -49,6 +49,7 @@ class AddSharedDomainEntityFetchingTransferDefinitionTest extends Unit
 
   <transfer name="FooBarModelConditions">
     <property name="fooBarModelIds" singular="fooBarModelId" type="int[]"/>
+    <property name="uuids" singular="uuid" type="string[]"/>
   </transfer>
 
   <transfer name="FooBarModelCollection">
@@ -103,6 +104,7 @@ class AddSharedDomainEntityFetchingTransferDefinitionTest extends Unit
 
   <transfer name="FooBarModelConditions">
     <property name="fooBarModelIds" singular="fooBarModelId" type="int[]"/>
+    <property name="uuids" singular="uuid" type="string[]"/>
   </transfer>
 
   <transfer name="FooBarModelCollection">
