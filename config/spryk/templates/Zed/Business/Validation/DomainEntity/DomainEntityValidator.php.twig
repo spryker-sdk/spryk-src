@@ -1,6 +1,7 @@
 <?php
 
 {{ include('Partials/license.twig') }}
+
 namespace {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator;
 
 use Generated\Shared\Transfer\ErrorTransfer;
@@ -39,9 +40,6 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
     }
 
     /**
-     * Specification:
-     * - Validates all {{ domainEntity }} transfers in the collection.
-     *
      * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
      *
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
@@ -57,9 +55,6 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
     }
 
     /**
-     * This method will do the validation of a single item. If you need to validate
-     * associated entities, then you should validate them in their module and model.
-     *
      * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer
      * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
      *
@@ -74,10 +69,6 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
     }
 
     /**
-     * Specification:
-     * - Validates a single {{ domainEntity }} transfer.
-     * - Runs validator rules.
-     *
      * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer
      * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
      *
@@ -95,10 +86,6 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
     }
 
     /**
-     * Specification:
-     * - Validates a single {{ domainEntity }} transfer.
-     * - Runs validator rule plugins.
-     *
      * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer
      * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
      *
@@ -116,8 +103,6 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
     }
 
     /**
-     * Helper method to reduce repeating the instantiation of the error transfer.
-     *
      * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer
      * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
      *

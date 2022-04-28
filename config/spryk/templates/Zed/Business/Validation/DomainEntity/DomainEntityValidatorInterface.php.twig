@@ -1,14 +1,12 @@
 <?php
 
 {{ include('Partials/license.twig') }}
+
 namespace {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator;
 
 interface {{ domainEntity }}ValidatorInterface
 {
     /**
-     * Specification:
-     * - Validates all {{ domainEntity }} transfers in the collection.
-     *
      * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
      *
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
@@ -18,9 +16,6 @@ interface {{ domainEntity }}ValidatorInterface
     ): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer;
 
     /**
-     * This method will do the validation of a single item. If you need to validate
-     * associated entities, then you should validate them in their module and model.
-     *
      * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer
      * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
      *

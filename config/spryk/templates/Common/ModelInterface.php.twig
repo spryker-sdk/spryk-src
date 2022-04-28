@@ -1,6 +1,7 @@
 <?php
 
 {{ include('Partials/license.twig') }}
+
 namespace {{ organization }}\Zed\{{ module }}\{{ layer }}{% if subDirectory.value %}\{{ subDirectory | replace({'/': '\\'}) }}{% endif %};
 
 {% if extends.value %}
