@@ -163,6 +163,10 @@ class SprykHelper extends Module
                 // Write files only in memory
                 return $this->getVirtualDirectory();
             },
+            'getSprykRootDirectory' => function () {
+                // Write files only in memory
+                return $this->getVirtualDirectory();
+            },
             'getSprykDirectories' => function () {
                 $sprykDirectories = [
                     $this->getRootDirectory() . 'config/spryk/spryks/', // When not found use this path (default)

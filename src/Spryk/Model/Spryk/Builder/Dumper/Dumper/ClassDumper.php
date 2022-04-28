@@ -102,7 +102,7 @@ class ClassDumper implements ClassDumperInterface
             $tmpClassNameMap[$tmpFileName] = $resolved;
         }
 
-        $process = new Process(['vendor/bin/phpcbf', $tmpDirectory, '--standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml']);
+        $process = new Process(['vendor/bin/phpcbf', $tmpDirectory, '--standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml'], null, null, null, 180);
         $process->run();
 
         foreach ($tmpClassNameMap as $tmpFileName => $resolved) {

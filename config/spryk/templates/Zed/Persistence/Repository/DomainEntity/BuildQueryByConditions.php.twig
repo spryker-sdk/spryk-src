@@ -1,0 +1,9 @@
+if (isset($conditions['{{ domainEntity | lcfirst }}_ids'])) {
+    ${{ domainEntity | lcfirst }}Query->filterById{{ domainEntity }}($conditions['{{ domainEntity | lcfirst }}_ids'], \Propel\Runtime\ActiveQuery\Criteria::IN);
+}
+
+if (isset($conditions['uuids'])) {
+    ${{ domainEntity | lcfirst }}Query->filterByUuid($conditions['uuids'], \Propel\Runtime\ActiveQuery\Criteria::IN);
+}
+
+return ${{ domainEntity | lcfirst }}Query;
