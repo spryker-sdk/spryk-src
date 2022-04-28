@@ -177,7 +177,6 @@ class AddCrudFacadeTest extends Unit
     {
         $this->tester->assertClassHasMethod(ClassName::ZED_REPOSITORY, 'getZipZapCollection');
         $this->tester->assertClassHasMethod(ClassName::ZED_REPOSITORY, 'applyZipZapFilters');
-        $this->tester->assertClassHasMethod(ClassName::ZED_REPOSITORY, 'hasZipZap');
         $this->tester->assertClassHasMethod(ClassName::ZED_REPOSITORY, 'getZipZapDeleteCollection');
         $this->tester->assertClassHasMethod(ClassName::ZED_REPOSITORY, 'applyZipZapDeleteFilters');
     }
@@ -194,7 +193,6 @@ class AddCrudFacadeTest extends Unit
 
         $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Business\ZipZap\Validator\ZipZapValidator', 'validate');
         $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Business\ZipZap\Validator\ZipZapValidator', 'validateCollection');
-        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Business\ZipZap\Validator\ZipZapValidator', 'validateCollectionTransactional');
     }
 
     /**

@@ -39,37 +39,18 @@ class {{ domainEntity }}{{ type }}Validator implements {{ domainEntity }}Validat
     }
 
     /**
-     * Use this method to breakOnFirstError instead of validating all transfers.
-     *
-     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
-     */
-    public function validateCollectionTransactional(
-        \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
-    ): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer {
-        return $this->validateCollection(${{ domainEntity | lcfirst }}CollectionResponseTransfer, true);
-    }
-
-    /**
      * Specification:
      * - Validates all {{ domainEntity }} transfers in the collection.
      *
      * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
-     * @param bool $breakOnFirstError = false
      *
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
     public function validateCollection(
-        \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer,
-        bool $breakOnFirstError = false
+        \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
     ): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer {
         foreach (${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize}}() as ${{ domainEntity | lcfirst }}Transfer) {
             ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->validate(${{ domainEntity | lcfirst }}Transfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer);
-
-            if ($breakOnFirstError && ${{ domainEntity | lcfirst }}CollectionResponseTransfer->getErrors()->count() > 0) {
-                return ${{ domainEntity | lcfirst }}CollectionResponseTransfer;
-            }
         }
 
         return ${{ domainEntity | lcfirst }}CollectionResponseTransfer;

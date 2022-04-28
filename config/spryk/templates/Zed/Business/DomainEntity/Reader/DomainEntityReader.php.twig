@@ -45,7 +45,7 @@ class {{ domainEntity }}Reader implements {{ domainEntity }}ReaderInterface
         ${{ domainEntity | lcfirst }}CollectionTransfer = $this->{{ module | lcfirst }}Repository
             ->get{{ domainEntity }}Collection(${{ domainEntity | lcfirst }}CriteriaTransfer);
 
-        return $this->expand{{ domainEntity }}Collection(${{ domainEntity | lcfirst }}CollectionTransfer);
+        return $this->execute{{ domainEntity }}ExpanderPlugins(${{ domainEntity | lcfirst }}CollectionTransfer);
     }
 
     /**
@@ -53,17 +53,15 @@ class {{ domainEntity }}Reader implements {{ domainEntity }}ReaderInterface
      *
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer
      */
-    protected function expand{{ domainEntity }}Collection(
+    protected function execute{{ domainEntity }}ExpanderPlugins(
         {{ domainEntity }}CollectionTransfer ${{ domainEntity | lcfirst }}CollectionTransfer
     ): {{ domainEntity }}CollectionTransfer {
+        ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize}}()->getArrayCopy();
+
         foreach ($this->{{ domainEntity | lcfirst }}ExpanderPlugins as ${{ domainEntity | lcfirst }}ExpanderPlugin) {
-            ${{ domainEntity | lcfirst }}CollectionTransfer->set{{ domainEntity | pluralize}}(
-                new \ArrayObject(
-                    ${{ domainEntity | lcfirst }}ExpanderPlugin->expand(${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize}}()->getArrayCopy())
-                )
-            );
+            ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}ExpanderPlugin->expand(${{ domainEntity | lcfirst }}Transfers);
         }
 
-        return ${{ domainEntity | lcfirst }}CollectionTransfer;
+        return ${{ domainEntity | lcfirst }}CollectionTransfer->set{{ domainEntity | pluralize}}(new \ArrayObject(${{ domainEntity | lcfirst }}Transfers));
     }
 }

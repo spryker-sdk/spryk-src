@@ -6,28 +6,15 @@ namespace {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Valida
 interface {{ domainEntity }}ValidatorInterface
 {
     /**
-     * Use this method to breakOnFirstError instead of validating all transfers
-     *
-     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
-     */
-    public function validateCollectionTransactional(
-        \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
-    ): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer;
-
-    /**
      * Specification:
      * - Validates all {{ domainEntity }} transfers in the collection.
      *
      * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
-     * @param bool $breakOnFirstError = false
      *
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
     public function validateCollection(
-        \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer,
-        bool $breakOnFirstError = false
+        \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
     ): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer;
 
     /**

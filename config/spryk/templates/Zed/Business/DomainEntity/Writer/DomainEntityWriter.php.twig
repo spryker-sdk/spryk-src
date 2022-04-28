@@ -73,7 +73,7 @@ class {{ domainEntity }}{{ className }} implements {{ domainEntity }}{{ classNam
         ${{ domainEntity | lcfirst }}CollectionResponseTransfer = new {{ domainEntity }}CollectionResponseTransfer();
         ${{ domainEntity | lcfirst }}CollectionResponseTransfer->set{{ domainEntity | pluralize }}(${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity | pluralize }}());
 
-        ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->validateCollection(${{ domainEntity | lcfirst }}CollectionRequestTransfer, ${{ domainEntity | lcfirst }}CollectionResponseTransfer);
+        ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->{{ domainEntity | lcfirst }}Validator->validateCollection(${{ domainEntity | lcfirst }}CollectionResponseTransfer);
 
         if (${{ domainEntity | lcfirst }}CollectionRequestTransfer->getIsTransactional() && ${{ domainEntity | lcfirst }}CollectionResponseTransfer->getErrors()->count()) {
             return ${{ domainEntity | lcfirst }}CollectionResponseTransfer;
@@ -86,23 +86,6 @@ class {{ domainEntity }}{{ className }} implements {{ domainEntity }}{{ classNam
         return $this->getTransactionHandler()->handleTransaction(function () use (${{ domainEntity | lcfirst }}CollectionResponseTransfer) {
             return $this->execute{{ type }}{{ domainEntity }}CollectionResponseTransaction(${{ domainEntity | lcfirst }}CollectionResponseTransfer);
         });
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
-     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
-     */
-    protected function validateCollection(
-        {{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer,
-        {{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
-    ): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer {
-        if (${{ domainEntity | lcfirst }}CollectionRequestTransfer->getIsTransactional()) {
-            return $this->{{ domainEntity | lcfirst }}Validator->validateCollectionTransactional(${{ domainEntity | lcfirst }}CollectionResponseTransfer);
-        }
-
-        return $this->{{ domainEntity | lcfirst }}Validator->validateCollection(${{ domainEntity | lcfirst }}CollectionResponseTransfer);
     }
 
     /**

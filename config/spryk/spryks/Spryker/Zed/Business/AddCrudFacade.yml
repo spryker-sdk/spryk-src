@@ -325,6 +325,10 @@ postSpryks:
                   value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers"
               output:
                   value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer[]"
+              specification:
+                  value:
+                      - "- Expands `{{ domainEntity }}Transfer[]` after reading them."
+                      - "- Returns expanded `{{ domainEntity }}Transfer[]`."
 
     # Creates {{ domainEntity }}WriterCreatePluginInterface
     - AddDomainEntityExtensionInterfaceMethod:
@@ -339,6 +343,10 @@ postSpryks:
                   value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers"
               output:
                   value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer[]"
+              specification:
+                  value:
+                      - "- Executes plugin for `{{ domainEntity }}Transfer[]` before or after create them."
+                      - "- Returns mapped `{{ domainEntity }}Transfer[]`."
 
     # Creates {{ domainEntity }}WriterUpdatePluginInterface
     - AddDomainEntityExtensionInterfaceMethod:
@@ -353,6 +361,10 @@ postSpryks:
                     value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer[] ${{ domainEntity | lcfirst }}Transfers"
                 output:
                     value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer[]"
+                specification:
+                    value:
+                        - "- Executes plugin for `{{ domainEntity }}Transfer[]` before or after update them."
+                        - "- Returns mapped `{{ domainEntity }}Transfer[]`."
 
     # Creates {{ domainEntity }}ValidatorRulePluginInterface
     - AddDomainEntityExtensionInterfaceMethod:
@@ -367,6 +379,10 @@ postSpryks:
                   value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer"
               output:
                   value: "array"
+              specification:
+                  value:
+                      - "- Validates `{{ domainEntity }}Transfer` before create or update it."
+                      - "- Returns validated `{{ domainEntity }}Transfer`."
     - AddZedPersistencePropelSchemaProperty:
           arguments:
               name:
