@@ -17,7 +17,7 @@ arguments:
     resourceDataObject:
         description: "Defines the Transfer that will be used in the Methods. Do not use Transfer as suffix, it will be added automatically. Example: Customer (ok) CustomerTransfer (wrong)"
         isOptional: true # Is not needed for all methods
-        value: {{ resource | singular | dashToCamelCase | ucfirst }}
+        value: "{{ resource | singular | dashToCamelCase | ucfirst }}"
 
     template:
         value: Common/Method.php.twig
@@ -46,9 +46,9 @@ postSpryk:
               method:
                   value: "mapGlueRequestTransferTo{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer"
               input:
-                  value: "\\Generated\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
+                  value: "\\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
               output:
-                  value: "\\Generated\Shared\\Transfer\{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer"
+                  value: "\\Generated\\Shared\\Transfer\\{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer"
               body:
                   value: Spryker/Glue/BackendApi/RequestMapper/MapGlueRequestTransferToCollectionDeleteCriteriaTransfer.php.twig
               target:
