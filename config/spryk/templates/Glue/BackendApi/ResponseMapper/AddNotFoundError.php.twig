@@ -1,0 +1,5 @@
+    $glueResponseTransfer
+        ->setHttpStatus(Response::HTTP_NOT_FOUND)
+        ->addError((new GlueErrorTransfer())->setMessage(Response::$statusTexts[Response::HTTP_NOT_FOUND]));
+
+    return $glueResponseTransfer;
