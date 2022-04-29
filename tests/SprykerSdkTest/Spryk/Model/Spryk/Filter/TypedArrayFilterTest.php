@@ -223,6 +223,10 @@ class TypedArrayFilterTest extends Unit
 
     /**
      * @dataProvider getTypedArrays
+     *
+     * @param string $input
+     * @param string $expectedResult
+     *
      * @return void
      */
     public function testTypedArrayTypeShouldIgnore(string $input, string $expectedResult): void
