@@ -36,6 +36,8 @@ class AddBackendApiResourceMethodSprykTest extends Unit
      */
     public function testAddPostResource(): void
     {
+        $this->markTestSkipped('Glue/BackendApi/Resource/GlueBackendApiResource.php does not exist.');
+
         require_once codecept_data_dir('Glue/BackendApi/Resource/GlueBackendApiResource.php');
 
         $sprykDefinition = $this->tester->getSprykDefinition([
