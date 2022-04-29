@@ -25,7 +25,6 @@ use SprykerSdk\Spryk\Model\Spryk\Dumper\SprykDefinitionDumper;
 use SprykerSdk\Spryk\Model\Spryk\Executor\SprykExecutor;
 use SprykerSdk\Spryk\SprykConfig;
 use SprykerSdk\Spryk\SprykFactory;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 return function (ContainerConfigurator $configurator) {
     $services = $configurator->services()
@@ -73,9 +72,5 @@ return function (ContainerConfigurator $configurator) {
 
     $services->set(Lexer::class)
         ->factory([service(SprykFactory::class), 'createLexer'])
-        ->args([service(SprykConfig::class)]);
-
-    $services->set(FilesystemAdapter::class)
-        ->factory([service(SprykFactory::class), 'createFilesystemCacheAdepter'])
         ->args([service(SprykConfig::class)]);
 };

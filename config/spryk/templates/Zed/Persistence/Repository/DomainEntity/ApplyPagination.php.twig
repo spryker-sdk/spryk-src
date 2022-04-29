@@ -1,0 +1,24 @@
+if ($paginationTransfer->getOffset() !== null || $paginationTransfer->getLimit() !== null) {
+    ${{ domainEntity | lcfirst }}Query
+        ->offset($paginationTransfer->getOffsetOrFail())
+        ->setLimit($paginationTransfer->getLimitOrFail());
+
+    return ${{ domainEntity | lcfirst }}Query;
+}
+
+$paginationModel = ${{ domainEntity | lcfirst }}Query->paginate(
+    $paginationTransfer->getPageOrFail(),
+    $paginationTransfer->getMaxPerPageOrFail()
+);
+
+$paginationTransfer->setNbResults($paginationModel->getNbResults())
+    ->setFirstIndex($paginationModel->getFirstIndex())
+    ->setLastIndex($paginationModel->getLastIndex())
+    ->setFirstPage($paginationModel->getFirstPage())
+    ->setLastPage($paginationModel->getLastPage())
+    ->setNextPage($paginationModel->getNextPage())
+    ->setPreviousPage($paginationModel->getPreviousPage());
+
+// Map the propel pagination model data to the transfer as needed
+
+return $paginationModel->getQuery();

@@ -19,6 +19,7 @@ arguments:
     body:
         description: "Body of the method. Can also be a template."
         isOptional: true
+        default: ""
 
     visibility:
         inherit: true
@@ -26,6 +27,7 @@ arguments:
 
     input:
         description: "Input (arguments) for the method. Can be an array or a list separated by comma."
+        isOptional: true
 
     output:
         description: "Output (return) for the method."

@@ -17,8 +17,6 @@ use SprykerSdk\Spryk\Model\Spryk\ArgumentList\Reader\ArgumentListReaderInterface
 use SprykerSdk\Spryk\Model\Spryk\Configuration\Loader\SprykConfigurationLoaderInterface;
 use SprykerSdk\Spryk\Model\Spryk\Dumper\SprykDefinitionDumperInterface;
 use SprykerSdk\Spryk\Model\Spryk\Executor\SprykExecutorInterface;
-use Symfony\Component\Cache\Adapter\AdapterInterface;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 class SprykFactory
 {
@@ -153,13 +151,5 @@ class SprykFactory
         }
 
         return $this->lexer;
-    }
-
-    /**
-     * @return \Symfony\Component\Cache\Adapter\AdapterInterface
-     */
-    public function createFilesystemCacheAdepter(): AdapterInterface
-    {
-        return new FilesystemAdapter();
     }
 }

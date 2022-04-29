@@ -302,17 +302,17 @@ interface ClassName
     /**
      * @var string
      */
-    public const ZED_FACADE_INTERFACE = 'Spryker\Zed\FooBar\Business\FooBarFacadeInterface';
-
-    /**
-     * @var string
-     */
     public const ZED_REPOSITORY = 'Spryker\Zed\FooBar\Persistence\FooBarRepository';
 
     /**
      * @var string
      */
     public const ZED_REPOSITORY_INTERFACE = 'Spryker\Zed\FooBar\Persistence\FooBarRepositoryInterface';
+
+    /**
+     * @var string
+     */
+    public const ZED_PERSISTENCE_FACTORY = 'Spryker\Zed\FooBar\Persistence\FooBarPersistenceFactory';
 
     /**
      * @var string

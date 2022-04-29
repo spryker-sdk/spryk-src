@@ -1,0 +1,14 @@
+$sortCollection = ${{ domainEntity | lcfirst }}CriteriaTransfer->getSortCollection();
+
+if ($sortCollection === null) {
+    return ${{ domainEntity | lcfirst }}Query;
+}
+
+foreach ($sortCollection as $sortTransfer) {
+    ${{ domainEntity | lcfirst }}Query->orderBy(
+        $sortTransfer->getField(),
+        $sortTransfer->getIsAscending() ? \Propel\Runtime\ActiveQuery\Criteria::ASC : \Propel\Runtime\ActiveQuery\Criteria::DESC
+    );
+}
+
+return ${{ domainEntity | lcfirst }}Query;
