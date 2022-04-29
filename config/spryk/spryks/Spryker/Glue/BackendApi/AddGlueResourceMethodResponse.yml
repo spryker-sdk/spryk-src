@@ -44,15 +44,15 @@ arguments:
         description: "The response code e.g. 200 (Ok)"
 
     controller:
-        value: "{{ resource | singular | dashToCamelCase | ucfirst }}ResourceController"
+        value: "{{ resource | singularize | dashToCamelCase | ucfirst }}ResourceController"
 
     zedDomainEntity:
         description: "Defines the domainEntity used on Zed side for the CRUD Facade. It will be used to create all needed Transfer Objects."
-        value: "{{ resource | singular | dashToCamelCase | ucfirst }}"
+        value: "{{ resource | singularize | dashToCamelCase | ucfirst }}"
 
     resourceDataObject:
         description: "Defines the Transfer that will be used in the Controller. Do not use Transfer as suffix, it will be added automatically. Example: Customer (ok) CustomerTransfer (wrong)."
-        value: "{{ resource | singular | dashToCamelCase | ucfirst }}"
+        value: "{{ resource | singularize | dashToCamelCase | ucfirst }}"
 
 postSpryks:
     # Add the controller method to handle the request
