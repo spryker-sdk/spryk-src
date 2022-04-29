@@ -7,34 +7,11 @@
 
 namespace SprykerSdk\Spryk;
 
-use Spryker\Shared\Config\Config;
-
 /**
  * @codeCoverageIgnore
  */
 class SprykConfig
 {
-    /**
-     * @uses \Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACE
-     *
-     * @var string
-     */
-    protected const PROJECT_NAMESPACE = 'PROJECT_NAMESPACE';
-
-    /**
-     * @uses \Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACES
-     *
-     * @var string
-     */
-    protected const PROJECT_NAMESPACES = 'PROJECT_NAMESPACES';
-
-    /**
-     * @uses \Spryker\Shared\Kernel\KernelConstants::CORE_NAMESPACES
-     *
-     * @var string
-     */
-    protected const CORE_NAMESPACES = 'CORE_NAMESPACES';
-
     /**
      * @var string
      */
@@ -99,11 +76,6 @@ class SprykConfig
      * @var string
      */
     protected const NAME_FILE_ARGUMENT_LIST = 'spryk_argument_list.yml';
-
-    /**
-     * @var string
-     */
-    protected const NAME_ORGANIZATION = 'spryker-sdk';
 
     /**
      * @var string
@@ -220,22 +192,22 @@ class SprykConfig
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     public function getCoreNamespaces(): array
     {
-        $namespaces = [];
         /** @var string $namespacesFromEnv */
         $namespacesFromEnv = getenv('CORE_NAMESPACES');
 
         if ($namespacesFromEnv) {
-            $namespaces = explode(',', $namespacesFromEnv);
+            return explode(',', $namespacesFromEnv);
         }
 
-        return Config::get(
-            static::CORE_NAMESPACES,
-            $namespaces,
-        );
+        if (defined('SPRYKER_CORE_NAMESPACES')) {
+            return explode(', ', SPRYKER_CORE_NAMESPACES);
+        }
+
+        return [];
     }
 
     /**
@@ -243,41 +215,90 @@ class SprykConfig
      */
     public function getProjectNamespace(): ?string
     {
-        return Config::get(static::PROJECT_NAMESPACE, getenv('PROJECT_NAMESPACE') ?: '');
+        /** @var string $namespaceFromEnv */
+        $namespaceFromEnv = getenv('PROJECT_NAMESPACE');
+
+        if ($namespaceFromEnv) {
+            return $namespaceFromEnv;
+        }
+
+        if (defined('SPRYKER_PROJECT_NAMESPACE')) {
+            return SPRYKER_PROJECT_NAMESPACE;
+        }
+
+        return null;
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     public function getProjectNamespaces(): array
     {
-        $namespaces = [];
-
         /** @var string $namespacesFromEnv */
-        $namespacesFromEnv = getenv('PROJECT_NAMESPACES');
+        $namespacesFromEnv = getenv('SPRYKER_PROJECT_NAMESPACES');
 
         if ($namespacesFromEnv) {
-            $namespaces = explode(',', $namespacesFromEnv);
+            return explode(',', $namespacesFromEnv);
         }
 
-        return Config::get(
-            static::PROJECT_NAMESPACES,
-            $namespaces,
-        );
+        if (defined('SPRYKER_PROJECT_NAMESPACES')) {
+            return explode(', ', SPRYKER_PROJECT_NAMESPACES);
+        }
+
+        return [];
     }
 
     /**
+     * We need to be able to serve two cases:
+     * 1. Building the cache file before the spryk.phar is created
+     * 2. Building the cache file from project side
+     *
+     * First case ensures that we have a cache file in place OOTB for users of the spryk.phar.
+     * Second case ensures that projects can build their own cache file when they have their own Spryk definitions.
+     *
      * @return string
      */
-    public function getArgumentListFilePath(): string
+    public function getArgumentListWritePath(): string
     {
+        // 1. case try to use the var directory inside spryker-sdk/spryk-src.
         $generatedDirectory = $this->getSprykRootDirectory() . 'var' . DIRECTORY_SEPARATOR;
 
-        if (!file_exists($generatedDirectory)) {
+        // When projects executes the build command the var directory inside spryker-sdk/spryk is not writable
+        // as it points to the root of the PHAR file.
+        if (!file_exists($generatedDirectory) || !is_writable($generatedDirectory)) {
+            // 2. case use path inside the project.
             $generatedDirectory = $this->getProjectRootDirectory() . static::NAME_DIRECTORY_GENERATED;
         }
 
         return $generatedDirectory . DIRECTORY_SEPARATOR . static::NAME_FILE_ARGUMENT_LIST;
+    }
+
+    /**
+     * We need to be able to serve two cases:
+     * 1. Reading the cache file from project (Spryks on project level)
+     * 2. Reading the cache file from spryk.phar (no Spryks on project level)
+     *
+     * First case ensures that when a project has created its own cache this file will be used.
+     * Second case ensures that when a project does not have their own cache the one from the spryk.phar will be used.
+     *
+     * @return string|null
+     */
+    public function getArgumentListReadPath(): ?string
+    {
+        // 1. case try to read from project.
+        $projectCacheFilePath = $this->getProjectRootDirectory() . static::NAME_DIRECTORY_GENERATED . DIRECTORY_SEPARATOR . static::NAME_FILE_ARGUMENT_LIST;
+
+        if (file_exists($projectCacheFilePath)) {
+            return $projectCacheFilePath;
+        }
+
+        // 2. case try to read from spryk.phar.
+        $sprykCacheFilePath = $this->getSprykRootDirectory() . 'var' . DIRECTORY_SEPARATOR . static::NAME_FILE_ARGUMENT_LIST;
+        if (file_exists($sprykCacheFilePath)) {
+            return $sprykCacheFilePath;
+        }
+
+        return null;
     }
 
     /**

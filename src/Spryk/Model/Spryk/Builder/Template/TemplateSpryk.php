@@ -8,6 +8,7 @@
 namespace SprykerSdk\Spryk\Model\Spryk\Builder\Template;
 
 use Exception;
+use PhpParser\Error;
 use SprykerSdk\Spryk\Model\Spryk\Builder\AbstractBuilder;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface;
@@ -93,7 +94,11 @@ class TemplateSpryk extends AbstractBuilder
 
         $content = $this->getContent($templateName);
 
-        $this->fileResolver->addFile($targetPath, $content);
+        try {
+            $this->fileResolver->addFile($targetPath, $content);
+        } catch (Error $e) {
+            $foo = 'bar';
+        }
 
         $this->log(sprintf('Created <fg=green>%s</>', $targetPath));
     }

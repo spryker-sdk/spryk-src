@@ -11,7 +11,7 @@ if (!is_file(dirname(__DIR__).'/vendor/autoload_runtime.php')) {
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
 return function (array $context) {
-    define('APPLICATION_ROOT_DIR', __DIR__ . '/..');
+    define('APPLICATION_ROOT_DIR', __DIR__ . '/../');
     define('SPRYK_ROOT_DIR', __DIR__ . '/../');
     define('APPLICATION_ENV', getenv('APPLICATION_ENV') ?? 'test');
     define('APPLICATION', 'Spryk');

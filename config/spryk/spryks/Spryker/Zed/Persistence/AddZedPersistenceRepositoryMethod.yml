@@ -4,6 +4,9 @@ mode: both
 level: 2
 
 arguments:
+    visibility:
+        value: "public"
+
     module:
         inherit: true
 

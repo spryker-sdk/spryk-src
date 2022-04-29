@@ -26,7 +26,7 @@ arguments:
 
     subDirectory:
         inherit: true
-        value: "Zed/{{ module }}/Communication/Plugin/MessageBroker"
+        value: "Communication/Plugin/MessageBroker"
 
     template:
         value: Zed/Communication/Plugin/MessageBroker/MessageHandlerPluginClass.php.twig
@@ -35,7 +35,7 @@ arguments:
         value: "{{ module }}{{ messageName }}MessageHandlerPlugin.php"
 
     targetPath:
-        value: "src/{{ organization }}/"
+         value: "src/{{ organization }}/{{ application }}/{{ module }}/"
 
 postSpryks:
     - AddZedBusinessMessageBrokerMessageHandlerMethod
