@@ -14,6 +14,7 @@ use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\Parser;
 use ReflectionClass;
 use ReflectionException;
+use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Exception\FileDoesNotContainClassOrInterfaceException;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClass;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface;
 use SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface;
@@ -120,6 +121,8 @@ class ClassParser implements ParserInterface
      * @param string $fileContents
      *
      * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClass
+     *@throws FileDoesNotContainClassOrInterfaceException
+     *
      */
     protected function fromFileContent(string $fileContents): ResolvedClass
     {
@@ -128,6 +131,10 @@ class ClassParser implements ParserInterface
 
         /** @var string $classOrInterfaceName */
         $classOrInterfaceName = $this->nodeFinder->findClassOrInterfaceName($ast);
+
+        if ($classOrInterfaceName === null) {
+            throw new FileDoesNotContainClassOrInterfaceException('The file doesn\'t contain a class or interface.');
+        }
 
         $resolved = new ResolvedClass();
         $resolved->setClassName($classOrInterfaceName);
