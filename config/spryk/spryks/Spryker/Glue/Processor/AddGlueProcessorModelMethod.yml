@@ -14,6 +14,10 @@ arguments:
         inherit: true
         default: Spryker
 
+    application:
+        inherit: true
+        default: Glue
+
     className:
         inherit: true
 
@@ -35,7 +39,7 @@ arguments:
         value: Common/Method.php.twig
 
     target:
-        value: '{{ organization }}\Glue\{{ module }}\Processor{% if subDirectory %}\{{ subDirectory }}{% endif %}\{{ className }}'
+        value: "{{ organization }}\\Glue\\{{ module }}\\Processor{% if subDirectory.value is not empty %}\\{{ subDirectory }}{% endif %}\\{{ className }}"
 
 preSpryks:
     - AddGlueProcessorModel

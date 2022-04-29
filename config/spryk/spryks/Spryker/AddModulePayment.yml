@@ -12,6 +12,10 @@ arguments:
         inherit: true
         type: NewModuleType
 
+    application:
+        inherit: true
+        value: Zed
+
     paymentMethod:
         inherit: true
 
