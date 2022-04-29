@@ -25,7 +25,7 @@ $autoloadProjectAutoloaderFile = function (string $file) use (&$composerAutoload
             require_once $path;
         }
     } else {
-        $pharPath = \Phar::running(false);
+        $pharPath = Phar::running(false);
         if ($pharPath === '') {
             if (is_file($path)) {
                 $composerAutoloaderProjectPaths[] = dirname($path, 2);
@@ -48,8 +48,3 @@ $autoloadProjectAutoloaderFile('/../../autoload.php');
 $devOrPharLoader->register(true);
 
 define('SPRYK_ROOT_DIR', __DIR__ . '/../');
-//defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', getcwd() . DIRECTORY_SEPARATOR);
-//defined('APPLICATION_SOURCE_DIR') || define('APPLICATION_SOURCE_DIR', APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR);
-//defined('APPLICATION_ENV') || define('APPLICATION_ENV', getenv('APPLICATION_ENV') ?? 'prod');
-//defined('APPLICATION') || define('APPLICATION', 'Spryk');
-//defined('APPLICATION_STORE') || define('APPLICATION_STORE', '');
