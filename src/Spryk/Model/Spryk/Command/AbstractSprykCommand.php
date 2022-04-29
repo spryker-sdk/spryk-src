@@ -27,7 +27,7 @@ abstract class AbstractSprykCommand implements SprykCommandInterface
             return;
         }
 
-        $process = new Process(explode(' ', $this->getCommandLine()), APPLICATION_ROOT_DIR);
+        $process = new Process(explode(' ', $this->getCommandLine()), APPLICATION_ROOT_DIR, null, null, 180);
         $process->run();
 
         if (!$process->isSuccessful()) {

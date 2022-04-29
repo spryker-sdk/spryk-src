@@ -10,8 +10,12 @@ arguments:
         inherit: true
         default: SprykerEco
 
+    application:
+        inherit: true
+        default: Zed
+
     subDirectory:
-        value: "Zed/{{ module }}/Communication/Plugin/Oms/Command"
+        value: "Communication/Plugin/Oms/Command"
 
     classNamePrefix:
         inherit: true
@@ -39,7 +43,7 @@ arguments:
         value: Common/Method.php.twig
 
     target:
-        value: "{{ organization }}\\{{ subDirectory | convertToClassNameFragment }}\\{{ className }}"
+        value: "{{ organization }}\\{{ application }}\\{{ module }}\\{{ subDirectory | convertToClassNameFragment }}\\{{ className }}"
 
 preSpryks:
     - AddCommandByOrderPlugin

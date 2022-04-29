@@ -1,0 +1,126 @@
+spryk: wrapper
+description: "Adds transfers for *domainEntity* to be used in common entity manipulation facade."
+mode: both
+level: 2
+
+arguments:
+    module:
+        inherit: true
+
+    organization:
+        inherit: true
+        default: Spryker
+
+    domainEntity:
+        inherit: true
+
+    targetPath:
+        value: "src/{{ organization }}/Shared/{{ module }}/Transfer/{{ module | underscored }}.transfer.xml"
+
+postSpryks:
+    - AddSharedTransferProperty:
+        arguments:
+            name:
+                value: "{{ domainEntity | ucfirst }}"
+            propertyName:
+                value: "id{{ domainEntity | ucfirst }}"
+            propertyType:
+                value: "int"
+    - AddSharedTransferProperty:
+        arguments:
+            name:
+                value: "{{ domainEntity | ucfirst }}"
+            propertyName:
+                value: "uuid"
+            propertyType:
+                value: "string"
+
+    # *domainEntity*CollectionRequest
+    -   AddSharedTransferProperty:
+            arguments:
+                name:
+                    value: "{{ domainEntity | ucfirst }}CollectionRequest"
+                propertyName:
+                    value: "isTransactional"
+                propertyType:
+                    value: "bool"
+    -   AddSharedTransferProperty:
+            arguments:
+                name:
+                    value: "{{ domainEntity | ucfirst }}CollectionRequest"
+                propertyName:
+                    value: "{{ domainEntity | lcfirst | pluralize }}"
+                propertyType:
+                    value: "{{ domainEntity | ucfirst }}[]"
+                singular:
+                    value: "{{ domainEntity | lcfirst }}"
+
+    # *domainEntity*CollectionResponse
+    -   AddSharedTransferProperty:
+            arguments:
+                name:
+                    value: "{{ domainEntity | ucfirst }}CollectionResponse"
+                propertyName:
+                    value: "errors"
+                propertyType:
+                    value: "Error[]"
+                singular:
+                    value: "error"
+    -   AddSharedTransferProperty:
+            arguments:
+                name:
+                    value: "{{ domainEntity | ucfirst }}CollectionResponse"
+                propertyName:
+                    value: "{{ domainEntity | lcfirst | pluralize }}"
+                propertyType:
+                    value: "{{ domainEntity | ucfirst }}[]"
+                singular:
+                    value: "{{ domainEntity | lcfirst }}"
+
+    # *domainEntity*CollectionDeleteCriteria
+    -   AddSharedTransferProperty:
+            arguments:
+                name:
+                    value: "{{ domainEntity | ucfirst }}CollectionDeleteCriteria"
+                propertyName:
+                    value: "isTransactional"
+                propertyType:
+                    value: "bool"
+    -   AddSharedTransferProperty:
+            arguments:
+                name:
+                    value: "{{ domainEntity | ucfirst }}CollectionDeleteCriteria"
+                propertyName:
+                    value: "{{ domainEntity | lcfirst }}Ids"
+                propertyType:
+                    value: "int[]"
+                singular:
+                    value: "id{{ domainEntity | ucfirst }}"
+    -   AddSharedTransferProperty:
+            arguments:
+                name:
+                    value: "{{ domainEntity | ucfirst }}CollectionDeleteCriteria"
+                propertyName:
+                    value: "uuids"
+                propertyType:
+                    value: "string[]"
+                singular:
+                    value: "uuid"
+
+    # Error
+    -   AddSharedTransferProperty:
+            arguments:
+                name:
+                    value: "Error"
+                propertyName:
+                    value: "message"
+                propertyType:
+                    value: "string"
+    -   AddSharedTransferProperty:
+            arguments:
+                name:
+                    value: "Error"
+                propertyName:
+                    value: "entityIdentifier"
+                propertyType:
+                    value: "string"

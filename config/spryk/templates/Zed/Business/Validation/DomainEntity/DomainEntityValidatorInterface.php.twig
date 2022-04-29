@@ -1,0 +1,25 @@
+<?php
+
+{{ include('Partials/license.twig') }}
+
+namespace {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator;
+
+interface {{ domainEntity }}ValidatorInterface
+{
+    /**
+     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
+     */
+    public function validateCollection(
+        \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
+    ): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer
+     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
+     */
+    public function validate(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer, \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer;
+}

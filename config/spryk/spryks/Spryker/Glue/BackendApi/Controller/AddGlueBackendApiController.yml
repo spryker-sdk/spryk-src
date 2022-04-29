@@ -1,0 +1,62 @@
+spryk: wrapper
+description: "Adds a new Glue BackendApi Controller to the Glue application."
+mode: both
+level: 3
+
+condition: "applicationType === 'Backend'"
+
+arguments:
+    module:
+        inherit: true
+
+    organization:
+        inherit: true
+        default: Spryker
+
+    application:
+        inherit: true
+        value: Glue
+
+    applicationType:
+        inherit: true
+        description: "Can be one of: Backend or Frontend"
+        default: "Backend"
+
+    isTestClass:
+        isOptional: true
+        default: false
+
+    resource:
+        inherit: true
+        description: "Defines the resource name this controller will work with e.g. /customers"
+
+    subDirectory:
+        inherit: true
+        value: Controller
+
+    controller:
+        inherit: true
+        value: "{{ resource | normalizeResourceName }}ResourceController"
+
+postSpryks:
+    - AddClass:
+          arguments:
+              subDirectory:
+                  value: Controller
+              className:
+                  value: "{{ controller }}"
+              extends:
+                  value:
+                      - "\\Spryker\\Glue\\{{ module }}\\Controller\\{{ controller }}"
+                      - "\\Spryker\\Glue\\Kernel\\Backend\\Controller\\AbstractBackendApiController"
+
+    - AddClass:
+          arguments:
+              isTestClass:
+                  value: true
+              subDirectory:
+                  value: Controller
+              className:
+                  value: "{{ resource | normalizeResourceName }}GetResourceController"
+              extends:
+                  value: "\\Codeception\\Test\\Unit"
