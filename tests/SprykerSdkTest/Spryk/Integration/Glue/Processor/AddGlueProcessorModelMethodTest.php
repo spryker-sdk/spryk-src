@@ -60,7 +60,7 @@ class AddGlueProcessorModelMethodTest extends Unit
                     '--input' => 'string $something',
                     '--output' => 'bool',
                 ],
-                'Spryker\Glue\FooBar\FooBar',
+                'Spryker\Glue\FooBar\Processor\FooBarProcessor',
                 'bazQux',
             ],
             [
@@ -72,7 +72,7 @@ class AddGlueProcessorModelMethodTest extends Unit
                     '--output' => 'bool',
                     '--mode' => 'project',
                 ],
-                'Pyz\Glue\FooBar\FooBar',
+                'Pyz\Glue\FooBar\Processor\FooBarProcessor',
                 'bazQux',
             ],
         ];
