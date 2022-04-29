@@ -10,6 +10,10 @@ arguments:
         inherit: true
         default: SprykerEco
 
+    application:
+        inherit: true
+        default: Yves
+
     classNamePrefix:
         inherit: true
 
@@ -29,13 +33,13 @@ arguments:
             - "@api"
 
     subDirectory:
-        value: "Yves/{{ module }}/Plugin"
+        value: "Plugin"
 
     template:
         value: Common/Method.php.twig
 
     target:
-        value: "{{ organization }}\\{{ subDirectory | convertToClassNameFragment }}\\{{ classNamePrefix }}SubFormPlugin"
+        value: "{{ organization }}\\{{ application }}\\{{ module }}\\{{ subDirectory | convertToClassNameFragment }}\\{{ classNamePrefix }}SubFormPlugin"
 
 preSpryks:
     - AddSubFormPlugin

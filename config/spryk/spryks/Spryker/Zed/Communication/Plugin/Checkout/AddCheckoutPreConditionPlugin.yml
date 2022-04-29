@@ -10,6 +10,10 @@ arguments:
         inherit: true
         default: SprykerEco
 
+    application:
+        inherit: true
+        default: Zed
+
     classNamePrefix:
         inherit: true
 
@@ -25,7 +29,7 @@ arguments:
         value: "Spryker/Zed/Kernel/Communication/AbstractPlugin"
 
     subDirectory:
-        value: "Zed/{{ module }}/Communication/Plugin/Checkout"
+        value: "Communication/Plugin/Checkout"
 
     template:
         value: Common/Class.php.twig
@@ -34,7 +38,7 @@ arguments:
         value: "{{ classNamePrefix }}CheckoutPreConditionPlugin.php"
 
     targetPath:
-        value: "src/{{ organization }}/"
+         value: "src/{{ organization }}/{{ application }}/{{ module }}/"
 
 preSpryks:
     - AddModule

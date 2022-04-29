@@ -1,0 +1,70 @@
+<?php
+
+{{ include('Partials/license.twig') }}
+
+namespace {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Deleter;
+
+use Generated\Shared\Transfer\{{ domainEntity }}CollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use {{ organization }}\Zed\{{ module }}\Persistence\{{ module }}EntityManagerInterface;
+use {{ organization }}\Zed\{{ module }}\Persistence\{{ module }}RepositoryInterface;
+
+class {{ domainEntity }}Deleter implements {{ domainEntity }}DeleterInterface
+{
+    use TransactionTrait;
+
+    /**
+     * @var \{{ organization }}\Zed\{{ module }}\Persistence\{{ module }}EntityManagerInterface
+     */
+    protected {{ module }}EntityManagerInterface ${{ module | lcfirst }}EntityManager;
+
+    /**
+     * @var \{{ organization }}\Zed\{{ module }}\Persistence\{{ module }}RepositoryInterface
+     */
+    protected {{ module }}RepositoryInterface ${{ module | lcfirst }}Repository;
+
+    /**
+     * @param \{{ organization }}\Zed\{{ module }}\Persistence\{{ module }}EntityManagerInterface ${{ module | lcfirst }}EntityManager
+     * @param \{{ organization }}\Zed\{{ module }}\Persistence\{{ module }}RepositoryInterface ${{ module | lcfirst }}Repository
+     */
+    public function __construct(
+        {{ module }}EntityManagerInterface ${{ module | lcfirst }}EntityManager,
+        {{ module }}RepositoryInterface ${{ module | lcfirst }}Repository
+    ) {
+        $this->{{ module | lcfirst }}EntityManager = ${{ module | lcfirst }}EntityManager;
+        $this->{{ module | lcfirst }}Repository = ${{ module | lcfirst }}Repository;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
+     */
+    public function delete{{ domainEntity }}Collection({{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer): {{ domainEntity }}CollectionResponseTransfer
+    {
+        return $this->getTransactionHandler()->handleTransaction(function () use (${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer) {
+            return $this->executeDelete{{ domainEntity }}CollectionTransaction(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\{{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
+     */
+    protected function executeDelete{{ domainEntity }}CollectionTransaction({{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer): {{ domainEntity }}CollectionResponseTransfer
+    {
+        ${{ domainEntity | lcfirst }}CollectionTransfer = $this->{{ module | lcfirst }}Repository->get{{ domainEntity }}DeleteCollection(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
+
+        ${{ domainEntity | lcfirst }}CollectionResponseTransfer = new {{ domainEntity }}CollectionResponseTransfer();
+
+        foreach(${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize }}() as ${{ domainEntity | lcfirst }}Transfer) {
+            ${{ domainEntity | lcfirst }}CollectionResponseTransfer->add{{ domainEntity }}(
+                $this->{{ module | lcfirst }}EntityManager->delete{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer)
+            );
+        }
+
+        return ${{ domainEntity | lcfirst }}CollectionResponseTransfer;
+    }
+}

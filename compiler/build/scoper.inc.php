@@ -37,6 +37,8 @@ return [
     'prefix' => $prefix,
     'finders' => [],
     'files-whitelist' => $stubs,
+    // Newer box version the one above are renamed, currently failing.
+    // 'exclude-files' => $stubs,
     'patchers' => [
         function (string $filePath, string $prefix, string $content): string {
             if (!in_array($filePath, [
@@ -50,7 +52,13 @@ return [
             return str_replace('__DIR__ . \'/..', '\'phar://spryk.phar', $content);
         },
         function (string $filePath, string $prefix, string $content): string {
-            return preg_replace('<\?php\s\n', '<?php' . PHP_EOL, $content); // A bug produced by the PHPScoper, it adds a whitespace after the opening PHP tag.
+            $changedContent = preg_replace('/<\?php\s\n/', '<?php' . PHP_EOL, $content); // A bug produced by the PHPScoper, it adds a whitespace after the opening PHP tag.
+
+            if ($changedContent) {
+                return $changedContent;
+            }
+
+            return $content;
         },
         function (string $filePath, string $prefix, string $content): string {
             if (strpos($filePath, 'vendor/twig/twig/src/Node/ModuleNode.php') !== 0) {
@@ -76,4 +84,7 @@ return [
     ],
     'whitelist-global-functions' => false,
     'whitelist-global-classes' => false,
+    // Newer box version the two above are renamed, currently failing.
+    // 'expose-global-functions' => false,
+    // 'expose-global-classes' => false,
 ];
