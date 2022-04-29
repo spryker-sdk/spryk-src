@@ -46,7 +46,7 @@ class AddGlueControllerDeleteActionTest extends Unit
 
         $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/Controller/BarController.php');
         $this->tester->assertClassHasMethod(ClassName::GLUE_CONTROLLER, 'deleteAction');
-        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/FooBar/FooBarDeleter.php');
+        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/Processor/FooBar/FooBarDeleter.php');
     }
 
     /**
@@ -68,6 +68,6 @@ class AddGlueControllerDeleteActionTest extends Unit
 
         $this->assertFileExists($this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'Controller/BarController.php');
         $this->tester->assertClassHasMethod(ClassName::PROJECT_GLUE_CONTROLLER, 'deleteAction');
-        $this->assertFileExists($this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'FooBar/FooBarDeleter.php');
+        $this->assertFileExists($this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'Processor/FooBar/FooBarDeleter.php');
     }
 }

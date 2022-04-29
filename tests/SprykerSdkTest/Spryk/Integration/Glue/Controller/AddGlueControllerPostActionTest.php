@@ -46,7 +46,7 @@ class AddGlueControllerPostActionTest extends Unit
 
         $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/Controller/BarController.php');
         $this->tester->assertClassHasMethod(ClassName::GLUE_CONTROLLER, 'postAction');
-        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/FooBar/FooBarWriter.php');
+        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/Processor/FooBar/FooBarWriter.php');
     }
 
     /**
@@ -68,6 +68,6 @@ class AddGlueControllerPostActionTest extends Unit
 
         $this->assertFileExists($this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'Controller/BarController.php');
         $this->tester->assertClassHasMethod(ClassName::PROJECT_GLUE_CONTROLLER, 'postAction');
-        $this->assertFileExists($this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'FooBar/FooBarWriter.php');
+        $this->assertFileExists($this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'Processor/FooBar/FooBarWriter.php');
     }
 }
