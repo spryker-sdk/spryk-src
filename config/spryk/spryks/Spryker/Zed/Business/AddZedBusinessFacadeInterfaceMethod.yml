@@ -16,6 +16,7 @@ arguments:
 
     specification:
         multiline: true
+        inherit: true
 
     facadeMethod:
         inherit: true
@@ -31,7 +32,6 @@ arguments:
 
     annotations:
         value:
-            - "Specification:"
             - "@api"
 
     template:

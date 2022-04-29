@@ -12,7 +12,8 @@
         "bin/spryk-dump",
         "bin/spryk-run",
         "bin/environment.php",
-        "vendor/composer/installed.php"
+        "vendor/composer/installed.php",
+        "var/spryk_argument_list.yml"
     ],
     "directories": [
         "src/",

@@ -19,6 +19,7 @@ use Symfony\Bridge\Twig\Extension\StopwatchExtension;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Bridge\Twig\Extension\WebLinkExtension;
 use Symfony\Bridge\Twig\Extension\YamlExtension;
+use Throwable;
 use Twig\Environment;
 use Twig\Error\SyntaxError;
 use Twig\Extension\DebugExtension;
@@ -64,6 +65,14 @@ class TemplateRenderer implements TemplateRendererInterface
             if (!$twig->hasExtension(get_class($extension))) {
                 $twig->addExtension($extension);
             }
+        }
+
+        $projectTemplatePath = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'spryk' . DIRECTORY_SEPARATOR . 'templates';
+
+        if (is_dir($projectTemplatePath)) {
+            /** @var \Twig\Loader\FilesystemLoader $loader */
+            $loader = $twig->getLoader();
+            $loader->addPath($projectTemplatePath);
         }
 
         $this->renderer = $twig;
@@ -112,7 +121,11 @@ class TemplateRenderer implements TemplateRendererInterface
             throw new Exception(sprintf('Spryk failed due to a SyntaxError in "%s"', $templateString), 0, $e);
         }
 
-        return $template->render($arguments);
+        try {
+            return $template->render($arguments);
+        } catch (Throwable $e) {
+            throw new Exception(sprintf('Spryk failed due to a SyntaxError in "%s"', $templateString), 0, $e);
+        }
     }
 
     /**

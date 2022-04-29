@@ -135,8 +135,9 @@ class MethodSpryk extends AbstractBuilder
      */
     protected function getTargetClass(): ResolvedClassInterface
     {
+        $targetClassName = $this->getTargetClassName();
         /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface|null $resolvedClass */
-        $resolvedClass = $this->fileResolver->resolve($this->getTargetClassName());
+        $resolvedClass = $this->fileResolver->resolve($targetClassName);
 
         if (!$resolvedClass) {
             throw new Exception(sprintf('Could not find class "%s".', $this->getTargetClassName()));

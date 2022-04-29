@@ -1,4 +1,5 @@
 spryk: method
+deprecated: "Use AddGlueControllerMethodPatch instead."
 description: "Adds a new action to the Glue controller."
 mode: both
 level: 2

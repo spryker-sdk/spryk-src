@@ -1,0 +1,44 @@
+spryk: wrapper
+description: "Adds a Persistence schema to *module*.schema.xml in the Zed application."
+mode: both
+
+arguments:
+    module:
+        inherit: true
+
+    organization:
+        inherit: true
+        default: Spryker
+
+    domainEntity:
+        inherit: true
+
+    propertyName:
+        inherit: true
+
+    uuidBehaviorKeyColumnsParameter:
+        inherit: true
+
+postSpryks:
+    - AddZedPersistencePropelSchemaUniqueKey:
+        arguments:
+            name:
+                value: "spy_{{ domainEntity | underscored }}"
+            keyName:
+                value: "spy_{{ domainEntity | underscored }}-unique-{{ propertyName }}"
+            columns:
+                value:
+                    - "{{ propertyName }}"
+    - AddZedPersistencePropelSchemaBehavior:
+        arguments:
+            name:
+                value: "spy_{{ domainEntity | underscored }}"
+            behaviorName:
+                value: "uuid"
+            parameterNames:
+                value:
+                    - "key_columns"
+            parameterValues:
+                value:
+                    - "{{ uuidBehaviorKeyColumnsParameter }}"
+

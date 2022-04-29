@@ -84,17 +84,21 @@ class Superseder implements SupersederInterface
     }
 
     /**
-     * @param string $argumentValue
+     * @param string|int|bool $argumentValue
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $sprykArguments
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $resolvedArguments
      *
-     * @return string
+     * @return string|int|bool
      */
     protected function replacePlaceholderInValue(
-        string $argumentValue,
+        $argumentValue,
         ArgumentCollectionInterface $sprykArguments,
         ArgumentCollectionInterface $resolvedArguments
-    ): string {
+    ) {
+        if (is_bool($argumentValue) || is_int($argumentValue)) {
+            return $argumentValue;
+        }
+
         preg_match_all(static::PLACEHOLDER_PATTERN, $argumentValue, $matches, PREG_SET_ORDER);
 
         if (count($matches) === 0) {
@@ -108,9 +112,9 @@ class Superseder implements SupersederInterface
             $replacements[$argumentName] = $resolvedArgumentValue;
         }
 
-        $argumentValue = $this->templateRenderer->renderString($argumentValue, $replacements);
+        $replacements = array_merge($replacements, $sprykArguments->getArguments());
 
-        return $argumentValue;
+        return $this->templateRenderer->renderString($argumentValue, $replacements);
     }
 
     /**
