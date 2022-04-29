@@ -378,7 +378,7 @@ postSpryks:
               input:
                   value: "\\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer"
               output:
-                  value: "array<string>"
+                  value: "string[]"
               specification:
                   value:
                       - "- Validates the `{{ domainEntity }}Transfer`."

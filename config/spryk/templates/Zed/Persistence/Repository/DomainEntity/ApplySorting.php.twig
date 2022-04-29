@@ -1,9 +1,5 @@
 $sortCollection = ${{ domainEntity | lcfirst }}CriteriaTransfer->getSortCollection();
 
-if ($sortCollection === null) {
-    return ${{ domainEntity | lcfirst }}Query;
-}
-
 foreach ($sortCollection as $sortTransfer) {
     ${{ domainEntity | lcfirst }}Query->orderBy(
         $sortTransfer->getField(),
