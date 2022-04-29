@@ -192,41 +192,6 @@ interface ClassName
     /**
      * @var string
      */
-    public const GLUE_BACKEND_API_CONTROLLER = 'Spryker\Glue\FooBarBackendApi\Controller\FooBarsResourceController';
-
-    /**
-     * @var string
-     */
-    public const GLUE_BACKEND_API_GET_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarBackendApi\Controller\FooBarsGetResourceControllerTest';
-
-    /**
-     * @var string
-     */
-    public const GLUE_BACKEND_API_GET_COLLECTION_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarBackendApi\Controller\FooBarsGetCollectionResourceControllerTest';
-
-    /**
-     * @var string
-     */
-    public const GLUE_BACKEND_API_POST_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarBackendApi\Controller\FooBarsPostResourceControllerTest';
-
-    /**
-     * @var string
-     */
-    public const GLUE_BACKEND_API_PATCH_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarBackendApi\Controller\FooBarsPatchResourceControllerTest';
-
-    /**
-     * @var string
-     */
-    public const GLUE_BACKEND_API_DELETE_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarBackendApi\Controller\FooBarsDeleteResourceControllerTest';
-
-    /**
-     * @var string
-     */
-    public const GLUE_BACKEND_API_DELETE_COLLECTION_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarBackendApi\Controller\FooBarsResourceDeleteCollectionControllerTest';
-
-    /**
-     * @var string
-     */
     public const GLUE_CONFIG = 'Spryker\Glue\FooBar\FooBarConfig';
 
     /**

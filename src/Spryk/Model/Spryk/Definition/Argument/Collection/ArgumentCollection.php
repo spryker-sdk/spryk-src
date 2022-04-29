@@ -137,6 +137,14 @@ class ArgumentCollection implements ArgumentCollectionInterface
     }
 
     /**
+     * @return string
+     */
+    public function getSprykName(): string
+    {
+        return $this->sprykName;
+    }
+
+    /**
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $argumentCollection
      *
      * @return $this

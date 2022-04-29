@@ -1,0 +1,86 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerSdkTest\Module;
+
+interface GlueBackendApiClassNames
+{
+    /**
+     * @var string
+     */
+    public const GLUE_BACKEND_API_FACTORY = 'Spryker\Glue\FooBarsBackendApi\FooBarsBackendApiFactory';
+
+    /**
+     * @var string
+     */
+    public const GLUE_BACKEND_API_DEPENDENCY_PROVIDER = 'Spryker\Glue\FooBarsBackendApi\FooBarsBackendApiDependencyProvider';
+
+    /**
+     * @var string
+     */
+    public const GLUE_BACKEND_API_CONTROLLER = 'Spryker\Glue\FooBarsBackendApi\Controller\FooBarsResourceController';
+
+    /**
+     * @var string
+     */
+    public const GLUE_BACKEND_API_GET_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\Controller\FooBarsGetResourceControllerTest';
+
+    /**
+     * @var string
+     */
+    public const GLUE_BACKEND_API_GET_COLLECTION_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\Controller\FooBarsGetCollectionResourceControllerTest';
+
+    /**
+     * @var string
+     */
+    public const GLUE_BACKEND_API_POST_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\Controller\FooBarsPostResourceControllerTest';
+
+    /**
+     * @var string
+     */
+    public const GLUE_BACKEND_API_PATCH_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\Controller\FooBarsPatchResourceControllerTest';
+
+    /**
+     * @var string
+     */
+    public const GLUE_BACKEND_API_DELETE_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\Controller\FooBarsDeleteResourceControllerTest';
+
+    /**
+     * @var string
+     */
+    public const GLUE_BACKEND_API_DELETE_COLLECTION_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\Controller\FooBarsDeleteCollectionResourceControllerTest';
+
+    /**
+     * @var string
+     */
+    public const GLUE_BACKEND_API_RESOURCE_PLUGIN = 'Spryker\Glue\FooBarsBackendApi\Plugin\FooBarBackendApiResource';
+
+    /**
+     * @var string
+     */
+    public const GLUE_BACKEND_API_REQUEST_MAPPER = '\Spryker\Glue\FooBarsBackendApi\Mapper\GlueRequestTestMapper';
+
+    /**
+     * @var string
+     */
+    public const GLUE_BACKEND_API_REQUEST_MAPPER_INTERFACE = '\Spryker\Glue\FooBarsBackendApi\Mapper\GlueRequestTestMapperInterface';
+
+    /**
+     * @var string
+     */
+    public const GLUE_BACKEND_API_RESPONSE_MAPPER = '\Spryker\Glue\FooBarsBackendApi\Mapper\GlueResponseTestMapper';
+
+    /**
+     * @var string
+     */
+    public const GLUE_BACKEND_API_RESPONSE_MAPPER_INTERFACE = '\Spryker\Glue\FooBarsBackendApi\Mapper\GlueResponseTestMapperInterface';
+
+    /**
+     * @var string
+     */
+    public const GLUE_TEST_HELPER = 'SprykerTest\Glue\FooBarsBackendApi\Helper\FooBarsHelper';
+}

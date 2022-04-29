@@ -207,6 +207,13 @@ class SprykExecutor implements SprykExecutorInterface
 
             $expectedValue = trim($expectedValue, '\'"');
 
+            if ($expectedValue === 'true') {
+                $expectedValue = true;
+            }
+            if ($expectedValue === 'false') {
+                $expectedValue = false;
+            }
+
             if ($comparison === '===' && $argumentValue !== $expectedValue) {
                 $conditionMatched = false;
             }

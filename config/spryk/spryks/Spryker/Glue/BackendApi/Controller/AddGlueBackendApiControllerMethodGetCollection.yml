@@ -68,16 +68,16 @@ preSpryks:
               isTestClass:
                   value: true
               controller:
-                  value: "{{ resource | normalizeResourceName }}GetResourceController"
+                  value: "{{ resource | normalizeResourceName }}GetCollectionResourceController"
 
 postSpryks:
-    # Add controller getAction
+    # Add controller getCollectionAction
     - AddMethod:
           arguments:
               method:
-                  value: "getAction"
+                  value: "getCollectionAction"
               input:
-                  value: "string $id, \\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
+                  value: "\\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               zedModule:
@@ -87,7 +87,7 @@ postSpryks:
               resourceDataObject:
                   inherit: true
               body:
-                  value: Glue/BackendApi/Controller/GetMethod.php.twig
+                  value: Glue/BackendApi/Controller/GetCollectionMethod.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Controller\\{{ resource | normalizeResourceName }}ResourceController"
 
