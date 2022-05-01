@@ -44,7 +44,7 @@ class WirePluginTest extends Unit
             '--module' => 'Ay',
             '--domainEntity' => 'Entity',
             '--type' => 'EntityPreCreate',
-            '--output' => '\Spryker\Zed\AyExtension\Dependency\Plugin\Entity\Writer\EntityCreatePluginInterface[]'
+            '--output' => '\Spryker\Zed\AyExtension\Dependency\Plugin\Entity\Writer\EntityCreatePluginInterface[]',
         ];
 
         $tester->execute($arguments);

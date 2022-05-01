@@ -11,9 +11,9 @@ namespace SprykerSdk\Spryk\Model\Spryk\Builder\NodeVisitor;
 
 use PhpParser\BuilderFactory;
 use PhpParser\Node;
+use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\NodeVisitorAbstract;
-use PhpParser\Node\Stmt\Namespace_;
 
 class AddUseVisitor extends NodeVisitorAbstract
 {

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerSdk\Spryk\Model\Spryk\Builder\Plugin;
 
 use PhpParser\NodeTraverser;
@@ -53,8 +58,6 @@ class WirePluginSpryk extends AbstractBuilder
 
     /**
      * @return void
-     *
-     * @throws SprykException
      */
     protected function build(): void
     {
@@ -72,8 +75,8 @@ class WirePluginSpryk extends AbstractBuilder
                 $sourceClassName,
                 $this->getPluginBefore(),
                 $this->getPluginAfter(),
-                $this->getPluginIndex()
-            )
+                $this->getPluginIndex(),
+            ),
         );
         $newStmts = $traverser->traverse($resolvedTargetClass->getClassTokenTree());
 
@@ -91,9 +94,9 @@ class WirePluginSpryk extends AbstractBuilder
     /**
      * @param string $targetClassName
      *
-     * @return ResolvedClassInterface
+     * @throws \SprykerSdk\Spryk\Exception\SprykException
      *
-     * @throws SprykException
+     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface
      */
     protected function resolveTargetClass(string $targetClassName): ResolvedClassInterface
     {

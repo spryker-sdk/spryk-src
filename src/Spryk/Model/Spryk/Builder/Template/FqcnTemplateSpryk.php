@@ -47,13 +47,11 @@ class FqcnTemplateSpryk extends TemplateSpryk
 
         $this->arguments->addArgument((new Argument())
             ->setName(static::ARGUMENT_TARGET_PATH)
-            ->setValue(dirname($filePath))
-        );
+            ->setValue(dirname($filePath)));
 
         $this->arguments->addArgument((new Argument())
             ->setName(static::ARGUMENT_TARGET_FILE_NAME)
-            ->setValue(basename($filePath))
-        );
+            ->setValue(basename($filePath)));
 
         return parent::getTargetPath();
     }
