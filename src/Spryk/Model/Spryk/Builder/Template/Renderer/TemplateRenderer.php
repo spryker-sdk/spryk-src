@@ -21,7 +21,6 @@ use Symfony\Bridge\Twig\Extension\WebLinkExtension;
 use Symfony\Bridge\Twig\Extension\YamlExtension;
 use Throwable;
 use Twig\Environment;
-use Twig\Error\SyntaxError;
 use Twig\Extension\DebugExtension;
 use Twig\Extension\ExtensionInterface;
 use Twig\Loader\LoaderInterface;
@@ -108,23 +107,20 @@ class TemplateRenderer implements TemplateRendererInterface
     /**
      * @param string $templateString
      * @param array $arguments
+     * @param string $sprykName
      *
      * @throws \Exception
      *
      * @return string
      */
-    public function renderString(string $templateString, array $arguments): string
+    public function renderString(string $templateString, array $arguments, string $sprykName): string
     {
         try {
             $template = $this->renderer->createTemplate($templateString);
-        } catch (SyntaxError $e) {
-            throw new Exception(sprintf('Spryk failed due to a SyntaxError in "%s"', $templateString), 0, $e);
-        }
 
-        try {
             return $template->render($arguments);
         } catch (Throwable $e) {
-            throw new Exception(sprintf('Spryk failed due to a SyntaxError in "%s"', $templateString), 0, $e);
+            throw new Exception(sprintf('Spryk "%s" failed due to a SyntaxError in "%s"', $sprykName, $templateString), 0, $e);
         }
     }
 

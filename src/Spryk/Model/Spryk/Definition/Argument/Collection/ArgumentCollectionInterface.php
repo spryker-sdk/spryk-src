@@ -57,6 +57,11 @@ interface ArgumentCollectionInterface
     public function setSprykName(string $sprykName);
 
     /**
+     * @return string
+     */
+    public function getSprykName(): string;
+
+    /**
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $argumentCollection
      *
      * @return $this

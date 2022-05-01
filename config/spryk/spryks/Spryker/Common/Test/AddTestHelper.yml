@@ -1,0 +1,31 @@
+spryk: template
+description: "Adds a new Test Helper."
+mode: both
+level: 2
+
+priority: 1
+
+arguments:
+    module:
+        inherit: true
+
+    organization:
+        inherit: true
+        default: Spryker
+
+    application:
+        inherit: true
+
+    template:
+        value: Common/Test/TestHelper.php.twig
+
+    className:
+        value: "{{ module }}Helper"
+
+    targetFilename:
+        value: "{{ className }}.php"
+
+    targetPath:
+        value: "tests/{{ organization }}Test/{{ application }}/{{ module }}/_support/Helper/"
+
+

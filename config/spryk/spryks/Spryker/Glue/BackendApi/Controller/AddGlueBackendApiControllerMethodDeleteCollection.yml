@@ -24,7 +24,7 @@ arguments:
         default: Glue
 
     httpMethod:
-        value: "get"
+        value: "delete"
 
     isBulk:
         description: "Defines if this resource should work with Collections. When set to true the method will use collections when possible."
@@ -68,16 +68,16 @@ preSpryks:
               isTestClass:
                   value: true
               controller:
-                  value: "{{ resource | normalizeResourceName }}GetResourceController"
+                  value: "{{ resource | normalizeResourceName }}DeleteCollectionResourceController"
 
 postSpryks:
-    # Add controller getAction
+    # Add controller deleteCollectionAction
     - AddMethod:
           arguments:
               method:
-                  value: "getAction"
+                  value: "deleteCollectionAction"
               input:
-                  value: "string $id, \\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
+                  value: "\\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               zedModule:
@@ -87,7 +87,7 @@ postSpryks:
               resourceDataObject:
                   inherit: true
               body:
-                  value: Glue/BackendApi/Controller/GetMethod.php.twig
+                  value: Glue/BackendApi/Controller/DeleteCollectionMethod.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Controller\\{{ resource | normalizeResourceName }}ResourceController"
 
