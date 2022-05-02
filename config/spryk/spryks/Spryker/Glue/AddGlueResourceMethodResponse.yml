@@ -36,6 +36,9 @@ arguments:
         description: "Can be one of: Backend or Frontend"
         default: "Backend"
 
+    suite:
+        value: "{{ applicationType }}Api"
+
     isBulk:
         description: "Defines if this resource should work with Collections. When set to true the method will use collections when possible."
         value: false
@@ -134,6 +137,8 @@ postSpryks:
                   value: "{{ zedModule }}"
               dependencyType:
                   value: "Client"
+
+    # What are the client methods we would need to bridge??
 
     # Add the controller method to handle the request
     - AddGlueBackendApiControllerMethodGet:

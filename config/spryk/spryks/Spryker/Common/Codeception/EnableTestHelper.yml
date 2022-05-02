@@ -10,21 +10,27 @@ arguments:
         inherit: true
         default: Spryker
 
-    layer: ~
+    application:
+        inherit: true
+
+    suite:
+        description: "Only used for Zed application all others don't have layers."
+        inherit: true
 
     helperClassName:
+        description: "The FQCN of the Helper."
 
     afterElement:
         isOptional: true
 
     addToElement:
-        value: "suites.{{ layer }}.modules.enabled"
+        value: "suites.{{ suite }}.modules.enabled"
 
     targetPath:
-        value: "tests/{{ organization }}Test/Zed/{{ module }}/codeception.yml"
+        value: "tests/{{ organization }}Test/{{ application}}/{{ module }}/codeception.yml"
 
     content:
         value: "{{ helperClassName }}"
 
 preSpryks:
-    - AddZedTestCodeceptionConfiguration
+    - AddSuiteCodeceptionConfiguration

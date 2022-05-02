@@ -11,6 +11,7 @@ arguments:
 
     application:
         inherit: true
+        value: Zed
 
     module:
         inherit: true

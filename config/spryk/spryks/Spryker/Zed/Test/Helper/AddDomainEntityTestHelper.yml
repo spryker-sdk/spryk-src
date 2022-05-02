@@ -16,6 +16,9 @@ arguments:
         inherit: true
         default: Spryker
 
+    application:
+        inherit: true
+
     domainEntity:
         inherit: true
 
@@ -33,10 +36,10 @@ preSpryks:
     - AddZedBusinessTestSuite
 
 postSpryks:
-    -   EnableTestHelper:
-            arguments:
-                layer:
-                    value: "Business"
-                helperClassName:
-                    value: "\\{{ organization }}Test\\Zed\\{{ module }}\\Helper\\{{ domainEntity }}CrudHelper"
+    - EnableTestHelper:
+          arguments:
+              suite:
+                  value: "Business"
+              helperClassName:
+                  value: "\\{{ organization }}Test\\Zed\\{{ module }}\\Helper\\{{ domainEntity }}CrudHelper"
 

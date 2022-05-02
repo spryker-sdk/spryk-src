@@ -80,11 +80,14 @@ class AddGlueResourceMethodResponseTest extends Unit
 
         // Controller and method
         $this->tester->assertClassHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER, $expectedControllerMethodName);
+
         // Controller test class
         $this->tester->assertClassOrInterfaceExists($expectedTestController);
+
         // Test method in the test controller
         $this->tester->assertClassHasMethod($expectedTestController, $expectedTestControllerMethodName);
-        // Test Helper method
+
+        // Test Helper methods
         $this->tester->assertClassHasMethod(GlueBackendApiClassNames::GLUE_TEST_HELPER, sprintf('haveValidFooBars%s%sUri', ucfirst($httpMethod), ($isBulk) ? 'Collection' : ''));
         $this->tester->assertClassHasMethod(GlueBackendApiClassNames::GLUE_TEST_HELPER, sprintf('haveInvalidFooBars%s%sUri', ucfirst($httpMethod), ($isBulk) ? 'Collection' : ''));
         $this->tester->assertClassHasMethod(GlueBackendApiClassNames::GLUE_TEST_HELPER, sprintf('haveValidFooBars%s%sRequestData', ucfirst($httpMethod), ($isBulk) ? 'Collection' : ''));
@@ -126,11 +129,11 @@ class AddGlueResourceMethodResponseTest extends Unit
     {
         return [
             ['get', 200],
-//            ['get', 200, true],
-//            ['post', 200],
-//            ['patch', 200],
-//            ['delete', 200],
-//            ['delete', 200, true],
+            ['get', 200, true],
+            ['post', 200],
+            ['patch', 200],
+            ['delete', 200],
+            ['delete', 200, true],
         ];
     }
 
