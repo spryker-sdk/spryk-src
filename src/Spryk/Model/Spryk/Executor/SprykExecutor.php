@@ -8,6 +8,7 @@
 namespace SprykerSdk\Spryk\Model\Spryk\Executor;
 
 use Exception;
+use InvalidArgumentException;
 use Jfcherng\Diff\DiffHelper;
 use SprykerSdk\Spryk\Exception\SprykWrongDevelopmentLayerException;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Collection\SprykBuilderCollectionInterface;
@@ -177,18 +178,19 @@ class SprykExecutor implements SprykExecutorInterface
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
      *
      * @throws \Exception
+     * @throws \InvalidArgumentException
      *
      * @return bool
      */
     protected function conditionMatched(SprykDefinitionInterface $sprykDefinition): bool
     {
-        $condition = $sprykDefinition->getCondition();
+        $conditionString = $sprykDefinition->getCondition();
 
-        if (!$condition) {
+        if (!$conditionString) {
             return true;
         }
 
-        $conditions = explode('&&', $condition);
+        $conditions = explode('&&', $conditionString);
 
         $conditionMatched = true;
 
@@ -199,11 +201,12 @@ class SprykExecutor implements SprykExecutorInterface
                 throw new Exception(sprintf('Allowed comparison types "!==" and "===" found "%s"', $comparison));
             }
 
-            if (!$sprykDefinition->getArgumentCollection()->hasArgument($argument)) {
-                throw new Exception(sprintf('Could not find the argument "%s" in the argument collection of "%s"', $argument, $sprykDefinition->getSprykName()));
+            // TRy to find also in previous definitions. This is needed as condition values might be only available in the "parent" spryk.
+            if (!$sprykDefinition->getArgumentCollection()->hasArgument($argument, true)) {
+                throw new InvalidArgumentException(sprintf('Could not find the argument "%s" in the argument collection of "%s" to be used in the condition "%s"', $argument, $sprykDefinition->getSprykName(), $conditionString));
             }
 
-            $argumentValue = $sprykDefinition->getArgumentCollection()->getArgument($argument)->getValue();
+            $argumentValue = $sprykDefinition->getArgumentCollection()->getArgument($argument, true)->getValue();
 
             $expectedValue = trim($expectedValue, '\'"');
 

@@ -120,7 +120,7 @@ class TemplateRenderer implements TemplateRendererInterface
 
             return $template->render($arguments);
         } catch (Throwable $e) {
-            throw new Exception(sprintf('Spryk "%s" failed due to a SyntaxError in "%s"', $sprykName, $templateString), 0, $e);
+            throw new Exception(sprintf('Spryk "%s" failed due to a SyntaxError in "%s". Previous error message: %s', $sprykName, $templateString, $e->getMessage()), 0, $e);
         }
     }
 

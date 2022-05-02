@@ -15,9 +15,9 @@ use SprykerSdk\Spryk\SprykConfig;
 
 class TemplateSpryk extends AbstractBuilder
 {
- /**
-  * @var string
-  */
+    /**
+     * @var string
+     */
     public const ARGUMENT_TARGET_FILE_NAME = 'targetFilename';
 
     /**

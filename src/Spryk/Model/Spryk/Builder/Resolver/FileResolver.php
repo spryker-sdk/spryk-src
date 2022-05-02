@@ -7,6 +7,7 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Builder\Resolver;
 
+use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Exception\FileDoesNotContainClassOrInterfaceException;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\ParserInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface;
@@ -171,8 +172,15 @@ class FileResolver implements FileResolverInterface
      */
     protected function addPhpFile(string $filePath, string $content): void
     {
-        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolved */
-        $resolved = $this->classParser->parse($content);
+        try {
+            /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolved */
+            $resolved = $this->classParser->parse($content);
+        } catch (FileDoesNotContainClassOrInterfaceException $e) {
+            $this->addDefaultFile($filePath, $content);
+
+            return;
+        }
+
         $resolved->setFilePath($filePath);
         $resolved->setOriginalContent('');
 

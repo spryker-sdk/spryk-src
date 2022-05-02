@@ -13,11 +13,15 @@ arguments:
         inherit: true
         default: Spryker
 
+    suite:
+        inherit: true
+        description: "The name of the suite can be one of: Business, Communication, Persistence, RestApi, BackendApi, FrontendApi."
+
     application:
         inherit: true
 
     template:
-        value: Common/Test/TestHelper.php.twig
+        value: Common/Codeception/TestHelper.php.twig
 
     className:
         value: "{{ module }}Helper"
@@ -28,4 +32,9 @@ arguments:
     targetPath:
         value: "tests/{{ organization }}Test/{{ application }}/{{ module }}/_support/Helper/"
 
-
+preSpryks:
+    - AddSuiteCodeceptionConfiguration
+    - EnableTestHelper:
+        arguments:
+            helperClassName:
+                value: "{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ className }}"

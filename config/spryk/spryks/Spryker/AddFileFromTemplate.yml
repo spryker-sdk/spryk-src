@@ -1,0 +1,14 @@
+spryk: template
+description: "Adds a new file."
+mode: both
+
+arguments:
+    module:
+        inherit: true
+
+    organization:
+        inherit: true
+
+    targetFilename: ~
+    targetPath: ~
+    template: ~

@@ -7,32 +7,20 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Builder\Bridge;
 
-use PhpParser\Lexer;
+use PhpParser\BuilderFactory;
+use PhpParser\Comment\Doc;
 use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\Stmt\Return_;
 use PhpParser\NodeTraverser;
-use PhpParser\Parser;
 use SprykerSdk\Spryk\Model\Spryk\Builder\AbstractBuilder;
-use SprykerSdk\Spryk\Model\Spryk\Builder\Bridge\Reflection\MethodHelperInterface;
-use SprykerSdk\Spryk\Model\Spryk\Builder\Bridge\Reflection\ReflectionHelperInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\NodeVisitor\AddMethodVisitor;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface;
-use SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface;
 use SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface;
 use SprykerSdk\Spryk\SprykConfig;
 
 class BridgeMethodsSpryk extends AbstractBuilder
 {
-    /**
-     * @var string
-     */
-    public const ARGUMENT_TARGET = 'target';
-
-    /**
-     * @var string
-     */
-    public const ARGUMENT_TEMPLATE = 'template';
-
     /**
      * @var string
      */
@@ -54,63 +42,23 @@ class BridgeMethodsSpryk extends AbstractBuilder
     public const ARGUMENT_DEPENDENCY_TYPE = 'dependencyType';
 
     /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface
-     */
-    protected TemplateRendererInterface $renderer;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Bridge\Reflection\ReflectionHelperInterface
-     */
-    protected ReflectionHelperInterface $reflectionHelper;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Bridge\Reflection\MethodHelperInterface
-     */
-    protected MethodHelperInterface $methodHelper;
-
-    /**
      * @var \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface
      */
     protected NodeFinderInterface $nodeFinder;
 
     /**
-     * @var \PhpParser\Parser
-     */
-    protected Parser $parser;
-
-    /**
-     * @var \PhpParser\Lexer
-     */
-    protected Lexer $lexer;
-
-    /**
      * @param \SprykerSdk\Spryk\SprykConfig $config
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface $fileResolver
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface $renderer
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Bridge\Reflection\ReflectionHelperInterface $reflectionHelper
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Bridge\Reflection\MethodHelperInterface $methodHelper
      * @param \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface $nodeFinder
-     * @param \PhpParser\Parser $parser
-     * @param \PhpParser\Lexer $lexer
      */
     public function __construct(
         SprykConfig $config,
         FileResolverInterface $fileResolver,
-        TemplateRendererInterface $renderer,
-        ReflectionHelperInterface $reflectionHelper,
-        MethodHelperInterface $methodHelper,
-        NodeFinderInterface $nodeFinder,
-        Parser $parser,
-        Lexer $lexer
+        NodeFinderInterface $nodeFinder
     ) {
         parent::__construct($config, $fileResolver);
 
-        $this->renderer = $renderer;
-        $this->reflectionHelper = $reflectionHelper;
-        $this->methodHelper = $methodHelper;
         $this->nodeFinder = $nodeFinder;
-        $this->parser = $parser;
-        $this->lexer = $lexer;
     }
 
     /**
@@ -137,85 +85,109 @@ class BridgeMethodsSpryk extends AbstractBuilder
         /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolved */
         $resolved = $this->fileResolver->resolve($this->getTarget());
 
-        $reflectionMethods = $this->getReflectionMethods($resolved);
+        $methodsToAdd = $this->getBridgeMethodsToAdd($resolved);
 
-        foreach ($reflectionMethods as $reflectionMethod) {
-            $returnTypeAnnotation = $this->getReturnTypeAnnotationFromDocBlock($reflectionMethod->getDocComment());
+        $builderFactory = new BuilderFactory();
 
-            $arguments = [
-                'docBlock' => $this->cleanMethodDocBlock($reflectionMethod->getDocComment()),
-                'methodName' => $reflectionMethod->getName(),
-                'dependentModule' => $this->getStringArgument(static::ARGUMENT_DEPENDENT_MODULE),
-                'dependencyType' => $this->getStringArgument(static::ARGUMENT_DEPENDENCY_TYPE),
-                'return' => ($returnTypeAnnotation !== 'void'),
-                'methodReturnType' => $this->methodHelper->getMethodReturnType($reflectionMethod),
-                'parameter' => $this->methodHelper->getParameter($reflectionMethod),
-                'parameterWithoutTypes' => $this->methodHelper->getParameterNames($reflectionMethod),
-            ];
-
-            $methodContent = $this->renderer->render(
-                $this->getStringArgument(static::ARGUMENT_TEMPLATE),
-                $arguments,
-            );
+        foreach ($methodsToAdd as $classMethodNode) {
+            $newClassMethodNode = $this->getNewClassMethodNode($builderFactory, $classMethodNode);
 
             $traverser = new NodeTraverser();
-            $traverser->addVisitor(new AddMethodVisitor($this->getClassMethodNode($methodContent)));
+            $traverser->addVisitor(new AddMethodVisitor($newClassMethodNode));
             $newStmts = $traverser->traverse($resolved->getClassTokenTree());
 
             $resolved->setClassTokenTree($newStmts);
 
             $this->log(sprintf(
                 'Added method "<fg=green>%s</>" to "<fg=green>%s</>"',
-                $reflectionMethod->getName(),
+                $classMethodNode->name,
                 $this->getTarget(),
             ));
         }
     }
 
     /**
-     * @param string $classMethod
+     * Copy from an existing method and create a "fresh" ClassMethod without attributes. Using the original ClassMethod
+     * with its attributes will crash the PrettyPrinter.
+     *
+     * @param \PhpParser\BuilderFactory $builderFactory
+     * @param \PhpParser\Node\Stmt\ClassMethod $classMethodNode
      *
      * @return \PhpParser\Node\Stmt\ClassMethod
      */
-    protected function getClassMethodNode(string $classMethod): ClassMethod
+    protected function getNewClassMethodNode(BuilderFactory $builderFactory, ClassMethod $classMethodNode): ClassMethod
     {
-        $methodContent = sprintf('<?php class FooBar {%s}', $classMethod);
+        $newClassMethod = $builderFactory->method($classMethodNode->name);
 
-        /** @var array<\PhpParser\Node\Stmt> $methodContentToken */
-        $methodContentToken = $this->parser->parse($methodContent);
-        /** @var \PhpParser\Node\Stmt\Class_ $classStmt */
-        $classStmt = $methodContentToken[0];
+        foreach ($classMethodNode->getParams() as $param) {
+            $param->setAttributes([]);
+            if ($param->type) {
+                $param->type->setAttributes([]);
+            }
+            $newClassMethod->addParam($param);
+        }
 
-        /** @var \PhpParser\Node\Stmt\ClassMethod $firstClassMethod */
-        $firstClassMethod = $classStmt->stmts[0];
+        if ($classMethodNode->getDocComment()) {
+            $newClassMethod->setDocComment(new Doc($classMethodNode->getDocComment()->getText()));
+        }
 
-        return $firstClassMethod;
+        $returnType = $classMethodNode->getReturnType();
+
+        if ($returnType) {
+            $returnType->setAttributes([]);
+            $newClassMethod->setReturnType($returnType);
+        }
+
+        $variableName = lcfirst($this->getStringArgument(static::ARGUMENT_DEPENDENT_MODULE)) . $this->getStringArgument(static::ARGUMENT_DEPENDENCY_TYPE);
+
+        $args = [];
+
+        foreach ($classMethodNode->params as $param) {
+            $var = $param->var;
+            $var->setAttributes([]);
+            $args[] = $var;
+        }
+
+        $methodCall = $builderFactory->methodCall(
+            $builderFactory->propertyFetch(
+                $builderFactory->var('this'),
+                $variableName,
+            ),
+            $classMethodNode->name,
+            $builderFactory->args($args),
+        );
+        $returnStatement = new Return_($methodCall);
+
+        $newClassMethod->addStmts([$returnStatement]);
+
+        return $newClassMethod->getNode();
     }
 
     /**
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolvedClass
      *
-     * @return array
+     * @return array<\PhpParser\Node\Stmt\ClassMethod>
      */
-    protected function getReflectionMethods(ResolvedClassInterface $resolvedClass): array
+    protected function getBridgeMethodsToAdd(ResolvedClassInterface $resolvedClass): array
     {
-        $sourceReflectionClass = $this->reflectionHelper->getReflectionClassByClassName(
-            $this->getSourceClassName(),
-        );
+        $sourceClassName = $this->getSourceClassName();
+        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolvedSourceClass */
+        $resolvedSourceClass = $this->fileResolver->resolve($sourceClassName);
+
+        $sourceClassMethods = $this->nodeFinder->findMethods($resolvedSourceClass->getClassTokenTree());
+        $targetClassMethods = $this->getMethodNamesFromResolvedClass($resolvedClass);
+
+        $methods = [];
 
         $methodNames = $this->getMethodNames();
 
-        $targetImmediateMethods = $this->getMethodNamesFromResolvedClass($resolvedClass);
-
-        $reflectionMethods = [];
-
         foreach ($methodNames as $methodName) {
-            if (!isset($targetImmediateMethods[$methodName])) {
-                $reflectionMethods[] = $sourceReflectionClass->getMethod($methodName);
+            if (!isset($targetClassMethods[$methodName])) {
+                $methods[] = $sourceClassMethods[$methodName];
             }
         }
 
-        return $reflectionMethods;
+        return $methods;
     }
 
     /**
@@ -245,52 +217,5 @@ class BridgeMethodsSpryk extends AbstractBuilder
     protected function getMethodNames(): array
     {
         return $this->getArrayArgument(static::ARGUMENT_METHODS);
-    }
-
-    /**
-     * @param string $docComment
-     *
-     * @return string
-     */
-    protected function cleanMethodDocBlock(string $docComment): string
-    {
-        $docCommentWithoutExtras = preg_replace('/.+?(?=@param|@return)/ms', '/**' . PHP_EOL . ' * ', $docComment, 1);
-
-        if ($docCommentWithoutExtras !== null) {
-            $docComment = $docCommentWithoutExtras;
-        }
-
-        return $this->addSpacingToDocComment($docComment);
-    }
-
-    /**
-     * @param string $docComment
-     *
-     * @return string
-     */
-    protected function addSpacingToDocComment(string $docComment): string
-    {
-        $docCommentLines = explode(PHP_EOL, $docComment);
-        array_walk($docCommentLines, function (&$docCommentLine): void {
-            $docCommentLine = str_repeat(' ', 4) . $docCommentLine;
-        });
-
-        return implode(PHP_EOL, $docCommentLines);
-    }
-
-    /**
-     * @param string $docComment
-     *
-     * @return string
-     */
-    protected function getReturnTypeAnnotationFromDocBlock(string $docComment): string
-    {
-        preg_match('/@return (.+)/', $docComment, $returnType);
-
-        if (!$returnType) {
-            return '';
-        }
-
-        return $returnType[1];
     }
 }

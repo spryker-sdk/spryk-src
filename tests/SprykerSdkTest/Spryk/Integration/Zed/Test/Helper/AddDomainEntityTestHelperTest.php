@@ -35,6 +35,9 @@ class AddDomainEntityTestHelperTest extends Unit
     {
         $this->tester->run($this, [
             '--module' => 'FooBar',
+            '--application' => 'Zed',
+            '--suite' => 'Business',
+            '--layer' => 'Business',
             '--domainEntity' => 'ZipZap',
         ]);
 

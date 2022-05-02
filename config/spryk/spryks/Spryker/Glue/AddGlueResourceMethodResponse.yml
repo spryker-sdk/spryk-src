@@ -36,6 +36,9 @@ arguments:
         description: "Can be one of: Backend or Frontend"
         default: "Backend"
 
+    suite:
+        value: "{{ applicationType }}Api"
+
     isBulk:
         description: "Defines if this resource should work with Collections. When set to true the method will use collections when possible."
         value: false
@@ -51,17 +54,92 @@ arguments:
         description: "The HTTP response code e.g. 200 (Ok)"
 
     controller:
-        value: "{{ resource | dashToCamelCase | ucfirst }}ResourceController"
+        value: "{{ resource | normalizeResourceName }}ResourceController"
 
     zedDomainEntity:
         description: "Defines the domainEntity used on Zed side for the CRUD Facade. It will be used to create all needed Transfer Objects."
-        value: "{{ resource | singularize | dashToCamelCase | ucfirst }}"
+        value: "{{ resource | normalizeResourceName | singularize }}"
 
     resourceDataObject:
         description: "Defines the Transfer that will be used in the Controller. Do not use Transfer as suffix, it will be added automatically. Example: Customer (ok) CustomerTransfer (wrong)."
-        value: "{{ resource | singularize | dashToCamelCase | ucfirst }}"
+        value: "{{ resource | normalizeResourceName | singularize }}"
 
 postSpryks:
+#    - AddGlueBackendApiApplication
+    # Add CrudFacade code
+    - AddCrudFacade:
+          arguments:
+              module:
+                  value: "{{ zedModule }}"
+              domainEntity:
+                  value: "{{ zedDomainEntity | ucfirst }}"
+    # Add the dependency provider for the Facade when used as BackendApi
+    - AddDependencyTypeToDependencyProvider:
+          condition: "applicationType === 'Backend'"
+          arguments:
+              dependentModule:
+                  value: "{{ zedModule }}"
+              dependencyType:
+                  value: "Facade"
+
+    # Add bridge method to get an entity collection for the used facade when used as BackendApi
+    - AddDependencyBridgeMethod:
+          condition: "applicationType === 'Backend' && httpMethod === 'get'"
+          arguments:
+              dependentModule:
+                  value: "{{ zedModule }}"
+              dependencyType:
+                  value: "Facade"
+              methods:
+                  value:
+                      - "get{{ zedDomainEntity }}Collection"
+
+    # Add bridge method to get an entity collection for the used facade when used as BackendApi
+    - AddDependencyBridgeMethod:
+          condition: "applicationType === 'Backend' && httpMethod === 'post'"
+          arguments:
+              dependentModule:
+                  value: "{{ zedModule }}"
+              dependencyType:
+                  value: "Facade"
+              methods:
+                  value:
+                      - "create{{ zedDomainEntity }}Collection"
+
+    # Add bridge method to get an entity collection for the used facade when used as BackendApi
+    - AddDependencyBridgeMethod:
+          condition: "applicationType === 'Backend' && httpMethod === 'patch'"
+          arguments:
+              dependentModule:
+                  value: "{{ zedModule }}"
+              dependencyType:
+                  value: "Facade"
+              methods:
+                  value:
+                      - "update{{ zedDomainEntity }}Collection"
+
+    # Add bridge method to get an entity collection for the used facade when used as BackendApi
+    - AddDependencyBridgeMethod:
+          condition: "applicationType === 'Backend' && httpMethod === 'delete'"
+          arguments:
+              dependentModule:
+                  value: "{{ zedModule }}"
+              dependencyType:
+                  value: "Facade"
+              methods:
+                  value:
+                      - "delete{{ zedDomainEntity }}Collection"
+
+    - AddDependencyTypeToDependencyProvider:
+          condition: "applicationType === 'Frontend'"
+          arguments:
+              dependentModule:
+                  value: "{{ zedModule }}"
+              dependencyType:
+                  value: "Client"
+
+    # What are the client methods we would need to bridge??
+
     # Add the controller method to handle the request
     - AddGlueBackendApiControllerMethodGet:
           condition: "applicationType === 'Backend' && httpMethod === 'get' && isBulk === false"

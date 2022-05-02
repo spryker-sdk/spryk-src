@@ -42,6 +42,7 @@ tests/_output/*
 !tests/_output/.gitkeep
 
 !tests/_data/config/*
+!tests/_data/Glue/*
 tests/_data/*
 
 var/*
