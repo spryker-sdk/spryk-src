@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Glue\BackendApi\Controller;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\GlueBackendApiClassNames;
 
 /**
  * Auto-generated group annotations
@@ -31,27 +32,20 @@ class AddGlueBackendApiApplicationTest extends Unit
     /**
      * @return void
      */
-    public function testAddsGlueControllerAction(): void
+    public function testAddsGlueBackendApiApplication(): void
     {
         $this->tester->run($this, [
-            '--module' => 'GlueRestApiConvention',
-            '--controller' => 'Bar',
-            '--organization' => 'Spryker',
+            '--mode' => 'core',
+            '--module' => 'FooBar',
+            '--apiType' => 'JSON',
+            '--applicationType' => 'Backend',
         ]);
 
-        $this->assertFileExists(
-            $this->tester->getSprykerModuleDirectory('GlueRestApiConvention')
-            . 'public/BackendApi/index.php',
-        );
+        $foo = '';
 
-        $this->assertFileExists(
-            $this->tester->getSprykerModuleDirectory('GlueRestApiConvention')
-            . 'src/Spryker/Glue/GlueApplication/Bootstrap/GlueBackendApiBootstrap.php',
-        );
-
-        $this->assertFileExists(
-            $this->tester->getSprykerModuleDirectory('GlueRestApiConvention')
-            . 'src/Spryker/Glue/GlueRestApiConvention/GlueRestApiConventionDependencyProvider.php',
-        );
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_BOOTSTRAP);
+//        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_APPLICATION_DEPENDENCY_PROVIDER);
+//        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_APPLICATION_DEPENDENCY_PROVIDER);
+//        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_REST_API_CONVENTION_DEPENDENCY_PROVIDER);
     }
 }

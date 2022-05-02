@@ -120,16 +120,15 @@ class ClassParser implements ParserInterface
     /**
      * @param string $fileContents
      *
-     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClass
-     *@throws FileDoesNotContainClassOrInterfaceException
+     * @throws \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Exception\FileDoesNotContainClassOrInterfaceException
      *
+     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClass
      */
     protected function fromFileContent(string $fileContents): ResolvedClass
     {
         /** @var array<\PhpParser\Node\Stmt> $ast */
         $ast = $this->parser->parse($fileContents);
 
-        /** @var string $classOrInterfaceName */
         $classOrInterfaceName = $this->nodeFinder->findClassOrInterfaceName($ast);
 
         if ($classOrInterfaceName === null) {

@@ -115,11 +115,22 @@ class AssertionModule extends Module
             ClassMethod::class,
             $method,
             sprintf(
-                'Expected that class "%s" has method "%s" but method not found.',
+                'Expected that class "%s" has method "%s" but method not found. Found methods: %s',
                 $className,
                 $methodName,
+                implode(', ', $this->getMethodNamesFromResolvedClass($resolved)),
             ),
         );
+    }
+
+    /**
+     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolvedClass
+     *
+     * @return array<string, string>
+     */
+    protected function getMethodNamesFromResolvedClass(ResolvedClassInterface $resolvedClass): array
+    {
+        return $this->getNodeFinder()->findMethodNames($resolvedClass->getClassTokenTree());
     }
 
     /**

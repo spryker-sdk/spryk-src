@@ -11,7 +11,6 @@ use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Exception\FileDoesNotContainCl
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\ParserInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface;
-use Throwable;
 
 class FileResolver implements FileResolverInterface
 {

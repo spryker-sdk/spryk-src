@@ -12,14 +12,16 @@ namespace SprykerSdk\Spryk\Model\Spryk\Filter;
  * into a camelCased string.
  *
  * Example:
- * $this->filter('FooBarBackendApi') === `FooBar';
+ * $this->filter('FooBarsBackendApi') === `FooBars';
+ * $this->filter('FooBarsFrontendApi') === `FooBars';
+ * $this->filter('FooBarsApi') === `FooBars';
  */
-class RemoveBackendApiSuffixFilter implements FilterInterface
+class RemoveApiSuffixFilter implements FilterInterface
 {
     /**
      * @var string
      */
-    protected const FILTER_NAME = 'removeBackendApiSuffix';
+    protected const FILTER_NAME = 'removeApiSuffix';
 
     /**
      * @return string
@@ -36,6 +38,9 @@ class RemoveBackendApiSuffixFilter implements FilterInterface
      */
     public function filter(string $value): string
     {
-        return (string)preg_replace('/BackendApi$/', '', $value);
+        $value = (string)preg_replace('/BackendApi$/', '', $value);
+        $value = (string)preg_replace('/FrontendApi$/', '', $value);
+
+        return (string)preg_replace('/Api$/', '', $value);
     }
 }
