@@ -25,7 +25,7 @@ arguments:
 
     sourceFqcn: ~
 
-    # in used when plugin dependency provider is not created
+    # is used to create plugin dependency provider
     pluginInterface: ~
 
 preSpryks:
