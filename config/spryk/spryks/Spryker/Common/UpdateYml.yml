@@ -1,0 +1,27 @@
+spryk: update-yml
+description: "Updates the *module* test configuration and adds a test helper."
+mode: both
+
+arguments:
+    module:
+        inherit: true
+
+    organization:
+        inherit: true
+        default: Spryker
+
+    application:
+        inherit: true
+
+    afterElement:
+        isOptional: true
+
+    addToElement:
+        descrption: "Path to where the content should be added to."
+
+    targetPath:
+        descrption: "The file path that should be updated."
+
+    content:
+        descrption: "The content of the element."
+
