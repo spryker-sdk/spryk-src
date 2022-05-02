@@ -9,6 +9,9 @@ arguments:
         inherit: true
         default: Spryker
 
+    application:
+        inherit: true
+
     module:
         inherit: true
 
@@ -18,8 +21,8 @@ excludedSpryks:
     - AddZedPresentationTwig
     - AddZedNavigationNode
 
-preSpryks:
-    - AddModule
+#preSpryks:
+#    - AddModule
 
 postSpryks:
     - AddZedDomainEntityDeleter
