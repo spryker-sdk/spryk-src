@@ -10,11 +10,20 @@ declare(strict_types=1);
 namespace SprykerSdk\Spryk\Model\Spryk\NodeFinder;
 
 use PhpParser\Node\Expr\MethodCall;
+use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Stmt\ClassConst;
 use PhpParser\Node\Stmt\ClassMethod;
 
 interface NodeFinderInterface
 {
+    /**
+     * @param array<\PhpParser\Node\Stmt> $tokens
+     * @param string $extends
+     *
+     * @return \PhpParser\Node\Name\FullyQualified|null
+     */
+    public function findExtends(array $tokens, string $extends): ?FullyQualified;
+
     /**
      * @param array<\PhpParser\Node\Stmt> $tokens
      * @param string $methodName

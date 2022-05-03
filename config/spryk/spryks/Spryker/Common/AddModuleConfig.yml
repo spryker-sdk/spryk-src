@@ -1,0 +1,32 @@
+spryk: template
+description: "Adds a new *module*Config to the *application*."
+mode: both
+
+arguments:
+    module:
+        inherit: true
+
+    organization:
+        inherit: true
+        default: Spryker
+
+    application:
+        inherit: true
+
+    template:
+        value: Common/Class.php.twig
+
+    extends:
+        callback: ResolveExtends
+        value:
+            - "\\Spryker\\{{ application }}\\{{ module }}\\{{ module }}Config"
+            - "\\Spryker\\{{ application }}\\Kernel\\AbstractBundleConfig"
+
+    targetFilename:
+        value: "{{ module }}Config.php"
+
+    targetPath:
+        value: "src/{{ organization }}/{{ application }}/{{ module }}/"
+
+#preSpryks:
+#    - AddModule

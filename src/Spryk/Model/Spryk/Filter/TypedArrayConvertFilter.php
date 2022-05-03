@@ -15,7 +15,7 @@ namespace SprykerSdk\Spryk\Model\Spryk\Filter;
  * $this->filter(`\Organization\Module\Class[] $classes') === 'array $classes';
  * $this->filter(`array $classes') === 'array $classes';
  */
-class TypedArrayFilter implements FilterInterface
+class TypedArrayConvertFilter implements FilterInterface
 {
     /**
      * @var string
@@ -98,7 +98,7 @@ class TypedArrayFilter implements FilterInterface
      */
     protected function isTypedArray(string $value): bool
     {
-        return (bool)preg_match('((.*?)\[\]$)', $value) || (bool)preg_match('((.*?)\<(.*?)\>$)', $value);
+        return (bool)preg_match('/(.*?)\[\]$/', $value) || (bool)preg_match('/(.*?)<(.*?)>$/', $value);
     }
 
     /**

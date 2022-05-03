@@ -14,10 +14,11 @@ class TargetPathExtenderPlugin extends AbstractExtender implements SprykConfigur
 {
     /**
      * @param array $sprykConfig
+     * @param string $sprykName
      *
      * @return array
      */
-    public function extend(array $sprykConfig): array
+    public function extend(array $sprykConfig, string $sprykName): array
     {
         if ($this->isBoth($sprykConfig)) {
             return $sprykConfig;

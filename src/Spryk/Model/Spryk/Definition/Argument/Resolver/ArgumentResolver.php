@@ -220,6 +220,11 @@ class ArgumentResolver implements ArgumentResolverInterface
             return $argumentDefinition[SprykConfig::NAME_ARGUMENT_KEY_VALUE];
         }
 
+        // Return manually set values. These are usually coming from pre or postSpryks which sometimes have a set value.
+        if (isset($argumentDefinition[SprykConfig::NAME_ARGUMENT_KEY_VALUE]) && !empty($argumentDefinition[SprykConfig::NAME_ARGUMENT_KEY_VALUE])) {
+            return $argumentDefinition[SprykConfig::NAME_ARGUMENT_KEY_VALUE];
+        }
+
         if ($this->canInherit($argumentName, $argumentDefinition, $resolvedArgumentCollection)) {
             return $resolvedArgumentCollection->getArgument($argumentName)->getValue();
         }

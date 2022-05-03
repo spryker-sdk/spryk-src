@@ -17,10 +17,10 @@ arguments:
 
     resourceType:
         inherit: true
-        value: "{{ module | removeRestApiSuffix | lower }}"
+        default: "{{ module | removeRestApiSuffix | lower }}"
 
     targetPath:
-        value: ""
+        default: ""
 
     directories:
         skipOnProjectLevel: true

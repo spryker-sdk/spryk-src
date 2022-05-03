@@ -135,9 +135,12 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         if ($this->calledSpryk === null) {
             $this->calledSpryk = $sprykName;
         }
+//        $this->resolveModeByOrganisation($preDefinedDefinition);
 
-        $this->resolveModeByOrganisation($preDefinedDefinition);
-        $sprykConfiguration = $this->loadConfig($sprykName);
+        $mode = $this->getMode();
+        $organization = $this->getOrganization($mode);
+
+        $sprykConfiguration = $this->loadConfig($sprykName, $mode);
 
         if (isset($preDefinedDefinition['excludedSpryks']) && !empty($preDefinedDefinition['excludedSpryks'])) {
             $sprykConfiguration['excludedSpryks'] = $preDefinedDefinition['excludedSpryks'];
@@ -145,9 +148,14 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
 
         $arguments = $this->mergeArguments($sprykConfiguration[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS], $preDefinedDefinition);
 
-        if ($this->mode === null && isset($arguments[SprykConfig::NAME_ARGUMENT_MODE][SprykConfig::NAME_ARGUMENT_KEY_VALUE])) {
-            $this->mode = $arguments[SprykConfig::NAME_ARGUMENT_MODE][SprykConfig::NAME_ARGUMENT_KEY_VALUE];
+        if ($organization && isset($arguments[SprykConfig::NAME_ARGUMENT_ORGANIZATION])) {
+            unset($arguments[SprykConfig::NAME_ARGUMENT_ORGANIZATION]['default'], $arguments[SprykConfig::NAME_ARGUMENT_ORGANIZATION]['values']);
+            $arguments[SprykConfig::NAME_ARGUMENT_ORGANIZATION]['value'] = $organization;
         }
+
+//        if ($this->mode === null && isset($arguments[SprykConfig::NAME_ARGUMENT_MODE][SprykConfig::NAME_ARGUMENT_KEY_VALUE])) {
+//            $this->mode = $arguments[SprykConfig::NAME_ARGUMENT_MODE][SprykConfig::NAME_ARGUMENT_KEY_VALUE];
+//        }
 
         $argumentCollection = $this->argumentResolver->resolve(
             $arguments,
@@ -178,6 +186,52 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         }
 
         return $this->definitionCollection[$sprykDefinitionKey];
+    }
+
+    /**
+     * Returns either the by User selected mode or the default mode.
+     *
+     * @return string
+     */
+    protected function getMode(): string
+    {
+        $mode = $this->style->getInput()->getOption(SprykConfig::NAME_ARGUMENT_MODE);
+
+        if (!$mode) {
+            $mode = $this->sprykConfig->getDefaultMode();
+        }
+
+//        if ($this->mode === null && isset($arguments[SprykConfig::NAME_ARGUMENT_MODE][SprykConfig::NAME_ARGUMENT_KEY_VALUE])) {
+//            $this->mode = $arguments[SprykConfig::NAME_ARGUMENT_MODE][SprykConfig::NAME_ARGUMENT_KEY_VALUE];
+//        }
+
+        return $mode;
+    }
+
+//    /**
+//     * @param array $sprykConfiguration
+//     *
+//     * @return string
+//     */
+//    protected function getMode(array $sprykConfiguration): string
+//    {
+//        return $sprykConfiguration[SprykConfig::NAME_ARGUMENT_MODE] ?? $this->sprykConfig->getDefaultMode();
+//    }
+
+    /**
+     * Returns either the by User selected organization, the project organization or null.
+     *
+     * @return string|null
+     */
+    protected function getOrganization(string $mode): ?string
+    {
+        $organization = $this->style->getInput()->getOption(SprykConfig::NAME_ARGUMENT_ORGANIZATION);
+
+        if (!$organization && $mode === SprykConfig::NAME_DEVELOPMENT_LAYER_PROJECT) {
+            $organization = $this->sprykConfig->getProjectNamespace();
+        }
+
+        return $organization;
     }
 
     /**
@@ -445,16 +499,6 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
 
     /**
      * @param array $sprykConfiguration
-     *
-     * @return string
-     */
-    protected function getMode(array $sprykConfiguration): string
-    {
-        return $sprykConfiguration[SprykConfig::NAME_ARGUMENT_MODE] ?? $this->sprykConfig->getDefaultDevelopmentMode();
-    }
-
-    /**
-     * @param array $sprykConfiguration
      * @param string $sprykName
      *
      * @return array
@@ -463,13 +507,13 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
     {
         $sprykDevelopmentLayer = $this->getMode($sprykConfiguration);
 
-        if ($sprykDevelopmentLayer !== 'both') {
+        if ($sprykDevelopmentLayer === 'both') {
             return $sprykConfiguration;
         }
 
         $argumentCollection = $this->argumentResolver->resolve([
             SprykConfig::NAME_ARGUMENT_MODE => [
-                SprykConfig::NAME_ARGUMENT_KEY_DEFAULT => $this->mode ?? $this->sprykConfig->getDefaultDevelopmentMode(),
+                SprykConfig::NAME_ARGUMENT_KEY_DEFAULT => $this->mode ?? $this->sprykConfig->getDefaultMode(),
                 SprykConfig::NAME_ARGUMENT_KEY_VALUES => [
                     SprykConfig::NAME_DEVELOPMENT_LAYER_PROJECT,
                     SprykConfig::NAME_DEVELOPMENT_LAYER_CORE,
@@ -487,14 +531,14 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
 
     /**
      * @param string $sprykName
-     *
+     * @param string $mode
      * @return array
      */
-    protected function loadConfig(string $sprykName): array
+    protected function loadConfig(string $sprykName, string $mode): array
     {
-        $sprykConfiguration = $this->sprykLoader->loadSpryk($sprykName, $this->mode);
+        return $this->sprykLoader->loadSpryk($sprykName, $mode);
 
-        return $this->resolveBothMode($sprykConfiguration, $sprykName);
+//        return $this->resolveBothMode($sprykConfiguration, $sprykName);
     }
 
     /**
@@ -518,5 +562,30 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         if (in_array($organisation, $this->sprykConfig->getProjectNamespaces())) {
             $this->mode = SprykConfig::NAME_DEVELOPMENT_LAYER_PROJECT;
         }
+    }
+
+    /**
+     * @param array|null $preDefinedDefinition
+     *
+     * @return string|null
+     */
+    protected function resolveOrganizationByMode(?array $preDefinedDefinition = null): ?string
+    {
+        if (!isset($preDefinedDefinition[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS][SprykConfig::NAME_ARGUMENT_ORGANIZATION][SprykConfig::NAME_ARGUMENT_KEY_VALUE])) {
+            return null;
+        }
+
+        $organisation = $preDefinedDefinition[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS][SprykConfig::NAME_ARGUMENT_ORGANIZATION][SprykConfig::NAME_ARGUMENT_KEY_VALUE];
+        if (in_array($organisation, $this->sprykConfig->getCoreNamespaces())) {
+//            $this->mode = SprykConfig::NAME_DEVELOPMENT_LAYER_CORE;
+
+            return null;
+        }
+
+        if (in_array($organisation, $this->sprykConfig->getProjectNamespaces())) {
+//            $this->mode = SprykConfig::NAME_DEVELOPMENT_LAYER_PROJECT;
+        }
+
+        return null;
     }
 }

@@ -18,6 +18,7 @@ arguments:
 
     dependencyType:
         description: "Can be one of: Facade, Client, Service"
+        inherit: true
 
     template:
         value: Common/Dependency/DependencyBridge.php.twig

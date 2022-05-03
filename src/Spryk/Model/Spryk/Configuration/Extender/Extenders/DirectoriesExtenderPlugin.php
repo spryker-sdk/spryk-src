@@ -23,10 +23,11 @@ class DirectoriesExtenderPlugin extends AbstractExtender implements SprykConfigu
 
     /**
      * @param array $sprykConfig
+     * @param string $sprykName
      *
      * @return array
      */
-    public function extend(array $sprykConfig): array
+    public function extend(array $sprykConfig, string $sprykName): array
     {
         if (!$this->isProject($sprykConfig)) {
             return $sprykConfig;

@@ -8,7 +8,7 @@
 namespace SprykerSdkTest\Spryk\Model\Spryk\Filter;
 
 use Codeception\Test\Unit;
-use SprykerSdk\Spryk\Model\Spryk\Filter\TypedArrayFilter;
+use SprykerSdk\Spryk\Model\Spryk\Filter\TypedArrayConvertFilter;
 
 /**
  * Auto-generated group annotations
@@ -261,7 +261,7 @@ class TypedArrayFilterTest extends Unit
      */
     protected function assertFilterResult(string $inputParameters, string $expectedResult): void
     {
-        $filter = new TypedArrayFilter();
+        $filter = new TypedArrayConvertFilter();
         $actualResult = $filter->filter($inputParameters);
 
         $this->assertSame($expectedResult, $actualResult);

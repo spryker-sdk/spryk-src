@@ -1,5 +1,6 @@
 spryk: template
 description: "Adds a new *module*Config to the Zed application."
+deprecated: "Use AddModule config instead."
 mode: both
 
 arguments:
@@ -14,7 +15,10 @@ arguments:
         value: Zed/ZedConfig.php.twig
 
     extends:
-        value: \Spryker\Zed\Kernel\AbstractBundleConfig
+        callback: ResolveExtends
+        value:
+            - "\\Spryker\\Zed\\{{ module }}\\{{ module }}Config"
+            - "\\Spryker\\Zed\\Kernel\\AbstractBundleConfig"
 
     targetFilename:
         value: "{{ module }}Config.php"
@@ -22,5 +26,5 @@ arguments:
     targetPath:
         value: "src/{{ organization }}/Zed/{{ module }}/"
 
-preSpryks:
-    - AddModule
+#preSpryks:
+#    - AddModule

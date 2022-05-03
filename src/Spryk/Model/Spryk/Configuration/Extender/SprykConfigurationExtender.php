@@ -24,13 +24,14 @@ class SprykConfigurationExtender implements SprykConfigurationExtenderInterface
 
     /**
      * @param array $sprykConfig
+     * @param string $sprykName
      *
      * @return array
      */
-    public function extend(array $sprykConfig): array
+    public function extend(array $sprykConfig, string $sprykName): array
     {
         foreach ($this->configExtenders as $configExtender) {
-            $sprykConfig = $configExtender->extend($sprykConfig);
+            $sprykConfig = $configExtender->extend($sprykConfig, $sprykName);
         }
 
         return $sprykConfig;

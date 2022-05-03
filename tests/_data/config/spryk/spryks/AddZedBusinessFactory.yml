@@ -1,18 +1,26 @@
 spryk: template
-description: "Unit Test configuration"
+description: "Adds a new *Module*BusinessFactory to the Zed application."
 mode: both
+level: 3
+
+condition: "application === 'Zed'"
+
 arguments:
-  module:
-    value: FooBar
+    module:
+        value: FooBar
 
-  organization:
-    default: Spryker
+    organization:
+        inherit: true
+        default: Spryker
 
-  template:
-    value: ZedBusinessFactory.php.twig
+    application:
+        value: Zed
 
-  targetFilename:
-    value: "{{ module }}BusinessFactory.php"
+    template:
+        value: ZedBusinessFactory.php.twig
 
-  targetPath:
-    default: "src/{{ organization }}/Zed/{{ module }}/Business/"
+    targetFilename:
+        value: "{{ module }}BusinessFactory.php"
+
+    targetPath:
+        default: "src/{{ organization }}/Zed/{{ module }}/Business/"

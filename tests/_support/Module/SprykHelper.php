@@ -95,6 +95,31 @@ class SprykHelper extends Module
     }
 
     /**
+     * @param string $sprykName
+     * @param array $arguments
+     *
+     * @return void
+     */
+    public function runSpryk(string $sprykName, array $arguments): void
+    {
+        /** @var \Codeception\Module\Symfony $symfony */
+        $symfony = $this->getModule('Symfony');
+
+        $command = $symfony->grabService(SprykRunConsole::class);
+
+        $tester = $this->getConsoleTester($command, $sprykName);
+
+        $arguments += [
+            'command' => $command->getName(),
+            SprykRunConsole::ARGUMENT_SPRYK => $sprykName,
+        ];
+
+        $arguments = $this->addDevelopmentModeFromConfig($arguments);
+
+        $tester->execute($arguments, ['interactive' => false]);
+    }
+
+    /**
      * @param array $arguments
      *
      * @return array

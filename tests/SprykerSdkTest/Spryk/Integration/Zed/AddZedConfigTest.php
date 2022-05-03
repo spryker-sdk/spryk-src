@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Zed;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\ClassName;
 
 /**
  * Auto-generated group annotations
@@ -29,25 +30,46 @@ class AddZedConfigTest extends Unit
     /**
      * @return void
      */
-    public function testAddsZedConfigFile(): void
-    {
-        $this->tester->run($this, [
-            '--module' => 'FooBar',
-        ]);
-
-        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/FooBarConfig.php');
-    }
+//    public function testAddsZedModuleConfig(): void
+//    {
+//        $this->tester->run($this, [
+//            '--module' => 'FooBar',
+//        ]);
+//
+//        $this->tester->assertClassOrInterfaceExists(ClassName::ZED_CONFIG);
+//    }
+//
+//    /**
+//     * @return void
+//     */
+//    public function testAddsZedModuleConfigOnProjectLayer(): void
+//    {
+//        $this->tester->run($this, [
+//            '--module' => 'FooBar',
+//            '--mode' => 'project',
+//        ]);
+//
+//        $this->tester->assertClassOrInterfaceExists(ClassName::PROJECT_ZED_CONFIG);
+//    }
 
     /**
      * @return void
      */
-    public function testAddsZedConfigFileOnProjectLayer(): void
+    public function testAddsZedModuleConfigOnProjectLevelAndExtendsCoreConfig(): void
     {
+        // Add core Config
         $this->tester->run($this, [
             '--module' => 'FooBar',
+        ]);
+        $this->tester->assertClassOrInterfaceExists(ClassName::ZED_CONFIG);
+
+        // Add project Config
+        $this->tester->run($this, [
             '--mode' => 'project',
+            '--module' => 'FooBar',
         ]);
 
-        $this->assertFileExists($this->tester->getProjectModuleDirectory() . 'FooBarConfig.php');
+        $this->tester->assertClassOrInterfaceExists(ClassName::PROJECT_ZED_CONFIG);
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_ZED_CONFIG, ClassName::ZED_CONFIG);
     }
 }
