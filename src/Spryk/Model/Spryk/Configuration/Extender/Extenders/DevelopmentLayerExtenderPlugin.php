@@ -14,33 +14,39 @@ class DevelopmentLayerExtenderPlugin extends AbstractExtender implements SprykCo
 {
     /**
      * @param array $sprykConfig
-     * @param string $sprykName
+     * @param array $context
      *
      * @return array
      */
-    public function extend(array $sprykConfig, string $sprykName): array
+    public function extend(array $sprykConfig, array $context): array
     {
-        if (!$this->isProject($sprykConfig)) {
+        if (!$this->isProject($sprykConfig, $context)) {
             return $sprykConfig;
         }
 
-        return $this->buildModeArgument($sprykConfig);
+        return $this->buildModeArgument($sprykConfig, $context);
     }
 
     /**
      * @param array $sprykConfig
-     *
+     * @param array $context
      * @return array
      */
-    protected function buildModeArgument(array $sprykConfig): array
+    protected function buildModeArgument(array $sprykConfig, array $context): array
     {
-        if ($this->isBoth($sprykConfig)) {
+        if ($this->isBoth($sprykConfig, $context)) {
             $sprykConfig[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS][SprykConfig::NAME_ARGUMENT_MODE][SprykConfig::NAME_ARGUMENT_KEY_DEFAULT] = $this->config->getDefaultMode();
 
             return $sprykConfig;
         }
 
-        $sprykConfig[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS][SprykConfig::NAME_ARGUMENT_MODE][SprykConfig::NAME_ARGUMENT_KEY_VALUE] = $this->getDevelopmentLayer($sprykConfig);
+        if (isset($sprykConfig[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS])) {
+            $sprykConfig[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS][SprykConfig::NAME_ARGUMENT_MODE][SprykConfig::NAME_ARGUMENT_KEY_VALUE] = $this->getDevelopmentLayer($sprykConfig, $context);
+
+            return $sprykConfig;
+        }
+
+        $sprykConfig[SprykConfig::NAME_ARGUMENT_MODE][SprykConfig::NAME_ARGUMENT_KEY_VALUE] = $this->getDevelopmentLayer($sprykConfig, $context);
 
         return $sprykConfig;
     }

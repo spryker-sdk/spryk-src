@@ -14,11 +14,11 @@ class DefaultValueExtenderPlugin extends AbstractExtender implements SprykConfig
 {
     /**
      * @param array $sprykConfig
-     * @param string $sprykName
+     * @param array $context
      *
      * @return array
      */
-    public function extend(array $sprykConfig, string $sprykName): array
+    public function extend(array $sprykConfig, array $context): array
     {
         $arguments = $this->getArguments($sprykConfig);
 

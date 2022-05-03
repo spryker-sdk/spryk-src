@@ -14,21 +14,21 @@ class TargetPathExtenderPlugin extends AbstractExtender implements SprykConfigur
 {
     /**
      * @param array $sprykConfig
-     * @param string $sprykName
+     * @param array $context
      *
      * @return array
      */
-    public function extend(array $sprykConfig, string $sprykName): array
+    public function extend(array $sprykConfig, array $context): array
     {
-        if ($this->isBoth($sprykConfig)) {
+        if ($this->isBoth($sprykConfig, $context)) {
             return $sprykConfig;
         }
 
-        if ($this->isCore($sprykConfig)) {
+        if ($this->isCore($sprykConfig, $context)) {
             return $sprykConfig;
         }
 
-        return $this->buildProjectPath($sprykConfig);
+        return $this->buildProjectPath($sprykConfig, $context);
     }
 
     /**
@@ -36,7 +36,7 @@ class TargetPathExtenderPlugin extends AbstractExtender implements SprykConfigur
      *
      * @return array
      */
-    protected function buildProjectPath(array $sprykConfig): array
+    protected function buildProjectPath(array $sprykConfig, array $context): array
     {
         $arguments = $this->getArguments($sprykConfig);
 
