@@ -1,5 +1,5 @@
 spryk: template
-description: "Adds a new Response mapper that maps {{ zedDomainEntity}} transfers to a GlueReponseTransfer."
+description: "Adds a new Response ResponseMapper that maps {{ zedDomainEntity }} transfers to a GlueResponseTransfer."
 mode: both
 level: 2
 
@@ -11,25 +11,53 @@ arguments:
         inherit: true
         default: Spryker
 
+    className:
+        value: "GlueResponse{{ resourceDataObject }}ResponseMapper"
+
     resource:
         description: "Defines the resource name this controller will work with."
+
+    subDirectory:
+        inherit: true
+        value: ResponseMapper
+
+    application:
+        inherit: true
+        value: Glue
+
+    applicationType:
+        inherit: true
+        description: "Can be one of: Backend or Frontend"
+        default: "Backend"
+
+    isTestClass:
+        inherit: true
+        isOptional: true
+        default: false
 
     resourceDataObject:
         description: "Defines the Transfer that will be used in the Methods. Do not use Transfer as suffix, it will be added automatically. Example: Customer (ok) CustomerTransfer (wrong)"
         isOptional: true # Is not needed for all methods
-        value: '{{ resource | singular | dashToCamelCase | ucfirst }}'
+        value: "{{ resource | normalizeResourceName | singularize }}"
 
     template:
-        value: Common/Method.php.twig
+        value: Common/Class.php.twig
+
+    zedDomainEntity:
+        description: "Defines the domainEntity used on Zed side for the CRUD Facade. It will be used to create all needed Transfer Objects."
+        value: "{{ resource | normalizeResourceName | singularize }}"
 
     target:
-        value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}Mapper"
+        value: "{{ organization }}\\Glue\\{{ module }}\\ResponseMapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
+
+    targetPath:
+        value: "src/{{ organization }}/Glue/{{ module }}/"
 
 preSpryks:
     - AddGlueBackendApiController
 
-postSpryk:
-    - AddGlueBackendApiMapperMethod:
+postSpryks:
+    - AddMethod:
           arguments:
               method:
                   value: "map{{ zedDomainEntity }}CollectionTransferToGlueResponseTransfer"
@@ -38,10 +66,12 @@ postSpryk:
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               body:
-                  value: Spryker/Glue/BackendApi/RequestMapper/MapCollectionTransferToGlueResponseTransfer.php.twig
+                  value: Glue/BackendApi/ResponseMapper/MapCollectionTransferToGlueResponseTransfer.php.twig
               target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}Mapper"
-    - AddGlueBackendApiMapperMethod:
+                  value: "{{ organization }}\\Glue\\{{ module }}\\ResponseMapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
+          postSpryks:
+              - AddInterfaceMethod
+    - AddMethod:
           arguments:
               method:
                   value: "map{{ zedDomainEntity }}CollectionTransferToSingleResourceGlueResponseTransfer"
@@ -50,10 +80,10 @@ postSpryk:
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               body:
-                  value: Spryker/Glue/BackendApi/RequestMapper/MapCollectionTransferToSingleResourceGlueResponseTransfer.php.twig
+                  value: Glue/BackendApi/ResponseMapper/MapCollectionTransferToSingleResourceGlueResponseTransfer.php.twig
               target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}Mapper"
-    - AddGlueBackendApiMapperMethod:
+                  value: "{{ organization }}\\Glue\\{{ module }}\\ResponseMapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
+    - AddMethod:
           arguments:
               method:
                   value: "map{{ zedDomainEntity }}CollectionResponseTransferToGlueResponseTransfer"
@@ -62,10 +92,10 @@ postSpryk:
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               body:
-                  value: Spryker/Glue/BackendApi/RequestMapper/MapCollectionResponseTransferToGlueResponseTransfer.php.twig
+                  value: Glue/BackendApi/ResponseMapper/MapCollectionResponseTransferToGlueResponseTransfer.php.twig
               target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}Mapper"
-    - AddGlueBackendApiMapperMethod:
+                  value: "{{ organization }}\\Glue\\{{ module }}\\ResponseMapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
+    - AddMethod:
           arguments:
               method:
                   value: "map{{ zedDomainEntity }}CollectionResponseTransferToSingleResourceGlueResponseTransfer"
@@ -74,10 +104,10 @@ postSpryk:
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               body:
-                  value: Spryker/Glue/BackendApi/RequestMapper/MapCollectionResponseTransferToSingleResourceGlueResponseTransfer.php.twig
+                  value: Glue/BackendApi/ResponseMapper/MapCollectionResponseTransferToSingleResourceGlueResponseTransfer.php.twig
               target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}Mapper"
-    - AddGlueBackendApiMapperMethod:
+                  value: "{{ organization }}\\Glue\\{{ module }}\\ResponseMapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
+    - AddMethod:
           excludedSpryks:
               - AddInterfaceMethod
           arguments:
@@ -88,10 +118,10 @@ postSpryk:
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               body:
-                  value: Spryker/Glue/BackendApi/RequestMapper/AddNotFoundError.php.twig
+                  value: Glue/BackendApi/ResponseMapper/AddNotFoundError.php.twig
               target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}Mapper"
-    - AddGlueBackendApiMapperMethod:
+                  value: "{{ organization }}\\Glue\\{{ module }}\\ResponseMapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
+    - AddMethod:
           excludedSpryks:
               - AddInterfaceMethod
           arguments:
@@ -102,13 +132,13 @@ postSpryk:
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               body:
-                  value: Spryker/Glue/BackendApi/RequestMapper/AddResourceToGlueResponse.php.twig
+                  value: Glue/BackendApi/ResponseMapper/AddResourceToGlueResponse.php.twig
               target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}Mapper"
+                  value: "{{ organization }}\\Glue\\{{ module }}\\ResponseMapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
     # Add factory method
     - AddGlueFactoryMethod:
           arguments:
               subDirectory:
-                  value: "Mapper"
+                  value: "ResponseMapper"
               className:
-                  value: "GlueResponse{{ resourceDataObject }}Mapper"
+                  value: "GlueResponse{{ module }}ResponseMapper"
