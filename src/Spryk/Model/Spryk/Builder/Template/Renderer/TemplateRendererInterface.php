@@ -20,10 +20,11 @@ interface TemplateRendererInterface
     /**
      * @param string $templateString
      * @param array $arguments
+     * @param string $sprykName
      *
      * @return string
      */
-    public function renderString(string $templateString, array $arguments): string;
+    public function renderString(string $templateString, array $arguments, string $sprykName): string;
 
     /**
      * @param string $template

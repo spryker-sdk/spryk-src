@@ -18,6 +18,7 @@ arguments:
 
     dependencyType:
         description: "Can be one of: Facade, Client, Service"
+        inherit: true
 
     layer:
         description: "Optional, only needed for Zed dependency provider. Can be one of: Communication, Business, Persistence."

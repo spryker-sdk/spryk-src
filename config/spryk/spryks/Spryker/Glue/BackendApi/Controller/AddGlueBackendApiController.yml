@@ -7,7 +7,10 @@ condition: "applicationType === 'Backend'"
 
 arguments:
     module:
+        description: "Based on the applicationType the module name will be suffixed with BackendApi or FrontendApi by the ResourceModuleName callback."
         inherit: true
+        value: "{{ resource | normalizeResourceName }}"
+        callback: GlueResourceModuleName
 
     organization:
         inherit: true
@@ -23,6 +26,7 @@ arguments:
         default: "Backend"
 
     isTestClass:
+        inherit: true
         isOptional: true
         default: false
 
@@ -49,14 +53,3 @@ postSpryks:
                   value:
                       - "\\Spryker\\Glue\\{{ module }}\\Controller\\{{ controller }}"
                       - "\\Spryker\\Glue\\Kernel\\Backend\\Controller\\AbstractBackendApiController"
-
-    - AddClass:
-          arguments:
-              isTestClass:
-                  value: true
-              subDirectory:
-                  value: Controller
-              className:
-                  value: "{{ resource | normalizeResourceName }}GetResourceController"
-              extends:
-                  value: "\\Codeception\\Test\\Unit"

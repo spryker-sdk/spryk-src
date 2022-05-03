@@ -1,12 +1,19 @@
 spryk: template
-description: "Unit Test configuration"
+description: "Adds a new *Module*BusinessFactory to the Zed application."
 mode: both
+level: 3
+
+condition: "application === 'Zed'"
+
 arguments:
   module:
     value: FooBar
 
   organization:
     default: Spryker
+
+  application:
+    value: Zed
 
   template:
     value: ZedBusinessFactory.php.twig

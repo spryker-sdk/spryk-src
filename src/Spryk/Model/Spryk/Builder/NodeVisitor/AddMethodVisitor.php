@@ -38,7 +38,11 @@ class AddMethodVisitor extends NodeVisitorAbstract
     public function enterNode(Node $node)
     {
         if (!($node instanceof Class_) && !($node instanceof Interface_)) {
-            return $node;
+            return null;
+        }
+
+        if ($node instanceof Interface_) {
+            $this->classMethodNode->stmts = null;
         }
 
         $stmts = $node->stmts;

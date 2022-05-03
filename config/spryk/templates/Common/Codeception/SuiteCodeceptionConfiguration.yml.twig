@@ -1,0 +1,15 @@
+{{ suite }}:
+    path: {{ suite }}
+    class_name: {{ module }}{{ suite }}Tester
+    modules:
+        enabled:
+            - Asserts
+            - \{{ organization }}Test\{{ application }}\{{ module }}\Helper\{{ module }}Helper
+            - \SprykerTest\Shared\Testify\Helper\Environment
+            - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+            - \SprykerTest\Shared\Testify\Helper\LocatorHelper:
+                  projectNamespaces: [ '{{ organization }}' ]
+            - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+            - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+            - \SprykerTest\Service\Container\Helper\ContainerHelper
+            - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper

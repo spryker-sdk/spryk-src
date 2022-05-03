@@ -7,6 +7,8 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Definition\Argument;
 
+use InvalidArgumentException;
+
 class Argument implements ArgumentInterface
 {
     /**
@@ -110,6 +112,8 @@ class Argument implements ArgumentInterface
     }
 
     /**
+     * @throws \InvalidArgumentException
+     *
      * @return array|string
      */
     public function __toString()
@@ -118,6 +122,10 @@ class Argument implements ArgumentInterface
 
         if (is_array($value)) {
             return implode(PHP_EOL, $value);
+        }
+
+        if (!is_string($value)) {
+            throw new InvalidArgumentException(sprintf('The value of "%s" must be either an array or a string but is "%s"', $this->name, gettype($this->value)));
         }
 
         return $value;

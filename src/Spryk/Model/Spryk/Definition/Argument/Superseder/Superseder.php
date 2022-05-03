@@ -114,7 +114,7 @@ class Superseder implements SupersederInterface
 
         $replacements = array_merge($replacements, $sprykArguments->getArguments());
 
-        return $this->templateRenderer->renderString($argumentValue, $replacements);
+        return $this->templateRenderer->renderString($argumentValue, $replacements, $sprykArguments->getSprykName());
     }
 
     /**
