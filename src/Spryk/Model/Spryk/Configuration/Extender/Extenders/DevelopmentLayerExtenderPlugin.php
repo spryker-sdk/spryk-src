@@ -30,6 +30,7 @@ class DevelopmentLayerExtenderPlugin extends AbstractExtender implements SprykCo
     /**
      * @param array $sprykConfig
      * @param array $context
+     *
      * @return array
      */
     protected function buildModeArgument(array $sprykConfig, array $context): array

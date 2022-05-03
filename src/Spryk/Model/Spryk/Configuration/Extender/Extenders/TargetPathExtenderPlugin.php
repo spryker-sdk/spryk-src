@@ -28,7 +28,7 @@ class TargetPathExtenderPlugin extends AbstractExtender implements SprykConfigur
             return $sprykConfig;
         }
 
-        return $this->buildProjectPath($sprykConfig, $context);
+        return $this->buildProjectPath($sprykConfig);
     }
 
     /**
@@ -36,7 +36,7 @@ class TargetPathExtenderPlugin extends AbstractExtender implements SprykConfigur
      *
      * @return array
      */
-    protected function buildProjectPath(array $sprykConfig, array $context): array
+    protected function buildProjectPath(array $sprykConfig): array
     {
         $arguments = $this->getArguments($sprykConfig);
 

@@ -73,7 +73,7 @@ class AssertionModule extends Module
             sprintf(
                 'Expected that class or interface "%s" extends "%s" but was not found.',
                 $classOrInterfaceName,
-                $extends
+                $extends,
             ),
         );
     }

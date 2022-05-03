@@ -39,6 +39,7 @@ class DirectoriesExtenderPlugin extends AbstractExtender implements SprykConfigu
     /**
      * @param array $sprykConfig
      * @param array $context
+     *
      * @return array
      */
     protected function buildProjectDirectories(array $sprykConfig, array $context): array

@@ -22,11 +22,11 @@ arguments:
             - "\\Spryker\\{{ application }}\\{{ module }}\\{{ module }}Config"
             - "\\Spryker\\{{ application }}\\Kernel\\AbstractBundleConfig"
 
+    className:
+        value: "{{ module }}Config"
+
     targetFilename:
         value: "{{ module }}Config.php"
 
     targetPath:
         value: "src/{{ organization }}/{{ application }}/{{ module }}/"
-
-#preSpryks:
-#    - AddModule

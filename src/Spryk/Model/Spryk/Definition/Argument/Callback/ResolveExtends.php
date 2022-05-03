@@ -50,7 +50,7 @@ class ResolveExtends implements CallbackInterface
             }
 
             foreach ($value as $extendCandidate) {
-                if ($this->fileResolver->resolve($extendCandidate) !== null ||  class_exists($extendCandidate)) {
+                if ($this->fileResolver->resolve($extendCandidate) !== null || class_exists($extendCandidate)) {
                     return $extendCandidate;
                 }
             }

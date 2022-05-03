@@ -332,6 +332,16 @@ interface ClassName
     /**
      * @var string
      */
+    public const SERVICE_CONFIG = 'Spryker\Service\FooBar\FooBarConfig';
+
+    /**
+     * @var string
+     */
+    public const PROJECT_SERVICE_CONFIG = 'Pyz\Service\FooBar\FooBarConfig';
+
+    /**
+     * @var string
+     */
     public const PROJECT_CONFIG_YVES = 'Pyz\Yves\FooBar\FooBarConfig';
 
     /**

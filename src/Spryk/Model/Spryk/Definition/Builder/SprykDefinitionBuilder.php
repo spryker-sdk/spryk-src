@@ -202,6 +202,8 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
     /**
      * Returns either the by User selected mode or the default mode.
      *
+     * @param array $sprykDefinition
+     *
      * @return string
      */
     protected function getMode(array $sprykDefinition): string
@@ -221,6 +223,8 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
 
     /**
      * Returns either the by User selected organization, the project organization or null.
+     *
+     * @param string $mode
      *
      * @return string|null
      */
