@@ -30,27 +30,27 @@ class AddZedConfigTest extends Unit
     /**
      * @return void
      */
-//    public function testAddsZedModuleConfig(): void
-//    {
-//        $this->tester->run($this, [
-//            '--module' => 'FooBar',
-//        ]);
-//
-//        $this->tester->assertClassOrInterfaceExists(ClassName::ZED_CONFIG);
-//    }
-//
-//    /**
-//     * @return void
-//     */
-//    public function testAddsZedModuleConfigOnProjectLayer(): void
-//    {
-//        $this->tester->run($this, [
-//            '--module' => 'FooBar',
-//            '--mode' => 'project',
-//        ]);
-//
-//        $this->tester->assertClassOrInterfaceExists(ClassName::PROJECT_ZED_CONFIG);
-//    }
+    public function testAddsZedModuleConfig(): void
+    {
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+        ]);
+
+        $this->tester->assertClassOrInterfaceExists(ClassName::ZED_CONFIG);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddsZedModuleConfigOnProjectLayer(): void
+    {
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'project',
+        ]);
+
+        $this->tester->assertClassOrInterfaceExists(ClassName::PROJECT_ZED_CONFIG);
+    }
 
     /**
      * @return void

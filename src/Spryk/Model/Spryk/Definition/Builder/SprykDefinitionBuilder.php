@@ -219,16 +219,6 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         return $mode;
     }
 
-//    /**
-//     * @param array $sprykConfiguration
-//     *
-//     * @return string
-//     */
-//    protected function getMode(array $sprykConfiguration): string
-//    {
-//        return $sprykConfiguration[SprykConfig::NAME_ARGUMENT_MODE] ?? $this->sprykConfig->getDefaultMode();
-//    }
-
     /**
      * Returns either the by User selected organization, the project organization or null.
      *
