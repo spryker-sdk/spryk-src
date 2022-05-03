@@ -222,6 +222,38 @@ class TypedArrayFilterTest extends Unit
     }
 
     /**
+     * @dataProvider getTypedArrays
+     *
+     * @param string $input
+     * @param string $expectedResult
+     *
+     * @return void
+     */
+    public function testTypedArrayTypeShouldIgnore(string $input, string $expectedResult): void
+    {
+        $inputParameters = 'array<string>';
+        $expectedResult = 'array';
+
+        $this->assertFilterResult($inputParameters, $expectedResult);
+    }
+
+    /**
+     * @return array<array<string, string>>
+     */
+    public function getTypedArrays(): array
+    {
+        return [
+            ['array<string>', 'array'],
+            ['array<string, string>', 'array'],
+            ['array<string, int>', 'array'],
+            ['array<int, string>', 'array'],
+            ['array<mixed>', 'array'],
+            ['array<\Generated\Shared\Transfer\FooBarTransfer>', 'array'],
+            ['array<array<mixed>>', 'array'],
+        ];
+    }
+
+    /**
      * @param string $inputParameters
      * @param string $expectedResult
      *

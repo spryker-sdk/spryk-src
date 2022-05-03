@@ -9,7 +9,7 @@ interface {{ domainEntity }}ValidatorRuleInterface
     /**
      * @param \Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer
      *
-     * @return array
+     * @return string[]
      */
     public function validate(\Generated\Shared\Transfer\{{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer): array;
 }
