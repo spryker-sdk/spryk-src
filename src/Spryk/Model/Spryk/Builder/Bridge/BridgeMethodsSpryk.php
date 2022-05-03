@@ -86,10 +86,6 @@ class BridgeMethodsSpryk extends AbstractBuilder
         /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolved */
         $resolved = $this->fileResolver->resolve($target);
 
-        if (!$resolved) {
-            $foo = 'bar';
-        }
-
         $methodsToAdd = $this->getBridgeMethodsToAdd($resolved);
 
         $builderFactory = new BuilderFactory();
