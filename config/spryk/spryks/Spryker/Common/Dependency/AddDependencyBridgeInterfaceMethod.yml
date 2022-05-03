@@ -26,7 +26,8 @@ arguments:
         value: Common/Dependency/DependencyBridgeInterfaceMethod.php.twig
 
     dependencyType:
-        value: Facade
+        description: "Can be one of: Facade, Client, Service"
+        inherit: true
 
     sourceClass:
         description: "Loads method definitions from this class."

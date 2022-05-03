@@ -13,7 +13,7 @@ arguments:
         default: Spryker
 
     application:
-        default: "Client"
+        value: "Client"
 
     template:
         value: Client/ClientFactory.php.twig

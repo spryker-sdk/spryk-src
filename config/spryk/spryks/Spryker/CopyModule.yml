@@ -1,8 +1,8 @@
 spryk: copyModule
 description: "Copies a *module*."
-priority: 1
+priority: 3
 mode: core
-level: 1
+level: 3
 
 arguments:
     module:
@@ -20,10 +20,10 @@ arguments:
         default: Spryker
 
     sourcePath:
-        value: "{{ organization | dasherize }}/{{ moduleSrcDirectory }}"
+        default: "{{ organization | dasherize }}/{{ module | dasherize }}"
 
     targetPath:
-        value: "{{ toOrganization | dasherize }}/{{ moduleSrcDirectory }}{{ toModule }}/"
+        default: "{{ toOrganization | dasherize }}/{{ toModule | dasherize }}/"
 
 postCommands:
     - ComposerReplaceGenerate
