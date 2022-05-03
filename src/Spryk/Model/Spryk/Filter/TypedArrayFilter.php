@@ -98,7 +98,7 @@ class TypedArrayFilter implements FilterInterface
      */
     protected function isTypedArray(string $value): bool
     {
-        return (bool)preg_match('((.*?)\[\]$)', $value);
+        return (bool)preg_match('((.*?)\[\]$)', $value) || (bool)preg_match('((.*?)\<(.*?)\>$)', $value);
     }
 
     /**

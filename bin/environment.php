@@ -25,7 +25,7 @@ $autoloadProjectAutoloaderFile = function (string $file) use (&$composerAutoload
             require_once $path;
         }
     } else {
-        $pharPath = \Phar::running(false);
+        $pharPath = Phar::running(false);
         if ($pharPath === '') {
             if (is_file($path)) {
                 $composerAutoloaderProjectPaths[] = dirname($path, 2);
