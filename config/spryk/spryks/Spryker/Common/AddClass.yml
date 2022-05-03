@@ -22,6 +22,7 @@ arguments:
         value: "\\{{ organization }}{% if isTestClass.value == true %}Test{% endif %}\\{{ application }}\\{{ module }}{% if subDirectory is defined %}\\{{ subDirectory | convertToClassNameFragment }}{% endif %}\\{{ className }}{% if isTestClass.value == true %}Test{% endif %}"
 
     isTestClass:
+        inherit: true
         description: "When set to true organization and className will be suffixed with Test."
         default: false
 

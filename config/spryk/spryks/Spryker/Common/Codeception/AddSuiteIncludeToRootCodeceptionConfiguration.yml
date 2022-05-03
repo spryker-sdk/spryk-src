@@ -1,0 +1,34 @@
+spryk: update-yml
+description: "Adds the include for the *application* test suite to the codeception.yml."
+mode: core
+
+arguments:
+    module:
+        inherit: true
+
+    organization:
+        inherit: true
+        default: Spryker
+
+    application:
+        inherit: true
+
+    suite:
+        inherit: true
+        description: "The name of the suite can be one of: Business, Communication, Persistence, RestApi, BackendApi, FrontendApi."
+
+    afterElement:
+        value: namespace
+
+    addToElement:
+        value: include
+
+    content:
+        description: "This will be added to the include section of the codeception.yml."
+        value: "tests/{{ organization }}Test/{{ application }}/{{ module }}"
+
+    targetPath:
+        value: "codeception.yml"
+
+preSpryks:
+    - AddSuiteCodeceptionConfiguration

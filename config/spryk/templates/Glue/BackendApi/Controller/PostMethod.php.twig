@@ -1,0 +1,11 @@
+        ${{ resourceDataObject | lcfirst }}CollectionRequestTransfer = $this->getFactory()
+            ->getGlueRequestTo{{ resourceDataObject }}Mapper()
+            ->map{{ resourceDataObject }}TransferTo{{ resourceDataObject }}CollectionRequestTransfer(${{ resourceDataObject | lcfirst }}Transfer, $glueRequestTransfer);
+
+        ${{ resourceDataObject | lcfirst }}CollectionResponseTransfer = $this->getFactory()
+            ->get{{ zedModule }}Facade()
+            ->create{{ resourceDataObject }}Collection(${{ resourceDataObject | lcfirst }}CollectionRequestTransfer);
+
+        return $this->getFactory()
+            ->get{{ resourceDataObject }}ToGlueResponseMapper()
+            ->map{{ resourceDataObject }}CollectionResponseToGlueResponse(${{ resourceDataObject | lcfirst }}CollectionResponseTransfer);

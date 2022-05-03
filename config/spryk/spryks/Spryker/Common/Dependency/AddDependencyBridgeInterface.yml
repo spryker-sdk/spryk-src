@@ -18,6 +18,7 @@ arguments:
 
     dependencyType:
         description: "Can be one of: Facade, Client, Service"
+        inherit: true
 
     template:
         value: Common/Dependency/DependencyBridgeInterface.php.twig
@@ -27,6 +28,3 @@ arguments:
 
     targetPath:
         value: "src/Spryker/{{ application }}/{{ module }}/Dependency/{{ dependencyType }}/"
-
-preSpryks:
-    - AddModule

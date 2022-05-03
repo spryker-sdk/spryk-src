@@ -5,12 +5,15 @@ level: 2
 
 arguments:
     module:
+        description: "Based on the applicationType the module name will be suffixed with BackendApi or FrontendApi by the ResourceModuleName callback."
         inherit: true
+        value: "{{ resource | normalizeResourceName }}"
+        callback: GlueResourceModuleName
 
     zedModule:
         inherit: true
         description: "The module name for the Zed Application. It's the same name as for the Glue Module but without the Api suffix."
-        value: "{{ module | removeBackendApiSuffix | singularize }}"
+        value: "{{ module | removeApiSuffix | singularize }}"
 
     organization:
         inherit: true
@@ -19,6 +22,23 @@ arguments:
     application:
         inherit: true
         default: Glue
+
+    httpMethod:
+        value: "get"
+
+    isBulk:
+        description: "Defines if this resource should work with Collections. When set to true the method will use collections when possible."
+        inherit: true
+
+    apiType:
+        inherit: true
+        description: "Can be one of: REST or JSON"
+        default: "JSON"
+
+    applicationType:
+        inherit: true
+        description: "Can be one of: Backend or Frontend"
+        value: "Backend"
 
     resource:
         inherit: true
@@ -43,8 +63,15 @@ arguments:
 preSpryks:
     # Add the BackendApi Controller
     - AddGlueBackendApiController
+    - AddGlueBackendApiController:
+          arguments:
+              isTestClass:
+                  value: true
+              controller:
+                  value: "{{ resource | normalizeResourceName }}GetResourceController"
 
 postSpryks:
+    # Add controller getAction
     - AddMethod:
           arguments:
               method:
@@ -63,3 +90,4 @@ postSpryks:
                   value: Glue/BackendApi/Controller/GetMethod.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Controller\\{{ resource | normalizeResourceName }}ResourceController"
+

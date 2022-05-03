@@ -16,7 +16,7 @@ arguments:
 
     resourceType:
         inherit: true
-        value: "{{ module | removeRestApiSuffix | lower }}"
+        default: "{{ module | removeRestApiSuffix | lower }}"
 
     clientModule:
         inherit: true
@@ -28,7 +28,7 @@ arguments:
         value: "post"
 
     targetPath:
-        value: "src/{{ organization }}/Glue/{{ module }}/"
+        default: "src/{{ organization }}/Glue/{{ module }}/"
 
     directories:
         skipOnProjectLevel: true
