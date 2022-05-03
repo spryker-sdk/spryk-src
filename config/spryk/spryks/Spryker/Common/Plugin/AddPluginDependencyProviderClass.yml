@@ -10,7 +10,7 @@ arguments:
         inherit: true
         default: Spryker
 
-    targetFqcn:
+    target:
         inherit: true
 
     fqcn:

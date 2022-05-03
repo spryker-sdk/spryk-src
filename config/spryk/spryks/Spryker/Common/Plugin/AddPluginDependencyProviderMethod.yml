@@ -17,8 +17,9 @@ arguments:
     className:
         inherit: true
 
-    targetFqcn:
+    target:
         inherit: true
+        callback: ResolveOrganizationInFqcn
 
     body:
         inherit: true
@@ -35,10 +36,6 @@ arguments:
 
     output:
         value: "{{ pluginInterface }}[]"
-
-    target:
-        value: "{{ targetFqcn }}"
-        callback: ResolveOrganizationInFqcn
 
 preSpryks:
     - AddPluginDependencyProviderClass

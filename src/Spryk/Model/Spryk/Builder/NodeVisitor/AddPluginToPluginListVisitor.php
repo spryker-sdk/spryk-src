@@ -50,7 +50,7 @@ class AddPluginToPluginListVisitor extends NodeVisitorAbstract
     /**
      * @var string
      */
-    protected $className;
+    protected $pluginClassName;
 
     /**
      * @var string
@@ -70,19 +70,19 @@ class AddPluginToPluginListVisitor extends NodeVisitorAbstract
     /**
      * @var bool
      */
-    protected $methodFound = false;
+    protected bool $methodFound = false;
 
     /**
      * @param string $methodName
-     * @param string $className
+     * @param string $pluginClassName
      * @param string $before
      * @param string $after
      * @param string|null $index
      */
-    public function __construct(string $methodName, string $className, string $before = '', string $after = '', ?string $index = null)
+    public function __construct(string $methodName, string $pluginClassName, string $before = '', string $after = '', ?string $index = null)
     {
         $this->methodName = $methodName;
-        $this->className = ltrim($className, '\\');
+        $this->pluginClassName = $pluginClassName;
         $this->before = ltrim($before, '\\');
         $this->after = ltrim($after, '\\');
         $this->index = $index;
@@ -91,14 +91,14 @@ class AddPluginToPluginListVisitor extends NodeVisitorAbstract
     /**
      * @param \PhpParser\Node $node
      *
-     * @return \PhpParser\Node|int
+     * @return \PhpParser\Node|int|null
      */
     public function enterNode(Node $node)
     {
-        if ($node instanceof ClassMethod && $node->name->toString() === $this->methodName) {
+        if ($node instanceof ClassMethod && (string)$node->name === $this->methodName) {
             $this->methodFound = true;
 
-            return $node;
+            return null;
         }
 
         if ($this->methodFound) {
@@ -115,7 +115,7 @@ class AddPluginToPluginListVisitor extends NodeVisitorAbstract
             }
         }
 
-        return $node;
+        return null;
     }
 
     /**
@@ -234,7 +234,7 @@ class AddPluginToPluginListVisitor extends NodeVisitorAbstract
 
             $nodeClassName = $item->value->class->toString();
 
-            if ($nodeClassName === $this->className && $this->isKeyEqualsToCurrentOne($item)) {
+            if ($nodeClassName === $this->pluginClassName && $this->isKeyEqualsToCurrentOne($item)) {
                 return true;
             }
         }
@@ -283,7 +283,7 @@ class AddPluginToPluginListVisitor extends NodeVisitorAbstract
     {
         return new ArrayItem(
             (new BuilderFactory())->new(
-                $this->getShortClassName($this->className),
+                $this->getShortClassName($this->pluginClassName),
             ),
             $this->index ? $this->createIndexExpr($this->index) : null,
         );

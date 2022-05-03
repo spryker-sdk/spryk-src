@@ -60,7 +60,8 @@ class TemplateSpryk extends AbstractBuilder
      */
     protected function shouldBuild(): bool
     {
-        $resolved = $this->fileResolver->resolve($this->getTargetPath());
+        $targetPath = $this->getTargetPath();
+        $resolved = $this->fileResolver->resolve($targetPath);
 
         if ($resolved === null) {
             return true;

@@ -24,17 +24,12 @@ class WirePluginSpryk extends AbstractBuilder
     /**
      * @var string
      */
-    public const ARGUMENT_TARGET_FQCN = 'targetFqcn';
+    public const ARGUMENT_TARGET = 'target';
 
     /**
      * @var string
      */
-    public const ARGUMENT_TARGET_METHOD_NAME = 'targetMethodName';
-
-    /**
-     * @var string
-     */
-    public const ARGUMENT_SOURCE_FQCN = 'sourceFqcn';
+    public const ARGUMENT_PLUGIN = 'plugin';
 
     /**
      * @var string
@@ -61,26 +56,30 @@ class WirePluginSpryk extends AbstractBuilder
      */
     protected function build(): void
     {
-        $targetClassName = $this->replaceOrganization($this->getTargetClassName());
-        $targetMethodName = $this->getTargetMethodName();
-        $sourceClassName = $this->getSourceClassName();
-
+        $targetClassName = $this->getTargetClassName();
+//        $targetClassName = $this->replaceOrganization($this->getTargetClassName());
         $resolvedTargetClass = $this->resolveTargetClass($targetClassName);
 
-        $traverser = new NodeTraverser();
-        $traverser->addVisitor(new AddUseVisitor($sourceClassName));
-        $traverser->addVisitor(
-            new AddPluginToPluginListVisitor(
-                $targetMethodName,
-                $sourceClassName,
-                $this->getPluginBefore(),
-                $this->getPluginAfter(),
-                $this->getPluginIndex(),
-            ),
-        );
-        $newStmts = $traverser->traverse($resolvedTargetClass->getClassTokenTree());
+        $targetMethodName = $this->getTargetMethodName();
+        $pluginClassNames = $this->getPluginClassNames();
 
-        $resolvedTargetClass->setClassTokenTree($newStmts);
+        foreach ($pluginClassNames as $pluginClassName) {
+            $traverser = new NodeTraverser();
+            $traverser->addVisitor(new AddUseVisitor($pluginClassName));
+            $traverser->addVisitor(
+                new AddPluginToPluginListVisitor(
+                    $targetMethodName,
+                    $pluginClassName,
+                    $this->getPluginBefore(),
+                    $this->getPluginAfter(),
+                    $this->getPluginIndex(),
+                ),
+            );
+            $newStmts = $traverser->traverse($resolvedTargetClass->getClassTokenTree());
+            $resolvedTargetClass->setClassTokenTree($newStmts);
+
+            $this->log(sprintf('Added plugin "%s" to "%s::%s()"', $pluginClassName, $targetClassName, $targetMethodName));
+        }
     }
 
     /**
@@ -125,7 +124,10 @@ class WirePluginSpryk extends AbstractBuilder
      */
     protected function getTargetClassName(): string
     {
-        return $this->arguments->getArgument(static::ARGUMENT_TARGET_FQCN)->getValue();
+        $target = $this->getTarget();
+        [$className, $methodName] = explode('::', $target);
+
+        return $className;
     }
 
     /**
@@ -133,15 +135,18 @@ class WirePluginSpryk extends AbstractBuilder
      */
     protected function getTargetMethodName(): string
     {
-        return $this->arguments->getArgument(static::ARGUMENT_TARGET_METHOD_NAME)->getValue();
+        $target = $this->getTarget();
+        [$className, $methodName] = explode('::', $target);
+
+        return trim($methodName, '()');
     }
 
     /**
-     * @return string
+     * @return array
      */
-    protected function getSourceClassName(): string
+    protected function getPluginClassNames(): array
     {
-        return $this->arguments->getArgument(static::ARGUMENT_SOURCE_FQCN)->getValue();
+        return (array)$this->arguments->getArgument(static::ARGUMENT_PLUGIN)->getValue();
     }
 
     /**
@@ -153,9 +158,9 @@ class WirePluginSpryk extends AbstractBuilder
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    protected function getPluginBefore(): ?string
+    protected function getPluginBefore(): string
     {
         return $this->arguments->hasArgument(static::ARGUMENT_PLUGIN_BEFORE)
             ? (string)$this->arguments->getArgument(static::ARGUMENT_PLUGIN_BEFORE)->getValue()

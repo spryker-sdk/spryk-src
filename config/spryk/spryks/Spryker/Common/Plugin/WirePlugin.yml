@@ -19,17 +19,11 @@ arguments:
     pluginAfter:
         isOptional: true
 
-    targetFqcn: ~
+    target:
+        description: "Format FQCN::method"
 
-    targetMethodName: ~
+    plugin: ~
 
-    sourceFqcn: ~
-
-    # is used to create plugin dependency provider
-    pluginInterface: ~
-
-preSpryks:
-    - AddPluginDependencyProviderMethod
 
 
 
