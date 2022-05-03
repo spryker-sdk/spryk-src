@@ -45,27 +45,27 @@ class AddPluginToPluginListVisitor extends NodeVisitorAbstract
     /**
      * @var string
      */
-    protected $methodName;
+    protected string $methodName;
 
     /**
      * @var string
      */
-    protected $pluginClassName;
+    protected string $pluginClassName;
 
     /**
      * @var string
      */
-    protected $before;
+    protected string $before;
 
     /**
      * @var string
      */
-    protected $after;
+    protected string $after;
 
     /**
      * @var string|null
      */
-    protected $index;
+    protected ?string $index;
 
     /**
      * @var bool

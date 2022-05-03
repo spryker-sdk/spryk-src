@@ -23,7 +23,3 @@ arguments:
         description: "Format FQCN::method"
 
     plugin: ~
-
-
-
-

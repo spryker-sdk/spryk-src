@@ -57,7 +57,6 @@ class WirePluginSpryk extends AbstractBuilder
     protected function build(): void
     {
         $targetClassName = $this->getTargetClassName();
-//        $targetClassName = $this->replaceOrganization($this->getTargetClassName());
         $resolvedTargetClass = $this->resolveTargetClass($targetClassName);
 
         $targetMethodName = $this->getTargetMethodName();
@@ -107,16 +106,6 @@ class WirePluginSpryk extends AbstractBuilder
         }
 
         return $resolvedClass;
-    }
-
-    /**
-     * @param string $targetClassName
-     *
-     * @return string
-     */
-    protected function replaceOrganization(string $targetClassName): string
-    {
-        return (string)preg_replace('/(\w+)/', $this->getOrganization(), $targetClassName, 1);
     }
 
     /**

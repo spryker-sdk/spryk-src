@@ -25,12 +25,12 @@ class AddUseVisitor extends NodeVisitorAbstract
     /**
      * @var string
      */
-    protected $className;
+    protected string $className;
 
     /**
      * @var string|null
      */
-    protected $alias;
+    protected ?string $alias;
 
     /**
      * @param string $className
