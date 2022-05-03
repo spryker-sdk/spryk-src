@@ -39,3 +39,5 @@ arguments:
     target:
         description: "Class where the method should be added to."
 
+    zedDomainEntity:
+        inherit: true
