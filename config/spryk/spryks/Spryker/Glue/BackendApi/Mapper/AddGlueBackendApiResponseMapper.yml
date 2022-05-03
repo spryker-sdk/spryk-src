@@ -19,7 +19,7 @@ arguments:
 
     subDirectory:
         inherit: true
-        value: ResponseMapper
+        value: Mapper
 
     application:
         inherit: true
@@ -48,7 +48,7 @@ arguments:
         value: "{{ resource | normalizeResourceName | singularize }}"
 
     target:
-        value: "{{ organization }}\\Glue\\{{ module }}\\ResponseMapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
+        value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
 
     targetPath:
         value: "src/{{ organization }}/Glue/{{ module }}/"
@@ -68,7 +68,7 @@ postSpryks:
               body:
                   value: Glue/BackendApi/ResponseMapper/MapCollectionTransferToGlueResponseTransfer.php.twig
               target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\ResponseMapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
+                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
           postSpryks:
               - AddInterfaceMethod
     - AddMethod:
@@ -82,7 +82,7 @@ postSpryks:
               body:
                   value: Glue/BackendApi/ResponseMapper/MapCollectionTransferToSingleResourceGlueResponseTransfer.php.twig
               target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\ResponseMapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
+                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
     - AddMethod:
           arguments:
               method:
@@ -94,7 +94,7 @@ postSpryks:
               body:
                   value: Glue/BackendApi/ResponseMapper/MapCollectionResponseTransferToGlueResponseTransfer.php.twig
               target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\ResponseMapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
+                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
     - AddMethod:
           arguments:
               method:
@@ -120,7 +120,7 @@ postSpryks:
               body:
                   value: Glue/BackendApi/ResponseMapper/AddNotFoundError.php.twig
               target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\ResponseMapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
+                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
     - AddMethod:
           excludedSpryks:
               - AddInterfaceMethod
@@ -134,7 +134,7 @@ postSpryks:
               body:
                   value: Glue/BackendApi/ResponseMapper/AddResourceToGlueResponse.php.twig
               target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\ResponseMapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
+                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
     # Add factory method
     - AddGlueFactoryMethod:
           arguments:

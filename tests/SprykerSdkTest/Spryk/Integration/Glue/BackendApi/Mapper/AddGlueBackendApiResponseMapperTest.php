@@ -22,7 +22,7 @@ class AddGlueBackendApiResponseMapperTest extends Unit
     /**
      * @var string
      */
-    protected const CLASS_NAME = '\Spryker\Glue\FooBar\ResponseMapper\GlueResponseFooBarResponseMapper';
+    protected const CLASS_NAME = '\Spryker\Glue\FooBar\Mapper\GlueResponseFooBarResponseMapper';
 
     /**
      * @var string
@@ -54,5 +54,4 @@ class AddGlueBackendApiResponseMapperTest extends Unit
         $this->tester->assertClassHasMethod(static::CLASS_NAME, 'addNotFoundError');
         $this->tester->assertClassHasMethod(static::CLASS_NAME, 'addResourceToGlueResponse');
     }
-
 }
