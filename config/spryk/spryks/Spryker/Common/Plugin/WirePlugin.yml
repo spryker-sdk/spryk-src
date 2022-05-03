@@ -1,0 +1,25 @@
+spryk: wirePlugin
+description: "Wire plugin to target class method."
+mode: both
+
+arguments:
+    organization:
+        inherit: true
+        default: Spryker
+
+    module:
+        inherit: true
+
+    pluginIndex:
+        isOptional: true
+
+    pluginBefore:
+        isOptional: true
+
+    pluginAfter:
+        isOptional: true
+
+    target:
+        description: "Format FQCN::method"
+
+    plugin: ~

@@ -21,7 +21,7 @@ interface ZipZapClientInterface
      *
      * @return bool
      */
-    public function methodWithStringArgument(string $foo): bool;
+    public function methodWithStringArgument(string $foo) : bool;
 
     /**
      * {@inheritDoc}
@@ -52,7 +52,7 @@ interface ZipZapClientInterface
      *
      * @return \Generated\Shared\Transfer\FooBarTransfer
      */
-    public function methodWithTransferInputAndTransferOutput(ZipZapTransfer $zipZapTransfer): FooBarTransfer;
+    public function methodWithTransferInputAndTransferOutput(\Generated\Shared\Transfer\ZipZapTransfer $zipZapTransfer): \Generated\Shared\Transfer\FooBarTransfer;
 
     /**
      * @api

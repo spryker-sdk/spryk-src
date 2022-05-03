@@ -35,7 +35,8 @@ class EnableTestHelperTest extends Unit
     {
         $this->tester->run($this, [
             '--module' => 'FooBar',
-            '--layer' => 'Business',
+            '--application' => 'Zed',
+            '--suite' => 'Business',
             '--helperClassName' => 'SprykerTest\Zed\FooBar\Helper\ZipZapCrudHelper',
         ]);
 

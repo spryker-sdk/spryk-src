@@ -10,21 +10,18 @@ arguments:
         inherit: true
         default: Spryker
 
-    layer: ~
-
-    helperClassName:
+    application:
+        inherit: true
 
     afterElement:
         isOptional: true
 
     addToElement:
-        value: "suites.{{ layer }}.modules.enabled"
+        descrption: "Path to where the content should be added to."
 
     targetPath:
-        value: "tests/{{ organization }}Test/Zed/{{ module }}/codeception.yml"
+        descrption: "The file path that should be updated."
 
     content:
-        value: "{{ helperClassName }}"
+        descrption: "The content of the element."
 
-preSpryks:
-    - AddZedTestCodeceptionConfiguration

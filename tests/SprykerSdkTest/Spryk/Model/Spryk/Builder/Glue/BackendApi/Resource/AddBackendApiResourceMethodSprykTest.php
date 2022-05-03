@@ -36,7 +36,7 @@ class AddBackendApiResourceMethodSprykTest extends Unit
      */
     public function testAddPostResource(): void
     {
-        require_once codecept_data_dir('Glue/BackendApi/Resource/GlueBackendApiResource.php');
+        require_once codecept_data_dir('../_support/Fixtures/Glue/BackendApi/Resource/GlueBackendApiResource.php');
 
         $sprykDefinition = $this->tester->getSprykDefinition([
             AddBackendApiResourceMethodSpryk::ARGUMENT_TARGET => '\SprykerTest\GlueBackendApiResource',
@@ -47,7 +47,7 @@ class AddBackendApiResourceMethodSprykTest extends Unit
             AddBackendApiResourceMethodSpryk::ARGUMENT_METHOD => 'Post', // Should add a `setPost` method call
         ]);
 
-        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Template\AddBackendApiResourceMethodSpryk $addBackendApiResourceMethodSpryk */
+        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Glue\BackendApi\Resource\AddBackendApiResourceMethodSpryk $addBackendApiResourceMethodSpryk */
         $addBackendApiResourceMethodSpryk = $this->tester->grabService(AddBackendApiResourceMethodSpryk::class);
         $addBackendApiResourceMethodSpryk->runSpryk($sprykDefinition);
 

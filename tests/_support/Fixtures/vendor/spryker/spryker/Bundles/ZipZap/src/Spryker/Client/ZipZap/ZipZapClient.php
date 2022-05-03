@@ -23,7 +23,7 @@ class ZipZapClient implements ZipZapClientInterface
      */
     public function methodWithStringArgument(string $foo): bool
     {
-        return true;
+        return $this->zipZapClient->methodWithStringArgument($foo);
     }
 
     /**
@@ -62,7 +62,7 @@ class ZipZapClient implements ZipZapClientInterface
      *
      * @return \Generated\Shared\Transfer\FooBarTransfer
      */
-    public function methodWithTransferInputAndTransferOutput(ZipZapTransfer $zipZapTransfer): FooBarTransfer
+    public function methodWithTransferInputAndTransferOutput(\Generated\Shared\Transfer\ZipZapTransfer $zipZapTransfer): \Generated\Shared\Transfer\FooBarTransfer
     {
         return new FooBarTransfer();
     }

@@ -17,6 +17,7 @@
         "symfony/framework-bundle": "^5.4.0 || ^6.0.0",
         "symfony/polyfill-php80": "^1.25",
         "symfony/process": "^5.0.0 || ^6.0.0",
+        "symfony/property-access": "^5.4",
         "symfony/proxy-manager-bridge": "^5.4.0",
         "symfony/runtime": "^5.4",
         "symfony/twig-bundle": "^5.4",

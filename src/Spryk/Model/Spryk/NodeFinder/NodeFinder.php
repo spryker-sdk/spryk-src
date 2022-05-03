@@ -68,9 +68,18 @@ class NodeFinder implements NodeFinderInterface
      */
     public function findMethods(array $tokens): array
     {
-        return (new PhpParserNodeFinder())->find($tokens, function (Node $node) {
+        /** @var array<\PhpParser\Node\Stmt\ClassMethod> $methodNodes */
+        $methodNodes = (new PhpParserNodeFinder())->find($tokens, function (Node $node) {
             return $node instanceof ClassMethod;
         });
+
+        $methods = [];
+
+        foreach ($methodNodes as $methodNode) {
+            $methods[(string)$methodNode->name] = $methodNode;
+        }
+
+        return $methods;
     }
 
     /**

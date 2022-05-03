@@ -14,6 +14,8 @@ interface ParserInterface
     /**
      * @param string $type
      *
+     * @throws \Exception
+     *
      * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface
      */
     public function parse(string $type): ResolvedInterface;

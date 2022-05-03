@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerSdkTest\Spryk\Integration\Glue;
+namespace SprykerSdkTest\Spryk\Integration\Glue\BackendApi\Controller;
 
 use Codeception\Test\Unit;
-use SprykerSdkTest\Module\ClassName;
+use SprykerSdkTest\Module\GlueBackendApiClassNames;
 
 /**
  * Auto-generated group annotations
@@ -34,9 +34,8 @@ class AddGlueBackendApiControllerTest extends Unit
     {
         $this->tester->run($this, [
             '--resource' => '/foo-bars',
-            '--module' => 'FooBarBackendApi',
         ]);
 
-        $this->tester->assertClassOrInterfaceExists(ClassName::GLUE_BACKEND_API_CONTROLLER);
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER);
     }
 }

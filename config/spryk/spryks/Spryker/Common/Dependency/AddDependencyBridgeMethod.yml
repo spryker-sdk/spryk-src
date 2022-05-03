@@ -18,15 +18,15 @@ arguments:
     dependentModule:
         inherit: true
 
+    dependencyType:
+        description: "Can be one of: Facade, Client, Service"
+        inherit: true
+
     methods:
         isMultiple: true
 
     template:
         value: Common/Dependency/DependencyBridgeMethod.php.twig
-
-    dependencyType:
-        description: "Can be one of: Facade, Client, Service"
-        inherit: true
 
     sourceClass:
         description: "Loads method definitions from this class."
