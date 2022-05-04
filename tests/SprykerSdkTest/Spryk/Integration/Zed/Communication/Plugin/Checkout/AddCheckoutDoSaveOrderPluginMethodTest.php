@@ -41,7 +41,7 @@ class AddCheckoutDoSaveOrderPluginMethodTest extends Unit
             '--classNamePrefix' => 'TestPayment',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::ZED_CHECKOUT_DO_SAVE_ORDER_PLUGIN, 'saveOrder');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_CHECKOUT_DO_SAVE_ORDER_PLUGIN, 'saveOrder');
     }
 
     /**
@@ -55,6 +55,6 @@ class AddCheckoutDoSaveOrderPluginMethodTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_ZED_CHECKOUT_DO_SAVE_ORDER_PLUGIN, 'saveOrder');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_ZED_CHECKOUT_DO_SAVE_ORDER_PLUGIN, 'saveOrder');
     }
 }

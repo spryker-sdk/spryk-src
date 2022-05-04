@@ -39,7 +39,7 @@ class AddYvesDependencyServiceFactoryMethodTest extends Unit
             '--dependentModule' => 'ZipZap',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::YVES_FACTORY, 'getZipZapService');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::YVES_FACTORY, 'getZipZapService');
     }
 
     /**
@@ -53,6 +53,6 @@ class AddYvesDependencyServiceFactoryMethodTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_YVES_FACTORY, 'getZipZapService');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_YVES_FACTORY, 'getZipZapService');
     }
 }

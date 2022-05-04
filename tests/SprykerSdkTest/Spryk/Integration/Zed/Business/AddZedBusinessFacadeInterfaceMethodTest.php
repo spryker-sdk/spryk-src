@@ -43,7 +43,7 @@ class AddZedBusinessFacadeInterfaceMethodTest extends Unit
             ],
         ]);
 
-        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Business\FooBarFacadeInterface', 'addSomething');
+        $this->tester->assertClassOrInterfaceHasMethod('Spryker\Zed\FooBar\Business\FooBarFacadeInterface', 'addSomething');
     }
 
     /**
@@ -63,7 +63,7 @@ class AddZedBusinessFacadeInterfaceMethodTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod('Pyz\Zed\FooBar\Business\FooBarFacadeInterface', 'addSomething');
+        $this->tester->assertClassOrInterfaceHasMethod('Pyz\Zed\FooBar\Business\FooBarFacadeInterface', 'addSomething');
     }
 
     /**

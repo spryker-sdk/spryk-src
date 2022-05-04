@@ -39,7 +39,7 @@ class AddYvesDependencyServiceDependencyProviderMethodTest extends Unit
             '--dependentModule' => 'ZipZap',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::YVES_DEPENDENCY_PROVIDER, 'addZipZapService');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::YVES_DEPENDENCY_PROVIDER, 'addZipZapService');
     }
 
     /**
@@ -53,6 +53,6 @@ class AddYvesDependencyServiceDependencyProviderMethodTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_YVES_DEPENDENCY_PROVIDER, 'addZipZapService');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_YVES_DEPENDENCY_PROVIDER, 'addZipZapService');
     }
 }

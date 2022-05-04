@@ -135,7 +135,7 @@ class AssertionModule extends Module
      *
      * @return void
      */
-    public function assertClassHasMethod(string $className, string $methodName): void
+    public function assertClassOrInterfaceHasMethod(string $className, string $methodName): void
     {
         $resolved = $this->getResolvedByClassName($className);
         $nodeFinder = $this->getNodeFinder();
@@ -150,6 +150,29 @@ class AssertionModule extends Module
                 $className,
                 $methodName,
                 implode(', ', $this->getMethodNamesFromResolvedClass($resolved)),
+            ),
+        );
+    }
+
+    /**
+     * @param string $className
+     * @param string $methodName
+     *
+     * @return void
+     */
+    public function assertClassOrInterfaceDoesNotHasMethod(string $className, string $methodName): void
+    {
+        $resolved = $this->getResolvedByClassName($className);
+        $nodeFinder = $this->getNodeFinder();
+
+        $method = $nodeFinder->findMethodNode($resolved->getClassTokenTree(), $methodName);
+
+        $this->assertNull(
+            $method,
+            sprintf(
+                'Expected that class "%s" does not has method "%s" but method was found.',
+                $className,
+                $methodName,
             ),
         );
     }

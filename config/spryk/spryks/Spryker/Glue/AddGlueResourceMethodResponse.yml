@@ -10,10 +10,10 @@ arguments:
     module:
         description: "Based on the applicationType the module name will be suffixed with BackendApi or FrontendApi by the ResourceModuleName callback."
         inherit: true
-        value: "{{ resource | normalizeResourceName }}"
+        default: "{{ resource | normalizeResourceName }}"
         callback: GlueResourceModuleName
 
-    zedModule:
+    zedModule: # dataModule
         inherit: true
         description: "The module name for the Zed Application. It's the same name as for the Glue Module but without the Api suffix."
         value: "{{ module | removeApiSuffix | singularize }}"
@@ -51,23 +51,26 @@ arguments:
         description: "The HTTP method e.g. POST"
 
     httpResponseCode:
-        description: "The HTTP response code e.g. 200 (Ok)"
+        description: "The HTTP response code e.g. 200 (OK)"
 
     controller:
-        value: "{{ resource | normalizeResourceName }}ResourceController"
+        default: "{{ resource | normalizeResourceName }}ResourceController"
 
     zedDomainEntity:
         description: "Defines the domainEntity used on Zed side for the CRUD Facade. It will be used to create all needed Transfer Objects."
-        value: "{{ resource | normalizeResourceName | singularize }}"
+        default: "{{ resource | normalizeResourceName | singularize }}"
 
     resourceDataObject:
         description: "Defines the Transfer that will be used in the Controller. Do not use Transfer as suffix, it will be added automatically. Example: Customer (ok) CustomerTransfer (wrong)."
-        value: "{{ resource | normalizeResourceName | singularize }}"
+        default: "{{ resource | normalizeResourceName | singularize }}"
 
 postSpryks:
     - AddGlueBackendApiApplication
+    - AddGlueBackendApiRequestMapper
+    - AddGlueBackendApiResponseMapper
     # Add CrudFacade code
     - AddCrudFacade:
+          condition: "applicationType === 'Backend'"
           arguments:
               module:
                   value: "{{ zedModule }}"
@@ -167,6 +170,8 @@ postSpryks:
                   value: "$this->markTestIncomplete('Implement me!');"
               target:
                   value: "{{ organization }}Test\\Glue\\{{ module }}\\Controller\\{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}ResourceControllerTest"
+              withInterface:
+                  value: false
 
     # TestHelper class
     - AddTestHelper:
@@ -187,6 +192,8 @@ postSpryks:
                   value: "throw new \\Exception(sprintf('%s::%s() not implemented.', __CLASS__, __METHOD__));"
               target:
                   value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | ucfirst }}Helper"
+              withInterface:
+                  value: false
 
     # TestHelper class method haveInvalid<Resource><HTTPMethod>(Collection)Uri
     - AddMethod:
@@ -201,6 +208,8 @@ postSpryks:
                   value: "throw new \\Exception(sprintf('%s::%s() not implemented.', __CLASS__, __METHOD__));"
               target:
                   value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | ucfirst }}Helper"
+              withInterface:
+                  value: false
     # TestHelper class method haveValid<Resource><HTTPMethod>(Collection)RequestData
     - AddMethod:
           arguments:
@@ -214,6 +223,8 @@ postSpryks:
                   value: "throw new \\Exception(sprintf('%s::%s() not implemented.', __CLASS__, __METHOD__));"
               target:
                   value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | ucfirst }}Helper"
+              withInterface:
+                  value: false
     # TestHelper class method haveInvalid<Resource><HTTPMethod>(Collection)RequestData
     - AddMethod:
           arguments:
@@ -227,3 +238,5 @@ postSpryks:
                   value: "throw new \\Exception(sprintf('%s::%s() not implemented.', __CLASS__, __METHOD__));"
               target:
                   value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | ucfirst }}Helper"
+              withInterface:
+                  value: false

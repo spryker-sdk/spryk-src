@@ -40,7 +40,7 @@ class AddZedPersistenceEntityManagerMethodTest extends Unit
             '--output' => 'array',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::ZED_ENTITY_MANAGER, 'doSomething');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_ENTITY_MANAGER, 'doSomething');
     }
 
     /**
@@ -56,6 +56,6 @@ class AddZedPersistenceEntityManagerMethodTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_ZED_ENTITY_MANAGER, 'doSomething');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_ZED_ENTITY_MANAGER, 'doSomething');
     }
 }

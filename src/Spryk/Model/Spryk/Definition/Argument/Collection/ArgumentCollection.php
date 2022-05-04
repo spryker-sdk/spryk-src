@@ -77,7 +77,7 @@ class ArgumentCollection implements ArgumentCollectionInterface
     public function getArgument(string $name, bool $lookupPreviousSprykArgumentCollection = false): ArgumentInterface
     {
         if (!$this->hasArgument($name, $lookupPreviousSprykArgumentCollection)) {
-            throw new ArgumentNotFoundException(sprintf('Argument "%s" could not be found. Maybe there is a typo in your spryk definition.', $name));
+            throw new ArgumentNotFoundException(sprintf('Argument "%s" could not be found. Maybe there is a typo in your "%s" definition.', $name, $this->getSprykName()));
         }
 
         if (isset($this->arguments[$name])) {
@@ -88,7 +88,7 @@ class ArgumentCollection implements ArgumentCollectionInterface
             return $this->previousSprykArgumentCollection->getArgument($name);
         }
 
-        throw new ArgumentNotFoundException(sprintf('Argument "%s" could not be found. Maybe there is a typo in your spryk definition.', $name));
+        throw new ArgumentNotFoundException(sprintf('Argument "%s" could not be found. Maybe there is a typo in your "%s" definition.', $name, $this->getSprykName()));
     }
 
     /**

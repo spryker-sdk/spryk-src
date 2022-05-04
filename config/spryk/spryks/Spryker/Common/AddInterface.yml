@@ -1,0 +1,38 @@
+spryk: template
+description: "Adds a new interface for the target class."
+mode: both
+level: 3
+
+arguments:
+    organization:
+        inherit: true
+        default: Spryker
+
+    application:
+        inherit: true
+
+    module:
+        inherit: true
+
+    className:
+        inherit: true
+
+    targetFilename:
+        inherit: true
+
+    interfaceName:
+        callback: GetClassNameFromTarget
+
+    subDirectory:
+        inherit: true
+        isOptional: true
+
+    targetPath:
+        description: "Target path will be extended with the subDirectory inside the TemplateSpryk when set."
+        value: "src/{{ organization }}/{{ application }}/{{ module }}"
+
+    target:
+        inherit: true
+
+    template:
+        value: Common/Interface.php.twig

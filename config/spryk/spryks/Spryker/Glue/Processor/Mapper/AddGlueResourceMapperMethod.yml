@@ -48,5 +48,5 @@ preSpryks:
             subDirectory:
                 value: "Mapper"
 
-postSpryk:
+postSpryks:
     - AddGlueResourceMapperInterfaceMethod

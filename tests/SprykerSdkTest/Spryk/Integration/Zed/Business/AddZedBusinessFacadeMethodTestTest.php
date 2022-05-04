@@ -40,7 +40,7 @@ class AddZedBusinessFacadeMethodTestTest extends Unit
             '--output' => 'bool',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::ZED_FACADE_TEST, 'testAddSomething');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_FACADE_TEST, 'testAddSomething');
     }
 
     /**
@@ -56,6 +56,6 @@ class AddZedBusinessFacadeMethodTestTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_ZED_FACADE_TEST, 'testAddSomething');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_ZED_FACADE_TEST, 'testAddSomething');
     }
 }

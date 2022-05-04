@@ -7,6 +7,10 @@ arguments:
         inherit: true
         default: Spryker
 
+    application:
+        inherit: true
+        default: Zed
+
     module:
         inherit: true
         moduleFilter:
@@ -49,5 +53,7 @@ postSpryks:
                   value: "return [];"
               target:
                   value: "\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}DependencyProvider"
+              withInterface:
+                  value: false
     # Add the add{{ type }}Plugins method to the DependencyProvider
     - AddZedDependencyAddPluginsDependencyProviderMethod

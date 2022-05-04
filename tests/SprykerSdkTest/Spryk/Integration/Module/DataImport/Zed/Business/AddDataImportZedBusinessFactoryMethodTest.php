@@ -40,7 +40,7 @@ class AddDataImportZedBusinessFactoryMethodTest extends Unit
             '--entity' => 'FooBarItem',
         ]);
 
-        $this->tester->assertClassHasMethod(
+        $this->tester->assertClassOrInterfaceHasMethod(
             ClassName::DATA_IMPORT_BUSINESS_FACTORY,
             'getFooBarItemDataImporter',
         );
@@ -57,7 +57,7 @@ class AddDataImportZedBusinessFactoryMethodTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(
+        $this->tester->assertClassOrInterfaceHasMethod(
             ClassName::PROJECT_DATA_IMPORT_BUSINESS_FACTORY,
             'getFooBarItemDataImporter',
         );

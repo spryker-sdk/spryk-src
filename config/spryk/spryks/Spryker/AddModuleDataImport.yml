@@ -61,6 +61,8 @@ postSpryks:
                 value: \Generated\Shared\Transfer\DataImporterConfigurationTransfer
             target:
                 value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\{{ module }}Config"
+            withInterface:
+                value: false
     - AddConstant:
         arguments:
             name:

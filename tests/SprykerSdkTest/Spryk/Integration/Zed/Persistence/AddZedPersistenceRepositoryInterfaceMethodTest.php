@@ -40,7 +40,7 @@ class AddZedPersistenceRepositoryInterfaceMethodTest extends Unit
             '--output' => 'array',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::ZED_REPOSITORY_INTERFACE, 'doSomething');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_REPOSITORY_INTERFACE, 'doSomething');
     }
 
     /**
@@ -56,6 +56,6 @@ class AddZedPersistenceRepositoryInterfaceMethodTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_ZED_REPOSITORY_INTERFACE, 'doSomething');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_ZED_REPOSITORY_INTERFACE, 'doSomething');
     }
 }

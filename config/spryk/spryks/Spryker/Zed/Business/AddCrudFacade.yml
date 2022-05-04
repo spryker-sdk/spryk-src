@@ -22,9 +22,6 @@ excludedSpryks:
     - AddZedPresentationTwig
     - AddZedNavigationNode
 
-#preSpryks:
-#    - AddModule
-
 postSpryks:
     - AddZedDomainEntityDeleter
     - AddZedDomainEntityCreator

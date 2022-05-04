@@ -55,18 +55,18 @@ class AddZedDependencyFacadeBridgeMethodTest extends Unit
             ],
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithStringArgument');
-        $this->tester->assertClassHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithArrayArgument');
-        $this->tester->assertClassHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodReturnsVoid');
-        $this->tester->assertClassHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithTransferInputAndTransferOutput');
-        $this->tester->assertClassHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithDefaultNull');
-        $this->tester->assertClassHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithDefaultArray');
-        $this->tester->assertClassHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithoutMethodReturnType');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithStringArgument');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithArrayArgument');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodReturnsVoid');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithTransferInputAndTransferOutput');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithDefaultNull');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithDefaultArray');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithoutMethodReturnType');
         $this->tester->assertClassNotContains(ClassName::ZED_FACADE_BRIDGE, 'methodWithoutMethodReturnType(): void');
-        $this->tester->assertClassHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithoutDocBlockReturnType');
-        $this->tester->assertClassHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithMultipleReturn');
-        $this->tester->assertClassHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithMultipleReturnAndNullable');
-        $this->tester->assertClassHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithNullableReturn');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithoutDocBlockReturnType');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithMultipleReturn');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithMultipleReturnAndNullable');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithNullableReturn');
     }
 
     /**
@@ -98,7 +98,7 @@ class AddZedDependencyFacadeBridgeMethodTest extends Unit
                 'methodWithStringArgument',
             ],
         ]);
-        $this->tester->assertClassHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithStringArgument');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithStringArgument');
 
         $this->tester->run($this, [
             '--module' => 'FooBar',
@@ -107,6 +107,6 @@ class AddZedDependencyFacadeBridgeMethodTest extends Unit
                 'methodWithStringArgument',
             ],
         ]);
-        $this->tester->assertClassHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithStringArgument');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_FACADE_BRIDGE, 'methodWithStringArgument');
     }
 }

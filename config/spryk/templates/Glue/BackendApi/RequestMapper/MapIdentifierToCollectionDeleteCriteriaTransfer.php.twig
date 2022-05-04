@@ -1,0 +1,4 @@
+    ${{ zedDomainEntity | lcfirst }}CollectionDeleteCriteriaTransfer = new {{ zedDomainEntity }}CollectionDeleteCriteriaTransfer();
+    ${{ zedDomainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->setIsTransactional(false)->addId{{ zedDomainEntity }}($identifier);
+
+    return ${{ zedDomainEntity | lcfirst }}CollectionDeleteCriteriaTransfer;

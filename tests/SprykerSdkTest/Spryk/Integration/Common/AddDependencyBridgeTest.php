@@ -59,7 +59,7 @@ class AddDependencyBridgeTest extends Unit
 
         $this->tester->run($this, $arguments);
 
-        $this->tester->assertClassHasMethod($expectedBridgeClass, '__construct');
+        $this->tester->assertClassOrInterfaceHasMethod($expectedBridgeClass, '__construct');
         $this->tester->assertClassOrInterfaceExists($expectedBridgeInterface);
     }
 

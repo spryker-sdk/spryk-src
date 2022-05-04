@@ -42,7 +42,7 @@ class AddZedDomainEntityMethodTest extends Unit
             '--output' => 'bool',
         ]);
 
-        $this->tester->assertClassHasMethod('\Spryker\Zed\FooBar\Business\Entity\FooBarEntityInterface', 'addSomething');
+        $this->tester->assertClassOrInterfaceHasMethod('\Spryker\Zed\FooBar\Business\Entity\FooBarEntityInterface', 'addSomething');
     }
 
     /**
@@ -60,6 +60,6 @@ class AddZedDomainEntityMethodTest extends Unit
             '--output' => 'bool',
         ]);
 
-        $this->tester->assertClassHasMethod('\Pyz\Zed\FooBar\Business\Entity\FooBarEntityInterface', 'addSomething');
+        $this->tester->assertClassOrInterfaceHasMethod('\Pyz\Zed\FooBar\Business\Entity\FooBarEntityInterface', 'addSomething');
     }
 }

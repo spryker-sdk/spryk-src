@@ -50,8 +50,8 @@ class AddGlueBasicStructureTest extends Unit
             'foo-bars',
             'public',
         );
-        $this->tester->assertClassHasMethod(ClassName::GLUE_BUSINESS_FACTORY, 'createFooBarMapper');
-        $this->tester->assertClassHasMethod(ClassName::GLUE_BUSINESS_FACTORY, 'createFooBarRestResponseBuilder');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::GLUE_BUSINESS_FACTORY, 'createFooBarMapper');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::GLUE_BUSINESS_FACTORY, 'createFooBarRestResponseBuilder');
     }
 
     /**
@@ -81,7 +81,7 @@ class AddGlueBasicStructureTest extends Unit
             'foo-bars',
             'public',
         );
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_GLUE_BUSINESS_FACTORY, 'createFooBarMapper');
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_GLUE_BUSINESS_FACTORY, 'createFooBarRestResponseBuilder');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_GLUE_BUSINESS_FACTORY, 'createFooBarMapper');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_GLUE_BUSINESS_FACTORY, 'createFooBarRestResponseBuilder');
     }
 }

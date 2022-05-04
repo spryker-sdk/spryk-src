@@ -1,0 +1,18 @@
+    ${{ zedDomainEntity | lcfirst }}CriteriaTransfer = new {{ zedDomainEntity }}CriteriaTransfer();
+
+    ${{ zedDomainEntity | lcfirst }}CriteriaTransfer->setPagination($glueRequestTransfer->getPagination());
+    ${{ zedDomainEntity | lcfirst }}CriteriaTransfer->setSortCollection($glueRequestTransfer->getSorting());
+
+    ${{ zedDomainEntity | lcfirst }}ConditionsTransfer = new {{ zedDomainEntity }}ConditionsTransfer();
+
+    if (!isset($glueRequestTransfer->getQueryFields()['filter'])) {
+        return ${{ zedDomainEntity | lcfirst }}CriteriaTransfer;
+    }
+
+    foreach ($glueRequestTransfer->getQueryFields()['filter'] as $key => $value) {
+        // Apply conditions to ${{ zedDomainEntity | lcfirst }}ConditionsTransfer
+    }
+
+    ${{ zedDomainEntity | lcfirst }}CriteriaTransfer->set{{ zedDomainEntity }}Conditions(${{ zedDomainEntity | lcfirst }}ConditionsTransfer);
+
+    return ${{ zedDomainEntity | lcfirst }}CriteriaTransfer;

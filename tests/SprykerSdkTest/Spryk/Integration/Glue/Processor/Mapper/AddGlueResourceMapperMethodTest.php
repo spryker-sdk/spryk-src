@@ -43,7 +43,7 @@ class AddGlueResourceMapperMethodTest extends Unit
 
         $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/Processor/Mapper/FooBarMapperInterface.php');
         $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/Processor/Mapper/FooBarMapper.php');
-        $this->tester->assertClassHasMethod(ClassName::GLUE_RESOURCE_MAPPER, 'mapRestFooBarsAttributesTransferToBarQuxTransfer');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::GLUE_RESOURCE_MAPPER, 'mapRestFooBarsAttributesTransferToBarQuxTransfer');
     }
 
     /**
@@ -60,7 +60,7 @@ class AddGlueResourceMapperMethodTest extends Unit
 
         $this->assertFileExists($this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'Processor/Mapper/FooBarMapperInterface.php');
         $this->assertFileExists($this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'Processor/Mapper/FooBarMapper.php');
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_GLUE_RESOURCE_MAPPER, 'mapRestFooBarsAttributesTransferToBarQuxTransfer');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_GLUE_RESOURCE_MAPPER, 'mapRestFooBarsAttributesTransferToBarQuxTransfer');
     }
 
     /**
@@ -77,7 +77,7 @@ class AddGlueResourceMapperMethodTest extends Unit
 
         $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/Processor/Mapper/FooBarMapperInterface.php');
         $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/Processor/Mapper/FooBarMapper.php');
-        $this->tester->assertClassHasMethod(ClassName::GLUE_RESOURCE_MAPPER, 'mapBarQuxTransferToRestFooBarsAttributesTransfer');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::GLUE_RESOURCE_MAPPER, 'mapBarQuxTransferToRestFooBarsAttributesTransfer');
     }
 
     /**
@@ -94,6 +94,6 @@ class AddGlueResourceMapperMethodTest extends Unit
 
         $this->assertFileExists($this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'Processor/Mapper/FooBarMapperInterface.php');
         $this->assertFileExists($this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'Processor/Mapper/FooBarMapper.php');
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_GLUE_RESOURCE_MAPPER, 'mapBarQuxTransferToRestFooBarsAttributesTransfer');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_GLUE_RESOURCE_MAPPER, 'mapBarQuxTransferToRestFooBarsAttributesTransfer');
     }
 }

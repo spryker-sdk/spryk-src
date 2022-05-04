@@ -41,7 +41,7 @@ class AddCommandByOrderPluginMethodTest extends Unit
             '--classNamePrefix' => 'TestPayment',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::ZED_PLUGIN_OMS_COMMAND_BY_ORDER_PLUGIN, 'run');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_PLUGIN_OMS_COMMAND_BY_ORDER_PLUGIN, 'run');
     }
 
     /**
@@ -55,6 +55,6 @@ class AddCommandByOrderPluginMethodTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_ZED_PLUGIN_OMS_COMMAND_BY_ORDER_PLUGIN, 'run');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_ZED_PLUGIN_OMS_COMMAND_BY_ORDER_PLUGIN, 'run');
     }
 }

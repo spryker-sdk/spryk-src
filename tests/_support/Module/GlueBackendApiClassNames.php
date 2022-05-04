@@ -82,22 +82,22 @@ interface GlueBackendApiClassNames
     /**
      * @var string
      */
-    public const GLUE_BACKEND_API_REQUEST_MAPPER = '\Spryker\Glue\FooBarsBackendApi\Mapper\GlueRequestTestMapper';
+    public const GLUE_BACKEND_API_REQUEST_MAPPER = '\Spryker\Glue\FooBarsBackendApi\Mapper\GlueRequestFooBarMapper';
 
     /**
      * @var string
      */
-    public const GLUE_BACKEND_API_REQUEST_MAPPER_INTERFACE = '\Spryker\Glue\FooBarsBackendApi\Mapper\GlueRequestTestMapperInterface';
+    public const GLUE_BACKEND_API_REQUEST_MAPPER_INTERFACE = '\Spryker\Glue\FooBarsBackendApi\Mapper\GlueRequestFooBarMapperInterface';
 
     /**
      * @var string
      */
-    public const GLUE_BACKEND_API_RESPONSE_MAPPER = '\Spryker\Glue\FooBarsBackendApi\Mapper\GlueResponseTestMapper';
+    public const GLUE_BACKEND_API_RESPONSE_MAPPER = '\Spryker\Glue\FooBarsBackendApi\Mapper\GlueResponseFooBarMapper';
 
     /**
      * @var string
      */
-    public const GLUE_BACKEND_API_RESPONSE_MAPPER_INTERFACE = '\Spryker\Glue\FooBarsBackendApi\Mapper\GlueResponseTestMapperInterface';
+    public const GLUE_BACKEND_API_RESPONSE_MAPPER_INTERFACE = '\Spryker\Glue\FooBarsBackendApi\Mapper\GlueResponseFooBarMapperInterface';
 
     /**
      * @var string

@@ -39,7 +39,7 @@ class AddClientMethodTest extends Unit
             '--output' => 'bool',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::CLIENT, 'addSomething');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::CLIENT, 'addSomething');
     }
 
     /**
@@ -55,6 +55,6 @@ class AddClientMethodTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_CLIENT, 'addSomething');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_CLIENT, 'addSomething');
     }
 }

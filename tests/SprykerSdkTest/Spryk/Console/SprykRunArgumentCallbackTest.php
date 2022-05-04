@@ -47,7 +47,7 @@ class SprykRunArgumentCallbackTest extends Unit
 
         $tester->execute($arguments, ['interactive' => false]);
 
-        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Business\FooBarBusinessFactory', 'createFooBar');
+        $this->tester->assertClassOrInterfaceHasMethod('Spryker\Zed\FooBar\Business\FooBarBusinessFactory', 'createFooBar');
     }
 
     /**
