@@ -44,7 +44,7 @@ class AddDataImportZedBusinessWriterStepMethodTest extends Unit
             '--output' => 'bool',
         ]);
 
-        $this->tester->assertClassHasMethod(
+        $this->tester->assertClassOrInterfaceHasMethod(
             'Spryker\Zed\FooBar\Business\Writer\FooBarItemWriter',
             'addSomething',
         );
@@ -65,7 +65,7 @@ class AddDataImportZedBusinessWriterStepMethodTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(
+        $this->tester->assertClassOrInterfaceHasMethod(
             'Pyz\Zed\FooBar\Business\Writer\FooBarItemWriter',
             'addSomething',
         );

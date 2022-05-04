@@ -8,6 +8,8 @@
 namespace SprykerSdkTest\Spryk\Integration\Glue\BackendApi\Mapper;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\GlueBackendApiClassNames;
+use SprykerSdkTest\SprykIntegrationTester;
 
 /**
  * Auto-generated group annotations
@@ -24,21 +26,9 @@ use Codeception\Test\Unit;
 class AddGlueBackendApiResponseMapperTest extends Unit
 {
     /**
-     * @var string
-     */
-    protected const CLASS_NAME = '\Spryker\Glue\FooBar\Mapper\GlueResponseFooBarMapper';
-
-    protected const INTERFACE_NAME = self::CLASS_NAME . 'Interface';
-
-    /**
-     * @var string
-     */
-    protected const MODULE = 'FooBar';
-
-    /**
      * @var \SprykerSdkTest\SprykIntegrationTester
      */
-    protected $tester;
+    protected SprykIntegrationTester $tester;
 
     /**
      * @return void
@@ -47,17 +37,27 @@ class AddGlueBackendApiResponseMapperTest extends Unit
     {
         $this->tester->run($this, [
             '--resource' => '/foo-bars',
-            '--module' => static::MODULE,
         ]);
 
-        $this->tester->assertClassOrInterfaceExists(static::CLASS_NAME);
-        $this->tester->assertClassOrInterfaceExists(static::CLASS_NAME . 'Interface');
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_RESPONSE_MAPPER);
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_RESPONSE_MAPPER_INTERFACE);
 
-        $this->tester->assertClassHasMethod(static::CLASS_NAME, 'map' . static::MODULE . 'CollectionTransferToGlueResponseTransfer');
-        $this->tester->assertClassHasMethod(static::CLASS_NAME, 'map' . static::MODULE . 'CollectionTransferToSingleResourceGlueResponseTransfer');
-        $this->tester->assertClassHasMethod(static::CLASS_NAME, 'map' . static::MODULE . 'CollectionResponseTransferToGlueResponseTransfer');
-        $this->tester->assertClassHasMethod(static::CLASS_NAME, 'map' . static::MODULE . 'CollectionResponseTransferToSingleResourceGlueResponseTransfer');
-        $this->tester->assertClassHasMethod(static::CLASS_NAME, 'addNotFoundError');
-        $this->tester->assertClassHasMethod(static::CLASS_NAME, 'addResourceToGlueResponse');
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_RESPONSE_MAPPER, 'mapFooBarCollectionTransferToGlueResponseTransfer');
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_RESPONSE_MAPPER_INTERFACE, 'mapFooBarCollectionTransferToGlueResponseTransfer');
+
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_RESPONSE_MAPPER, 'mapFooBarCollectionTransferToSingleResourceGlueResponseTransfer');
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_RESPONSE_MAPPER_INTERFACE, 'mapFooBarCollectionTransferToSingleResourceGlueResponseTransfer');
+
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_RESPONSE_MAPPER, 'mapFooBarCollectionResponseTransferToGlueResponseTransfer');
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_RESPONSE_MAPPER_INTERFACE, 'mapFooBarCollectionResponseTransferToGlueResponseTransfer');
+
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_RESPONSE_MAPPER, 'mapFooBarCollectionResponseTransferToSingleResourceGlueResponseTransfer');
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_RESPONSE_MAPPER_INTERFACE, 'mapFooBarCollectionResponseTransferToSingleResourceGlueResponseTransfer');
+
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_RESPONSE_MAPPER, 'addNotFoundError');
+        $this->tester->assertClassOrInterfaceDoesNotHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_RESPONSE_MAPPER_INTERFACE, 'addNotFoundError');
+
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_RESPONSE_MAPPER, 'addResourceToGlueResponse');
+        $this->tester->assertClassOrInterfaceDoesNotHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_RESPONSE_MAPPER_INTERFACE, 'addResourceToGlueResponse');
     }
 }

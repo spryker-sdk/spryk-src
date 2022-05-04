@@ -8,20 +8,20 @@ arguments:
         inherit: true
         default: Spryker
 
+    application:
+        inherit: true
+
     module:
         inherit: true
 
-    method:
+    className:
         inherit: true
 
     targetFilename:
-        value: "{{ className }}Interface.php"
+        inherit: true
 
     interfaceName:
-        value: "{{ className }}Interface"
-
-    application:
-        inherit: true
+        callback: GetClassNameFromTarget
 
     subDirectory:
         inherit: true
@@ -31,14 +31,8 @@ arguments:
         description: "Target path will be extended with the subDirectory inside the TemplateSpryk when set."
         value: "src/{{ organization }}/{{ application }}/{{ module }}"
 
-    input:
-        isOptional: true
-
-    output:
-        default: void
+    target:
+        inherit: true
 
     template:
         value: Common/Interface.php.twig
-
-    target:
-        inherit: true

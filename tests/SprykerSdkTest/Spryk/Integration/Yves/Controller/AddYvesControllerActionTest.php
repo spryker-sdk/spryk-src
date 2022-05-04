@@ -39,7 +39,7 @@ class AddYvesControllerActionTest extends Unit
             '--controllerMethod' => 'index',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::YVES_CONTROLLER, 'indexAction');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::YVES_CONTROLLER, 'indexAction');
     }
 
     /**
@@ -54,6 +54,6 @@ class AddYvesControllerActionTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_YVES_CONTROLLER, 'indexAction');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_YVES_CONTROLLER, 'indexAction');
     }
 }

@@ -41,6 +41,6 @@ class AddPaymentMethodFilterPluginMethodTest extends Unit
             '--classNamePrefix' => 'TestPayment',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::ZED_PAYMENT_METHOD_FILTER_PLUGIN, 'filterPaymentMethods');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_PAYMENT_METHOD_FILTER_PLUGIN, 'filterPaymentMethods');
     }
 }

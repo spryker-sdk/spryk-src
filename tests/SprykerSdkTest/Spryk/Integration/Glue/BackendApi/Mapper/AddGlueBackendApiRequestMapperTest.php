@@ -8,6 +8,8 @@
 namespace SprykerSdkTest\Spryk\Integration\Glue\BackendApi\Mapper;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\GlueBackendApiClassNames;
+use SprykerSdkTest\SprykIntegrationTester;
 
 /**
  * Auto-generated group annotations
@@ -24,37 +26,35 @@ use Codeception\Test\Unit;
 class AddGlueBackendApiRequestMapperTest extends Unit
 {
     /**
-     * @var string
-     */
-    protected const CLASS_NAME = '\Spryker\Glue\FooBar\Mapper\GlueRequestFooBarMapper';
-
-    /**
-     * @var string
-     */
-    protected const MODULE = 'FooBar';
-
-    /**
      * @var \SprykerSdkTest\SprykIntegrationTester
      */
-    protected $tester;
+    protected SprykIntegrationTester $tester;
 
     /**
      * @return void
      */
-    public function testAddsGlueBackendApiResponseMapper(): void
+    public function testAddsGlueBackendApiRequestMapper(): void
     {
         $this->tester->run($this, [
             '--resource' => '/foo-bars',
-            '--module' => static::MODULE,
         ]);
 
-        $this->tester->assertClassOrInterfaceExists(static::CLASS_NAME);
-        $this->tester->assertClassOrInterfaceExists(static::CLASS_NAME . 'Interface');
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER);
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER_INTERFACE);
 
-        $this->tester->assertClassHasMethod(static::CLASS_NAME, 'mapGlueRequestTransferTo' . static::MODULE . 'CriteriaTransfer');
-        $this->tester->assertClassHasMethod(static::CLASS_NAME, 'mapGlueRequestTransferTo' . static::MODULE . 'CollectionDeleteCriteriaTransfer');
-        $this->tester->assertClassHasMethod(static::CLASS_NAME, 'mapIdentifierTo' . static::MODULE . 'CriteriaTransfer');
-        $this->tester->assertClassHasMethod(static::CLASS_NAME, 'mapIdentifierTo' . static::MODULE . 'CollectionDeleteCriteriaTransfer');
-        $this->tester->assertClassHasMethod(static::CLASS_NAME, 'map' . static::MODULE . 'TransferTo' . static::MODULE . 'CollectionRequestTransfer');
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER, 'mapGlueRequestTransferToFooBarCriteriaTransfer');
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER_INTERFACE, 'mapGlueRequestTransferToFooBarCriteriaTransfer');
+
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER, 'mapGlueRequestTransferToFooBarCollectionDeleteCriteriaTransfer');
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER_INTERFACE, 'mapGlueRequestTransferToFooBarCollectionDeleteCriteriaTransfer');
+
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER, 'mapIdentifierToFooBarCriteriaTransfer');
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER_INTERFACE, 'mapIdentifierToFooBarCriteriaTransfer');
+
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER, 'mapIdentifierToFooBarCollectionDeleteCriteriaTransfer');
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER_INTERFACE, 'mapIdentifierToFooBarCollectionDeleteCriteriaTransfer');
+
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER, 'mapFooBarTransferToFooBarCollectionRequestTransfer');
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER_INTERFACE, 'mapFooBarTransferToFooBarCollectionRequestTransfer');
     }
 }

@@ -39,6 +39,6 @@ class AddGlueBackendApiControllerMethodGetTest extends Unit
 
         $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER);
         $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_GET_CONTROLLER_TEST);
-        $this->tester->assertClassHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER, 'getAction');
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER, 'getAction');
     }
 }

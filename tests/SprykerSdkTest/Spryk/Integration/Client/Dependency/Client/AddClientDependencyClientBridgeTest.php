@@ -67,6 +67,6 @@ class AddClientDependencyClientBridgeTest extends Unit
             '--dependentModule' => 'ZipZap',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::CLIENT_FACTORY, 'getZipZapClient');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::CLIENT_FACTORY, 'getZipZapClient');
     }
 }

@@ -5,10 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerSdkTest\Spryk\Integration\Yves\Plugin;
+namespace SprykerSdkTest\Spryk\Integration\Common;
 
 use Codeception\Test\Unit;
+use SprykerSdk\Spryk\Console\SprykRunConsole;
 use SprykerSdkTest\Module\ClassName;
+use SprykerSdkTest\SprykIntegrationTester;
 
 /**
  * Auto-generated group annotations
@@ -16,29 +18,28 @@ use SprykerSdkTest\Module\ClassName;
  * @group SprykerSdkTest
  * @group Spryk
  * @group Integration
- * @group Yves
- * @group Plugin
- * @group AddSubFormPluginDataProviderMethodTest
+ * @group Common
+ * @group AddModuleConfigTest
  * Add your own group annotations below this line
  */
-class AddSubFormPluginDataProviderMethodTest extends Unit
+class AddModuleConfigTest extends Unit
 {
     /**
      * @var \SprykerSdkTest\SprykIntegrationTester
      */
-    protected $tester;
+    protected SprykIntegrationTester $tester;
 
     /**
      * @return void
      */
-    public function testAddMethod(): void
+    public function testAddsConstant(): void
     {
-        $this->tester->run($this, [
-            '--organization' => 'SprykerShop',
+        $arguments = [
             '--module' => 'FooBar',
-            '--classNamePrefix' => 'TestPayment',
-        ]);
+        ];
 
-        $this->tester->assertClassOrInterfaceHasMethod(ClassName::YVES_PLUGIN_SUB_FORM_PLUGIN, 'createSubFormDataProvider');
+        $this->tester->run($this, $arguments);
+
+        $this->tester->assertClassOrInterfaceExists();
     }
 }

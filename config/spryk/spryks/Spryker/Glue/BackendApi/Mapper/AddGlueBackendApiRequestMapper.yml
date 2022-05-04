@@ -5,25 +5,28 @@ level: 2
 
 arguments:
     module:
+        description: "Module name should be suffixed either with Api or with BackendApi depending on the choosen applicationType."
         inherit: true
+        default: "{{ resource | normalizeResourceName }}{% if applicationType == 'Frontend' %}Api{% else %}BackendApi{% endif %}"
 
     organization:
         inherit: true
         default: Spryker
+
+    application:
+        inherit: true
+        value: Glue
 
     className:
         value: "GlueRequest{{ resourceDataObject }}Mapper"
 
     resource:
         description: "Defines the resource name this controller will work with."
+        inherit: true
 
     subDirectory:
         inherit: true
         value: Mapper
-
-    application:
-        inherit: true
-        value: Glue
 
     applicationType:
         inherit: true
@@ -38,24 +41,26 @@ arguments:
     resourceDataObject:
         description: "Defines the Transfer that will be used in the Methods. Do not use Transfer as suffix, it will be added automatically. Example: Customer (ok) CustomerTransfer (wrong)"
         isOptional: true # Is not needed for all methods
-        value: "{{ resource | normalizeResourceName | singularize }}"
+        default: "{{ resource | normalizeResourceName | singularize }}"
 
     template:
         value: Common/Class.php.twig
 
     zedDomainEntity:
         description: "Defines the domainEntity used on Zed side for the CRUD Facade. It will be used to create all needed Transfer Objects."
-        value: "{{ resource | normalizeResourceName | singularize }}"
+        default: "{{ resource | normalizeResourceName | singularize }}"
 
     target:
         value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueRequest{{ resourceDataObject }}Mapper"
+
+    targetFilename:
+        value: "{{ className }}.php"
 
     targetPath:
         value: "src/{{ organization }}/Glue/{{ module }}/"
 
 preSpryks:
     - AddGlueBackendApiController
-    - AddInterface
 
 postSpryks:
     - AddMethod:
@@ -70,10 +75,9 @@ postSpryks:
                   value: Glue/BackendApi/RequestMapper/MapGlueRequestTransferToCriteriaTransfer.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueRequest{{ resourceDataObject }}Mapper"
-          postSpryks:
-              - AddInterfaceMethod:
-                    arguments:
-                        condition: "visibility === 'public' && withInterface === true"
+              # Overloading AddMethod Spryk
+              zedDomainEntity:
+                  inherit: true
     - AddMethod:
           arguments:
               method:
@@ -86,10 +90,9 @@ postSpryks:
                   value: Glue/BackendApi/RequestMapper/MapGlueRequestTransferToCollectionDeleteCriteriaTransfer.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueRequest{{ resourceDataObject }}Mapper"
-          postSpryks:
-              - AddInterfaceMethod:
-                    arguments:
-                        condition: "visibility === 'public' && withInterface === true"
+              # Overloading AddMethod Spryk
+              zedDomainEntity:
+                  inherit: true
     - AddMethod:
           arguments:
               method:
@@ -102,10 +105,9 @@ postSpryks:
                   value: Glue/BackendApi/RequestMapper/MapIdentifierToCriteriaTransfer.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueRequest{{ resourceDataObject }}Mapper"
-          postSpryks:
-              - AddInterfaceMethod:
-                    arguments:
-                        condition: "visibility === 'public' && withInterface === true"
+              # Overloading AddMethod Spryk
+              zedDomainEntity:
+                  inherit: true
     - AddMethod:
           arguments:
               method:
@@ -118,10 +120,9 @@ postSpryks:
                   value: Glue/BackendApi/RequestMapper/MapIdentifierToCollectionDeleteCriteriaTransfer.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueRequest{{ resourceDataObject }}Mapper"
-          postSpryks:
-              - AddInterfaceMethod:
-                    arguments:
-                        condition: "visibility === 'public' && withInterface === true"
+              # Overloading AddMethod Spryk
+              zedDomainEntity:
+                  inherit: true
     - AddMethod:
           arguments:
               method:
@@ -134,10 +135,9 @@ postSpryks:
                   value: Glue/BackendApi/RequestMapper/MapIdentifierToCollectionCollectionRequestTransfer.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueRequest{{ resourceDataObject }}Mapper"
-          postSpryks:
-              - AddInterfaceMethod:
-                    arguments:
-                        condition: "visibility === 'public' && withInterface === true"
+              # Overloading AddMethod Spryk
+              zedDomainEntity:
+                  inherit: true
     # Add factory method
     - AddGlueFactoryMethod:
           arguments:

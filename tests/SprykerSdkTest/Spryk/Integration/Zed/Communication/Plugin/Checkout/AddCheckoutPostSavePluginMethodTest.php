@@ -41,7 +41,7 @@ class AddCheckoutPostSavePluginMethodTest extends Unit
             '--classNamePrefix' => 'TestPayment',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::ZED_CHECKOUT_POST_SAVE_PLUGIN, 'executeHook');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_CHECKOUT_POST_SAVE_PLUGIN, 'executeHook');
     }
 
     /**
@@ -55,6 +55,6 @@ class AddCheckoutPostSavePluginMethodTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_ZED_CHECKOUT_POST_SAVE_PLUGIN, 'executeHook');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_ZED_CHECKOUT_POST_SAVE_PLUGIN, 'executeHook');
     }
 }

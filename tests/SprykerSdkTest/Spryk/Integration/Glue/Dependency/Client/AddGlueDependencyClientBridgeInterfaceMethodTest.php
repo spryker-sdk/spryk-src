@@ -54,16 +54,16 @@ class AddGlueDependencyClientBridgeInterfaceMethodTest extends Unit
             ],
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::GLUE_CLIENT_BRIDGE_INTERFACE, 'methodWithStringArgument');
-        $this->tester->assertClassHasMethod(ClassName::GLUE_CLIENT_BRIDGE_INTERFACE, 'methodWithArrayArgument');
-        $this->tester->assertClassHasMethod(ClassName::GLUE_CLIENT_BRIDGE_INTERFACE, 'methodReturnsVoid');
-        $this->tester->assertClassHasMethod(ClassName::GLUE_CLIENT_BRIDGE_INTERFACE, 'methodWithTransferInputAndTransferOutput');
-        $this->tester->assertClassHasMethod(ClassName::GLUE_CLIENT_BRIDGE_INTERFACE, 'methodWithDefaultNull');
-        $this->tester->assertClassHasMethod(ClassName::GLUE_CLIENT_BRIDGE_INTERFACE, 'methodWithDefaultArray');
-        $this->tester->assertClassHasMethod(ClassName::GLUE_CLIENT_BRIDGE_INTERFACE, 'methodWithoutDocBlockReturnType');
-        $this->tester->assertClassHasMethod(ClassName::GLUE_CLIENT_BRIDGE_INTERFACE, 'methodWithMultipleReturn');
-        $this->tester->assertClassHasMethod(ClassName::GLUE_CLIENT_BRIDGE_INTERFACE, 'methodWithMultipleReturnAndNullable');
-        $this->tester->assertClassHasMethod(ClassName::GLUE_CLIENT_BRIDGE_INTERFACE, 'methodWithNullableReturn');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::GLUE_CLIENT_BRIDGE_INTERFACE, 'methodWithStringArgument');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::GLUE_CLIENT_BRIDGE_INTERFACE, 'methodWithArrayArgument');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::GLUE_CLIENT_BRIDGE_INTERFACE, 'methodReturnsVoid');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::GLUE_CLIENT_BRIDGE_INTERFACE, 'methodWithTransferInputAndTransferOutput');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::GLUE_CLIENT_BRIDGE_INTERFACE, 'methodWithDefaultNull');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::GLUE_CLIENT_BRIDGE_INTERFACE, 'methodWithDefaultArray');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::GLUE_CLIENT_BRIDGE_INTERFACE, 'methodWithoutDocBlockReturnType');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::GLUE_CLIENT_BRIDGE_INTERFACE, 'methodWithMultipleReturn');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::GLUE_CLIENT_BRIDGE_INTERFACE, 'methodWithMultipleReturnAndNullable');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::GLUE_CLIENT_BRIDGE_INTERFACE, 'methodWithNullableReturn');
     }
 
     /**

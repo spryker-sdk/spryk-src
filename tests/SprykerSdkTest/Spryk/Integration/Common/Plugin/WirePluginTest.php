@@ -74,7 +74,7 @@ class WirePluginTest extends Unit
         $expectedMethod = 'getZipZapPlugins';
         $expectedBody = 'return [new FooBarOnePlugin(), new FooBarTwoPlugin()];';
 
-        $this->tester->assertClassHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'getZipZapPlugins');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'getZipZapPlugins');
         $this->tester->assertMethodBody($expectedClass, $expectedMethod, $expectedBody);
     }
 }

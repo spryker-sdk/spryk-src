@@ -41,7 +41,7 @@ class AddCheckoutPreConditionPluginMethodTest extends Unit
             '--classNamePrefix' => 'TestPayment',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::ZED_CHECKOUT_PRE_CONDITION_PLUGIN, 'checkCondition');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_CHECKOUT_PRE_CONDITION_PLUGIN, 'checkCondition');
     }
 
     /**
@@ -55,6 +55,6 @@ class AddCheckoutPreConditionPluginMethodTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_ZED_CHECKOUT_PRE_CONDITION_PLUGIN, 'checkCondition');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_ZED_CHECKOUT_PRE_CONDITION_PLUGIN, 'checkCondition');
     }
 }

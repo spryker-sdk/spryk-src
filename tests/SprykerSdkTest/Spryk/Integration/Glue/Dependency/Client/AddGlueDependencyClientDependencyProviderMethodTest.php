@@ -39,7 +39,7 @@ class AddGlueDependencyClientDependencyProviderMethodTest extends Unit
             '--dependentModule' => 'ZipZap',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::GLUE_DEPENDENCY_PROVIDER, 'addZipZapClient');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::GLUE_DEPENDENCY_PROVIDER, 'addZipZapClient');
     }
 
     /**
@@ -53,6 +53,6 @@ class AddGlueDependencyClientDependencyProviderMethodTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_GLUE_DEPENDENCY_PROVIDER, 'addZipZapClient');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_GLUE_DEPENDENCY_PROVIDER, 'addZipZapClient');
     }
 }

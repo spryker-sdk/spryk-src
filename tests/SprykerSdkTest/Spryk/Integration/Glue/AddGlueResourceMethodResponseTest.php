@@ -79,30 +79,30 @@ class AddGlueResourceMethodResponseTest extends Unit
         $this->tester->run($this, $commandOptions);
 
         // Controller and method
-        $this->tester->assertClassHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER, $expectedControllerMethodName);
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER, $expectedControllerMethodName);
 
         // Controller test class
         $this->tester->assertClassOrInterfaceExists($expectedTestController);
 
         // Test method in the test controller
-        $this->tester->assertClassHasMethod($expectedTestController, $expectedTestControllerMethodName);
+        $this->tester->assertClassOrInterfaceHasMethod($expectedTestController, $expectedTestControllerMethodName);
 
         // Test Helper methods
-        $this->tester->assertClassHasMethod(GlueBackendApiClassNames::GLUE_TEST_HELPER, sprintf('haveValidFooBars%s%sUri', ucfirst($httpMethod), ($isBulk) ? 'Collection' : ''));
-        $this->tester->assertClassHasMethod(GlueBackendApiClassNames::GLUE_TEST_HELPER, sprintf('haveInvalidFooBars%s%sUri', ucfirst($httpMethod), ($isBulk) ? 'Collection' : ''));
-        $this->tester->assertClassHasMethod(GlueBackendApiClassNames::GLUE_TEST_HELPER, sprintf('haveValidFooBars%s%sRequestData', ucfirst($httpMethod), ($isBulk) ? 'Collection' : ''));
-        $this->tester->assertClassHasMethod(GlueBackendApiClassNames::GLUE_TEST_HELPER, sprintf('haveInvalidFooBars%s%sRequestData', ucfirst($httpMethod), ($isBulk) ? 'Collection' : ''));
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_TEST_HELPER, sprintf('haveValidFooBars%s%sUri', ucfirst($httpMethod), ($isBulk) ? 'Collection' : ''));
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_TEST_HELPER, sprintf('haveInvalidFooBars%s%sUri', ucfirst($httpMethod), ($isBulk) ? 'Collection' : ''));
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_TEST_HELPER, sprintf('haveValidFooBars%s%sRequestData', ucfirst($httpMethod), ($isBulk) ? 'Collection' : ''));
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_TEST_HELPER, sprintf('haveInvalidFooBars%s%sRequestData', ucfirst($httpMethod), ($isBulk) ? 'Collection' : ''));
 
 //        // Resource
 //        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_RESOURCE_PLUGIN);
 //
-//        // Request mapper
-//        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER);
-//        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER_INTERFACE);
-//
-//        // Response mapper
-//        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER);
-//        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER_INTERFACE);
+        // Request mapper
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER);
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER_INTERFACE);
+
+        // Response mapper
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER);
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER_INTERFACE);
 //
 //        // Factory
 //        $this->tester->assertClassHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_FACTORY, sprintf('get%sFacade', ($zedModule ?? 'FooBar')));
@@ -110,8 +110,8 @@ class AddGlueResourceMethodResponseTest extends Unit
 //        $this->tester->assertClassHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_FACTORY, sprintf('get%sToGlueResponseMapper', ($zedDomainEntity ?? 'FooBar')));
 //
 //        // Dependency provider
-        $this->tester->assertClassHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_DEPENDENCY_PROVIDER, 'provideDependencies');
-        $this->tester->assertClassHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_DEPENDENCY_PROVIDER, sprintf('add%sFacade', ($zedModule ?? 'FooBar')));
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_DEPENDENCY_PROVIDER, 'provideDependencies');
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_DEPENDENCY_PROVIDER, sprintf('add%sFacade', ($zedModule ?? 'FooBar')));
     }
 
     /**

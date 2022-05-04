@@ -39,7 +39,7 @@ class AddZedDependencyClientBusinessFactoryMethodTest extends Unit
             '--dependentModule' => 'ZipZap',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::ZED_BUSINESS_FACTORY, 'getZipZapClient');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_BUSINESS_FACTORY, 'getZipZapClient');
     }
 
     /**
@@ -53,6 +53,6 @@ class AddZedDependencyClientBusinessFactoryMethodTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_ZED_BUSINESS_FACTORY, 'getZipZapClient');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_ZED_BUSINESS_FACTORY, 'getZipZapClient');
     }
 }

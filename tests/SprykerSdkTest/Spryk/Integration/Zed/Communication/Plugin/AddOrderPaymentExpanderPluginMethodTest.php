@@ -40,7 +40,7 @@ class AddOrderPaymentExpanderPluginMethodTest extends Unit
             '--classNamePrefix' => 'TestPayment',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::ZED_ORDER_PAYMENT_EXPANDER_PLUGIN, 'expand');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_ORDER_PAYMENT_EXPANDER_PLUGIN, 'expand');
     }
 
     /**
@@ -54,6 +54,6 @@ class AddOrderPaymentExpanderPluginMethodTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_ZED_ORDER_PAYMENT_EXPANDER_PLUGIN, 'expand');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_ZED_ORDER_PAYMENT_EXPANDER_PLUGIN, 'expand');
     }
 }

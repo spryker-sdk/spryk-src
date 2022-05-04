@@ -39,7 +39,7 @@ class AddZedDependencyClientDependencyProviderMethodTest extends Unit
             '--dependentModule' => 'ZipZap',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'addZipZapClient');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'addZipZapClient');
     }
 
     /**
@@ -53,6 +53,6 @@ class AddZedDependencyClientDependencyProviderMethodTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_ZED_DEPENDENCY_PROVIDER, 'addZipZapClient');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_ZED_DEPENDENCY_PROVIDER, 'addZipZapClient');
     }
 }

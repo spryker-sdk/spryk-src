@@ -30,3 +30,6 @@ arguments:
 
     targetPath:
         value: "src/{{ organization }}/{{ application }}/{{ module }}/"
+
+    withInterface:
+        value: false

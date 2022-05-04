@@ -42,8 +42,8 @@ class AddGlueProcessorModelMethodTest extends Unit
         string $methodName
     ): void {
         $this->tester->run($this, $params);
-        $this->tester->assertClassHasMethod($className, $methodName);
-        $this->tester->assertClassHasMethod($className . 'Interface', $methodName);
+        $this->tester->assertClassOrInterfaceHasMethod($className, $methodName);
+        $this->tester->assertClassOrInterfaceHasMethod($className . 'Interface', $methodName);
     }
 
     /**

@@ -67,6 +67,6 @@ class AddGlueDependencyClientBridgeTest extends Unit
             '--dependentModule' => 'ZipZap',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::GLUE_BUSINESS_FACTORY, 'getZipZapClient');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::GLUE_BUSINESS_FACTORY, 'getZipZapClient');
     }
 }

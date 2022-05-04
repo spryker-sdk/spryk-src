@@ -8,28 +8,39 @@ arguments:
         inherit: true
         default: Spryker
 
+    application:
+        inherit: true
+
     module:
         inherit: true
 
-    method: ~
-
-    body:
-        default: ""
+    method:
+        inherit: true
 
     visibility:
         inherit: true
-        default: public
+        value: public
 
     input:
+        inherit: true
         isOptional: true
 
     output:
+        inherit: true
         default: void
 
     template:
         value: Common/InterfaceMethod.php.twig
 
     target:
+        inherit: true
+        callback: EnsureInterfaceSuffix
+
+    targetFilename:
+        callback: GetFilenameFromTarget
+
+    subDirectory:
+        description: "Only used to forward to the generated interface."
         inherit: true
 
 preSpryks:

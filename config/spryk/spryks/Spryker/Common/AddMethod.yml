@@ -33,15 +33,23 @@ arguments:
         description: "Output (return) for the method."
         default: void
 
+    subDirectory:
+        description: "Only used to forward to the generated interface."
+        inherit: true
+
     template:
         value: Common/Method.php.twig
 
     target:
         description: "Class where the method should be added to."
 
-    zedDomainEntity:
-        inherit: true
-
     withInterface:
         inherit: true
         default: true
+
+postSpryks:
+    - AddInterfaceMethod:
+          arguments:
+              condition: "visibility === 'public' && withInterface === true"
+              className:
+                  vallue: "{{ target }}Interface"
