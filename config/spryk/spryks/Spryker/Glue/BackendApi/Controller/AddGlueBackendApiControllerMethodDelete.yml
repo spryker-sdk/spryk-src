@@ -90,4 +90,6 @@ postSpryks:
                   value: Glue/BackendApi/Controller/DeleteMethod.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Controller\\{{ resource | normalizeResourceName }}ResourceController"
+              withInterface:
+                  value: false
 

@@ -66,6 +66,8 @@ arguments:
 
 postSpryks:
     - AddGlueBackendApiApplication
+    - AddGlueBackendApiRequestMapper
+    - AddGlueBackendApiResponseMapper
     # Add CrudFacade code
     - AddCrudFacade:
           condition: "applicationType === 'Backend'"
@@ -168,6 +170,8 @@ postSpryks:
                   value: "$this->markTestIncomplete('Implement me!');"
               target:
                   value: "{{ organization }}Test\\Glue\\{{ module }}\\Controller\\{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}ResourceControllerTest"
+              withInterface:
+                  value: false
 
     # TestHelper class
     - AddTestHelper:
@@ -188,6 +192,8 @@ postSpryks:
                   value: "throw new \\Exception(sprintf('%s::%s() not implemented.', __CLASS__, __METHOD__));"
               target:
                   value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | ucfirst }}Helper"
+              withInterface:
+                  value: false
 
     # TestHelper class method haveInvalid<Resource><HTTPMethod>(Collection)Uri
     - AddMethod:
@@ -202,6 +208,8 @@ postSpryks:
                   value: "throw new \\Exception(sprintf('%s::%s() not implemented.', __CLASS__, __METHOD__));"
               target:
                   value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | ucfirst }}Helper"
+              withInterface:
+                  value: false
     # TestHelper class method haveValid<Resource><HTTPMethod>(Collection)RequestData
     - AddMethod:
           arguments:
@@ -215,6 +223,8 @@ postSpryks:
                   value: "throw new \\Exception(sprintf('%s::%s() not implemented.', __CLASS__, __METHOD__));"
               target:
                   value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | ucfirst }}Helper"
+              withInterface:
+                  value: false
     # TestHelper class method haveInvalid<Resource><HTTPMethod>(Collection)RequestData
     - AddMethod:
           arguments:
@@ -228,3 +238,5 @@ postSpryks:
                   value: "throw new \\Exception(sprintf('%s::%s() not implemented.', __CLASS__, __METHOD__));"
               target:
                   value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | ucfirst }}Helper"
+              withInterface:
+                  value: false

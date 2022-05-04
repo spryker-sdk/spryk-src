@@ -135,6 +135,7 @@ class MethodSpryk extends AbstractBuilder
      */
     protected function getTargetClass(): ResolvedClassInterface
     {
+        $methodName = $this->getMethodName();
         $targetClassName = $this->getTargetClassName();
         /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface|null $resolvedClass */
         $resolvedClass = $this->fileResolver->resolve($targetClassName);

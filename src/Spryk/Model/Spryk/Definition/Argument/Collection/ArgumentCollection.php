@@ -70,12 +70,14 @@ class ArgumentCollection implements ArgumentCollectionInterface
      * @param string $name
      * @param bool $lookupPreviousSprykArgumentCollection When set to true we try to resolve from previous Spryk definitions.
      *
+     * @throws \SprykerSdk\Spryk\Exception\ArgumentNotFoundException
+     *
      * @return \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\ArgumentInterface
      */
     public function getArgument(string $name, bool $lookupPreviousSprykArgumentCollection = false): ArgumentInterface
     {
         if (!$this->hasArgument($name, $lookupPreviousSprykArgumentCollection)) {
-            $this->throwArgumentNotFoundException($name);
+            throw new ArgumentNotFoundException(sprintf('Argument "%s" could not be found. Maybe there is a typo in your "%s" definition.', $name, $this->getSprykName()));
         }
 
         if (isset($this->arguments[$name])) {
@@ -86,19 +88,7 @@ class ArgumentCollection implements ArgumentCollectionInterface
             return $this->previousSprykArgumentCollection->getArgument($name);
         }
 
-        $this->throwArgumentNotFoundException($name);
-    }
-
-    /**
-     * @param string $argumentName
-     *
-     * @throws \SprykerSdk\Spryk\Exception\ArgumentNotFoundException
-     *
-     * @return void
-     */
-    protected function throwArgumentNotFoundException(string $argumentName): void
-    {
-        throw new ArgumentNotFoundException(sprintf('Argument "%s" could not be found. Maybe there is a typo in your "%s" definition.', $argumentName, $this->getSprykName()));
+        throw new ArgumentNotFoundException(sprintf('Argument "%s" could not be found. Maybe there is a typo in your "%s" definition.', $name, $this->getSprykName()));
     }
 
     /**

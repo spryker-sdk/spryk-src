@@ -23,5 +23,3 @@ arguments:
     targetPath:
         value: "src/{{ organization }}/{{ application }}/{{ module }}/"
 
-#preSpryks:
-#    - AddModule

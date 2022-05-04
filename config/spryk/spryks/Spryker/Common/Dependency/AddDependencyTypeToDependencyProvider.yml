@@ -80,6 +80,8 @@ postSpryks:
                   callback: DependencyFactoryMethodReturn
               target:
                   value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\{{ module }}Factory"
+              withInterface:
+                  value: false
 
     # Add a factory method for Zed applications.
     - AddMethod:
@@ -94,6 +96,8 @@ postSpryks:
                   callback: DependencyFactoryMethodReturn
               target:
                   value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\{{ layer }}\\{{ module }}{{ layer }}Factory"
+              withInterface:
+                  value: false
 
     - AddDependencyTypeToDependencyProviderProvideMethod
     - AddConstant:

@@ -49,7 +49,7 @@ arguments:
 
 postSpryks:
     - AddInterfaceMethod:
+          condition: "visibility === 'public' && withInterface === true"
           arguments:
-              condition: "visibility === 'public' && withInterface === true"
               className:
                   vallue: "{{ target }}Interface"

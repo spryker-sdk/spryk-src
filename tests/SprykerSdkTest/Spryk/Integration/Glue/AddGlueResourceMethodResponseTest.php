@@ -103,7 +103,6 @@ class AddGlueResourceMethodResponseTest extends Unit
         // Response mapper
         $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER);
         $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER_INTERFACE);
-//
 //        // Factory
 //        $this->tester->assertClassHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_FACTORY, sprintf('get%sFacade', ($zedModule ?? 'FooBar')));
 //        $this->tester->assertClassHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_FACTORY, sprintf('getGlueRequestTo%sMapper', ($zedDomainEntity ?? 'FooBar')));

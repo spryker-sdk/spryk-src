@@ -172,7 +172,7 @@ class AssertionModule extends Module
             sprintf(
                 'Expected that class "%s" does not has method "%s" but method was found.',
                 $className,
-                $methodName
+                $methodName,
             ),
         );
     }

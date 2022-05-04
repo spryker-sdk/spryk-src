@@ -12,6 +12,7 @@ arguments:
 
     application:
         inherit: true
+        default: Glue
 
     apiType:
         default: JSON
@@ -111,6 +112,8 @@ preSpryks:
                   value: "getGlueApplicationBootstrapPlugins"
               output:
                   value: "array<\\Spryker\\Glue\\GlueApplicationExtension\\Dependency\\Plugin\\GlueApplicationBootstrapPluginInterface>"
+              withInterface:
+                  value: false
     - AddMethod:
           arguments:
               target:
@@ -119,6 +122,8 @@ preSpryks:
                   value: "getGlueContextExpanderPlugins"
               output:
                   value: "array<\\Spryker\\Glue\\GlueApplicationExtension\\Dependency\\Plugin\\GlueContextExpanderPluginInterface>"
+              withInterface:
+                  value: false
     - AddMethod:
           arguments:
               target:
@@ -127,6 +132,8 @@ preSpryks:
                   value: "getCommunicationProtocolPlugins"
               output:
                   value: "array<\\Spryker\\Glue\\GlueApplicationExtension\\Dependency\\Plugin\\CommunicationProtocolPluginInterface>"
+              withInterface:
+                  value: false
     - AddMethod:
           arguments:
               target:
@@ -135,6 +142,8 @@ preSpryks:
                   value: "getApiConventionPlugins"
               output:
                   value: "array<\\Spryker\\Glue\\GlueApplicationExtension\\Dependency\\Plugin\\ApiConventionPluginInterface>"
+              withInterface:
+                  value: false
     - AddMethod:
           arguments:
               target:
@@ -143,6 +152,8 @@ preSpryks:
                   value: "getResourceFilterPlugins"
               output:
                   value: "array<\\Spryker\\Glue\\GlueApplicationExtension\\Dependency\\Plugin\\ResourceFilterPluginInterface>"
+              withInterface:
+                  value: false
 
     # Add GlueBackendApiApplicationDependencyProvider
     - AddGlueDependencyProvider:
@@ -158,6 +169,8 @@ preSpryks:
                   value: "getApplicationPlugins"
               output:
                   value: "array<\\Spryker\\Shared\\ApplicationExtension\\Dependency\\Plugin\\ApplicationPluginInterface>"
+              withInterface:
+                  value: false
     - AddMethod:
           arguments:
               target:
@@ -166,6 +179,8 @@ preSpryks:
                   value: "getRequestBuilderPlugins"
               output:
                   value: "array<\\Spryker\\Glue\\GlueBackendApiApplicationExtension\\Dependency\\Plugin\\RequestBuilderPluginInterface>"
+              withInterface:
+                  value: false
     - AddMethod:
           arguments:
               target:
@@ -174,6 +189,8 @@ preSpryks:
                   value: "getRequestAfterRoutingValidatorPlugins"
               output:
                   value: "array<\\Spryker\\Glue\\GlueBackendApiApplicationExtension\\Dependency\\Plugin\\RequestAfterRoutingValidatorPluginInterface>"
+              withInterface:
+                  value: false
     - AddMethod:
           arguments:
               target:
@@ -182,6 +199,8 @@ preSpryks:
                   value: "getResponseFormatterPlugins"
               output:
                   value: "array<\\Spryker\\Glue\\GlueBackendApiApplicationExtension\\Dependency\\Plugin\\ResponseFormatterPluginInterface>"
+              withInterface:
+                  value: false
     - AddMethod:
           arguments:
               target:
@@ -190,6 +209,8 @@ preSpryks:
                   value: "getRouterPlugins"
               output:
                   value: "array<\\Spryker\\Glue\\GlueBackendApiApplicationExtension\\Dependency\\Plugin\\RouterPluginInterface>"
+              withInterface:
+                  value: false
     - AddMethod:
           arguments:
               target:
@@ -198,6 +219,8 @@ preSpryks:
                   value: "getRouteMatcherPlugins"
               output:
                   value: "array<\\Spryker\\Glue\\GlueBackendApiApplicationExtension\\Dependency\\Plugin\\RouteMatcherPluginInterface>"
+              withInterface:
+                  value: false
     - AddMethod:
           arguments:
               target:
@@ -206,6 +229,8 @@ preSpryks:
                   value: "getRequestResourceFilterPlugin"
               output:
                   value: "\\Spryker\\Glue\\GlueBackendApiApplicationExtension\\Dependency\\Plugin\\RequestResourceFilterPluginInterface"
+              withInterface:
+                  value: false
 
     # Add GlueRestApiConventionDependencyProvider
     - AddGlueDependencyProvider:
@@ -223,6 +248,8 @@ preSpryks:
                   value: "getResponseEncoderPlugins"
               output:
                   value: "array<\\Spryker\\Glue\\GlueRestApiConventionExtension\\Dependency\\Plugin\\ResponseEncoderPluginInterface>"
+              withInterface:
+                  value: false
     - AddMethod:
           condition: "apiType === 'REST'"
           arguments:
@@ -232,6 +259,8 @@ preSpryks:
                   value: "getRequestBuilderPlugins"
               output:
                   value: "array<\\Spryker\\Glue\\GlueRestApiConventionExtension\\Dependency\\Plugin\\RequestBuilderPluginInterface>"
+              withInterface:
+                  value: false
     - AddMethod:
           condition: "apiType === 'REST'"
           arguments:
@@ -241,6 +270,8 @@ preSpryks:
                   value: "getRequestValidatorPlugins"
               output:
                   value: "array<\\Spryker\\Glue\\GlueRestApiConventionExtension\\Dependency\\Plugin\\RequestValidatorPluginInterface>"
+              withInterface:
+                  value: false
     - AddMethod:
           condition: "apiType === 'REST'"
           arguments:
@@ -250,6 +281,8 @@ preSpryks:
                   value: "getResponseFormatterPlugins"
               output:
                   value: "array<\\Spryker\\Glue\\GlueRestApiConventionExtension\\Dependency\\Plugin\\ResponseFormatterPluginInterface>"
+              withInterface:
+                  value: false
     # Wire Plugins
     # Wire GlueApplicationDependencyProvider plugins
     - WirePlugin:
