@@ -1,9 +1,13 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerSdkTest\Spryk\Integration\Glue\BackendApi\Mapper;
 
 use Codeception\Test\Unit;
-use SprykerSdkTest\Module\GlueBackendApiClassNames;
 
 /**
  * Auto-generated group annotations
@@ -24,7 +28,7 @@ class AddGlueBackendApiResponseMapperTest extends Unit
      */
     protected const CLASS_NAME = '\Spryker\Glue\FooBar\Mapper\GlueResponseFooBarMapper';
 
-    protected const INTERFACE_NAME = self::CLASS_NAME.'Interface';
+    protected const INTERFACE_NAME = self::CLASS_NAME . 'Interface';
 
     /**
      * @var string
@@ -47,7 +51,7 @@ class AddGlueBackendApiResponseMapperTest extends Unit
         ]);
 
         $this->tester->assertClassOrInterfaceExists(static::CLASS_NAME);
-        $this->tester->assertClassOrInterfaceExists(static::CLASS_NAME.'Interface');
+        $this->tester->assertClassOrInterfaceExists(static::CLASS_NAME . 'Interface');
 
         $this->tester->assertClassHasMethod(static::CLASS_NAME, 'map' . static::MODULE . 'CollectionTransferToGlueResponseTransfer');
         $this->tester->assertClassHasMethod(static::CLASS_NAME, 'map' . static::MODULE . 'CollectionTransferToSingleResourceGlueResponseTransfer');
