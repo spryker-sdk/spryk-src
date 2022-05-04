@@ -12,7 +12,7 @@ arguments:
         default: Spryker
 
     className:
-        value: "GlueResponse{{ resourceDataObject }}ResponseMapper"
+        value: "GlueResponse{{ resourceDataObject }}Mapper"
 
     resource:
         description: "Defines the resource name this controller will work with."
@@ -48,7 +48,7 @@ arguments:
         value: "{{ resource | normalizeResourceName | singularize }}"
 
     target:
-        value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
+        value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}Mapper"
 
     targetPath:
         value: "src/{{ organization }}/Glue/{{ module }}/"
@@ -68,9 +68,11 @@ postSpryks:
               body:
                   value: Glue/BackendApi/ResponseMapper/MapCollectionTransferToGlueResponseTransfer.php.twig
               target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
+                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}Mapper"
           postSpryks:
-              - AddInterfaceMethod
+              - AddInterfaceMethod:
+                    arguments:
+                        condition: "visibility === 'public' && withInterface === true"
     - AddMethod:
           arguments:
               method:
@@ -82,7 +84,11 @@ postSpryks:
               body:
                   value: Glue/BackendApi/ResponseMapper/MapCollectionTransferToSingleResourceGlueResponseTransfer.php.twig
               target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
+                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}Mapper"
+          postSpryks:
+              - AddInterfaceMethod:
+                  arguments:
+                      condition: "visibility === 'public' && withInterface === true"
     - AddMethod:
           arguments:
               method:
@@ -94,7 +100,11 @@ postSpryks:
               body:
                   value: Glue/BackendApi/ResponseMapper/MapCollectionResponseTransferToGlueResponseTransfer.php.twig
               target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
+                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}Mapper"
+          postSpryks:
+              - AddInterfaceMethod:
+                    arguments:
+                        condition: "visibility === 'public' && withInterface === true"
     - AddMethod:
           arguments:
               method:
@@ -106,7 +116,11 @@ postSpryks:
               body:
                   value: Glue/BackendApi/ResponseMapper/MapCollectionResponseTransferToSingleResourceGlueResponseTransfer.php.twig
               target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\ResponseMapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
+                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}Mapper"
+          postSpryks:
+              - AddInterfaceMethod:
+                    arguments:
+                        condition: "visibility === 'public' && withInterface === true"
     - AddMethod:
           excludedSpryks:
               - AddInterfaceMethod
@@ -120,7 +134,7 @@ postSpryks:
               body:
                   value: Glue/BackendApi/ResponseMapper/AddNotFoundError.php.twig
               target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
+                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}Mapper"
     - AddMethod:
           excludedSpryks:
               - AddInterfaceMethod
@@ -134,11 +148,11 @@ postSpryks:
               body:
                   value: Glue/BackendApi/ResponseMapper/AddResourceToGlueResponse.php.twig
               target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}ResponseMapper"
+                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}Mapper"
     # Add factory method
     - AddGlueFactoryMethod:
           arguments:
               subDirectory:
                   value: "ResponseMapper"
               className:
-                  value: "GlueResponse{{ module }}ResponseMapper"
+                  value: "GlueResponse{{ resourceDataObject }}Mapper"

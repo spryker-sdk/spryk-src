@@ -41,3 +41,7 @@ arguments:
 
     zedDomainEntity:
         inherit: true
+
+    withInterface:
+        inherit: true
+        default: true

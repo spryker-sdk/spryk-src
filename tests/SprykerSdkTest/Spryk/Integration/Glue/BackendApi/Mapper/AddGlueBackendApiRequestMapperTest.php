@@ -44,14 +44,12 @@ class AddGlueBackendApiRequestMapperTest extends Unit
         ]);
 
         $this->tester->assertClassOrInterfaceExists(static::CLASS_NAME);
-//        $this->tester->assertClassOrInterfaceExists(static::CLASS_NAME.'Interface');
+        $this->tester->assertClassOrInterfaceExists(static::CLASS_NAME.'Interface');
 
         $this->tester->assertClassHasMethod(static::CLASS_NAME, 'mapGlueRequestTransferTo' . static::MODULE . 'CriteriaTransfer');
         $this->tester->assertClassHasMethod(static::CLASS_NAME, 'mapGlueRequestTransferTo' . static::MODULE . 'CollectionDeleteCriteriaTransfer');
         $this->tester->assertClassHasMethod(static::CLASS_NAME, 'mapIdentifierTo' . static::MODULE . 'CriteriaTransfer');
         $this->tester->assertClassHasMethod(static::CLASS_NAME, 'mapIdentifierTo' . static::MODULE . 'CollectionDeleteCriteriaTransfer');
         $this->tester->assertClassHasMethod(static::CLASS_NAME, 'map' . static::MODULE . 'TransferTo' . static::MODULE . 'CollectionRequestTransfer');
-
     }
-
 }
