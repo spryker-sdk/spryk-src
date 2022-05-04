@@ -13,11 +13,12 @@ use SprykerSdk\Spryk\SprykConfig;
 class OrganizationExtenderPlugin extends AbstractExtender implements SprykConfigurationExtenderPluginInterface
 {
     /**
-     * @param array<mixed> $sprykConfig
+     * @param array $sprykConfig
+     * @param array $context
      *
-     * @return array<mixed>
+     * @return array
      */
-    public function extend(array $sprykConfig): array
+    public function extend(array $sprykConfig, array $context): array
     {
         $arguments = $this->getArguments($sprykConfig);
 

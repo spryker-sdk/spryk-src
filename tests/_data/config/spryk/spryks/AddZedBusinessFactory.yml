@@ -6,20 +6,21 @@ level: 3
 condition: "application === 'Zed'"
 
 arguments:
-  module:
-    value: FooBar
+    module:
+        value: FooBar
 
-  organization:
-    default: Spryker
+    organization:
+        inherit: true
+        default: Spryker
 
-  application:
-    value: Zed
+    application:
+        value: Zed
 
-  template:
-    value: ZedBusinessFactory.php.twig
+    template:
+        value: ZedBusinessFactory.php.twig
 
-  targetFilename:
-    value: "{{ module }}BusinessFactory.php"
+    targetFilename:
+        value: "{{ module }}BusinessFactory.php"
 
-  targetPath:
-    default: "src/{{ organization }}/Zed/{{ module }}/Business/"
+    targetPath:
+        default: "src/{{ organization }}/Zed/{{ module }}/Business/"

@@ -302,9 +302,11 @@ class SprykConfig
     }
 
     /**
+     * Defines the default mode to use for the Spryks. Modes can be: project, core or both. When not set we use `project` as default.
+     *
      * @return string
      */
-    public function getDefaultDevelopmentMode(): string
+    public function getDefaultMode(): string
     {
         return static::NAME_DEVELOPMENT_LAYER_PROJECT;
     }

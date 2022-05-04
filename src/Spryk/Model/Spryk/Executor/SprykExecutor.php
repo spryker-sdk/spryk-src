@@ -23,6 +23,11 @@ use SprykerSdk\Spryk\Style\SprykStyleInterface;
 class SprykExecutor implements SprykExecutorInterface
 {
     /**
+     * @var \SprykerSdk\Spryk\SprykConfig
+     */
+    protected SprykConfig $sprykConfig;
+
+    /**
      * @var \SprykerSdk\Spryk\Model\Spryk\Definition\Builder\SprykDefinitionBuilderInterface
      */
     protected SprykDefinitionBuilderInterface $definitionBuilder;
@@ -63,6 +68,7 @@ class SprykExecutor implements SprykExecutorInterface
     protected FileDumperInterface $fileDumper;
 
     /**
+     * @param \SprykerSdk\Spryk\SprykConfig $sprykConfig
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Builder\SprykDefinitionBuilderInterface $definitionBuilder
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Collection\SprykBuilderCollectionInterface $sprykBuilderCollection
      * @param array<\SprykerSdk\Spryk\Model\Spryk\Command\SprykCommandInterface> $sprykCommands
@@ -70,12 +76,14 @@ class SprykExecutor implements SprykExecutorInterface
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\FileDumperInterface $fileDumper
      */
     public function __construct(
+        SprykConfig $sprykConfig,
         SprykDefinitionBuilderInterface $definitionBuilder,
         SprykBuilderCollectionInterface $sprykBuilderCollection,
         array $sprykCommands,
         FileResolverInterface $fileResolver,
         FileDumperInterface $fileDumper
     ) {
+        $this->sprykConfig = $sprykConfig;
         $this->definitionBuilder = $definitionBuilder;
         $this->sprykBuilderCollection = $sprykBuilderCollection;
         $this->sprykCommands = $sprykCommands;
@@ -159,7 +167,7 @@ class SprykExecutor implements SprykExecutorInterface
      */
     protected function buildSpryk(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): void
     {
-        if ($sprykDefinition->getMode() !== $this->mainSprykDefinitionMode || !$this->conditionMatched($sprykDefinition)) {
+        if (($sprykDefinition->getMode() !== 'both' && $sprykDefinition->getMode() !== $this->mainSprykDefinitionMode) || !$this->conditionMatched($sprykDefinition)) {
             return;
         }
 
@@ -439,6 +447,10 @@ class SprykExecutor implements SprykExecutorInterface
     {
         $sprykModeArgument = $style->getInput()->getOption(SprykConfig::NAME_ARGUMENT_MODE);
         $sprykModeDefinition = $sprykDefinition->getMode();
+
+        if ($sprykModeDefinition === 'both') {
+            return true;
+        }
 
         if ($sprykModeArgument === false || $sprykModeArgument === null) {
             return true;

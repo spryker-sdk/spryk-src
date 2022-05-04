@@ -7,6 +7,7 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Callback;
 
+use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface;
 
 /**
@@ -14,6 +15,19 @@ use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollecti
  */
 class ResolveExtends implements CallbackInterface
 {
+    /**
+     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface
+     */
+    protected FileResolverInterface $fileResolver;
+
+    /**
+     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface $fileResolver
+     */
+    public function __construct(FileResolverInterface $fileResolver)
+    {
+        $this->fileResolver = $fileResolver;
+    }
+
     /**
      * @return string
      */
@@ -36,7 +50,7 @@ class ResolveExtends implements CallbackInterface
             }
 
             foreach ($value as $extendCandidate) {
-                if (class_exists($extendCandidate)) {
+                if ($this->fileResolver->resolve($extendCandidate) !== null || class_exists($extendCandidate)) {
                     return $extendCandidate;
                 }
             }

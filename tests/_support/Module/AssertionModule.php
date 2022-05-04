@@ -49,6 +49,37 @@ class AssertionModule extends Module
 
     /**
      * @param string $classOrInterfaceName
+     * @param string $extends
+     *
+     * @return void
+     */
+    public function assertClassOrInterfaceExtends(string $classOrInterfaceName, string $extends): void
+    {
+        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolved */
+        $resolved = $this->getSprykHelper()->getFileResolver()->resolve($classOrInterfaceName);
+
+        $this->assertNotNull(
+            $resolved,
+            sprintf(
+                'Expected that class or interface "%s" exists but was not found.',
+                $classOrInterfaceName,
+            ),
+        );
+
+        $extendFullyQualified = $this->getNodeFinder()->findExtends($resolved->getClassTokenTree(), $extends);
+
+        $this->assertNotNull(
+            $extendFullyQualified,
+            sprintf(
+                'Expected that class or interface "%s" extends "%s" but was not found.',
+                $classOrInterfaceName,
+                $extends,
+            ),
+        );
+    }
+
+    /**
+     * @param string $classOrInterfaceName
      *
      * @return void
      */

@@ -46,7 +46,7 @@ abstract class AbstractExtender
      */
     protected function getArguments(array $sprykConfig): array
     {
-        return $sprykConfig[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS] ?? [];
+        return $sprykConfig[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS] ?? $sprykConfig;
     }
 
     /**
@@ -57,48 +57,60 @@ abstract class AbstractExtender
      */
     protected function setArguments(array $arguments, array $sprykConfig): array
     {
-        $sprykConfig[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS] = $arguments;
+        if (isset($sprykConfig[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS])) {
+            $sprykConfig[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS] = $arguments;
 
-        return $sprykConfig;
+            return $sprykConfig;
+        }
+
+        return array_merge($sprykConfig, $arguments);
     }
 
     /**
      * @param array $sprykConfig
+     * @param array $context
      *
      * @return string|null
      */
-    protected function getDevelopmentLayer(array $sprykConfig): ?string
+    protected function getDevelopmentLayer(array $sprykConfig, array $context): ?string
     {
-        return $sprykConfig[SprykConfig::NAME_ARGUMENT_MODE] ?? null;
+        if (isset($context['mode'])) {
+            return $context['mode'];
+        }
+
+        return $sprykConfig[SprykConfig::NAME_ARGUMENT_MODE] ?? $context['mode'] ?? null;
     }
 
     /**
      * @param array $sprykConfig
+     * @param array $context
      *
      * @return bool
      */
-    protected function isProject(array $sprykConfig): bool
+    protected function isProject(array $sprykConfig, array $context): bool
     {
-        return $this->getDevelopmentLayer($sprykConfig) === SprykConfig::NAME_DEVELOPMENT_LAYER_PROJECT;
+        return $this->getDevelopmentLayer($sprykConfig, $context) === SprykConfig::NAME_DEVELOPMENT_LAYER_PROJECT;
     }
 
     /**
      * @param array $sprykConfig
+     * @param array $context
      *
      * @return bool
      */
-    protected function isCore(array $sprykConfig): bool
+    protected function isCore(array $sprykConfig, array $context): bool
     {
-        return $this->getDevelopmentLayer($sprykConfig) === SprykConfig::NAME_DEVELOPMENT_LAYER_CORE;
+        return $this->getDevelopmentLayer($sprykConfig, $context) === SprykConfig::NAME_DEVELOPMENT_LAYER_CORE;
     }
 
     /**
      * @param array $sprykConfig
+     * @param array $context
      *
      * @return bool
      */
-    protected function isBoth(array $sprykConfig): bool
+    protected function isBoth(array $sprykConfig, array $context): bool
     {
-        return $this->getDevelopmentLayer($sprykConfig) === SprykConfig::NAME_DEVELOPMENT_LAYER_BOTH;
+        return $this->getDevelopmentLayer($sprykConfig, $context) === SprykConfig::NAME_DEVELOPMENT_LAYER_BOTH;
     }
 }

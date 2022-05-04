@@ -10,6 +10,10 @@ arguments:
         inherit: true
         default: Spryker
 
+    application:
+        inherit: true
+        default: Zed
+
     modelMethod:
         value: "get{{ entity }}DataImport"
 
@@ -34,4 +38,6 @@ preSpryks:
 postSpryks:
     - AddZedBusinessFacade
     - AddZedDependencyProvider
-    - AddZedConfig
+    - AddModuleConfig:
+          arguments:
+              application: "Zed"
