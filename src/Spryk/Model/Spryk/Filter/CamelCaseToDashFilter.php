@@ -10,7 +10,6 @@ namespace SprykerSdk\Spryk\Model\Spryk\Filter;
 use Laminas\Filter\FilterChain;
 use Laminas\Filter\StringToLower;
 use Laminas\Filter\Word\CamelCaseToDash;
-use Laminas\Filter\Word\DashToCamelCase;
 
 /**
  * Filter is used to convert a camelCased string
