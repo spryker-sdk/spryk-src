@@ -43,6 +43,10 @@ arguments:
     target:
         description: "Class where the method should be added to."
 
+    annotations:
+        isOptional: true
+        isMultiline: true
+
     withInterface:
         inherit: true
         default: true

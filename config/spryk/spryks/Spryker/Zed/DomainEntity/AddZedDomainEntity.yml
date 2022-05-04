@@ -43,6 +43,9 @@ arguments:
     targetPath:
         value: "src/{{ organization }}/Zed/{{ module }}/{{ layer }}"
 
+    application:
+        value: Zed
+
 preSpryks:
     - AddModule
 
