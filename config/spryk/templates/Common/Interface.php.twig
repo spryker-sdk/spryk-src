@@ -1,7 +1,7 @@
 <?php
 
 {{ include('Partials/license.twig') }}
-namespace {{ organization }}\{{ application }}\{{ module }}{% if layer.value }}\{{ layer }}{% endif %}{% if subDirectory.value %}\{{ subDirectory | replace({'/': '\\'}) }}{% endif %};
+namespace {{ organization }}\{{ application }}\{{ module }}{% if layer.value %}\{{ layer }}{% endif %}{% if subDirectory.value %}\{{ subDirectory | replace({'/': '\\'}) }}{% endif %};
 
 {% if extends.value %}
     {% set extendedInterfaces = [] %}

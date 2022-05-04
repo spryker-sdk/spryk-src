@@ -55,6 +55,7 @@ arguments:
 
 preSpryks:
     - AddGlueBackendApiController
+    - AddInterface
 
 postSpryks:
     - AddMethod:

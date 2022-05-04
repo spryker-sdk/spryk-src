@@ -14,6 +14,23 @@ arguments:
     method:
         inherit: true
 
+    targetFilename:
+        value: "{{ className }}Interface.php"
+
+    interfaceName:
+        value: "{{ className }}Interface"
+
+    application:
+        inherit: true
+
+    subDirectory:
+        inherit: true
+        isOptional: true
+
+    targetPath:
+        description: "Target path will be extended with the subDirectory inside the TemplateSpryk when set."
+        value: "src/{{ organization }}/{{ application }}/{{ module }}"
+
     input:
         isOptional: true
 

@@ -24,6 +24,8 @@ class AddGlueBackendApiResponseMapperTest extends Unit
      */
     protected const CLASS_NAME = '\Spryker\Glue\FooBar\Mapper\GlueResponseFooBarMapper';
 
+    protected const INTERFACE_NAME = self::CLASS_NAME.'Interface';
+
     /**
      * @var string
      */
