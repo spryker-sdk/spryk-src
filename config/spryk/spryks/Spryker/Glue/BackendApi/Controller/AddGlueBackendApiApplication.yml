@@ -14,10 +14,10 @@ arguments:
         inherit: true
 
     apiType:
-        value: JSON
+        default: JSON
 
     applicationType:
-        value: Backend
+        default: Backend
 
 preSpryks:
     - AddComposerJson
@@ -349,7 +349,7 @@ preSpryks:
               plugin:
                   value: "\\Spryker\\Glue\\GlueRestApiConvention\\Plugin\\GlueRestApiConvention\\AcceptFormatRequestValidatorPlugin"
               target:
-                  value: "\\Pyz\\Glue\\GlueRestApiConvention\\GlueRestApiConventionDependencyProvider::getRequestValidatorPlugins"
+                  value: "\\Spryker\\Glue\\GlueRestApiConvention\\GlueRestApiConventionDependencyProvider::getRequestValidatorPlugins"
     - WirePlugin:
           condition: "apiType === 'REST'"
           arguments:
