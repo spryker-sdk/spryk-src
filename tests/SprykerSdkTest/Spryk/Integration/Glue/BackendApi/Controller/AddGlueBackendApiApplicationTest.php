@@ -37,15 +37,11 @@ class AddGlueBackendApiApplicationTest extends Unit
         $this->tester->run($this, [
             '--mode' => 'core',
             '--module' => 'FooBar',
-            '--apiType' => 'JSON',
             '--applicationType' => 'Backend',
         ]);
 
-        $foo = '';
-
         $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_BOOTSTRAP);
-//        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_APPLICATION_DEPENDENCY_PROVIDER);
-//        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_APPLICATION_DEPENDENCY_PROVIDER);
-//        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_REST_API_CONVENTION_DEPENDENCY_PROVIDER);
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_APPLICATION_DEPENDENCY_PROVIDER);
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_APPLICATION_DEPENDENCY_PROVIDER);
     }
 }
