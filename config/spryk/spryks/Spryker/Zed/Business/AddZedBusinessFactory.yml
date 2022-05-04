@@ -34,4 +34,6 @@ preSpryks:
 postSpryks:
     - AddZedBusinessFacade
     - AddZedDependencyProvider
-    - AddZedConfig
+    - AddModuleConfig:
+          arguments:
+              application: "Zed"

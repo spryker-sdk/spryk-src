@@ -19,4 +19,7 @@ arguments:
         value: "{{ organization }}\\Glue\\{{ module }}\\{{ module }}Config"
 
 preSpryks:
-    - AddGlueConfig
+    - AddModuleConfig:
+          arguments:
+              application:
+                  value: Glue

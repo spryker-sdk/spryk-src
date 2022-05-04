@@ -29,53 +29,49 @@ class AddDependencyBridgeTest extends Unit
     protected SprykIntegrationTester $tester;
 
     /**
+     * @dataProvider dataProvider
+     *
+     * @param string $dependencyType
+     * @param string $application
+     * @param string $expectedBridgeClass
+     * @param string $expectedBridgeInterface
+     * @param string|null $layer
+     *
      * @return void
      */
-    public function testAddsADependencyBridgeForAClientToZed(): void
-    {
-        $this->tester->run($this, [
+    public function testAddsADependencyBridge(
+        string $dependencyType,
+        string $application,
+        string $expectedBridgeClass,
+        string $expectedBridgeInterface,
+        ?string $layer = null
+    ): void {
+        $arguments = [
             '--module' => 'FooBar',
-            '--application' => 'Zed',
-            '--layer' => 'Business',
+            '--application' => $application,
             '--dependentModule' => 'ZipZap',
-            '--dependencyType' => 'Client',
-        ]);
+            '--dependencyType' => $dependencyType,
+        ];
 
-        $this->tester->assertClassHasMethod(ClassName::ZED_CLIENT_BRIDGE, '__construct');
-        $this->tester->assertClassOrInterfaceExists(ClassName::ZED_CLIENT_BRIDGE_INTERFACE);
+        if ($layer) {
+            $arguments['--layer'] = $layer;
+        }
+
+        $this->tester->run($this, $arguments);
+
+        $this->tester->assertClassHasMethod($expectedBridgeClass, '__construct');
+        $this->tester->assertClassOrInterfaceExists($expectedBridgeInterface);
     }
 
     /**
-     * @return void
+     * @return array<array<\string>>
      */
-    public function testAddsADependencyBridgeForAFacadeToZed(): void
+    public function dataProvider(): array
     {
-        $this->tester->run($this, [
-            '--module' => 'FooBar',
-            '--application' => 'Zed',
-            '--layer' => 'Business',
-            '--dependentModule' => 'ZipZap',
-            '--dependencyType' => 'Facade',
-        ]);
-
-        $this->tester->assertClassHasMethod(ClassName::ZED_FACADE_BRIDGE, '__construct');
-        $this->tester->assertClassOrInterfaceExists(ClassName::ZED_FACADE_BRIDGE_INTERFACE);
-    }
-
-    /**
-     * @return void
-     */
-    public function testAddsADependencyBridgeForAServiceToZed(): void
-    {
-        $this->tester->run($this, [
-            '--module' => 'FooBar',
-            '--application' => 'Zed',
-            '--layer' => 'Business',
-            '--dependentModule' => 'ZipZap',
-            '--dependencyType' => 'Service',
-        ]);
-
-        $this->tester->assertClassHasMethod(ClassName::ZED_SERVICE_BRIDGE, '__construct');
-        $this->tester->assertClassOrInterfaceExists(ClassName::ZED_SERVICE_BRIDGE_INTERFACE);
+        return [
+            'from a Service to Zed' => ['Service', 'Zed', ClassName::ZED_SERVICE_BRIDGE, ClassName::ZED_SERVICE_BRIDGE_INTERFACE, 'Business'],
+            'from a Facade to Zed' => ['Facade', 'Zed', ClassName::ZED_FACADE_BRIDGE, ClassName::ZED_FACADE_BRIDGE_INTERFACE, 'Business'],
+            'from a Client to Zed' => ['Client', 'Zed', ClassName::ZED_CLIENT_BRIDGE, ClassName::ZED_CLIENT_BRIDGE_INTERFACE, 'Business'],
+        ];
     }
 }

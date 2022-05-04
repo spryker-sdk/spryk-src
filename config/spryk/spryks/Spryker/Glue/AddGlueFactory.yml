@@ -29,4 +29,7 @@ preSpryks:
 
 postSpryks:
     - AddGlueDependencyProvider
-    - AddGlueConfig
+    - AddModuleConfig:
+          arguments:
+              application:
+                  value: Glue

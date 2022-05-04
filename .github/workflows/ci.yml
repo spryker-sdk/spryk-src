@@ -57,6 +57,20 @@ jobs:
       - name: PHPStan checks
         run: composer stan
 
+      - name: Codecept tests
+        if: ${{ matrix.php-version == '7.4' }}
+        run: composer test
+
+      - name: Codecept tests with coverage
+        if: ${{ matrix.php-version == '8.1' }}
+        run: composer test-cover
+
+      - name: Code Coverage Report
+        if: success() && matrix.php-version == '8.1'
+        uses: codecov/codecov-action@v1
+        with:
+            file: ./tests/_output/coverage.xml
+
   prefer-lowest:
     runs-on: ubuntu-18.04
     strategy:
@@ -88,11 +102,8 @@ jobs:
             key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
             restore-keys: ${{ runner.os }}-composer-
 
-      - name: Composer prefer-lowest
+      - name: Composer prefer lowest
         run: composer lowest-setup
-
-      #- name: Codecept run test
-      #  run: vendor/bin/codecept run
 
       - name: Validate prefer lowest
         run: composer lowest

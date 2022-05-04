@@ -21,5 +21,8 @@ arguments:
         value: "{{ organization }}\\Yves\\{{ module }}\\{{ module }}Config"
 
 preSpryks:
-    - AddYvesConfig
+    - AddModuleConfig:
+          arguments:
+              application:
+                  value: Yves
 

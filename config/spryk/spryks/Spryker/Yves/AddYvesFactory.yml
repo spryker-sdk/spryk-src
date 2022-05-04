@@ -29,4 +29,7 @@ preSpryks:
 
 postSpryks:
     - AddYvesDependencyProvider
-    - AddYvesConfig
+    - AddModuleConfig:
+          arguments:
+              application:
+                  value: Yves

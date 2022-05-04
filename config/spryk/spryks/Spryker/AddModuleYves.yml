@@ -30,5 +30,8 @@ postSpryks:
     - AddSharedTransferSchema
     - AddYvesFactory
     - AddYvesDependencyProvider
-    - AddYvesConfig
+    - AddModuleConfig:
+          arguments:
+              application:
+                  value: Yves
     - AddYvesTheme
