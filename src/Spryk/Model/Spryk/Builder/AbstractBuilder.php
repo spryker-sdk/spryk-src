@@ -148,16 +148,37 @@ abstract class AbstractBuilder implements SprykBuilderInterface
      */
     protected function getTargetPath(): string
     {
-        $relativeTargetPath = $this->getStringArgument(static::ARGUMENT_TARGET_PATH);
+        return $this->getAbsoluteTargetPath($this->getStringArgument(static::ARGUMENT_TARGET_PATH));
+    }
 
+    /**
+     * @param string $relativeFilePath
+     *
+     * @return string
+     */
+    protected function getFileTargetPath(string $relativeFilePath): string
+    {
+        $relativeDirPath = dirname($relativeFilePath);
+        $fileName = basename($relativeFilePath);
+
+        return $this->getAbsoluteTargetPath($relativeDirPath) . DIRECTORY_SEPARATOR . $fileName;
+    }
+
+    /**
+     * @param string $relativeDirPath
+     *
+     * @return string
+     */
+    protected function getAbsoluteTargetPath(string $relativeDirPath): string
+    {
         if ($this->arguments->hasArgument('mode') && $this->getStringArgument('mode') === 'project') {
             $path = rtrim($this->config->getProjectRootDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
-            return $path . $relativeTargetPath;
+            return $path . $relativeDirPath;
         }
 
         if (!$this->arguments->hasArgument(static::ARGUMENT_MODULE) || $this->arguments->getArgument(static::ARGUMENT_MODULE)->getValue() === null) {
-            return rtrim($this->config->getProjectRootDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $relativeTargetPath;
+            return rtrim($this->config->getProjectRootDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $relativeDirPath;
         }
 
         $moduleName = $this->getModuleName();
@@ -168,7 +189,7 @@ abstract class AbstractBuilder implements SprykBuilderInterface
             $this->getDasherizeFilter()->filter($this->getStringArgument(static::ARGUMENT_ORGANIZATION)),
             'Bundles',
             $moduleName,
-            $relativeTargetPath,
+            $relativeDirPath,
         ];
 
         return rtrim($this->config->getProjectRootDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $targetPathFragments);
