@@ -13,11 +13,11 @@ arguments:
     template:
         value: Glue/Validation/AddGlueValidation.yml.twig
 
-    resourceType:
+    resource:
         inherit: true
 
     targetFilename:
-        value: "{{ resourceType | dasherize }}.validation.yaml"
+        value: "{{ resource }}.validation.yaml"
 
     targetPath:
         value: "src/{{ organization }}/Glue/{{ module }}/Validation/"
