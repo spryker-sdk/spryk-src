@@ -8,11 +8,12 @@ arguments:
 
     organization:
         inherit: true
+        default: Spryker
 
     resource:
         inherit: true
 
-    method:
+    httpMethod:
         description: "Can be one of the HTTP request methods. E.g. POST."
 
     field:

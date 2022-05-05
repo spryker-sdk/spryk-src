@@ -31,7 +31,7 @@ class UpdateGlueValidationSpryk extends AbstractBuilder
     /**
      * @var string
      */
-    protected const ARGUMENT_METHOD = 'method';
+    protected const ARGUMENT_HTTP_METHOD = 'httpMethod';
 
     /**
      * @var string
@@ -97,10 +97,6 @@ class UpdateGlueValidationSpryk extends AbstractBuilder
      */
     protected function getResolvedYmlFile(string $targetFile): ResolvedYmlInterface
     {
-        if (!is_file($targetFile)) {
-            $this->fileResolver->addFile($targetFile, '[]');
-        }
-
         $resolvedTargetFile = $this->fileResolver->resolve($targetFile);
 
         if (!($resolvedTargetFile instanceof ResolvedYmlInterface)) {
@@ -168,7 +164,7 @@ class UpdateGlueValidationSpryk extends AbstractBuilder
      */
     protected function getMethod(): string
     {
-        return strtolower($this->arguments->getArgument(static::ARGUMENT_METHOD)->getValue());
+        return strtolower($this->arguments->getArgument(static::ARGUMENT_HTTP_METHOD)->getValue());
     }
 
     /**
