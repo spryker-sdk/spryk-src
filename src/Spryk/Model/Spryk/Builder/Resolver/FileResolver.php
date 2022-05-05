@@ -106,6 +106,7 @@ class FileResolver implements FileResolverInterface
             case 'php':
                 return $this->classParser->parse($fileName);
             case 'yml':
+            case 'yaml':
                 return $this->ymlParser->parse($fileName);
             case 'json':
                 return $this->jsonParser->parse($fileName);
@@ -148,6 +149,7 @@ class FileResolver implements FileResolverInterface
 
                 break;
             case 'yml':
+            case 'yaml':
                 $this->addYmlFile($filePath, $content);
 
                 break;

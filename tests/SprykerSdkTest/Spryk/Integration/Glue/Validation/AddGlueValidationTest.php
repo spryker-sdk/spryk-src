@@ -35,7 +35,7 @@ class AddGlueValidationTest extends Unit
     {
         $this->tester->run($this, [
             '--module' => 'FooBar',
-            '--resourceType' => 'foo-bars',
+            '--resource' => 'foo-bars',
             '--mode' => 'core',
         ]);
 
@@ -49,7 +49,7 @@ class AddGlueValidationTest extends Unit
     {
         $this->tester->run($this, [
             '--module' => 'FooBar',
-            '--resourceType' => 'foo-bars',
+            '--resource' => 'foo-bars',
             '--mode' => 'project',
         ]);
 
