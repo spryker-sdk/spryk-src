@@ -42,7 +42,7 @@ class AddImplementsSprykTest extends Unit
             AddImplementsSpryk::ARGUMENT_INTERFACE => '\SprykerTest\RestResourceInterface',
         ]);
 
-        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Implementation\AddImplementsSpryk addImplementsSpryk */
+        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Implementation\AddImplementsSpryk $addImplementsSpryk */
         $addImplementsSpryk = $this->tester->grabService(AddImplementsSpryk::class);
         $addImplementsSpryk->runSpryk($sprykDefinition);
 

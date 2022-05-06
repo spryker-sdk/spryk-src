@@ -403,7 +403,7 @@ class AssertionModule extends Module
 
         $this->assertInstanceOf(
             MethodCall::class,
-            $methodCallNode
+            $methodCallNode,
         );
     }
 }
