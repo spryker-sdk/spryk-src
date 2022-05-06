@@ -29,7 +29,7 @@
      {% endif -%}
      * @return {{ output | returnValueToDocParameter | raw }}
      */
-    {% if visibility is defined %}{{ visibility }}{% else %}public{% endif %} function {{ method }}({% if inputString is not empty %}{{ inputString | typedArrayConvert }}{% endif %}){% if output.value is not empty %}: {{ output | typedArrayConvert | raw }}{% endif %}
+    {% if visibility is defined %}{{ visibility }}{% else %}public{% endif %} {% if isStatic is defined and isStatic.value %}static {% endif %}function {{ method }}({% if inputString is not empty %}{{ inputString | typedArrayConvert }}{% endif %}){% if output.value is not empty %}: {{ output | typedArrayConvert | raw }}{% endif %}
 
     {
 {% block body %}

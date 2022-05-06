@@ -17,14 +17,37 @@ arguments:
             - ClassNameShortCallback
             - EnsureControllerSuffixCallback
 
+    application:
+        value: Zed
+
+    extends:
+        callback: ResolveExtends
+        value:
+            - "\\Spryker\\{{ application }}\\{{ module }}\\Communication\\Controller\\{{ controller | classNameShort | ensureControllerSuffix }}"
+            - "\\Spryker\\{{ application }}\\Kernel\\Communication\\Controller\\AbstractController"
+
+    className:
+        value: "{{ controller }}"
+        callback:
+            - ClassNameShortCallback
+            - EnsureControllerSuffixCallback
+
+    annotations:
+        value:
+            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\Communication\\{{ module }}CommunicationFactory getFactory()"
+            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\Business\\{{ module }}FacadeInterface getFacade()"
+
     template:
-        value: Zed/Communication/ZedCommunicationController.php.twig
+        value: Common/Class.php.twig
+
+    subDirectory:
+        value: "Communication/Controller"
 
     targetFilename:
         value: "{{ controller | classNameShort | ensureControllerSuffix }}.php"
 
     targetPath:
-        value: "src/{{ organization }}/Zed/{{ module }}/Communication/Controller/"
+        value: "src/{{ organization }}/Zed/{{ module }}"
 
 preSpryks:
     - AddModule

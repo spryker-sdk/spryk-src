@@ -4,6 +4,7 @@
 {% block namespace %}
 namespace {{ organization }}{% if isTestClass.value == true %}Test{% endif %}\{{ application }}\{{ module }}{% if subDirectory is defined %}\{{ subDirectory | convertToClassNameFragment }}{% endif %};
 {% endblock %}
+
 {% if extends.value is not null and extends.value is not empty %}
 use {{ extends | convertToClassNameFragment }};
 {% endif %}
@@ -12,6 +13,7 @@ use {{ implements | convertToClassNameFragment }};
 {% endif %}
 {% block useStatements %}
 {% endblock %}
+
 {% block classDocBlock %}
 {% if isTestClass.value == true %}
 /**
@@ -23,6 +25,12 @@ use {{ implements | convertToClassNameFragment }};
  * @group {{ className }}Test
  * Add your own group annotations below this line
  */
+{% elseif annotations.value is not empty %}
+/**
+{% for annotation in annotations.value %}
+ * {{ annotation }}
+ {% endfor %}
+*/
 {% endif %}
 {% endblock %}
 class {{ className }}{% if isTestClass.value == true %}Test{% endif %}{% if extends.value is not null and extends.value is not empty %} extends {{ extends | replace({'/': '\\'}) }}{% endif %}{% if implements.value is not null and implements.value is not empty %} implements {{ implements | replace({'/': '\\'}) }}{% endif ~%}
