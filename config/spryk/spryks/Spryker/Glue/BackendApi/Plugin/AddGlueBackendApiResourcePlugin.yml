@@ -10,6 +10,9 @@ arguments:
         inherit: true
         default: Spryker
 
+    apiType:
+        default: JSON
+
     resource:
         description: "Defines the resource name this resource plugin will work with."
 
@@ -17,26 +20,22 @@ arguments:
         value: "{{ resource }}Resource"
 
     extends:
-        value: \Spryker\Glue\GlueApplication\Plugin\GlueApplication\AbstractResourcePlugin
-
-    implements:
-        value: \Spryker\Glue\GlueRestApiConventionExtension\Dependency\Plugin\RestResourceInterface
+        value: "\\Spryker\\Glue\\GlueApplication\\Plugin\\GlueApplication\\AbstractResourcePlugin"
 
     template:
-        value: Common/Model.php.twig
+        value: Common/Class.php.twig
 
     targetFilename:
         value: "{{ resource }}Resource.php"
 
     targetPath:
-        value: "src/{{ organization }}/Glue/{{ module }}/Plugin/"
+        value: "src/{{ organization }}/Glue/{{ module }}/"
 
     application:
         value: Glue
 
-    layer:
-        inherit: true
-        default: Plugin
+    subDirectory:
+        value: Plugin
 
 postSpryks:
     - AddMethod:
@@ -47,7 +46,7 @@ postSpryks:
                   value: "string"
               body:
                   value:
-                      - "return '{{ resource | camelCaseToDash }}';"
+                      - "return '{{ resource | dasherize }}';"
               target:
                   value: "\\{{ organization }}\\Glue\\{{ module }}\\Plugin\\{{ resource }}Resource"
               withInterface:
@@ -87,4 +86,18 @@ postSpryks:
                   value: "\\{{ organization }}\\Glue\\{{ module }}\\Plugin\\{{ resource }}Resource"
               target:
                   value: "\\Spryker\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider::getResourcePlugins"
+    - AddImplements:
+          condition: "apiType === 'REST'"
+          arguments:
+              interface:
+                  value: "Spryker\\Glue\\GlueRestApiConventionExtension\\Dependency\\Plugin\\RestResourceInterface"
+              target:
+                  value: "\\{{ organization }}\\Glue\\{{ module }}\\Plugin\\{{ className }}"
+    - AddImplements:
+          condition: "apiType === 'JSON'"
+          arguments:
+              interface:
+                  value: "Spryker\\Glue\\GlueJsonApiConventionExtension\\Dependency\\Plugin\\JsonApiResourceInterface"
+              target:
+                  value: "\\{{ organization }}\\Glue\\{{ module }}\\Plugin\\{{ className }}"
 

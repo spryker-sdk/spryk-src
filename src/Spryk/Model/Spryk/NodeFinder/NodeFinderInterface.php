@@ -68,4 +68,12 @@ interface NodeFinderInterface
      * @return string|null
      */
     public function findClassOrInterfaceName(array $tokens): ?string;
+
+    /**
+     * @param array<\PhpParser\Node\Stmt> $tokens
+     * @param string $implement
+     *
+     * @return \PhpParser\Node\Name|null
+     */
+    public function findImplements(array $tokens, string $implement): ?Name;
 }

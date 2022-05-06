@@ -9,6 +9,7 @@ namespace SprykerSdkTest\Module;
 
 use Codeception\Module;
 use PhpParser\Node\Expr\MethodCall;
+use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\ClassConst;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\PrettyPrinter\Standard;
@@ -365,5 +366,44 @@ class AssertionModule extends Module
         }
 
         $this->assertCount($count, $tableXmlElements, 'Expected table not found in schema.');
+    }
+
+    /**
+     * @param string $className
+     * @param string $implement
+     *
+     * @return void
+     */
+    public function assertClassHasImplement(string $className, string $implement): void
+    {
+        $resolved = $this->getResolvedByClassName($className);
+        $implementNode = $this->getNodeFinder()->findImplements($resolved->getClassTokenTree(), $implement);
+
+        $this->assertInstanceOf(
+            Name::class,
+            $implementNode,
+            sprintf(
+                'Expected that class "%s" implements "%s" but node not found.',
+                $className,
+                $implement,
+            ),
+        );
+    }
+
+    /**
+     * @param string $className
+     * @param string $method
+     *
+     * @return void
+     */
+    public function assertClassHasBackendApiResourceMethod(string $className, string $method): void
+    {
+        $resolved = $this->getResolvedByClassName($className);
+        $methodCallNode = $this->getNodeFinder()->findMethodCallNode($resolved->getClassTokenTree(), 'setPost');
+
+        $this->assertInstanceOf(
+            MethodCall::class,
+            $methodCallNode
+        );
     }
 }
