@@ -86,6 +86,9 @@ preSpryks:
               template:
                   value: Spryker/Glue/BackendApi/index.php.twig
 
+              isPlainFile:
+                  value: true
+
     # Add AddGlueBackendApiBootstrap
     - AddFileFromTemplate:
           arguments:

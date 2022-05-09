@@ -159,4 +159,11 @@ interface SprykStyleInterface
      * @return \Symfony\Component\Console\Input\InputInterface
      */
     public function getInput(): InputInterface;
+
+    /**
+     * @param string $message
+     *
+     * @return void
+     */
+    public function writelnVerbose(string $message): void;
 }

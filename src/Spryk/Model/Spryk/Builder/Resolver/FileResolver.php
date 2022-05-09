@@ -7,6 +7,7 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Builder\Resolver;
 
+use SprykerSdk\Spryk\Exception\SprykException;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Exception\FileDoesNotContainClassOrInterfaceException;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\ParserInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface;
@@ -67,10 +68,11 @@ class FileResolver implements FileResolverInterface
 
     /**
      * @param string $name
+     * @param string $resolveStrategy
      *
      * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface|null
      */
-    public function resolve(string $name): ?ResolvedInterface
+    public function resolve(string $name, string $resolveStrategy = self::RESOLVE_BY_FILE_EXTENSION): ?ResolvedInterface
     {
         if (isset(static::$resolved[$name])) {
             return static::$resolved[$name];
@@ -83,7 +85,7 @@ class FileResolver implements FileResolverInterface
         }
 
         if (file_exists($name)) {
-            return static::$resolved[$name] = $this->parseFile($name);
+            return static::$resolved[$name] = $this->parseFile($name, $resolveStrategy);
         }
 
         if (class_exists($name) || interface_exists($name)) {
@@ -95,10 +97,30 @@ class FileResolver implements FileResolverInterface
 
     /**
      * @param string $fileName
+     * @param string $resolveStrategy
+     *
+     * @throws \SprykerSdk\Spryk\Exception\SprykException
      *
      * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface
      */
-    protected function parseFile(string $fileName): ResolvedInterface
+    protected function parseFile(string $fileName, string $resolveStrategy): ResolvedInterface
+    {
+        switch ($resolveStrategy) {
+            case static::RESOLVE_BY_FILE_EXTENSION:
+                return $this->parseByFileExtension($fileName);
+            case static::RESOLVE_AS_PLAIN_FILE:
+                return $this->parseAsPlainFile($fileName);
+            default:
+                throw new SprykException(sprintf('Undefined resolve strategy "%s"', $resolveStrategy));
+        }
+    }
+
+    /**
+     * @param string $fileName
+     *
+     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface
+     */
+    protected function parseByFileExtension(string $fileName): ResolvedInterface
     {
         $extension = $this->getExtension($fileName);
 
@@ -115,6 +137,16 @@ class FileResolver implements FileResolverInterface
             default:
                 return $this->fileParser->parse($fileName);
         }
+    }
+
+    /**
+     * @param string $fileName
+     *
+     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface
+     */
+    protected function parseAsPlainFile(string $fileName): ResolvedInterface
+    {
+        return $this->fileParser->parse($fileName);
     }
 
     /**
