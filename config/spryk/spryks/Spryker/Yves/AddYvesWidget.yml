@@ -26,7 +26,7 @@ arguments:
     extends:
         callback: ResolveExtends
         value:
-            - "\\Spryker\\{{ application }}\\{{ module }}\\Widget\\{{ widget | removeWidgetSuffix }}Widget"
+            - "\\SprykerShop\\{{ application }}\\{{ module }}\\Widget\\{{ widget | removeWidgetSuffix }}Widget"
             - "\\Spryker\\{{ application }}\\Kernel\\Widget\\AbstractWidget"
 
     className:

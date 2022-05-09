@@ -36,7 +36,11 @@ class AddZedCommunicationFactoryTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Communication/FooBarCommunicationFactory.php');
+        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Communication/FooBarCommunicationFactory.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory');
     }
 
     /**
@@ -49,6 +53,32 @@ class AddZedCommunicationFactoryTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->assertFileExists($this->tester->getProjectModuleDirectory() . 'Communication/FooBarCommunicationFactory.php');
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory() . 'Communication/FooBarCommunicationFactory.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory');
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddsZedCommunicationFactoryFileThatExtendsSameCoreBaseClass(): void
+    {
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'core',
+        ]);
+
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'project',
+        ]);
+
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Zed') . 'Communication/FooBarCommunicationFactory.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\FooBar\Communication\FooBarCommunicationFactory');
     }
 }

@@ -35,7 +35,11 @@ class AddClientTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Client/FooBar/FooBarClient.php');
+        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Client/FooBar/FooBarClient.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Client\Kernel\AbstractClient');
     }
 
     /**
@@ -48,9 +52,32 @@ class AddClientTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->assertFileExists(
-            $this->tester->getProjectModuleDirectory('FooBar', 'Client')
-            . 'FooBarClient.php',
-        );
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Client') . 'FooBarClient.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Client\Kernel\AbstractClient');
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddsClientFileThatExtendsSameCoreBaseClass(): void
+    {
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'core',
+        ]);
+
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'project',
+        ]);
+
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Client') . 'FooBarClient.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Client\FooBar\FooBarClient');
     }
 }

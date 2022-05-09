@@ -35,7 +35,11 @@ class AddYvesFactoryTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $this->assertFileExists($this->tester->getSprykerShopModuleDirectory() . 'src/SprykerShop/Yves/FooBar/FooBarFactory.php');
+        $targetClassFilePath = $this->tester->getSprykerShopModuleDirectory() . 'src/SprykerShop/Yves/FooBar/FooBarFactory.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Yves\Kernel\AbstractFactory');
     }
 
     /**
@@ -48,9 +52,32 @@ class AddYvesFactoryTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->assertFileExists(
-            $this->tester->getProjectModuleDirectory('FooBar', 'Yves')
-            . 'FooBarFactory.php',
-        );
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Yves') . 'FooBarFactory.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Yves\Kernel\AbstractFactory');
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddsYvesFactoryFileThatExtendsSameCoreBaseClass(): void
+    {
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'core',
+        ]);
+
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'project',
+        ]);
+
+        $targetClassFile = $this->tester->getProjectModuleDirectory('FooBar', 'Yves') . 'FooBarFactory.php';
+
+        $this->assertFileExists($targetClassFile);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFile, 'SprykerShop\Yves\FooBar\FooBarFactory');
     }
 }

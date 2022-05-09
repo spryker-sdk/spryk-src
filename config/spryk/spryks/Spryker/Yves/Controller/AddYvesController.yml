@@ -22,7 +22,7 @@ arguments:
     extends:
         callback: ResolveExtends
         value:
-            - "\\Spryker\\{{ application }}\\{{ module }}\\Controller\\{{controller | classNameShort | ensureControllerSuffix}}"
+            - "\\SprykerShop\\{{ application }}\\{{ module }}\\Controller\\{{controller | classNameShort | ensureControllerSuffix}}"
             - "\\Spryker\\{{ application }}\\Kernel\\Controller\\AbstractController"
 
     className:

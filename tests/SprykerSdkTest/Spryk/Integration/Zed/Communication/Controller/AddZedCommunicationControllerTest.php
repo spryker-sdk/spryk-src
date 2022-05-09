@@ -39,21 +39,35 @@ class AddZedCommunicationControllerTest extends Unit
             '--controller' => 'Index',
         ]);
 
-        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Communication/Controller/IndexController.php');
+        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Communication/Controller/IndexController.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Communication\Controller\AbstractController');
     }
 
     /**
      * @return void
      */
-    public function testAddsZedControllerFileOnProjectLayer(): void
+    public function testAddsZedControllerFileOnProjectLayerAndThatExtendsSameCoreBaseClass(): void
     {
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'core',
+            '--controller' => 'Index',
+        ]);
+
         $this->tester->run($this, [
             '--module' => 'FooBar',
             '--controller' => 'Index',
             '--mode' => 'project',
         ]);
 
-        $this->assertFileExists($this->tester->getProjectModuleDirectory() . 'Communication/Controller/IndexController.php');
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory() . 'Communication/Controller/IndexController.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\FooBar\Communication\Controller\IndexController');
     }
 
     /**
@@ -80,7 +94,11 @@ class AddZedCommunicationControllerTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->assertFileExists($this->tester->getProjectModuleDirectory() . 'Communication/Controller/IndexController.php');
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory() . 'Communication/Controller/IndexController.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Communication\Controller\AbstractController');
     }
 
     /**

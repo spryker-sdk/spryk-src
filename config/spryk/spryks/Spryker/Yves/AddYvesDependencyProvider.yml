@@ -16,7 +16,7 @@ arguments:
     extends:
         callback: ResolveExtends
         value:
-            - "\\Spryker\\{{ application }}\\{{ module }}\\{{ module }}DependencyProvider"
+            - "\\SprykerShop\\{{ application }}\\{{ module }}\\{{ module }}DependencyProvider"
             - "\\Spryker\\{{ application }}\\Kernel\\AbstractBundleDependencyProvider"
 
     className:

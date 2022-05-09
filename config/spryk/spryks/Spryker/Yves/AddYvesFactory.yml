@@ -18,7 +18,7 @@ arguments:
     extends:
         callback: ResolveExtends
         value:
-            - "\\Spryker\\{{ application }}\\{{ module }}\\{{ module }}Factory"
+            - "\\SprykerShop\\{{ application }}\\{{ module }}\\{{ module }}Factory"
             - "\\Spryker\\{{ application }}\\Kernel\\AbstractFactory"
 
     className:
