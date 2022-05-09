@@ -19,7 +19,7 @@ class ResolvedClass extends AbstractResolved implements ResolvedClassInterface
     /**
      * @var \ReflectionClass
      */
-    protected \ReflectionClass $reflectionClass;
+    protected ReflectionClass $reflectionClass;
 
     /**
      * @var string
