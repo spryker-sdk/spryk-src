@@ -35,7 +35,11 @@ class AddZedDependencyProviderTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/FooBarDependencyProvider.php');
+        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/FooBarDependencyProvider.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\AbstractBundleDependencyProvider');
     }
 
     /**
@@ -48,6 +52,32 @@ class AddZedDependencyProviderTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->assertFileExists($this->tester->getProjectModuleDirectory() . 'FooBarDependencyProvider.php');
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory() . 'FooBarDependencyProvider.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\AbstractBundleDependencyProvider');
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddsZedDependencyProviderThatExtendsSameCoreBaseClass(): void
+    {
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'core',
+        ]);
+
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'project',
+        ]);
+
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Zed') . 'FooBarDependencyProvider.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\FooBar\FooBarDependencyProvider');
     }
 }

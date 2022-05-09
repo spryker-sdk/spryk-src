@@ -10,8 +10,20 @@ arguments:
     module:
         inherit: true
 
+    application:
+        value: Yves
+
+    extends:
+        callback: ResolveExtends
+        value:
+            - "\\SprykerShop\\{{ application }}\\{{ module }}\\{{ module }}DependencyProvider"
+            - "\\Spryker\\{{ application }}\\Kernel\\AbstractBundleDependencyProvider"
+
+    className:
+        value: "{{ module }}DependencyProvider"
+
     template:
-        value: Yves/YvesDependencyProvider.php.twig
+        value: Common/Class.php.twig
 
     targetFilename:
         value: "{{ module }}DependencyProvider.php"

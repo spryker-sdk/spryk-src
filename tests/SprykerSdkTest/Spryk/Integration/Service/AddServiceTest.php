@@ -35,7 +35,11 @@ class AddServiceTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Service/FooBar/FooBarService.php');
+        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Service/FooBar/FooBarService.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Service\Kernel\AbstractService');
     }
 
     /**
@@ -48,9 +52,32 @@ class AddServiceTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->assertFileExists(
-            $this->tester->getProjectModuleDirectory('FooBar', 'Service')
-            . 'FooBarService.php',
-        );
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Service') . 'FooBarService.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Service\Kernel\AbstractService');
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddsServiceFileThatExtendsSameCoreBaseClass(): void
+    {
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'core',
+        ]);
+
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'project',
+        ]);
+
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Service') . 'FooBarService.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Service\FooBar\FooBarService');
     }
 }

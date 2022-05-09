@@ -16,14 +16,36 @@ arguments:
             - ClassNameShortCallback
             - EnsureControllerSuffixCallback
 
+    application:
+        value: Glue
+
+    extends:
+        callback: ResolveExtends
+        value:
+            - "\\Spryker\\{{ application }}\\{{ module }}\\Controller\\{{controller | classNameShort | ensureControllerSuffix}}"
+            - "\\Spryker\\{{ application }}\\Kernel\\Controller\\AbstractController"
+
+    className:
+        value: "{{ controller }}"
+        callback:
+            - ClassNameShortCallback
+            - EnsureControllerSuffixCallback
+
+    annotations:
+        value:
+            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\{{ module }}Factory getFactory()"
+
     template:
-        value: Glue/Controller/GlueController.php.twig
+        value: Common/Class.php.twig
+
+    subDirectory:
+        value: "Controller"
 
     targetFilename:
         value: "{{ controller | classNameShort | ensureControllerSuffix }}.php"
 
     targetPath:
-        value: "src/{{ organization }}/Glue/{{ module }}/Controller/"
+        value: "src/{{ organization }}/Glue/{{ module }}/"
 
 preSpryks:
     - AddModule

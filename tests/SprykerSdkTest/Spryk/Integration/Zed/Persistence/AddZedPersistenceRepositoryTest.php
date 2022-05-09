@@ -36,7 +36,11 @@ class AddZedPersistenceRepositoryTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Persistence/FooBarRepository.php');
+        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Persistence/FooBarRepository.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Persistence\AbstractRepository');
     }
 
     /**
@@ -49,9 +53,32 @@ class AddZedPersistenceRepositoryTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->assertFileExists(
-            $this->tester->getProjectModuleDirectory()
-            . 'Persistence/FooBarRepository.php',
-        );
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory() . 'Persistence/FooBarRepository.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Persistence\AbstractRepository');
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddsZedRepositoryFileThatExtendsSameCoreBaseClass(): void
+    {
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'core',
+        ]);
+
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'project',
+        ]);
+
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Zed') . 'Persistence/FooBarRepository.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\FooBar\Persistence\FooBarRepository');
     }
 }
