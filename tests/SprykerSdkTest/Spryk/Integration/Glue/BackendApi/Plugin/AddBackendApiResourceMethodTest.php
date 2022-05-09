@@ -70,7 +70,6 @@ class AddBackendApiResourceMethodTest extends Unit
             '--method' => 'Post',
         ]);
 
-//        $this->tester->assertClassHasBackendApiResourceMethod(ClassName::GLUE_BACKEND_API_RESOURCE_PLUGIN, 'JsonApiResourceInterface');
         $this->tester->assertClassMethodHasMethodCall(ClassName::PROJECT_GLUE_BACKEND_API_RESOURCE_PLUGIN, 'getDeclaredMethods', 'setPost');
     }
 }
