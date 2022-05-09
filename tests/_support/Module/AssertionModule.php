@@ -9,6 +9,7 @@ namespace SprykerSdkTest\Module;
 
 use Codeception\Module;
 use PhpParser\Node\Expr\MethodCall;
+use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\ClassConst;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\PrettyPrinter\Standard;
@@ -365,5 +366,72 @@ class AssertionModule extends Module
         }
 
         $this->assertCount($count, $tableXmlElements, 'Expected table not found in schema.');
+    }
+
+    /**
+     * @param string $className
+     * @param string $implement
+     *
+     * @return void
+     */
+    public function assertClassImplements(string $className, string $implement): void
+    {
+        $resolved = $this->getResolvedByClassName($className);
+        $implementNode = $this->getNodeFinder()->findImplements($resolved->getClassTokenTree(), $implement);
+
+        $this->assertInstanceOf(
+            Name::class,
+            $implementNode,
+            sprintf(
+                'Expected that class "%s" implements "%s" but node not found.',
+                $className,
+                $implement,
+            ),
+        );
+    }
+
+    /**
+     * Assert that a method inside of a class has method call.
+     *
+     * @example
+     * ```
+     * class FooBar { // className
+     *     public function zipZap() { // classMethodName
+     *         $this->bazBat(); // methodCallName
+     *     }
+     * }
+     * ```
+     *
+     * @param string $className
+     * @param string $classMethodName
+     * @param string $methodCallName
+     *
+     * @return void
+     */
+    public function assertClassMethodHasMethodCall(string $className, string $classMethodName, string $methodCallName): void
+    {
+        $this->assertClassOrInterfaceHasMethod($className, $classMethodName);
+
+        $resolved = $this->getResolvedByClassName($className);
+        $nodeFinder = $this->getNodeFinder();
+
+        $method = $nodeFinder->findMethodNode($resolved->getClassTokenTree(), $classMethodName);
+
+        if (!$method) {
+            $this->assertTrue(false, sprintf('Class method "%s" not found.', $classMethodName));
+        }
+
+        $methodCallNode = $this->getNodeFinder()->findMethodCallNode($method->getStmts(), $methodCallName);
+
+        $this->assertInstanceOf(
+            MethodCall::class,
+            $methodCallNode,
+            sprintf(
+                'Expected that class "%s::%s()" calls method "%s" but method call not found.',
+                $className,
+                $classMethodName,
+                $methodCallName,
+            ),
+        );
     }
 }

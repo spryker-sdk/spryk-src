@@ -69,6 +69,7 @@ class AddCrudFacadeTest extends Unit
         $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_BUSINESS_FACTORY, 'getZipZapUpdateValidatorRulePlugins');
         $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_BUSINESS_FACTORY, 'getZipZapCreateValidatorRulePlugins');
 
+        // Identifier
         $this->assertFileExists(
             $this->tester->getSprykerModuleDirectory()
             . 'src/Spryker/Zed/FooBar/Business/ZipZap/IdentifierBuilder/ZipZapIdentifierBuilder.php',
@@ -77,6 +78,8 @@ class AddCrudFacadeTest extends Unit
             $this->tester->getSprykerModuleDirectory()
             . 'src/Spryker/Zed/FooBar/Business/ZipZap/IdentifierBuilder/ZipZapIdentifierBuilderInterface.php',
         );
+
+        // Writer
         $this->assertFileExists(
             $this->tester->getSprykerModuleDirectory()
             . 'src/Spryker/Zed/FooBar/Business/ZipZap/Writer/ZipZapCreator.php',
@@ -86,11 +89,13 @@ class AddCrudFacadeTest extends Unit
             . 'src/Spryker/Zed/FooBar/Business/ZipZap/Writer/ZipZapCreatorInterface.php',
         );
 
+        // Deleter
         $this->assertFileExists(
             $this->tester->getSprykerModuleDirectory()
             . 'src/Spryker/Zed/FooBar/Business/ZipZap/Deleter/ZipZapDeleter.php',
         );
 
+        // Reader
         $this->assertFileExists(
             $this->tester->getSprykerModuleDirectory()
             . 'src/Spryker/Zed/FooBar/Business/ZipZap/Reader/ZipZapReader.php',
@@ -109,6 +114,7 @@ class AddCrudFacadeTest extends Unit
             $this->tester->getSprykerModuleDirectory()
             . 'src/Spryker/Zed/FooBar/Business/ZipZap/Writer/ZipZapUpdaterInterface.php',
         );
+
         $this->tester->assertClassOrInterfaceHasMethod('Spryker\Zed\FooBar\Business\ZipZap\Writer\ZipZapUpdater', 'updateZipZapCollection');
         $this->tester->assertClassOrInterfaceHasMethod('Spryker\Zed\FooBar\Business\ZipZap\Writer\ZipZapUpdaterInterface', 'updateZipZapCollection');
         $this->tester->assertClassOrInterfaceHasMethod('Spryker\Zed\FooBar\Business\FooBarBusinessFactory', 'createZipZapUpdater');

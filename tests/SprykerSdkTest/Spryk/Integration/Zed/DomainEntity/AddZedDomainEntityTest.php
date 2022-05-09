@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Zed;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\SprykIntegrationTester;
 
 /**
  * Auto-generated group annotations
@@ -25,7 +26,7 @@ class AddZedDomainEntityTest extends Unit
     /**
      * @var \SprykerSdkTest\SprykIntegrationTester
      */
-    protected $tester;
+    protected SprykIntegrationTester $tester;
 
     /**
      * @return void
@@ -35,12 +36,11 @@ class AddZedDomainEntityTest extends Unit
         $this->tester->run($this, [
             '--mode' => 'core',
             '--module' => 'FooBar',
-            '--subDirectory' => 'Entity',
             '--className' => 'FooBarEntity',
         ]);
 
-        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Business/Entity/FooBarEntity.php');
-        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Business/Entity/FooBarEntityInterface.php');
+        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Business/FooBarEntity/FooBarEntity.php');
+        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Business/FooBarEntity/FooBarEntityInterface.php');
     }
 
     /**
@@ -51,11 +51,10 @@ class AddZedDomainEntityTest extends Unit
         $this->tester->run($this, [
             '--mode' => 'project',
             '--module' => 'FooBar',
-            '--subDirectory' => 'Entity',
             '--className' => 'FooBarEntity',
         ]);
 
-        $this->assertFileExists($this->tester->getProjectModuleDirectory() . 'Business/Entity/FooBarEntity.php');
-        $this->assertFileExists($this->tester->getProjectModuleDirectory() . 'Business/Entity/FooBarEntityInterface.php');
+        $this->assertFileExists($this->tester->getProjectModuleDirectory() . 'Business/FooBarEntity/FooBarEntity.php');
+        $this->assertFileExists($this->tester->getProjectModuleDirectory() . 'Business/FooBarEntity/FooBarEntityInterface.php');
     }
 }

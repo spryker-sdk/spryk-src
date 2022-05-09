@@ -1,0 +1,26 @@
+spryk: addBackendApiRestResourceMethod
+description: "Adds a new method call to the GlueResourceMethodCollectionTransfer in GlueBackendApi Resource Plugin."
+mode: both
+
+arguments:
+    module:
+        inherit: true
+
+    organization:
+        inherit: true
+
+    resource:
+        description: "Defines the resource name this resource plugin will work with."
+
+    resourceDataObject:
+        description: "Defines the Transfer that will be used in the Controller. Do not use Transfer as suffix, it will be added automatically. Example: Customer (ok) CustomerTransfer (wrong)"
+        value: "{{ resource | singularize | dashToCamelCase | ucfirst }}"
+
+    target:
+        value: "\\{{ organization }}\\Glue\\{{ module }}\\Plugin\\{{ resource }}Resource"
+
+    method:
+        description: "Can be oneOf: Get, GetCollection, Post, Patch, Delete, DeleteCollection"
+
+preSpryks:
+    - AddGlueBackendApiResourcePlugin

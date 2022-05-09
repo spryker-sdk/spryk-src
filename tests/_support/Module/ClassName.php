@@ -553,4 +553,9 @@ interface ClassName
      * @var string
      */
     public const PROJECT_YVES_PLUGIN_SUB_FORM_PLUGIN = 'Pyz\Yves\FooBar\Plugin\TestPaymentSubFormPlugin';
+
+    /**
+     * @var string
+     */
+    public const PROJECT_GLUE_BACKEND_API_RESOURCE_PLUGIN = 'Pyz\Glue\FooBar\Plugin\BarBazResource';
 }
