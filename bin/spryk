@@ -7,8 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 (function () {
     require_once __DIR__ . DIRECTORY_SEPARATOR . 'environment.php';
 
-    define('APPLICATION_ROOT_DIR', getcwd() . DIRECTORY_SEPARATOR);
-
     $kernel = new Kernel('prod', false);
     $application = new Application($kernel);
     $application->setDefaultCommand('spryk:run', true);
