@@ -17,9 +17,9 @@ use PhpParser\NodeVisitorAbstract;
 class AddImplementsVisitor extends NodeVisitorAbstract
 {
     /**
-     * @var mixed
+     * @var string
      */
-    protected $interface;
+    protected string $interface;
 
     /**
      * @param string $interface

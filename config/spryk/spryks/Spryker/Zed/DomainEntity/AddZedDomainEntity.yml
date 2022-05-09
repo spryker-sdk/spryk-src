@@ -2,9 +2,6 @@ spryk: template
 description: "Adds a new DomainEntity related model to the Zed application."
 mode: both
 level: 2
-
-application: Zed
-
 priority: 1
 
 arguments:
@@ -14,6 +11,10 @@ arguments:
     organization:
         inherit: true
         default: Spryker
+
+    application:
+        inherit: true
+        default: Zed
 
     layer:
         inherit: true
@@ -29,22 +30,19 @@ arguments:
 
     subDirectory:
         inherit: true
-        isOptional: true
+        default: "Business/{{ className }}"
 
     className:
         inherit: true
 
     template:
-        value: Common/Model.php.twig
+        value: Common/Class.php.twig
 
     targetFilename:
         value: "{{ className }}.php"
 
     targetPath:
-        value: "src/{{ organization }}/Zed/{{ module }}/{{ layer }}"
-
-    application:
-        value: Zed
+        value: "src/{{ organization }}/Zed/{{ module }}/"
 
 preSpryks:
     - AddModule

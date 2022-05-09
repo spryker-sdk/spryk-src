@@ -67,11 +67,11 @@ class AddGlueBackendApiResourcePluginTest extends Unit
         $expectedMethod = 'getResourcePlugins';
         $expectedBody = 'return [new BarBazResource()];';
 
-        $this->tester->assertClassOrInterfaceExists(ClassName::GLUE_BACKEND_API_RESOURCE_PLUGIN);
+        $this->tester->assertClassOrInterfaceExists(ClassName::PROJECT_GLUE_BACKEND_API_RESOURCE_PLUGIN);
         $this->tester->assertClassOrInterfaceHasMethod($expectedClass, $expectedMethod);
         $this->tester->assertMethodBody($expectedClass, $expectedMethod, $expectedBody);
-        $this->tester->assertClassOrInterfaceHasMethod(ClassName::GLUE_BACKEND_API_RESOURCE_PLUGIN, 'getType');
-        $this->tester->assertClassOrInterfaceHasMethod(ClassName::GLUE_BACKEND_API_RESOURCE_PLUGIN, 'getController');
-        $this->tester->assertClassOrInterfaceHasMethod(ClassName::GLUE_BACKEND_API_RESOURCE_PLUGIN, 'getDeclaredMethods');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_GLUE_BACKEND_API_RESOURCE_PLUGIN, 'getType');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_GLUE_BACKEND_API_RESOURCE_PLUGIN, 'getController');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_GLUE_BACKEND_API_RESOURCE_PLUGIN, 'getDeclaredMethods');
     }
 }

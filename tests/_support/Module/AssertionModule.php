@@ -374,7 +374,7 @@ class AssertionModule extends Module
      *
      * @return void
      */
-    public function assertClassHasImplement(string $className, string $implement): void
+    public function assertClassImplements(string $className, string $implement): void
     {
         $resolved = $this->getResolvedByClassName($className);
         $implementNode = $this->getNodeFinder()->findImplements($resolved->getClassTokenTree(), $implement);
@@ -391,19 +391,47 @@ class AssertionModule extends Module
     }
 
     /**
+     * Assert that a method inside of a class has method call.
+     *
+     * @example
+     * ```
+     * class FooBar { // className
+     *     public function zipZap() { // classMethodName
+     *         $this->bazBat(); // methodCallName
+     *     }
+     * }
+     * ```
+     *
      * @param string $className
-     * @param string $method
+     * @param string $classMethodName
+     * @param string $methodCallName
      *
      * @return void
      */
-    public function assertClassHasBackendApiResourceMethod(string $className, string $method): void
+    public function assertClassMethodHasMethodCall(string $className, string $classMethodName, string $methodCallName): void
     {
+        $this->assertClassOrInterfaceHasMethod($className, $classMethodName);
+
         $resolved = $this->getResolvedByClassName($className);
-        $methodCallNode = $this->getNodeFinder()->findMethodCallNode($resolved->getClassTokenTree(), 'setPost');
+        $nodeFinder = $this->getNodeFinder();
+
+        $method = $nodeFinder->findMethodNode($resolved->getClassTokenTree(), $classMethodName);
+
+        if (!$method) {
+            $this->assertTrue(false, sprintf('Class method "%s" not found.', $classMethodName));
+        }
+
+        $methodCallNode = $this->getNodeFinder()->findMethodCallNode($method->getStmts(), $methodCallName);
 
         $this->assertInstanceOf(
             MethodCall::class,
             $methodCallNode,
+            sprintf(
+                'Expected that class "%s::%s()" calls method "%s" but method call not found.',
+                $className,
+                $classMethodName,
+                $methodCallName,
+            ),
         );
     }
 }

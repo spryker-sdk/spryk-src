@@ -9,6 +9,7 @@ namespace SprykerSdkTest\Spryk\Integration\Common;
 
 use Codeception\Test\Unit;
 use SprykerSdkTest\Module\ClassName;
+use SprykerSdkTest\SprykIntegrationTester;
 
 /**
  * Auto-generated group annotations
@@ -25,7 +26,7 @@ class AddImplementsTest extends Unit
     /**
      * @var \SprykerSdkTest\SprykIntegrationTester
      */
-    protected $tester;
+    protected SprykIntegrationTester $tester;
 
     /**
      * @return void
@@ -47,6 +48,6 @@ class AddImplementsTest extends Unit
             '--interface' => 'Spryker\Client\ZipZap\ZipZapClientInterface',
         ]);
 
-        $this->tester->assertClassHasImplement(ClassName::CLIENT, 'ZipZapClientInterface');
+        $this->tester->assertClassImplements(ClassName::CLIENT, 'ZipZapClientInterface');
     }
 }

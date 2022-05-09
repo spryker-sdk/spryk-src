@@ -25,7 +25,7 @@ use {{ implements | convertToClassNameFragment }};
  */
 {% endif %}
 {% endblock %}
-class {{ className }}{% if isTestClass.value == true %}Test{% endif %}{% if extends.value is not null and extends.value is not empty %} extends {{ extends | replace({'/': '\\'}) | classNameShort }}{% endif %}{% if implements.value is not null and implements.value is not empty %} implements {{ implements | replace({'/': '\\'}) }}{% endif ~%}
+class {{ className }}{% if isTestClass.value == true %}Test{% endif %}{% if extends.value is not null and extends.value is not empty %} extends {{ extends | replace({'/': '\\'}) }}{% endif %}{% if implements.value is not null and implements.value is not empty %} implements {{ implements | replace({'/': '\\'}) }}{% endif ~%}
 {
 {% block body %}
     {% block properties %}

@@ -78,7 +78,7 @@ class AddImplementsSpryk extends AbstractBuilder
         return (
             $resolvedClass instanceof ResolvedClassInterface
             && $resolvedInterface instanceof ResolvedClassInterface
-            && !$this->isAlreadyImplements($resolvedClass, $resolvedInterface)
+            && !$this->hasImplements($resolvedClass, $resolvedInterface)
         );
     }
 
@@ -111,7 +111,7 @@ class AddImplementsSpryk extends AbstractBuilder
      *
      * @return bool
      */
-    protected function isAlreadyImplements(
+    protected function hasImplements(
         ResolvedClassInterface $resolvedClass,
         ResolvedClassInterface $resolvedInterface
     ): bool {

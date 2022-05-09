@@ -2,9 +2,6 @@ spryk: method
 description: "Adds a new method to the *target* model."
 mode: both
 level: 2
-
-application: Zed
-
 priority: 1
 
 arguments:
@@ -15,6 +12,10 @@ arguments:
         inherit: true
         default: Spryker
 
+    application:
+        inherit: true
+        default: Zed
+
     layer:
         inherit: true
         default: Business
@@ -24,7 +25,7 @@ arguments:
 
     subDirectory:
         inherit: true
-        isOptional: true
+        default: "Business/{{ className }}"
 
     modelMethod: ~
 
@@ -45,14 +46,14 @@ arguments:
         value: "{{ className }}"
 
     fqcnPattern:
-        value: "{{ organization }}\\Zed\\{{ module }}\\{{ layer }}{% if subDirectory %}\\{{ subDirectory | convertToClassNameFragment }}{% endif %}\\{{ className }}"
+        value: "{{ organization }}\\Zed\\{{ module }}{% if subDirectory %}\\{{ subDirectory | convertToClassNameFragment }}{% endif %}\\{{ className }}"
 
 preSpryks:
     - AddZedDomainEntity:
         arguments:
             implements:
                 value:
-                    - "{{ organization }}\\Zed\\{{ module }}\\{{ layer }}{% if subDirectory %}\\{{ subDirectory | convertToClassNameFragment }}{% endif %}\\{{ className }}Interface"
+                    - "{{ organization }}\\Zed\\{{ module }}{% if subDirectory %}\\{{ subDirectory | convertToClassNameFragment }}{% endif %}\\{{ className }}Interface"
 
 postSpryks:
     - AddZedDomainEntityInterfaceMethod

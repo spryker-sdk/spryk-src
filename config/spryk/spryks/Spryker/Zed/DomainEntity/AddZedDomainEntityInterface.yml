@@ -2,9 +2,6 @@ spryk: template
 description: "Adds a new DomainEntity related interface to the Zed application."
 mode: both
 level: 2
-
-application: Zed
-
 priority: 1
 
 arguments:
@@ -14,6 +11,10 @@ arguments:
     organization:
         inherit: true
         default: Spryker
+
+    application:
+        inherit: true
+        default: Zed
 
     layer:
         inherit: true
@@ -26,7 +27,7 @@ arguments:
 
     subDirectory:
         inherit: true
-        isOptional: true
+        default: "Business/{{ className }}"
 
     className:
         inherit: true
@@ -35,12 +36,13 @@ arguments:
         value: "{{ className }}Interface"
 
     template:
-        value: Common/ModelInterface.php.twig
+        value: Common/Interface.php.twig
 
     targetFilename:
         value: "{{ interfaceName }}.php"
 
     targetPath:
-        value: "src/{{ organization }}/Zed/{{ module }}/{{ layer }}"
+        value: "src/{{ organization }}/Zed/{{ module }}/"
+
 preSpryks:
     - AddModule

@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Zed;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\SprykIntegrationTester;
 
 /**
  * Auto-generated group annotations
@@ -25,7 +26,7 @@ class AddZedDomainEntityInterfaceMethodTest extends Unit
     /**
      * @var \SprykerSdkTest\SprykIntegrationTester
      */
-    protected $tester;
+    protected SprykIntegrationTester $tester;
 
     /**
      * @return void
@@ -35,14 +36,13 @@ class AddZedDomainEntityInterfaceMethodTest extends Unit
         $this->tester->run($this, [
             '--mode' => 'core',
             '--module' => 'FooBar',
-            '--subDirectory' => 'Entity',
             '--className' => 'FooBarEntity',
             '--modelMethod' => 'addSomething',
             '--input' => 'string $foo',
             '--output' => 'bool',
         ]);
 
-        $this->tester->assertClassOrInterfaceHasMethod('\Spryker\Zed\FooBar\Business\Entity\FooBarEntityInterface', 'addSomething');
+        $this->tester->assertClassOrInterfaceHasMethod('\Spryker\Zed\FooBar\Business\FooBarEntity\FooBarEntityInterface', 'addSomething');
     }
 
     /**
@@ -53,13 +53,12 @@ class AddZedDomainEntityInterfaceMethodTest extends Unit
         $this->tester->run($this, [
             '--mode' => 'project',
             '--module' => 'FooBar',
-            '--subDirectory' => 'Entity',
             '--className' => 'FooBarEntity',
             '--modelMethod' => 'addSomething',
             '--input' => 'string $foo',
             '--output' => 'bool',
         ]);
 
-        $this->tester->assertClassOrInterfaceHasMethod('\Pyz\Zed\FooBar\Business\Entity\FooBarEntityInterface', 'addSomething');
+        $this->tester->assertClassOrInterfaceHasMethod('\Pyz\Zed\FooBar\Business\FooBarEntity\FooBarEntityInterface', 'addSomething');
     }
 }
