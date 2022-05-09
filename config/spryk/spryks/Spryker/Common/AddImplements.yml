@@ -1,0 +1,9 @@
+spryk: addImplements
+description: "Add implements interface notation to the target class."
+mode: both
+
+arguments:
+    target:
+        description: "Target class"
+
+    interface: ~

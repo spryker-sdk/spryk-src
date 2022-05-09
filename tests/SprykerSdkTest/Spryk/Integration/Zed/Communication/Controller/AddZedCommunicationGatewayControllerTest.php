@@ -37,10 +37,11 @@ class AddZedCommunicationGatewayControllerTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $this->assertFileExists(
-            $this->tester->getSprykerModuleDirectory()
-            . 'src/Spryker/Zed/FooBar/Communication/Controller/GatewayController.php',
-        );
+        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Communication/Controller/GatewayController.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Communication\Controller\AbstractController');
     }
 
     /**
@@ -53,9 +54,32 @@ class AddZedCommunicationGatewayControllerTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->assertFileExists(
-            $this->tester->getProjectModuleDirectory()
-            . 'Communication/Controller/GatewayController.php',
-        );
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory() . 'Communication/Controller/GatewayController.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Communication\Controller\AbstractController');
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddsZedGatewayControllerFileThatExtendsSameCoreBaseClass(): void
+    {
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'core',
+        ]);
+
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'project',
+        ]);
+
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Zed') . 'Communication/Controller/GatewayController.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\FooBar\Communication\Controller\GatewayController');
     }
 }

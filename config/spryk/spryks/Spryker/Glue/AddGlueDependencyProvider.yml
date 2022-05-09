@@ -10,8 +10,20 @@ arguments:
         inherit: true
         default: Spryker
 
+    application:
+        value: Glue
+
+    extends:
+        callback: ResolveExtends
+        value:
+            - "\\Spryker\\{{ application }}\\{{ module }}\\{{ module }}DependencyProvider"
+            - "\\Spryker\\{{ application }}\\Kernel\\AbstractBundleDependencyProvider"
+
+    className:
+        value: "{{ module }}DependencyProvider"
+
     template:
-        value: Glue/GlueDependencyProvider.php.twig
+        value: Common/Class.php.twig
 
     targetFilename:
         value: "{{ module }}DependencyProvider.php"
@@ -21,3 +33,22 @@ arguments:
 
 preSpryks:
     - AddModule
+
+postSpryks:
+    - AddMethod:
+          arguments:
+              target:
+                  value: "\\{{ organization }}\\Glue\\{{ module }}\\{{ module }}DependencyProvider"
+              withInterface:
+                  value: false
+              input:
+                  value: "\\Spryker\\{{ application }}\\Kernel\\Container $container"
+              output:
+                  value: "\\Spryker\\{{ application }}\\Kernel\\Container"
+              method:
+                  value: "provideDependencies"
+              body:
+                  value:
+                      - "$container = parent::provideDependencies($container);"
+                      - ""
+                      - "return $container;"

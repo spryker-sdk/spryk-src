@@ -10,14 +10,36 @@ arguments:
         inherit: true
         default: Spryker
 
+    application:
+        value: Zed
+
+    extends:
+        callback: ResolveExtends
+        value:
+            - "\\Spryker\\{{ application }}\\{{ module }}\\Persistence\\{{ module }}Repository"
+            - "\\Spryker\\{{ application }}\\Kernel\\Persistence\\AbstractRepository"
+
+    className:
+        value: "{{ module }}Repository"
+
+    implements:
+        value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\{{ module }}RepositoryInterface"
+
+    annotations:
+        value:
+            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\{{ module }}PersistenceFactory getFactory()"
+
     template:
-        value: Zed/Persistence/ZedPersistenceRepository.php.twig
+        value: Common/Class.php.twig
+
+    subDirectory:
+        value: "Persistence"
 
     targetFilename:
         value: "{{ module }}Repository.php"
 
     targetPath:
-        value: "src/{{ organization }}/Zed/{{ module }}/Persistence/"
+        value: "src/{{ organization }}/Zed/{{ module }}/"
 
 preSpryks:
     - AddModule

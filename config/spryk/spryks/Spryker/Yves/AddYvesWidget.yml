@@ -20,14 +20,33 @@ arguments:
     templateName:
         value: "{{ widget | removeWidgetSuffix | dasherize }}"
 
+    application:
+        value: Yves
+
+    extends:
+        callback: ResolveExtends
+        value:
+            - "\\SprykerShop\\{{ application }}\\{{ module }}\\Widget\\{{ widget | removeWidgetSuffix }}Widget"
+            - "\\Spryker\\{{ application }}\\Kernel\\Widget\\AbstractWidget"
+
+    className:
+        value: "{{ widget | removeWidgetSuffix }}Widget"
+
+    annotations:
+        value:
+            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\{{ module }}Config getConfig()"
+
     template:
-        value: Yves/YvesWidget.php.twig
+        value: Common/Class.php.twig
+
+    subDirectory:
+        value: "Widget"
 
     targetFilename:
         value: "{{ widget | removeWidgetSuffix }}Widget.php"
 
     targetPath:
-        value: "src/{{ organization }}/Yves/{{ module }}/Widget/"
+        value: "src/{{ organization }}/Yves/{{ module }}/"
 
 preSpryks:
     - AddModule
@@ -35,3 +54,34 @@ preSpryks:
 postSpryks:
     - AddYvesFactory
     - AddYvesWidgetView
+    - AddMethod:
+        arguments:
+            target:
+                value: "\\{{ organization }}\\Yves\\{{ module }}\\Widget\\{{ widget | removeWidgetSuffix }}Widget"
+            withInterface:
+                value: false
+            isStatic:
+                value: true
+            output:
+                value: "string"
+            method:
+                value: "getName"
+            body:
+                value: "return '{{ widgetClassName }}';"
+
+    - AddMethod:
+        arguments:
+            templateName:
+                inherit: true
+            target:
+                value: "\\{{ organization }}\\Yves\\{{ module }}\\Widget\\{{ widget | removeWidgetSuffix }}Widget"
+            withInterface:
+                value: false
+            isStatic:
+                value: true
+            output:
+                value: "string"
+            method:
+                value: "getTemplate"
+            body:
+                value: "return '@{{ module }}/views/{{ templateName }}/{{ templateName }}.twig';"

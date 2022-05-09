@@ -10,8 +10,20 @@ arguments:
         inherit: true
         default: Spryker
 
+    application:
+        value: Client
+
+    extends:
+        callback: ResolveExtends
+        value:
+            - "\\Spryker\\{{ application }}\\{{ module }}\\{{ module }}DependencyProvider"
+            - "\\Spryker\\{{ application }}\\Kernel\\AbstractDependencyProvider"
+
+    className:
+        value: "{{ module }}DependencyProvider"
+
     template:
-        value: Client/ClientDependencyProvider.php.twig
+        value: Common/Class.php.twig
 
     targetFilename:
         value: "{{ module }}DependencyProvider.php"

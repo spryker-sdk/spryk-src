@@ -19,14 +19,32 @@ arguments:
         inherit: false
         default: "Business"
 
+    extends:
+        callback: ResolveExtends
+        value:
+            - "\\Spryker\\{{ application }}\\{{ module }}\\Business\\{{ module }}BusinessFactory"
+            - "\\Spryker\\{{ application }}\\Kernel\\Business\\AbstractBusinessFactory"
+
+    className:
+        value: "{{ module }}BusinessFactory"
+
+    annotations:
+        value:
+            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\{{ module }}Config getConfig()"
+            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\{{ module }}EntityManagerInterface getEntityManager()"
+            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\{{ module }}RepositoryInterface getRepository()"
+
     template:
-        value: Zed/Business/ZedBusinessFactory.php.twig
+        value: Common/Class.php.twig
+
+    subDirectory:
+        value: "Business"
 
     targetFilename:
         value: "{{ module }}BusinessFactory.php"
 
     targetPath:
-        value: "src/{{ organization }}/Zed/{{ module }}/Business/"
+        value: "src/{{ organization }}/Zed/{{ module }}/"
 
 preSpryks:
     - AddModule

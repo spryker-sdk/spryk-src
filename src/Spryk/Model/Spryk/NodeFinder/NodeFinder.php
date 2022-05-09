@@ -188,4 +188,30 @@ class NodeFinder implements NodeFinderInterface
 
         return null;
     }
+
+    /**
+     * @param array<\PhpParser\Node\Stmt> $tokens
+     * @param string $implement
+     *
+     * @return \PhpParser\Node\Name|null
+     */
+    public function findImplements(array $tokens, string $implement): ?Name
+    {
+        /** @var \PhpParser\Node\Stmt\Class_|null $class */
+        $class = (new PhpParserNodeFinder())->findFirst($tokens, function (Node $node) {
+            return $node instanceof Class_;
+        });
+
+        if (!$class) {
+            return null;
+        }
+
+        foreach ($class->implements as $currentImplement) {
+            if ((string)$currentImplement === $implement) {
+                return $currentImplement;
+            }
+        }
+
+        return null;
+    }
 }

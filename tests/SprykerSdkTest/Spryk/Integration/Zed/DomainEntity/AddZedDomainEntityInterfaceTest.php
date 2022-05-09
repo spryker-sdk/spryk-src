@@ -35,11 +35,10 @@ class AddZedDomainEntityInterfaceTest extends Unit
         $this->tester->run($this, [
             '--mode' => 'core',
             '--module' => 'FooBar',
-            '--subDirectory' => 'Entity',
             '--className' => 'FooBarEntity',
         ]);
 
-        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Business/Entity/FooBarEntityInterface.php');
+        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Business/FooBarEntity/FooBarEntityInterface.php');
     }
 
     /**
@@ -50,10 +49,9 @@ class AddZedDomainEntityInterfaceTest extends Unit
         $this->tester->run($this, [
             '--mode' => 'project',
             '--module' => 'FooBar',
-            '--subDirectory' => 'Entity',
             '--className' => 'FooBarEntity',
         ]);
 
-        $this->assertFileExists($this->tester->getProjectModuleDirectory() . 'Business/Entity/FooBarEntityInterface.php');
+        $this->assertFileExists($this->tester->getProjectModuleDirectory() . 'Business/FooBarEntity/FooBarEntityInterface.php');
     }
 }
