@@ -104,7 +104,11 @@ class FileResolver implements FileResolverInterface
 
         switch ($extension) {
             case 'php':
-                return $this->classParser->parse($fileName);
+                try {
+                    return $this->classParser->parse($fileName);
+                } catch (FileDoesNotContainClassOrInterfaceException $e) {
+                    return $this->fileParser->parse($fileName);
+                }
             case 'yml':
             case 'yaml':
                 return $this->ymlParser->parse($fileName);
