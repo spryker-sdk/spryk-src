@@ -10,7 +10,6 @@ namespace SprykerSdk\Spryk\Model\Spryk\Builder\Template;
 use Exception;
 use PhpParser\Error;
 use SprykerSdk\Spryk\Model\Spryk\Builder\AbstractBuilder;
-use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolver;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface;
 use SprykerSdk\Spryk\SprykConfig;
@@ -31,11 +30,6 @@ class TemplateSpryk extends AbstractBuilder
      * @var string
      */
     public const ARGUMENT_SUB_DIRECTORY = 'subDirectory';
-
-    /**
-     * @var string
-     */
-    public const ARGUMENT_IS_PLAIN_FILE = 'isPlainFile';
 
     /**
      * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface
@@ -68,10 +62,7 @@ class TemplateSpryk extends AbstractBuilder
     protected function shouldBuild(): bool
     {
         $targetPath = $this->getTargetPath();
-        $resolved = $this->fileResolver->resolve(
-            $targetPath,
-            $this->isPlainFile() ? FileResolver::RESOLVE_AS_PLAIN_FILE : FileResolver::RESOLVE_BY_FILE_EXTENSION,
-        );
+        $resolved = $this->fileResolver->resolve($targetPath);
 
         if ($resolved === null) {
             return true;
@@ -89,12 +80,7 @@ class TemplateSpryk extends AbstractBuilder
     {
         $targetPath = $this->getTargetPath();
 
-        if (
-            $this->fileResolver->resolve(
-                $targetPath,
-                $this->isPlainFile() ? FileResolverInterface::RESOLVE_AS_PLAIN_FILE : FileResolverInterface::RESOLVE_BY_FILE_EXTENSION,
-            )
-        ) {
+        if ($this->fileResolver->resolve($targetPath)) {
             throw new Exception(sprintf('Trying to add a file from template failed, because the file "%s" already exists', $targetPath));
         }
 
@@ -163,21 +149,6 @@ class TemplateSpryk extends AbstractBuilder
     protected function getTemplateName(): string
     {
         return $this->getStringArgument(static::ARGUMENT_TEMPLATE);
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isPlainFile(): bool
-    {
-        $isPlainFile = false;
-
-        if ($this->arguments->hasArgument(static::ARGUMENT_IS_PLAIN_FILE)) {
-            $isPlainFileArgument = $this->arguments->getArgument(static::ARGUMENT_IS_PLAIN_FILE)->getValue();
-            $isPlainFile = $isPlainFileArgument === 'false' ? false : (bool)$isPlainFileArgument;
-        }
-
-        return $isPlainFile;
     }
 
     /**

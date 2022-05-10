@@ -12,22 +12,11 @@ use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface;
 interface FileResolverInterface
 {
     /**
-     * @var string
-     */
-    public const RESOLVE_BY_FILE_EXTENSION = 'RESOLVE_BY_FILE_EXTENSION';
-
-    /**
-     * @var string
-     */
-    public const RESOLVE_AS_PLAIN_FILE = 'RESOLVE_AS_PLAIN_FILE';
-
-    /**
      * @param string $name
-     * @param string $resolveStrategy
      *
      * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface|null
      */
-    public function resolve(string $name, string $resolveStrategy = self::RESOLVE_BY_FILE_EXTENSION): ?ResolvedInterface;
+    public function resolve(string $name): ?ResolvedInterface;
 
     /**
      * @return iterable<string, \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface>
