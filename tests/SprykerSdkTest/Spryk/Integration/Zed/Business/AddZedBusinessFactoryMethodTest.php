@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Zed\Business;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\SprykIntegrationTester;
 
 /**
  * Auto-generated group annotations
@@ -25,7 +26,7 @@ class AddZedBusinessFactoryMethodTest extends Unit
     /**
      * @var \SprykerSdkTest\SprykIntegrationTester
      */
-    protected $tester;
+    protected SprykIntegrationTester $tester;
 
     /**
      * @return void
