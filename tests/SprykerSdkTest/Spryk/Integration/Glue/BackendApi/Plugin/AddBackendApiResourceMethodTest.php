@@ -53,20 +53,21 @@ class AddBackendApiResourceMethodTest extends Unit
             '--method' => 'getResourcePlugins',
             '--body' => 'return [];',
             '--output' => 'array',
+            '--withInterface' => false,
         ];
 
         $this->tester->runSpryk('AddMethod', $arguments);
 
         $this->tester->runSpryk('AddGlueBackendApiResourcePlugin', [
-            '--module' => 'FooBar',
+            '--mode' => 'project',
             '--organization' => 'Pyz',
-            '--resource' => 'BarBaz',
+            '--resource' => '/foo-bars',
         ]);
 
         $this->tester->run($this, [
-            '--module' => 'FooBar',
+            '--mode' => 'project',
             '--organization' => 'Pyz',
-            '--resource' => 'BarBaz',
+            '--resource' => '/foo-bars',
             '--method' => 'Post',
         ]);
 

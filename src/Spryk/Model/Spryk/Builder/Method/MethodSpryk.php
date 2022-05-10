@@ -152,9 +152,9 @@ class MethodSpryk extends AbstractBuilder
      */
     protected function build(): void
     {
+        $methodName = $this->getMethodName();
         $resolvedClass = $this->getTargetClass();
 
-        $methodName = $this->getMethodName();
         $methodExists = $this->methodExists($resolvedClass, $methodName);
 
         $methodArgument = new Argument();
@@ -285,7 +285,7 @@ class MethodSpryk extends AbstractBuilder
     protected function getMethodName(): string
     {
         foreach (static::ARGUMENT_METHOD_NAME_CANDIDATES as $methodNameCandidate) {
-            if ($this->arguments->hasArgument($methodNameCandidate)) {
+            if ($this->arguments->hasArgument($methodNameCandidate) && $this->arguments->getArgument($methodNameCandidate)->getValue() !== null) {
                 return $this->arguments->getArgument($methodNameCandidate);
             }
         }

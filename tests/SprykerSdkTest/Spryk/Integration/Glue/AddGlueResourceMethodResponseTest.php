@@ -40,7 +40,7 @@ class AddGlueResourceMethodResponseTest extends Unit
      *
      * @return void
      */
-    public function testAddsGlueBackendApiJSONApiResourceMethodResponseCode(
+    public function testAddsGlueBackendJSONApiResourceMethodResponseCode(
         string $httpMethod,
         int $httpResponseCode,
         ?bool $isBulk = null,
@@ -93,9 +93,9 @@ class AddGlueResourceMethodResponseTest extends Unit
         $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_TEST_HELPER, sprintf('haveValidFooBars%s%sRequestData', ucfirst($httpMethod), ($isBulk) ? 'Collection' : ''));
         $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_TEST_HELPER, sprintf('haveInvalidFooBars%s%sRequestData', ucfirst($httpMethod), ($isBulk) ? 'Collection' : ''));
 
-//        // Resource
-//        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_RESOURCE_PLUGIN);
-//
+        // Resource
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_RESOURCE_PLUGIN);
+
         // Request mapper
         $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER);
         $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER_INTERFACE);
@@ -103,12 +103,13 @@ class AddGlueResourceMethodResponseTest extends Unit
         // Response mapper
         $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER);
         $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER_INTERFACE);
-//        // Factory
-//        $this->tester->assertClassHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_FACTORY, sprintf('get%sFacade', ($zedModule ?? 'FooBar')));
-//        $this->tester->assertClassHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_FACTORY, sprintf('getGlueRequestTo%sMapper', ($zedDomainEntity ?? 'FooBar')));
-//        $this->tester->assertClassHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_FACTORY, sprintf('get%sToGlueResponseMapper', ($zedDomainEntity ?? 'FooBar')));
-//
-//        // Dependency provider
+
+        // Factory
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_FACTORY, sprintf('get%sFacade', ($zedModule ?? 'FooBar')));
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_FACTORY, sprintf('createGlueRequest%sMapper', ($zedDomainEntity ?? 'FooBar')));
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_FACTORY, sprintf('createGlueResponse%sMapper', ($zedDomainEntity ?? 'FooBar')));
+
+        // Dependency provider
         $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_DEPENDENCY_PROVIDER, 'provideDependencies');
         $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_DEPENDENCY_PROVIDER, sprintf('add%sFacade', ($zedModule ?? 'FooBar')));
     }
@@ -128,11 +129,11 @@ class AddGlueResourceMethodResponseTest extends Unit
     {
         return [
             ['get', 200],
-            ['get', 200, true],
-            ['post', 200],
-            ['patch', 200],
-            ['delete', 200],
-            ['delete', 200, true],
+//            ['get', 200, true],
+//            ['post', 200],
+//            ['patch', 200],
+//            ['delete', 200],
+//            ['delete', 200, true],
         ];
     }
 

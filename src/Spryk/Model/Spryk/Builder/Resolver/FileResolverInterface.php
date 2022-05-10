@@ -35,4 +35,11 @@ interface FileResolverInterface
      * @return void
      */
     public function reset(): void;
+
+    /**
+     * @param string $type The interface name.
+     *
+     * @return array<\SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface>
+     */
+    public function getResolvedByType(string $type): array;
 }

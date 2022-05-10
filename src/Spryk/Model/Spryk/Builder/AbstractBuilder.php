@@ -7,6 +7,7 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Builder;
 
+use InvalidArgumentException;
 use Laminas\Filter\FilterChain;
 use Laminas\Filter\StringToLower;
 use Laminas\Filter\Word\CamelCaseToDash;
@@ -219,21 +220,37 @@ abstract class AbstractBuilder implements SprykBuilderInterface
     /**
      * @param string $argumentName
      *
+     * @throws \InvalidArgumentException
+     *
      * @return string
      */
     protected function getStringArgument(string $argumentName): string
     {
-        return $this->arguments->getArgument($argumentName)->getValue();
+        $value = $this->arguments->getArgument($argumentName)->getValue();
+
+        if (!is_string($value)) {
+            throw new InvalidArgumentException(sprintf('Argument value for "%s" should be a string, found "%s"', $argumentName, gettype($value)));
+        }
+
+        return $value;
     }
 
     /**
      * @param string $argumentName
      *
+     * @throws \InvalidArgumentException
+     *
      * @return array
      */
     protected function getArrayArgument(string $argumentName): array
     {
-        return $this->arguments->getArgument($argumentName)->getValue();
+        $value = $this->arguments->getArgument($argumentName)->getValue();
+
+        if (!is_array($value)) {
+            throw new InvalidArgumentException(sprintf('Argument value for "%s" should be an array, found "%s"', $argumentName, gettype($value)));
+        }
+
+        return $value;
     }
 
     /**

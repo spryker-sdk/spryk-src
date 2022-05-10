@@ -53,19 +53,19 @@ class AddGlueBackendApiResourcePluginTest extends Unit
             '--method' => 'getResourcePlugins',
             '--body' => 'return [];',
             '--output' => 'array',
+            '--withInterface' => false,
         ];
 
         $this->tester->runSpryk('AddMethod', $arguments);
 
         $this->tester->run($this, [
-            '--module' => 'FooBar',
             '--organization' => 'Pyz',
-            '--resource' => 'BarBaz',
+            '--resource' => '/foo-bars',
 
         ]);
         $expectedClass = '\Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationDependencyProvider';
         $expectedMethod = 'getResourcePlugins';
-        $expectedBody = 'return [new BarBazResource()];';
+        $expectedBody = 'return [new FooBarsBackendApiResource()];';
 
         $this->tester->assertClassOrInterfaceExists(ClassName::PROJECT_GLUE_BACKEND_API_RESOURCE_PLUGIN);
         $this->tester->assertClassOrInterfaceHasMethod($expectedClass, $expectedMethod);

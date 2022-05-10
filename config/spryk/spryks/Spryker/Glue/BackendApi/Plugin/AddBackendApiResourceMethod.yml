@@ -5,19 +5,36 @@ mode: both
 arguments:
     module:
         inherit: true
+        default: "{{ resource | normalizeResourceName }}"
+        callback: GlueResourceModuleName
 
     organization:
         inherit: true
+        default: Spryker
+
+    application:
+        inherit: true
+        default: Glue
+
+    applicationType:
+        inherit: true
+        default: Backend
 
     resource:
         description: "Defines the resource name this resource plugin will work with."
+        inherit: true
 
     resourceDataObject:
         description: "Defines the Transfer that will be used in the Controller. Do not use Transfer as suffix, it will be added automatically. Example: Customer (ok) CustomerTransfer (wrong)"
         value: "{{ resource | singularize | dashToCamelCase | ucfirst }}"
+        inherit: true
+
+    className:
+        inherit: true
+        default: "{{ resource | normalizeResourceName }}BackendApiResource"
 
     target:
-        value: "\\{{ organization }}\\Glue\\{{ module }}\\Plugin\\{{ resource }}Resource"
+        value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
 
     method:
         description: "Can be oneOf: Get, GetCollection, Post, Patch, Delete, DeleteCollection"

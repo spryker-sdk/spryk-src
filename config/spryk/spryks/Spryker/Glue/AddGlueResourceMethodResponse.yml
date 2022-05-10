@@ -68,6 +68,7 @@ postSpryks:
     - AddGlueBackendApiApplication
     - AddGlueBackendApiRequestMapper
     - AddGlueBackendApiResponseMapper
+    - AddGlueBackendApiResourcePlugin
     # Add CrudFacade code
     - AddCrudFacade:
           condition: "applicationType === 'Backend'"

@@ -8,7 +8,6 @@
 namespace SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Resolver;
 
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Argument;
-use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Callback\Resolver\CallbackArgumentResolverInterface;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Superseder\SupersederInterface;
 use SprykerSdk\Spryk\SprykConfig;
@@ -22,36 +21,28 @@ class ArgumentResolver implements ArgumentResolverInterface
     /**
      * @var \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface
      */
-    protected $argumentCollection;
+    protected ArgumentCollectionInterface $argumentCollection;
 
     /**
      * @var \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Superseder\SupersederInterface
      */
-    protected $superseder;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Callback\Resolver\CallbackArgumentResolverInterface
-     */
-    protected $callbackArgumentResolver;
+    protected SupersederInterface $superseder;
 
     /**
      * @var \SprykerSdk\Spryk\Style\SprykStyleInterface
      */
-    protected $style;
+    protected SprykStyleInterface $style;
 
     /**
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $argumentCollection
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Superseder\SupersederInterface $superseder
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Callback\Resolver\CallbackArgumentResolverInterface $callbackArgumentResolver
      */
     public function __construct(
         ArgumentCollectionInterface $argumentCollection,
-        SupersederInterface $superseder,
-        CallbackArgumentResolverInterface $callbackArgumentResolver
+        SupersederInterface $superseder
     ) {
         $this->argumentCollection = $argumentCollection;
         $this->superseder = $superseder;
-        $this->callbackArgumentResolver = $callbackArgumentResolver;
     }
 
     /**
@@ -89,9 +80,7 @@ class ArgumentResolver implements ArgumentResolverInterface
             $resolvedArgumentCollection->addArgument($argument);
         }
 
-        $argumentCollection = $this->superseder->supersede($argumentCollection, $resolvedArgumentCollection);
-
-        return $this->callbackArgumentResolver->resolve($argumentCollection);
+        return $this->superseder->supersede($argumentCollection, $resolvedArgumentCollection);
     }
 
     /**

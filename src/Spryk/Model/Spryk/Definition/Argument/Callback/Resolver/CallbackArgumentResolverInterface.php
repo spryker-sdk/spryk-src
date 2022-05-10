@@ -7,6 +7,7 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Callback\Resolver;
 
+use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\ArgumentInterface;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface;
 
 interface CallbackArgumentResolverInterface
@@ -17,4 +18,12 @@ interface CallbackArgumentResolverInterface
      * @return \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface
      */
     public function resolve(ArgumentCollectionInterface $argumentCollection): ArgumentCollectionInterface;
+
+    /**
+     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\ArgumentInterface $argument
+     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $argumentCollection
+     *
+     * @return \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\ArgumentInterface
+     */
+    public function resolveArgument(ArgumentInterface $argument, ArgumentCollectionInterface $argumentCollection): ArgumentInterface;
 }

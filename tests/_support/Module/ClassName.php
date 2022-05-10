@@ -557,5 +557,5 @@ interface ClassName
     /**
      * @var string
      */
-    public const PROJECT_GLUE_BACKEND_API_RESOURCE_PLUGIN = 'Pyz\Glue\FooBar\Plugin\BarBazResource';
+    public const PROJECT_GLUE_BACKEND_API_RESOURCE_PLUGIN = 'Pyz\Glue\FooBarsBackendApi\Plugin\FooBarsBackendApiResource';
 }
