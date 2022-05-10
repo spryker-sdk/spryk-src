@@ -46,6 +46,8 @@ arguments:
     subDirectory:
         value: Plugin
 
+preSpryks:
+    - AddGlueBackendApiApplication
 postSpryks:
     - AddMethod:
           arguments:
@@ -109,5 +111,5 @@ postSpryks:
               plugin:
                   value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
               target:
-                  value: "\\Spryker\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider::getResourcePlugins"
+                  value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider::getResourcePlugins"
 

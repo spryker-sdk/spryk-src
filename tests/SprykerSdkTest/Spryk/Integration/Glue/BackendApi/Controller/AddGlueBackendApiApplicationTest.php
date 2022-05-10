@@ -9,6 +9,7 @@ namespace SprykerSdkTest\Spryk\Integration\Glue\BackendApi\Controller;
 
 use Codeception\Test\Unit;
 use SprykerSdkTest\Module\GlueBackendApiClassNames;
+use SprykerSdkTest\SprykIntegrationTester;
 
 /**
  * Auto-generated group annotations
@@ -27,7 +28,24 @@ class AddGlueBackendApiApplicationTest extends Unit
     /**
      * @var \SprykerSdkTest\SprykIntegrationTester
      */
-    protected $tester;
+    protected SprykIntegrationTester $tester;
+
+    /**
+     * @return void
+     */
+    public function testAddsGlueBackendApiApplicationOnProjectLevel(): void
+    {
+        $this->tester->run($this, [
+            '--mode' => 'project',
+            '--organization' => 'Pyz',
+            '--module' => 'FooBar',
+            '--applicationType' => 'Backend',
+        ]);
+
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::PROJECT_GLUE_BACKEND_API_BOOTSTRAP);
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::PROJECT_GLUE_APPLICATION_DEPENDENCY_PROVIDER);
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::PROJECT_GLUE_BACKEND_API_APPLICATION_DEPENDENCY_PROVIDER);
+    }
 
     /**
      * @return void
@@ -40,7 +58,7 @@ class AddGlueBackendApiApplicationTest extends Unit
             '--applicationType' => 'Backend',
         ]);
 
-        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_BOOTSTRAP);
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::PROJECT_GLUE_BACKEND_API_BOOTSTRAP);
         $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_APPLICATION_DEPENDENCY_PROVIDER);
         $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_APPLICATION_DEPENDENCY_PROVIDER);
     }
