@@ -80,12 +80,8 @@ class ClassParser implements ParserInterface
         $resolved->setClassName($className);
         $resolved->setFullyQualifiedClassName('\\' . $className);
 
-        try {
-            $reflectionClass = new ReflectionClass($className);
-            $resolved->setReflectionClass($reflectionClass);
-        } catch (ReflectionException $e) {
-            $foo = 'bar';
-        }
+        $reflectionClass = new ReflectionClass($className);
+        $resolved->setReflectionClass($reflectionClass);
 
         $fileName = $reflectionClass->getFileName();
 

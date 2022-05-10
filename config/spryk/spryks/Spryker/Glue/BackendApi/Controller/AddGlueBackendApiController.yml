@@ -50,6 +50,7 @@ postSpryks:
               className:
                   value: "{{ controller }}"
               extends:
+                  callback: ResolveExtends
                   value:
                       - "\\Spryker\\Glue\\{{ module }}\\Controller\\{{ controller }}"
                       - "\\Spryker\\Glue\\Kernel\\Backend\\Controller\\AbstractBackendApiController"
