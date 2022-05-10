@@ -49,6 +49,7 @@ arguments:
 
     httpMethod:
         description: "The HTTP method e.g. POST"
+        callback: StringToLower
 
     httpResponseCode:
         description: "The HTTP response code e.g. 200 (OK)"
