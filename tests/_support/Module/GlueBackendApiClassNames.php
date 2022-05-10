@@ -12,12 +12,17 @@ interface GlueBackendApiClassNames
     /**
      * @var string
      */
-    public const GLUE_BACKEND_API_BOOTSTRAP = 'Pyz\Glue\GlueApplication\Bootstrap\GlueBackendApiBootstrap';
+    public const PROJECT_GLUE_BACKEND_API_BOOTSTRAP = 'Pyz\Glue\GlueApplication\Bootstrap\GlueBackendApiBootstrap';
 
     /**
      * @var string
      */
     public const GLUE_APPLICATION_DEPENDENCY_PROVIDER = 'Spryker\Glue\GlueApplication\GlueApplicationDependencyProvider';
+
+    /**
+     * @var string
+     */
+    public const PROJECT_GLUE_APPLICATION_DEPENDENCY_PROVIDER = 'Pyz\Glue\GlueApplication\GlueApplicationDependencyProvider';
 
     /**
      * @var string
@@ -28,6 +33,11 @@ interface GlueBackendApiClassNames
      * @var string
      */
     public const GLUE_BACKEND_API_APPLICATION_DEPENDENCY_PROVIDER = 'Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationDependencyProvider';
+
+    /**
+     * @var string
+     */
+    public const PROJECT_GLUE_BACKEND_API_APPLICATION_DEPENDENCY_PROVIDER = 'Pyz\Glue\GlueBackendApiApplication\GlueBackendApiApplicationDependencyProvider';
 
     /**
      * @var string
@@ -77,7 +87,7 @@ interface GlueBackendApiClassNames
     /**
      * @var string
      */
-    public const GLUE_BACKEND_API_RESOURCE_PLUGIN = 'Spryker\Glue\FooBarsBackendApi\Plugin\FooBarBackendApiResource';
+    public const GLUE_BACKEND_API_RESOURCE_PLUGIN = 'Spryker\Glue\FooBarsBackendApi\Plugin\FooBarsBackendApiResource';
 
     /**
      * @var string

@@ -38,12 +38,14 @@ class AssertionModule extends Module
     {
         /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolved */
         $resolved = $this->getSprykHelper()->getFileResolver()->resolve($classOrInterfaceName);
+        $resolvedClasses = $this->getSprykHelper()->getFileResolver()->getResolvedByType(ResolvedClassInterface::class);
 
         $this->assertNotNull(
             $resolved,
             sprintf(
-                'Expected that class or interface "%s" exists but was not found.',
+                "Expected that class or interface \"%s\" exists but was not found. Found classes: \n\n%s",
                 $classOrInterfaceName,
+                implode("\n", array_keys($resolvedClasses)),
             ),
         );
     }

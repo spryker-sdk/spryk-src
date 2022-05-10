@@ -270,4 +270,16 @@ class FileResolver implements FileResolverInterface
     {
         static::$resolved = [];
     }
+
+    /**
+     * @param string $type The interface name.
+     *
+     * @return array<\SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface>
+     */
+    public function getResolvedByType(string $type): array
+    {
+        return array_filter(static::$resolved, function (ResolvedInterface $resolved) use ($type) {
+            return $resolved instanceof $type;
+        });
+    }
 }

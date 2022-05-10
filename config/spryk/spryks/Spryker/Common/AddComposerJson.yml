@@ -1,6 +1,6 @@
 spryk: template
-description: "Adds a new composer.json to the root."
-mode: core
+description: "Adds a new composer.json to the root of the module or the project."
+mode: both
 
 arguments:
     module:
@@ -19,6 +19,6 @@ arguments:
 preSpryks:
     - AddModule
 
-#postCommands:
-#    - ComposerReplaceGenerate
-#    - ComposerDumpAutoload
+postCommands:
+    - ComposerReplaceGenerate
+    - ComposerDumpAutoload

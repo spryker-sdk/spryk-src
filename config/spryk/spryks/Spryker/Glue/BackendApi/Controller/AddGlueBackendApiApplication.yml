@@ -110,6 +110,8 @@ preSpryks:
                   value: "\\{{ organization }}\\Glue\\GlueApplication\\GlueApplicationDependencyProvider"
               method:
                   value: "getGlueApplicationBootstrapPlugins"
+              body:
+                  value: "return [];"
               output:
                   value: "array<\\Spryker\\Glue\\GlueApplicationExtension\\Dependency\\Plugin\\GlueApplicationBootstrapPluginInterface>"
               withInterface:
@@ -120,6 +122,8 @@ preSpryks:
                   value: "\\{{ organization }}\\Glue\\GlueApplication\\GlueApplicationDependencyProvider"
               method:
                   value: "getGlueContextExpanderPlugins"
+              body:
+                  value: "return [];"
               output:
                   value: "array<\\Spryker\\Glue\\GlueApplicationExtension\\Dependency\\Plugin\\GlueContextExpanderPluginInterface>"
               withInterface:
@@ -130,6 +134,8 @@ preSpryks:
                   value: "\\{{ organization }}\\Glue\\GlueApplication\\GlueApplicationDependencyProvider"
               method:
                   value: "getCommunicationProtocolPlugins"
+              body:
+                  value: "return [];"
               output:
                   value: "array<\\Spryker\\Glue\\GlueApplicationExtension\\Dependency\\Plugin\\CommunicationProtocolPluginInterface>"
               withInterface:
@@ -140,6 +146,8 @@ preSpryks:
                   value: "\\{{ organization }}\\Glue\\GlueApplication\\GlueApplicationDependencyProvider"
               method:
                   value: "getApiConventionPlugins"
+              body:
+                  value: "return [];"
               output:
                   value: "array<\\Spryker\\Glue\\GlueApplicationExtension\\Dependency\\Plugin\\ApiConventionPluginInterface>"
               withInterface:
@@ -150,6 +158,8 @@ preSpryks:
                   value: "\\{{ organization }}\\Glue\\GlueApplication\\GlueApplicationDependencyProvider"
               method:
                   value: "getResourceFilterPlugins"
+              body:
+                  value: "return [];"
               output:
                   value: "array<\\Spryker\\Glue\\GlueApplicationExtension\\Dependency\\Plugin\\ResourceFilterPluginInterface>"
               withInterface:
@@ -167,6 +177,8 @@ preSpryks:
                   value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider"
               method:
                   value: "getApplicationPlugins"
+              body:
+                  value: "return [];"
               output:
                   value: "array<\\Spryker\\Shared\\ApplicationExtension\\Dependency\\Plugin\\ApplicationPluginInterface>"
               withInterface:
@@ -177,6 +189,8 @@ preSpryks:
                   value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider"
               method:
                   value: "getRequestBuilderPlugins"
+              body:
+                  value: "return [];"
               output:
                   value: "array<\\Spryker\\Glue\\GlueBackendApiApplicationExtension\\Dependency\\Plugin\\RequestBuilderPluginInterface>"
               withInterface:
@@ -187,6 +201,8 @@ preSpryks:
                   value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider"
               method:
                   value: "getRequestAfterRoutingValidatorPlugins"
+              body:
+                  value: "return [];"
               output:
                   value: "array<\\Spryker\\Glue\\GlueBackendApiApplicationExtension\\Dependency\\Plugin\\RequestAfterRoutingValidatorPluginInterface>"
               withInterface:
@@ -197,6 +213,8 @@ preSpryks:
                   value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider"
               method:
                   value: "getResponseFormatterPlugins"
+              body:
+                  value: "return [];"
               output:
                   value: "array<\\Spryker\\Glue\\GlueBackendApiApplicationExtension\\Dependency\\Plugin\\ResponseFormatterPluginInterface>"
               withInterface:
@@ -207,6 +225,8 @@ preSpryks:
                   value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider"
               method:
                   value: "getRouterPlugins"
+              body:
+                  value: "return [];"
               output:
                   value: "array<\\Spryker\\Glue\\GlueBackendApiApplicationExtension\\Dependency\\Plugin\\RouterPluginInterface>"
               withInterface:
@@ -217,6 +237,8 @@ preSpryks:
                   value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider"
               method:
                   value: "getRouteMatcherPlugins"
+              body:
+                  value: "return [];"
               output:
                   value: "array<\\Spryker\\Glue\\GlueBackendApiApplicationExtension\\Dependency\\Plugin\\RouteMatcherPluginInterface>"
               withInterface:
@@ -227,12 +249,26 @@ preSpryks:
                   value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider"
               method:
                   value: "getRequestResourceFilterPlugin"
+              body:
+                  value: "return [];"
               output:
                   value: "\\Spryker\\Glue\\GlueBackendApiApplicationExtension\\Dependency\\Plugin\\RequestResourceFilterPluginInterface"
               withInterface:
                   value: false
+    - AddMethod:
+          arguments:
+              target:
+                  value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider"
+              method:
+                  value: "getResourcePlugins"
+              body:
+                  value: "return [];"
+              output:
+                  value: "array<\\Spryker\\Glue\\GlueApplicationExtension\\Dependency\\Plugin\\ResourceInterface>"
+              withInterface:
+                  value: false
 
-    # Add GlueRestApiConventionDependencyProvider
+    # Add GlueRestApiConventionDependencyProviderSpryk/Model/Spryk/Builder/Resolver/FileResolver.php:37
     - AddGlueDependencyProvider:
           condition: "apiType === 'REST'"
           arguments:
@@ -246,6 +282,8 @@ preSpryks:
                   value: "\\{{ organization }}\\Glue\\GlueRestApiConvention\\GlueRestApiConventionDependencyProvider"
               method:
                   value: "getResponseEncoderPlugins"
+              body:
+                  value: "return [];"
               output:
                   value: "array<\\Spryker\\Glue\\GlueRestApiConventionExtension\\Dependency\\Plugin\\ResponseEncoderPluginInterface>"
               withInterface:
@@ -257,6 +295,8 @@ preSpryks:
                   value: "\\{{ organization }}\\Glue\\GlueRestApiConvention\\GlueRestApiConventionDependencyProvider"
               method:
                   value: "getRequestBuilderPlugins"
+              body:
+                  value: "return [];"
               output:
                   value: "array<\\Spryker\\Glue\\GlueRestApiConventionExtension\\Dependency\\Plugin\\RequestBuilderPluginInterface>"
               withInterface:
@@ -268,6 +308,8 @@ preSpryks:
                   value: "\\{{ organization }}\\Glue\\GlueRestApiConvention\\GlueRestApiConventionDependencyProvider"
               method:
                   value: "getRequestValidatorPlugins"
+              body:
+                  value: "return [];"
               output:
                   value: "array<\\Spryker\\Glue\\GlueRestApiConventionExtension\\Dependency\\Plugin\\RequestValidatorPluginInterface>"
               withInterface:
@@ -279,6 +321,8 @@ preSpryks:
                   value: "\\{{ organization }}\\Glue\\GlueRestApiConvention\\GlueRestApiConventionDependencyProvider"
               method:
                   value: "getResponseFormatterPlugins"
+              body:
+                  value: "return [];"
               output:
                   value: "array<\\Spryker\\Glue\\GlueRestApiConventionExtension\\Dependency\\Plugin\\ResponseFormatterPluginInterface>"
               withInterface:
@@ -290,19 +334,19 @@ preSpryks:
               plugin:
                   value: "\\Spryker\\Glue\\GlueBackendApiApplication\\Plugin\\GlueApplication\\BackendApiGlueApplicationBootstrapPlugin"
               target:
-                  value: "\\Spryker\\Glue\\GlueApplication\\GlueApplicationDependencyProvider::getGlueApplicationBootstrapPlugins"
+                  value: "\\{{ organization }}\\Glue\\GlueApplication\\GlueApplicationDependencyProvider::getGlueApplicationBootstrapPlugins"
     - WirePlugin:
           arguments:
               plugin:
                   value: "\\Spryker\\Glue\\GlueHttp\\Plugin\\GlueContext\\HttpGlueContextExpanderPlugin"
               target:
-                  value: "\\Spryker\\Glue\\GlueApplication\\GlueApplicationDependencyProvider::getGlueContextExpanderPlugins"
+                  value: "\\{{ organization }}\\Glue\\GlueApplication\\GlueApplicationDependencyProvider::getGlueContextExpanderPlugins"
     - WirePlugin:
           arguments:
               plugin:
                   value: "\\Spryker\\Glue\\GlueHttp\\Plugin\\GlueApplication\\HttpCommunicationProtocolPlugin"
               target:
-                  value: "\\Spryker\\Glue\\GlueApplication\\GlueApplicationDependencyProvider::getCommunicationProtocolPlugins"
+                  value: "\\{{ organization }}\\Glue\\GlueApplication\\GlueApplicationDependencyProvider::getCommunicationProtocolPlugins"
     - WirePlugin:
           condition: "apiType === 'REST'"
           arguments:
@@ -310,7 +354,7 @@ preSpryks:
                   value:
                       - "\\Spryker\\Glue\\GlueRestApiConvention\\Plugin\\GlueApplication\\RestApiConventionPlugin"
               target:
-                  value: "\\Spryker\\Glue\\GlueApplication\\GlueApplicationDependencyProvider::getApiConventionPlugins"
+                  value: "\\{{ organization }}\\Glue\\GlueApplication\\GlueApplicationDependencyProvider::getApiConventionPlugins"
     - WirePlugin:
           condition: "apiType === 'JSON'"
           arguments:
@@ -318,14 +362,14 @@ preSpryks:
                   value:
                       - "\\Spryker\\Glue\\GlueJsonApiConvention\\Plugin\\GlueApplication\\JsonApiApiConventionPlugin"
               target:
-                  value: "\\Spryker\\Glue\\GlueApplication\\GlueApplicationDependencyProvider::getApiConventionPlugins"
+                  value: "\\{{ organization }}\\Glue\\GlueApplication\\GlueApplicationDependencyProvider::getApiConventionPlugins"
     - WirePlugin:
           condition: "apiType === 'JSON'"
           arguments:
               plugin:
                   value: "\\Spryker\\Glue\\GlueJsonApiConvention\\Plugin\\GlueApplication\\JsonApiApiConventionPlugin"
               target:
-                  value: "\\Spryker\\Glue\\GlueApplication\\GlueApplicationDependencyProvider::getResourceFilterPlugins"
+                  value: "\\{{ organization }}\\Glue\\GlueApplication\\GlueApplicationDependencyProvider::getResourceFilterPlugins"
 
     # Wire GlueBackendApiApplicationDependencyProvider plugins
     - WirePlugin:
@@ -333,31 +377,31 @@ preSpryks:
               plugin:
                   value: "\\Spryker\\Zed\\Propel\\Communication\\Plugin\\Application\\PropelApplicationPlugin"
               target:
-                  value: "\\Spryker\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider::getApplicationPlugins"
+                  value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider::getApplicationPlugins"
     - WirePlugin:
           arguments:
               plugin:
                   value: "\\Spryker\\Glue\\GlueHttp\\Plugin\\GlueBackendApiApplication\\CorsHeaderExistenceRequestAfterRoutingValidatorPlugin"
               target:
-                  value: "\\Spryker\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider::getRequestAfterRoutingValidatorPlugins"
+                  value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider::getRequestAfterRoutingValidatorPlugins"
     - WirePlugin:
           arguments:
               plugin:
                   value: "\\Spryker\\Glue\\GlueBackendApiApplication\\Plugin\\GlueBackendApiApplication\\SecurityHeaderResponseFormatterPlugin"
               target:
-                  value: "\\Spryker\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider::getResponseFormatterPlugins"
+                  value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider::getResponseFormatterPlugins"
     - WirePlugin:
           arguments:
               plugin:
                   value: "\\Spryker\\Glue\\GlueApplication\\Plugin\\GlueApplication\\ResourceRouteMatcherPlugin"
               target:
-                  value: "\\Spryker\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider::getRouteMatcherPlugins"
+                  value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider::getRouteMatcherPlugins"
     - WirePlugin:
           arguments:
               plugin:
                   value: "\\Spryker\\Glue\\GlueApplication\\Plugin\\GlueApplication\\RequestResourceFilterPlugin"
               target:
-                  value: "\\Spryker\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider::getRequestResourceFilterPlugin"
+                  value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider::getRequestResourceFilterPlugin"
     # Wire GlueRestApiConventionDependencyProvider plugins
     - WirePlugin:
           condition: "apiType === 'REST'"
@@ -365,7 +409,7 @@ preSpryks:
               plugin:
                   value: "\\Spryker\\Glue\\GlueRestApiConvention\\Plugin\\GlueRestApiConvention\\JsonResponseEncoderPlugin"
               target:
-                  value: "\\Spryker\\Glue\\GlueRestApiConvention\\GlueRestApiConventionDependencyProvider::getResponseEncoderPlugins"
+                  value: "\\{{ organization }}\\Glue\\GlueRestApiConvention\\GlueRestApiConventionDependencyProvider::getResponseEncoderPlugins"
     - WirePlugin:
           condition: "apiType === 'REST'"
           arguments:
@@ -375,18 +419,18 @@ preSpryks:
                       - "\\Spryker\\Glue\\GlueRestApiConvention\\Plugin\\GlueRestApiConvention\\PaginationRequestBuilderPlugin"
                       - "\\Spryker\\Glue\\GlueRestApiConvention\\Plugin\\GlueRestApiConvention\\SortRequestBuilderPlugin"
               target:
-                  value: "\\Spryker\\Glue\\GlueRestApiConvention\\GlueRestApiConventionDependencyProvider::getRequestBuilderPlugins"
+                  value: "\\{{ organization }}\\Glue\\GlueRestApiConvention\\GlueRestApiConventionDependencyProvider::getRequestBuilderPlugins"
     - WirePlugin:
           condition: "apiType === 'REST'"
           arguments:
               plugin:
                   value: "\\Spryker\\Glue\\GlueRestApiConvention\\Plugin\\GlueRestApiConvention\\AcceptFormatRequestValidatorPlugin"
               target:
-                  value: "\\Spryker\\Glue\\GlueRestApiConvention\\GlueRestApiConventionDependencyProvider::getRequestValidatorPlugins"
+                  value: "\\{{ organization }}\\Glue\\GlueRestApiConvention\\GlueRestApiConventionDependencyProvider::getRequestValidatorPlugins"
     - WirePlugin:
           condition: "apiType === 'REST'"
           arguments:
               plugin:
                   value: "\\Spryker\\Glue\\GlueRestApiConvention\\Plugin\\GlueRestApiConvention\\RestApiResponseFormatterPlugin"
               target:
-                  value: "\\Spryker\\Glue\\GlueRestApiConvention\\GlueRestApiConventionDependencyProvider::getResponseFormatterPlugins"
+                  value: "\\{{ organization }}\\Glue\\GlueRestApiConvention\\GlueRestApiConventionDependencyProvider::getResponseFormatterPlugins"
