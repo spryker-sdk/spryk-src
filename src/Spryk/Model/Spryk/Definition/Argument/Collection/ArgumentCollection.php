@@ -21,7 +21,7 @@ class ArgumentCollection implements ArgumentCollectionInterface
     /**
      * @var string
      */
-    protected string $sprykName;
+    protected string $sprykName = 'Unknown';
 
     /**
      * @var \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface|null

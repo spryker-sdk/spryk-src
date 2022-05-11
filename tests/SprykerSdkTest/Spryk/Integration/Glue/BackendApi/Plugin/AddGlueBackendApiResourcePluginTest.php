@@ -35,30 +35,6 @@ class AddGlueBackendApiResourcePluginTest extends Unit
      */
     public function testAddsGlueBackendApiResourcePlugin(): void
     {
-//        // Create DependencyProvider
-//        $arguments = [
-//            '--organization' => 'Spryker',
-//            '--application' => 'Glue',
-//            '--module' => 'GlueBackendApiApplication',
-//            '--output' => 'array',
-//        ];
-//
-//        $this->tester->runSpryk('AddDependencyProvider', $arguments);
-//
-//        // Add method to DependencyProvider
-//        $arguments = [
-//            '--organization' => 'Spryker',
-//            '--application' => 'Glue',
-//            '--module' => 'GlueBackendApiApplication',
-//            '--target' => '\Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationDependencyProvider',
-//            '--method' => 'getResourcePlugins',
-//            '--body' => 'return [];',
-//            '--output' => 'array',
-//            '--withInterface' => false,
-//        ];
-//
-//        $this->tester->runSpryk('AddMethod', $arguments);
-
         $this->tester->run($this, [
             '--organization' => 'Pyz',
             '--resource' => '/foo-bars',

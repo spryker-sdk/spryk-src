@@ -64,6 +64,7 @@ class ArgumentResolver implements ArgumentResolverInterface
 
         if (!$resolvedArgumentCollection) {
             $resolvedArgumentCollection = clone $argumentCollection;
+            $resolvedArgumentCollection->setSprykName($sprykName);
         }
 
         $argumentCollection->setSprykName($sprykName);
