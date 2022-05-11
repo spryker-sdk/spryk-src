@@ -133,11 +133,11 @@ class AddGlueResourceMethodResponseTest extends Unit
     {
         return [
             ['get', 200],
-//            ['get', 200, true],
-//            ['post', 200],
-//            ['patch', 200],
-//            ['delete', 200],
-//            ['delete', 200, true],
+            ['get', 200, true],
+            ['post', 200],
+            ['patch', 200],
+            ['delete', 200],
+            ['delete', 200, true],
         ];
     }
 
