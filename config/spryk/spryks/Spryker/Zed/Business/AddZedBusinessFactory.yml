@@ -13,8 +13,7 @@ arguments:
         default: Spryker
 
     application:
-        inherit: true
-        default: "Zed"
+        value: "Zed"
 
     layer:
         inherit: false
