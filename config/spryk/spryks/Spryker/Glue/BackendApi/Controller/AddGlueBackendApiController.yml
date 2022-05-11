@@ -9,7 +9,6 @@ arguments:
     module:
         description: "Based on the applicationType the module name will be suffixed with BackendApi or FrontendApi by the ResourceModuleName callback."
         inherit: true
-        value: "{{ resource | normalizeResourceName }}"
         callback: GlueResourceModuleName
 
     organization:
@@ -50,6 +49,7 @@ postSpryks:
               className:
                   value: "{{ controller }}"
               extends:
+                  callback: ResolveExtends
                   value:
                       - "\\Spryker\\Glue\\{{ module }}\\Controller\\{{ controller }}"
                       - "\\Spryker\\Glue\\Kernel\\Backend\\Controller\\AbstractBackendApiController"

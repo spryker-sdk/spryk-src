@@ -13,7 +13,8 @@ arguments:
         default: Spryker
 
     application:
-        value: "Glue"
+        inherit: true
+        default: "Glue"
 
     extends:
         callback: ResolveExtends

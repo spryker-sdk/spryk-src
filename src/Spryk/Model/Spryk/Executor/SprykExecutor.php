@@ -68,6 +68,11 @@ class SprykExecutor implements SprykExecutorInterface
     protected FileDumperInterface $fileDumper;
 
     /**
+     * @var int
+     */
+    protected int $currentExecutionLevel = 0;
+
+    /**
      * @param \SprykerSdk\Spryk\SprykConfig $sprykConfig
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Builder\SprykDefinitionBuilderInterface $definitionBuilder
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Collection\SprykBuilderCollectionInterface $sprykBuilderCollection
@@ -246,7 +251,9 @@ class SprykExecutor implements SprykExecutorInterface
     protected function executePreSpryks(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): void
     {
         $style->startPreSpryks($sprykDefinition);
+        ++$this->currentExecutionLevel;
         $this->buildPreSpryks($sprykDefinition, $style);
+        --$this->currentExecutionLevel;
         $style->endPreSpryks($sprykDefinition);
     }
 
@@ -259,7 +266,12 @@ class SprykExecutor implements SprykExecutorInterface
     protected function executeSpryk(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): void
     {
         $builder = $this->sprykBuilderCollection->getBuilder($sprykDefinition);
+
+        $style->writelnVerbose(sprintf('Starting: %s Level: %s', $sprykDefinition->getSprykName(), $this->currentExecutionLevel));
+
         $builder->runSpryk($sprykDefinition, $style);
+
+        $style->writelnVerbose(sprintf('Finished: %s', $sprykDefinition->getSprykName()));
 
         $this->executedSpryks[$sprykDefinition->getSprykDefinitionKey()] = $sprykDefinition;
     }
@@ -273,7 +285,9 @@ class SprykExecutor implements SprykExecutorInterface
     protected function executePostSpryks(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): void
     {
         $style->startPostSpryks($sprykDefinition);
+        ++$this->currentExecutionLevel;
         $this->buildPostSpryks($sprykDefinition, $style);
+        --$this->currentExecutionLevel;
         $style->endPostSpryks($sprykDefinition);
     }
 

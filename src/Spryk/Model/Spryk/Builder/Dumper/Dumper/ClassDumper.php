@@ -97,7 +97,7 @@ class ClassDumper implements ClassDumperInterface
                 $resolved->getTokens(),
             );
 
-            file_put_contents($tmpFileName, $fileContent);
+            $this->filePutContent($tmpFileName, $fileContent);
 
             $tmpClassNameMap[$tmpFileName] = $resolved;
         }
@@ -124,5 +124,22 @@ class ClassDumper implements ClassDumperInterface
         $traverser->addVisitor(new OrderStatementsInClassVisitor());
 
         return $traverser->traverse($statements);
+    }
+
+    /**
+     * @param string $fileName
+     * @param string $fileContent
+     *
+     * @return void
+     */
+    private function filePutContent(string $fileName, string $fileContent): void
+    {
+        $dir = dirname($fileName);
+
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        file_put_contents($fileName, $fileContent);
     }
 }

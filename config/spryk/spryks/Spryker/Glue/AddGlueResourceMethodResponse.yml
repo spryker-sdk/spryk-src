@@ -161,19 +161,19 @@ postSpryks:
 
     # Add controller test method test<Resource><HTTPMethod>ReturnsHttpResponseCode<ResponseCode>
     # The test controller is added by the AddGlueBackendApiControllerMethod* Spryks
-    - AddMethod:
-          arguments:
-              isBulk:
-                  inherit: true
-              method:
-                  description: "Method follows this pattern: test<Resource><HTTPMethod>(Collection)ReturnsHttpResponseCode<HTTPResponseCode>"
-                  value: "test{{ resource | normalizeResourceName | singularize | ucfirst }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}ReturnsHttpResponseCode{{ httpResponseCode }}"
-              body:
-                  value: "$this->markTestIncomplete('Implement me!');"
-              target:
-                  value: "{{ organization }}Test\\Glue\\{{ module }}\\Controller\\{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}ResourceControllerTest"
-              withInterface:
-                  value: false
+#    - AddMethod:
+#          arguments:
+#              isBulk:
+#                  inherit: true
+#              method:
+#                  description: "Method follows this pattern: test<Resource><HTTPMethod>(Collection)ReturnsHttpResponseCode<HTTPResponseCode>"
+#                  value: "test{{ resource | normalizeResourceName | singularize | ucfirst }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}ReturnsHttpResponseCode{{ httpResponseCode }}"
+#              body:
+#                  value: "$this->markTestIncomplete('Implement me!');"
+#              target:
+#                  value: "{{ organization }}Test\\Glue\\{{ module }}\\Controller\\{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}ResourceControllerTest"
+#              withInterface:
+#                  value: false
 
     # TestHelper class
     - AddTestHelper:

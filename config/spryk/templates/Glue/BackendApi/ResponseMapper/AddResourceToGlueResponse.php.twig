@@ -1,4 +1,4 @@
-    $resourceTransfer = new GlueResourceTransfer();
+    $resourceTransfer = new \Generated\Shared\Transfer\GlueResourceTransfer();
     $resourceTransfer->setAttributes(${{ zedDomainEntity | lcfirst }}Transfer);
     $resourceTransfer->setId(${{ zedDomainEntity | lcfirst }}Transfer->getId{{ zedDomainEntity }}());
     $resourceTransfer->setType('{{ zedDomainEntity | lcfirst }}');

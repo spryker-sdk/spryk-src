@@ -675,6 +675,8 @@ postSpryks:
                   value: "{{ domainEntity }}Mapper"
               subDirectory:
                   value: "Propel/{{ domainEntity }}/Mapper"
+              implements:
+                  value: []
               modelMethod:
                   value: "map{{ domainEntity }}TransferTo{{ domainEntity }}Entity"
           excludedSpryks:
