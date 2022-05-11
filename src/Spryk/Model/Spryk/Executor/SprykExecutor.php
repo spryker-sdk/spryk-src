@@ -182,7 +182,7 @@ class SprykExecutor implements SprykExecutorInterface
         $this->executePreSpryks($sprykDefinition, $style);
         $this->executeSpryk($sprykDefinition, $style);
         $this->executePostSpryks($sprykDefinition, $style);
-        $this->executePostCommands($sprykDefinition, $style);
+        //$this->executePostCommands($sprykDefinition, $style);
 
         $style->endSpryk($sprykDefinition);
     }

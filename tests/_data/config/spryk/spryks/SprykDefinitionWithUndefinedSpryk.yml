@@ -2,5 +2,11 @@ spryk: undefinedSpryk
 description: "Unit Test configuration"
 mode: both
 arguments:
-  foo:
-    value: bar
+    organization:
+        value: Foo
+    application:
+        value: Bar
+    module:
+        value: Baz
+    foo:
+        value: bat

@@ -8,6 +8,9 @@ arguments:
         inherit: true
         default: Spryker
 
+    application:
+        value: Client
+
     module:
         inherit: true
 

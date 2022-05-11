@@ -9,6 +9,7 @@ namespace SprykerSdk\Spryk\Model\Spryk\Definition\Builder;
 
 use SprykerSdk\Spryk\Model\Spryk\Configuration\Extender\SprykConfigurationExtenderInterface;
 use SprykerSdk\Spryk\Model\Spryk\Configuration\Loader\SprykConfigurationLoaderInterface;
+use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Argument;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Resolver\ArgumentResolverInterface;
 use SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition;
@@ -73,6 +74,11 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
      * @var array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface>
      */
     protected array $definitionCollection = [];
+
+    /**
+     * @var array<mixed>
+     */
+    protected array $debugData = [];
 
     /**
      * @var array<\SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface>
@@ -141,6 +147,9 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         ?array $preDefinedDefinition = null,
         ?ArgumentCollectionInterface $parentArgumentCollection = null
     ): SprykDefinitionInterface {
+        $this->debugData['countAll'] = isset($this->debugData['countAll']) ? ++$this->debugData['countAll'] : 1;
+        $this->debugData['countAdded'] = $this->debugData['countAdded'] ?? 0;
+
         if ($this->calledSpryk === null) {
             $this->calledSpryk = $sprykName;
         }
@@ -178,7 +187,22 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         $sprykDefinitionKey = sprintf('%s.%s', $sprykName, $argumentCollection->getFingerprint());
         $this->argumentCollectionCache[$sprykDefinitionKey] = $argumentCollection;
 
+        if (!$argumentCollection->hasArgument('application')) {
+            $applicationArgument = new Argument();
+            $applicationArgument->setName('application')
+                ->setValue('default');
+
+            $argumentCollection->addArgument($applicationArgument);
+        }
+
         if (!isset($this->definitionCollection[$sprykDefinitionKey])) {
+            // Collect debug information
+            $count = $this->debugData[$argumentCollection->getArgument('organization')->getValue()][$argumentCollection->getArgument('module')->getValue()][$argumentCollection->getArgument('application')->getValue()][$argumentCollection->getSprykName()] ?? 0;
+
+            $this->debugData[$argumentCollection->getArgument('organization')->getValue()][$argumentCollection->getArgument('module')->getValue()][$argumentCollection->getArgument('application')->getValue()][$argumentCollection->getSprykName()] = ++$count;
+
+            $this->debugData['countAdded'] = ++$this->debugData['countAdded'];
+
             $sprykDefinition = $this->createDefinition($sprykName, $sprykConfiguration[static::SPRYK_BUILDER_NAME]);
 
             $this->definitionCollection[$sprykDefinitionKey] = $sprykDefinition;
