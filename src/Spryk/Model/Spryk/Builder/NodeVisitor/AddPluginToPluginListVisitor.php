@@ -227,14 +227,16 @@ class AddPluginToPluginListVisitor extends NodeVisitorAbstract
      */
     protected function isPluginAdded(Array_ $node): bool
     {
+        $pluginClassNameToCompare = ltrim($this->pluginClassName, '\\');
+
         foreach ($node->items as $item) {
             if ($item === null || !($item->value instanceof New_) || !($item->value->class instanceof Name)) {
                 continue;
             }
 
-            $nodeClassName = $item->value->class->toString();
+            $nodeClassName = ltrim($item->value->class->toString(), '\\');
 
-            if ($nodeClassName === $this->pluginClassName && $this->isKeyEqualsToCurrentOne($item)) {
+            if ($nodeClassName === $pluginClassNameToCompare && $this->isKeyEqualsToCurrentOne($item)) {
                 return true;
             }
         }
