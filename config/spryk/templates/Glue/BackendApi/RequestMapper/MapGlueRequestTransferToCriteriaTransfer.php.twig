@@ -1,9 +1,9 @@
-    ${{ zedDomainEntity | lcfirst }}CriteriaTransfer = new {{ zedDomainEntity }}CriteriaTransfer();
+    ${{ zedDomainEntity | lcfirst }}CriteriaTransfer = new \Generated\Shared\Transfer\{{ zedDomainEntity }}CriteriaTransfer();
 
     ${{ zedDomainEntity | lcfirst }}CriteriaTransfer->setPagination($glueRequestTransfer->getPagination());
-    ${{ zedDomainEntity | lcfirst }}CriteriaTransfer->setSortCollection($glueRequestTransfer->getSorting());
+    ${{ zedDomainEntity | lcfirst }}CriteriaTransfer->setSortCollection($glueRequestTransfer->getSortings());
 
-    ${{ zedDomainEntity | lcfirst }}ConditionsTransfer = new {{ zedDomainEntity }}ConditionsTransfer();
+    ${{ zedDomainEntity | lcfirst }}ConditionsTransfer = new \Generated\Shared\Transfer\{{ zedDomainEntity }}ConditionsTransfer();
 
     if (!isset($glueRequestTransfer->getQueryFields()['filter'])) {
         return ${{ zedDomainEntity | lcfirst }}CriteriaTransfer;

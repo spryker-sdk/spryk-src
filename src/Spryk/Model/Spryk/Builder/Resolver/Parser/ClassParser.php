@@ -13,7 +13,6 @@ use PhpParser\NodeVisitor\CloningVisitor;
 use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\Parser;
 use ReflectionClass;
-use ReflectionException;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Exception\FileDoesNotContainClassOrInterfaceException;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClass;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface;

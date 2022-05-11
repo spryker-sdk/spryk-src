@@ -13,7 +13,8 @@ arguments:
         default: Spryker
 
     application:
-        value: "Service"
+        inherit: true
+        default: "Service"
 
     extends:
         callback: ResolveExtends

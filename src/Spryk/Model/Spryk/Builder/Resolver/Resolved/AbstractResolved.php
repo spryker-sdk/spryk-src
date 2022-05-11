@@ -88,9 +88,16 @@ abstract class AbstractResolved implements ResolvedInterface
      */
     public function getTmpFileName(): string
     {
-        if ($this->tmpFileName === null) {
-            $this->tmpFileName = sprintf('%s/spryk/%s', sys_get_temp_dir(), basename($this->filePath));
+        if ($this->tmpFileName !== null) {
+            return $this->tmpFileName;
         }
+
+        $srcDir = '/src/';
+        $srcPos = strpos($this->filePath, $srcDir);
+
+        $fileName = $srcPos !== false ? substr($this->filePath, $srcPos + strlen($srcDir)) : basename($this->filePath);
+
+        $this->tmpFileName = sprintf('%s/spryk/%s', sys_get_temp_dir(), $fileName);
 
         return $this->tmpFileName;
     }
