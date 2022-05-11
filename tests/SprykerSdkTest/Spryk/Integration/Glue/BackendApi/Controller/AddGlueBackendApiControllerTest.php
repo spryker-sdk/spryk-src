@@ -9,6 +9,7 @@ namespace SprykerSdkTest\Spryk\Integration\Glue\BackendApi\Controller;
 
 use Codeception\Test\Unit;
 use SprykerSdkTest\Module\GlueBackendApiClassNames;
+use SprykerSdkTest\SprykIntegrationTester;
 
 /**
  * Auto-generated group annotations
@@ -25,7 +26,7 @@ class AddGlueBackendApiControllerTest extends Unit
     /**
      * @var \SprykerSdkTest\SprykIntegrationTester
      */
-    protected $tester;
+    protected SprykIntegrationTester $tester;
 
     /**
      * @return void

@@ -14,6 +14,9 @@ arguments:
         inherit: true
         default: Spryker
 
+    application:
+        value: Glue
+
     subDirectory:
         inherit: true
         isOptional: true

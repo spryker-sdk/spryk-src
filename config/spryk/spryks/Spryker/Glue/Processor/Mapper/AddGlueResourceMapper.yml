@@ -2,8 +2,6 @@ spryk: template
 description: "Adds a new Resource Mapper model to the Glue application."
 mode: both
 
-application: Glue
-
 priority: 1
 
 arguments:
@@ -13,6 +11,9 @@ arguments:
     organization:
         inherit: true
         default: Spryker
+
+    application:
+        value: Glue
 
     subDirectory:
         inherit: true

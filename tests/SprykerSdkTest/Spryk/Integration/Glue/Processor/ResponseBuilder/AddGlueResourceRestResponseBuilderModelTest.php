@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Glue\Processor\ResponseBuilder;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\SprykIntegrationTester;
 
 /**
  * Auto-generated group annotations
@@ -26,7 +27,7 @@ class AddGlueResourceRestResponseBuilderModelTest extends Unit
     /**
      * @var \SprykerSdkTest\SprykIntegrationTester
      */
-    protected $tester;
+    protected SprykIntegrationTester $tester;
 
     /**
      * @return void
