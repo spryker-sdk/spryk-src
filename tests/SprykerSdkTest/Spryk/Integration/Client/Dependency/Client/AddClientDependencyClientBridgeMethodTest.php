@@ -10,6 +10,7 @@ namespace SprykerSdkTest\Spryk\Integration\Client\Dependency\Client;
 use Codeception\Test\Unit;
 use SprykerSdk\Spryk\Exception\SprykWrongDevelopmentLayerException;
 use SprykerSdkTest\Module\ClassName;
+use SprykerSdkTest\SprykIntegrationTester;
 
 /**
  * Auto-generated group annotations
@@ -28,7 +29,7 @@ class AddClientDependencyClientBridgeMethodTest extends Unit
     /**
      * @var \SprykerSdkTest\SprykIntegrationTester
      */
-    protected $tester;
+    protected SprykIntegrationTester $tester;
 
     /**
      * @skip Skipped for further investigation prioritisation and fix.

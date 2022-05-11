@@ -9,6 +9,7 @@ namespace SprykerSdkTest\Spryk\Integration\Glue;
 
 use Codeception\Test\Unit;
 use SprykerSdkTest\Module\GlueBackendApiClassNames;
+use SprykerSdkTest\SprykIntegrationTester;
 
 /**
  * Auto-generated group annotations
@@ -25,7 +26,7 @@ class AddGlueResourceMethodResponseTest extends Unit
     /**
      * @var \SprykerSdkTest\SprykIntegrationTester
      */
-    protected $tester;
+    protected SprykIntegrationTester $tester;
 
     /**
      * @dataProvider resourceMethodResponse
@@ -50,6 +51,9 @@ class AddGlueResourceMethodResponseTest extends Unit
         ?string $resourceDataObject = null
     ): void {
         $commandOptions = [
+            // TODO We also need to add tests for project level
+//            '--mode' => 'project',
+//            '--organization' => 'Pyz',
             '--resource' => '/foo-bars',
             '--httpMethod' => $httpMethod,
             '--httpResponseCode' => $httpResponseCode,
