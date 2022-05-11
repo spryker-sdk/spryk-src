@@ -54,3 +54,6 @@ postSpryks:
                   value:
                       - "\\Spryker\\Glue\\{{ module }}\\Controller\\{{ controller }}"
                       - "\\Spryker\\Glue\\Kernel\\Backend\\Controller\\AbstractBackendApiController"
+              annotations:
+                  value:
+                      - "@method \\{{ organization }}\\Glue\\{{ module }}\\{{ module }}Factory getFactory()"

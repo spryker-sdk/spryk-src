@@ -1,11 +1,11 @@
-        ${{ resourceDataObject | lcfirst }}CriteriaTransfer = $this->getFactory()
-            ->getGlueRequestTo{{ resourceDataObject }}Mapper()
-            ->mapGlueRequestTo{{ resourceDataObject }}CriteriaTransfer($glueRequestTransfer);
+        ${{ zedDomainEntity | lcfirst }}CriteriaTransfer = $this->getFactory()
+            ->createGlueRequest{{ zedDomainEntity }}Mapper()
+            ->mapGlueRequestTransferTo{{ zedDomainEntity }}CriteriaTransfer($glueRequestTransfer);
 
-        ${{ resourceDataObject | lcfirst }}CollectionTransfer = $this->getFactory()
+        ${{ zedDomainEntity | lcfirst }}CollectionTransfer = $this->getFactory()
             ->get{{ zedModule }}Facade()
-            ->get{{ resourceDataObject }}Collection(${{ resourceDataObject | lcfirst }}CriteriaTransfer);
+            ->get{{ zedDomainEntity }}Collection(${{ zedDomainEntity | lcfirst }}CriteriaTransfer);
 
         return $this->getFactory()
-            ->get{{ resourceDataObject }}ToGlueResponseMapper()
-            ->map{{ resourceDataObject }}CollectionToGlueResponse(${{ resourceDataObject | lcfirst }}CollectionTransfer);
+            ->createGlueResponse{{ zedDomainEntity }}Mapper()
+            ->map{{ zedDomainEntity }}CollectionResponseTransferToGlueResponseTransfer(${{ zedDomainEntity | lcfirst }}CollectionTransfer);

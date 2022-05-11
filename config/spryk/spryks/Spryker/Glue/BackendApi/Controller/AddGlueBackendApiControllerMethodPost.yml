@@ -73,7 +73,7 @@ postSpryks:
               method:
                   value: "postAction"
               input:
-                  value: "\\Generated\\Shared\\Transfer\\{{ resourceDataObject }}Transfer ${{ resourceDataObject | ucfirst }}Transfer, \\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
+                  value: "\\Generated\\Shared\\Transfer\\{{ zedDomainEntity }}Transfer ${{ zedDomainEntity | lcfirst }}Transfer, \\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               zedModule:

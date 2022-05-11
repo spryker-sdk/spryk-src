@@ -82,6 +82,8 @@ postSpryks:
                   value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\{{ module }}Factory"
               withInterface:
                   value: false
+              visibility:
+                  value: "public"
 
     # Add a factory method for Zed applications.
     - AddMethod:

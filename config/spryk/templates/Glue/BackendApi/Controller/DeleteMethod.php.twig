@@ -1,11 +1,11 @@
-        ${{ resourceDataObject | lcfirst }}CollectionDeleteCriteriaTransfer = $this->getFactory()
-            ->getGlueRequestTo{{ resourceDataObject }}Mapper()
-            ->mapIdentifierTo{{ resourceDataObject }}CollectionDeleteCriteriaTransfer($id, $glueRequestTransfer);
+        ${{ zedDomainEntity | lcfirst }}CollectionDeleteCriteriaTransfer = $this->getFactory()
+            ->createGlueRequest{{ zedDomainEntity }}Mapper()
+            ->mapIdentifierTo{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer($id, $glueRequestTransfer);
 
-        ${{ resourceDataObject | lcfirst }}CollectionResponseTransfer = $this->getFactory()
+        ${{ zedDomainEntity | lcfirst }}CollectionResponseTransfer = $this->getFactory()
             ->get{{ zedModule }}Facade()
-            ->delete{{ resourceDataObject }}Collection(${{ resourceDataObject | lcfirst }}CollectionDeleteCriteriaTransfer);
+            ->delete{{ zedDomainEntity }}Collection(${{ zedDomainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
 
         return $this->getFactory()
-            ->get{{ resourceDataObject }}ToGlueResponseMapper()
-            ->map{{ resourceDataObject }}CollectionResponseToSingleResourceGlueResponse(${{ resourceDataObject | lcfirst }}CollectionResponseTransfer);
+            ->createGlueResponse{{ zedDomainEntity }}Mapper()
+            ->map{{ zedDomainEntity }}CollectionResponseTransferToSingleResourceGlueResponseTransfer(${{ zedDomainEntity | lcfirst }}CollectionResponseTransfer);
