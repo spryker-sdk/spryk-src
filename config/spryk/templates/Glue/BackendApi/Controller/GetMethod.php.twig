@@ -3,7 +3,7 @@
             ->mapIdentifierTo{{ zedDomainEntity }}CriteriaTransfer($id, $glueRequestTransfer);
 
         ${{ zedDomainEntity | lcfirst }}CollectionTransfer = $this->getFactory()
-            ->get{{ zedModule }}Facade()
+            ->get{{ dataModule }}Facade()
             ->get{{ zedDomainEntity }}Collection(${{ zedDomainEntity | lcfirst }}CriteriaTransfer);
 
         return $this->getFactory()

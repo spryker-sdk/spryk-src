@@ -13,7 +13,7 @@ arguments:
         default: "{{ resource | normalizeResourceName }}"
         callback: GlueResourceModuleName
 
-    zedModule: # dataModule
+    dataModule: # dataModule
         inherit: true
         description: "The module name for the Zed Application. It's the same name as for the Glue Module but without the Api suffix."
         value: "{{ module | removeApiSuffix | singularize }}"
@@ -75,7 +75,7 @@ postSpryks:
           condition: "applicationType === 'Backend'"
           arguments:
               module:
-                  value: "{{ zedModule }}"
+                  value: "{{ dataModule }}"
               domainEntity:
                   value: "{{ zedDomainEntity | ucfirst }}"
     # Add the dependency provider for the Facade when used as BackendApi
@@ -83,7 +83,7 @@ postSpryks:
           condition: "applicationType === 'Backend'"
           arguments:
               dependentModule:
-                  value: "{{ zedModule }}"
+                  value: "{{ dataModule }}"
               dependencyType:
                   value: "Facade"
 
@@ -92,7 +92,7 @@ postSpryks:
           condition: "applicationType === 'Backend' && httpMethod === 'get'"
           arguments:
               dependentModule:
-                  value: "{{ zedModule }}"
+                  value: "{{ dataModule }}"
               dependencyType:
                   value: "Facade"
               methods:
@@ -104,7 +104,7 @@ postSpryks:
           condition: "applicationType === 'Backend' && httpMethod === 'post'"
           arguments:
               dependentModule:
-                  value: "{{ zedModule }}"
+                  value: "{{ dataModule }}"
               dependencyType:
                   value: "Facade"
               methods:
@@ -116,7 +116,7 @@ postSpryks:
           condition: "applicationType === 'Backend' && httpMethod === 'patch'"
           arguments:
               dependentModule:
-                  value: "{{ zedModule }}"
+                  value: "{{ dataModule }}"
               dependencyType:
                   value: "Facade"
               methods:
@@ -128,7 +128,7 @@ postSpryks:
           condition: "applicationType === 'Backend' && httpMethod === 'delete'"
           arguments:
               dependentModule:
-                  value: "{{ zedModule }}"
+                  value: "{{ dataModule }}"
               dependencyType:
                   value: "Facade"
               methods:
@@ -139,7 +139,7 @@ postSpryks:
           condition: "applicationType === 'Frontend'"
           arguments:
               dependentModule:
-                  value: "{{ zedModule }}"
+                  value: "{{ dataModule }}"
               dependencyType:
                   value: "Client"
 

@@ -3,7 +3,7 @@
             ->mapIdentifierTo{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer($id, $glueRequestTransfer);
 
         ${{ zedDomainEntity | lcfirst }}CollectionResponseTransfer = $this->getFactory()
-            ->get{{ zedModule }}Facade()
+            ->get{{ dataModule }}Facade()
             ->delete{{ zedDomainEntity }}Collection(${{ zedDomainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
 
         return $this->getFactory()

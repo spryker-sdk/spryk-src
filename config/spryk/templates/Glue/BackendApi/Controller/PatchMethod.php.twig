@@ -3,7 +3,7 @@
             ->map{{ zedDomainEntity }}TransferTo{{ zedDomainEntity }}CollectionRequestTransfer(${{ zedDomainEntity | lcfirst }}Transfer, $glueRequestTransfer);
 
         ${{ zedDomainEntity | lcfirst }}CollectionResponseTransfer = $this->getFactory()
-            ->get{{ zedModule }}Facade()
+            ->get{{ dataModule }}Facade()
             ->update{{ zedDomainEntity }}Collection(${{ zedDomainEntity | lcfirst }}CollectionRequestTransfer);
 
         return $this->getFactory()

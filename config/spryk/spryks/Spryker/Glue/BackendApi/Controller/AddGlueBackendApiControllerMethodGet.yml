@@ -10,7 +10,7 @@ arguments:
         default: "{{ resource | normalizeResourceName }}"
         callback: GlueResourceModuleName
 
-    zedModule:
+    dataModule:
         inherit: true
         description: "The module name for the Zed Application. It's the same name as for the Glue Module but without the Api suffix."
         value: "{{ module | removeApiSuffix | singularize }}"
@@ -82,7 +82,7 @@ postSpryks:
                   value: "string $id, \\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
-              zedModule:
+              dataModule:
                   inherit: true
               zedDomainEntity:
                   inherit: true
