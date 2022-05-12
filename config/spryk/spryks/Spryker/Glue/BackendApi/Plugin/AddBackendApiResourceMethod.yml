@@ -26,7 +26,7 @@ arguments:
 
     resourceDataObject:
         description: "Defines the Transfer that will be used in the Controller. Do not use Transfer as suffix, it will be added automatically. Example: Customer (ok) CustomerTransfer (wrong)"
-        value: "{{ resource | singularize | dashToCamelCase | ucfirst }}"
+        value: "\\Generated\\Shared\\Transfer\\{{ zedDomainEntity }}Transfer"
         inherit: true
 
     className:
@@ -36,7 +36,7 @@ arguments:
     target:
         value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
 
-    method:
+    httpMethod:
         description: "Can be oneOf: Get, GetCollection, Post, Patch, Delete, DeleteCollection"
 
 preSpryks:

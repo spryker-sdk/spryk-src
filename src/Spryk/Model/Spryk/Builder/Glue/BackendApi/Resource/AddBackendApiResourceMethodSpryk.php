@@ -38,7 +38,7 @@ class AddBackendApiResourceMethodSpryk extends AbstractBuilder
     /**
      * @var string
      */
-    public const ARGUMENT_METHOD = 'method';
+    public const ARGUMENT_METHOD = 'httpMethod';
 
     /**
      * @var \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface
@@ -109,7 +109,7 @@ class AddBackendApiResourceMethodSpryk extends AbstractBuilder
         $methodName = $this->getMethodName();
         $resourceDataObject = $this->getResourceDataObject();
 
-        $methodName = sprintf('set%s', $methodName);
+        $methodName = sprintf('set%s', ucfirst(strtolower($methodName)));
 
         $traverser = new NodeTraverser();
         $traverser->addVisitor(new AddGlueResourceMethodVisitor($methodName, $resourceDataObject, $this->nodeFinder));

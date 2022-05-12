@@ -24,7 +24,8 @@ arguments:
         default: Glue
 
     httpMethod:
-        value: "delete"
+        inherit: true
+        default: "delete"
 
     isBulk:
         description: "Defines if this resource should work with Collections. When set to true the method will use collections when possible."
@@ -71,6 +72,7 @@ preSpryks:
                   value: "{{ resource | normalizeResourceName }}DeleteCollectionResourceController"
 
 postSpryks:
+    - AddBackendApiResourceMethod
     # Add controller deleteCollectionAction
     - AddMethod:
           arguments:

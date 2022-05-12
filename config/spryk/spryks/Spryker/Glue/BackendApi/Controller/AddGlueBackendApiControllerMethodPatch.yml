@@ -24,7 +24,8 @@ arguments:
         default: Glue
 
     httpMethod:
-        value: "patch"
+        inherit: true
+        default: "patch"
 
     apiType:
         inherit: true
@@ -67,6 +68,7 @@ preSpryks:
                   value: "{{ resource | normalizeResourceName }}PatchResourceController"
 
 postSpryks:
+    - AddBackendApiResourceMethod
     # Add controller patchAction
     - AddMethod:
           arguments:

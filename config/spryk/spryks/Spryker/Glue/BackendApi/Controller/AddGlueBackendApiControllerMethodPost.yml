@@ -24,7 +24,8 @@ arguments:
         default: Glue
 
     httpMethod:
-        value: "post"
+        inherit: true
+        default: "post"
 
     apiType:
         inherit: true
@@ -67,6 +68,7 @@ preSpryks:
                   value: "{{ resource | normalizeResourceName }}PostResourceController"
 
 postSpryks:
+    - AddBackendApiResourceMethod
     # Add controller postAction
     - AddMethod:
           arguments:
