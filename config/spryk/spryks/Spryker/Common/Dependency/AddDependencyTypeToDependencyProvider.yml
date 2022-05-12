@@ -21,6 +21,10 @@ arguments:
         description: "Can be one of: Facade, Client, Service"
         inherit: true
 
+    applicationType:
+        inherit: true
+        default: Backend
+
     layer:
         description: "Optional, only needed for Zed dependency provider. Can be one of: Communication, Business, Persistence."
         isOptional: true
@@ -35,10 +39,10 @@ arguments:
         isMultiple: true
 
     input:
-        value: "\\Spryker\\{{ application }}\\Kernel\\Container $container"
+        value: "\\Spryker\\{{ application }}\\Kernel\\{% if application.value == 'Glue' %}{{ applicationType }}\\{% endif %}Container $container"
 
     output:
-        value: "\\Spryker\\{{ application }}\\Kernel\\Container"
+        value: "\\Spryker\\{{ application }}\\Kernel\\{% if application.value == 'Glue' %}{{ applicationType }}\\{% endif %}Container"
 
     method:
         description: "Adds one of addFooBarFacade, addFooBarClient, addFooBarService."

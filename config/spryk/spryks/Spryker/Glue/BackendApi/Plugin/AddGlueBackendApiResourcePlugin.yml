@@ -16,6 +16,7 @@ arguments:
         value: Glue
 
     applicationType:
+        inherit: true
         default: Backend
 
     apiType:
@@ -32,7 +33,7 @@ arguments:
         callback: ResolveExtends
         value:
             - "\\Spryker\\{{ application }}\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
-            - "\\Spryker\\Glue\\GlueApplication\\Plugin\\GlueApplication\\AbstractResourcePlugin"
+            - "\\Spryker\\Glue\\GlueApplication\\Plugin\\GlueApplication\\{{applicationType}}\\AbstractResourcePlugin"
 
     template:
         value: Common/Class.php.twig
@@ -57,7 +58,7 @@ postSpryks:
                   value: "string"
               body:
                   value:
-                      - "return '{{ resource | dasherize }}';"
+                      - "return '{{ resource | trim(\"/\",) | dasherize }}';"
               target:
                   value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
               withInterface:

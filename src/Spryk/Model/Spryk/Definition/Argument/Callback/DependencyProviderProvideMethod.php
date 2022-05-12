@@ -39,6 +39,13 @@ class DependencyProviderProvideMethod implements CallbackInterface
     public function getValue(ArgumentCollectionInterface $argumentCollection, $value): string
     {
         if ($argumentCollection->getArgument('application', true)->getValue() === 'Glue') {
+            if ($argumentCollection->hasArgument('applicationType', true)) {
+                return sprintf(
+                    'provide%sDependencies',
+                    $argumentCollection->getArgument('applicationType', true)->getValue(),
+                );
+            }
+
             return 'provideDependencies';
         }
 

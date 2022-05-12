@@ -15,11 +15,15 @@ arguments:
     application:
         value: Glue
 
+    applicationType:
+        inherit: true
+        default: Backend
+
     extends:
         callback: ResolveExtends
         value:
             - "\\Spryker\\{{ application }}\\{{ module }}\\{{ module }}Factory"
-            - "\\Spryker\\{{ application }}\\Kernel\\AbstractFactory"
+            - "\\Spryker\\{{ application }}\\Kernel\\{{applicationType}}\\AbstractFactory"
 
     className:
         value: "{{ module }}Factory"

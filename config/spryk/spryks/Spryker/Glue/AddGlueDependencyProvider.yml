@@ -13,11 +13,15 @@ arguments:
     application:
         value: Glue
 
+    applicationType:
+        inherit: true
+        default: Backend
+
     extends:
         callback: ResolveExtends
         value:
             - "\\Spryker\\{{ application }}\\{{ module }}\\{{ module }}DependencyProvider"
-            - "\\Spryker\\{{ application }}\\Kernel\\AbstractBundleDependencyProvider"
+            - "\\Spryker\\{{ application }}\\Kernel\\{{ applicationType }}\\AbstractBundleDependencyProvider"
 
     className:
         value: "{{ module }}DependencyProvider"
@@ -42,13 +46,13 @@ postSpryks:
               withInterface:
                   value: false
               input:
-                  value: "\\Spryker\\{{ application }}\\Kernel\\Container $container"
+                  value: "\\Spryker\\{{ application }}\\Kernel\\{{ applicationType }}\\Container $container"
               output:
-                  value: "\\Spryker\\{{ application }}\\Kernel\\Container"
+                  value: "\\Spryker\\{{ application }}\\Kernel\\{{ applicationType }}\\Container"
               method:
-                  value: "provideDependencies"
+                  value: "provide{{ applicationType }}Dependencies"
               body:
                   value:
-                      - "$container = parent::provideDependencies($container);"
+                      - "$container = parent::provide{{ applicationType }}Dependencies($container);"
                       - ""
                       - "return $container;"

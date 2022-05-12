@@ -114,7 +114,7 @@ class AddGlueResourceMethodResponseTest extends Unit
         $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_FACTORY, sprintf('createGlueResponse%sMapper', ($zedDomainEntity ?? 'FooBar')));
 
         // Dependency provider
-        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_DEPENDENCY_PROVIDER, 'provideDependencies');
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_DEPENDENCY_PROVIDER, 'provideBackendDependencies');
         $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_DEPENDENCY_PROVIDER, sprintf('add%sFacade', ($dataModule ?? 'FooBar')));
     }
 

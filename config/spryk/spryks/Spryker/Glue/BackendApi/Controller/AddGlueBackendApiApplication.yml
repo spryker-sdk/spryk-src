@@ -367,7 +367,7 @@ preSpryks:
           condition: "apiType === 'JSON'"
           arguments:
               plugin:
-                  value: "\\Spryker\\Glue\\GlueJsonApiConvention\\Plugin\\GlueApplication\\JsonApiApiConventionPlugin"
+                  value: "\\Spryker\\Glue\\GlueApplication\\Plugin\\GlueApplication\\RequestResourceFilterPlugin"
               target:
                   value: "\\{{ organization }}\\Glue\\GlueApplication\\GlueApplicationDependencyProvider::getResourceFilterPlugins"
 

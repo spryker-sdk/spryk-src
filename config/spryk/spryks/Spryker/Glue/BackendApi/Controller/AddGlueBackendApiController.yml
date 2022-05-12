@@ -53,7 +53,7 @@ postSpryks:
                   callback: ResolveExtends
                   value:
                       - "\\Spryker\\Glue\\{{ module }}\\Controller\\{{ controller }}"
-                      - "\\Spryker\\Glue\\Kernel\\Backend\\Controller\\AbstractBackendApiController"
+                      - "\\Spryker\\Glue\\Kernel\\Backend\\Controller\\AbstractController "
               annotations:
                   value:
                       - "@method \\{{ organization }}\\Glue\\{{ module }}\\{{ module }}Factory getFactory()"
