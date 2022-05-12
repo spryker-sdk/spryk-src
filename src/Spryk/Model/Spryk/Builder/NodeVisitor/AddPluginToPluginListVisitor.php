@@ -82,7 +82,7 @@ class AddPluginToPluginListVisitor extends NodeVisitorAbstract
     public function __construct(string $methodName, string $pluginClassName, string $before = '', string $after = '', ?string $index = null)
     {
         $this->methodName = $methodName;
-        $this->pluginClassName = $pluginClassName;
+        $this->pluginClassName = ltrim($pluginClassName, '\\');
         $this->before = ltrim($before, '\\');
         $this->after = ltrim($after, '\\');
         $this->index = $index;
@@ -227,16 +227,14 @@ class AddPluginToPluginListVisitor extends NodeVisitorAbstract
      */
     protected function isPluginAdded(Array_ $node): bool
     {
-        $pluginClassNameToCompare = ltrim($this->pluginClassName, '\\');
-
         foreach ($node->items as $item) {
             if ($item === null || !($item->value instanceof New_) || !($item->value->class instanceof Name)) {
                 continue;
             }
 
-            $nodeClassName = ltrim($item->value->class->toString(), '\\');
+            $nodeClassName = $item->value->class->toString();
 
-            if ($nodeClassName === $pluginClassNameToCompare && $this->isKeyEqualsToCurrentOne($item)) {
+            if ($nodeClassName === $this->pluginClassName && $this->isKeyEqualsToCurrentOne($item)) {
                 return true;
             }
         }
