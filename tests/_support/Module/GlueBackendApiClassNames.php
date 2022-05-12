@@ -17,6 +17,11 @@ interface GlueBackendApiClassNames
     /**
      * @var string
      */
+    public const GLUE_BACKEND_API_BOOTSTRAP = 'Spryker\Glue\GlueApplication\Bootstrap\GlueBackendApiBootstrap';
+
+    /**
+     * @var string
+     */
     public const GLUE_APPLICATION_DEPENDENCY_PROVIDER = 'Spryker\Glue\GlueApplication\GlueApplicationDependencyProvider';
 
     /**
