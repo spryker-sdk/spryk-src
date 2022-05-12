@@ -66,179 +66,179 @@ arguments:
         default: "{{ resource | normalizeResourceName | singularize }}"
 
 postSpryks:
-#    - AddGlueBackendApiApplication
-#    - AddGlueBackendApiRequestMapper
-#    - AddGlueBackendApiResponseMapper
-#    - AddGlueBackendApiResourcePlugin
-#    # Add CrudFacade code
-#    - AddCrudFacade:
-#          condition: "applicationType === 'Backend'"
-#          arguments:
-#              module:
-#                  value: "{{ zedModule }}"
-#              domainEntity:
-#                  value: "{{ zedDomainEntity | ucfirst }}"
-#    # Add the dependency provider for the Facade when used as BackendApi
-#    - AddDependencyTypeToDependencyProvider:
-#          condition: "applicationType === 'Backend'"
-#          arguments:
-#              dependentModule:
-#                  value: "{{ zedModule }}"
-#              dependencyType:
-#                  value: "Facade"
-#
-#    # Add bridge method to get an entity collection for the used facade when used as BackendApi
-#    - AddDependencyBridgeMethod:
-#          condition: "applicationType === 'Backend' && httpMethod === 'get'"
-#          arguments:
-#              dependentModule:
-#                  value: "{{ zedModule }}"
-#              dependencyType:
-#                  value: "Facade"
-#              methods:
-#                  value:
-#                      - "get{{ zedDomainEntity }}Collection"
-#
-#    # Add bridge method to get an entity collection for the used facade when used as BackendApi
-#    - AddDependencyBridgeMethod:
-#          condition: "applicationType === 'Backend' && httpMethod === 'post'"
-#          arguments:
-#              dependentModule:
-#                  value: "{{ zedModule }}"
-#              dependencyType:
-#                  value: "Facade"
-#              methods:
-#                  value:
-#                      - "create{{ zedDomainEntity }}Collection"
-#
-#    # Add bridge method to get an entity collection for the used facade when used as BackendApi
-#    - AddDependencyBridgeMethod:
-#          condition: "applicationType === 'Backend' && httpMethod === 'patch'"
-#          arguments:
-#              dependentModule:
-#                  value: "{{ zedModule }}"
-#              dependencyType:
-#                  value: "Facade"
-#              methods:
-#                  value:
-#                      - "update{{ zedDomainEntity }}Collection"
-#
-#    # Add bridge method to get an entity collection for the used facade when used as BackendApi
-#    - AddDependencyBridgeMethod:
-#          condition: "applicationType === 'Backend' && httpMethod === 'delete'"
-#          arguments:
-#              dependentModule:
-#                  value: "{{ zedModule }}"
-#              dependencyType:
-#                  value: "Facade"
-#              methods:
-#                  value:
-#                      - "delete{{ zedDomainEntity }}Collection"
-#
-#    - AddDependencyTypeToDependencyProvider:
-#          condition: "applicationType === 'Frontend'"
-#          arguments:
-#              dependentModule:
-#                  value: "{{ zedModule }}"
-#              dependencyType:
-#                  value: "Client"
-#
-#    # What are the client methods we would need to bridge??
-#
-#    # Add the controller method to handle the request
-#    - AddGlueBackendApiControllerMethodGet:
-#          condition: "applicationType === 'Backend' && httpMethod === 'get' && isBulk === false"
-#    - AddGlueBackendApiControllerMethodGetCollection:
-#          condition: "applicationType === 'Backend' && httpMethod === 'get' && isBulk === true"
-#    - AddGlueBackendApiControllerMethodPost:
-#          condition: "applicationType === 'Backend' && httpMethod === 'post'"
+    - AddGlueBackendApiApplication
+    - AddGlueBackendApiRequestMapper
+    - AddGlueBackendApiResponseMapper
+    - AddGlueBackendApiResourcePlugin
+    # Add CrudFacade code
+    - AddCrudFacade:
+          condition: "applicationType === 'Backend'"
+          arguments:
+              module:
+                  value: "{{ zedModule }}"
+              domainEntity:
+                  value: "{{ zedDomainEntity | ucfirst }}"
+    # Add the dependency provider for the Facade when used as BackendApi
+    - AddDependencyTypeToDependencyProvider:
+          condition: "applicationType === 'Backend'"
+          arguments:
+              dependentModule:
+                  value: "{{ zedModule }}"
+              dependencyType:
+                  value: "Facade"
+
+    # Add bridge method to get an entity collection for the used facade when used as BackendApi
+    - AddDependencyBridgeMethod:
+          condition: "applicationType === 'Backend' && httpMethod === 'get'"
+          arguments:
+              dependentModule:
+                  value: "{{ zedModule }}"
+              dependencyType:
+                  value: "Facade"
+              methods:
+                  value:
+                      - "get{{ zedDomainEntity }}Collection"
+
+    # Add bridge method to get an entity collection for the used facade when used as BackendApi
+    - AddDependencyBridgeMethod:
+          condition: "applicationType === 'Backend' && httpMethod === 'post'"
+          arguments:
+              dependentModule:
+                  value: "{{ zedModule }}"
+              dependencyType:
+                  value: "Facade"
+              methods:
+                  value:
+                      - "create{{ zedDomainEntity }}Collection"
+
+    # Add bridge method to get an entity collection for the used facade when used as BackendApi
+    - AddDependencyBridgeMethod:
+          condition: "applicationType === 'Backend' && httpMethod === 'patch'"
+          arguments:
+              dependentModule:
+                  value: "{{ zedModule }}"
+              dependencyType:
+                  value: "Facade"
+              methods:
+                  value:
+                      - "update{{ zedDomainEntity }}Collection"
+
+    # Add bridge method to get an entity collection for the used facade when used as BackendApi
+    - AddDependencyBridgeMethod:
+          condition: "applicationType === 'Backend' && httpMethod === 'delete'"
+          arguments:
+              dependentModule:
+                  value: "{{ zedModule }}"
+              dependencyType:
+                  value: "Facade"
+              methods:
+                  value:
+                      - "delete{{ zedDomainEntity }}Collection"
+
+    - AddDependencyTypeToDependencyProvider:
+          condition: "applicationType === 'Frontend'"
+          arguments:
+              dependentModule:
+                  value: "{{ zedModule }}"
+              dependencyType:
+                  value: "Client"
+
+    # What are the client methods we would need to bridge??
+
+    # Add the controller method to handle the request
+    - AddGlueBackendApiControllerMethodGet:
+          condition: "applicationType === 'Backend' && httpMethod === 'get' && isBulk === false"
+    - AddGlueBackendApiControllerMethodGetCollection:
+          condition: "applicationType === 'Backend' && httpMethod === 'get' && isBulk === true"
+    - AddGlueBackendApiControllerMethodPost:
+          condition: "applicationType === 'Backend' && httpMethod === 'post'"
     - AddGlueBackendApiControllerMethodPatch:
           condition: "applicationType === 'Backend' && httpMethod === 'patch'"
-#    - AddGlueBackendApiControllerMethodDelete:
-#          condition: "applicationType === 'Backend' && httpMethod === 'delete' && isBulk === false"
-#    - AddGlueBackendApiControllerMethodDeleteCollection:
-#          condition: "applicationType === 'Backend' && httpMethod === 'delete' && isBulk === true"
+    - AddGlueBackendApiControllerMethodDelete:
+          condition: "applicationType === 'Backend' && httpMethod === 'delete' && isBulk === false"
+    - AddGlueBackendApiControllerMethodDeleteCollection:
+          condition: "applicationType === 'Backend' && httpMethod === 'delete' && isBulk === true"
 
-#    # Add controller test method test<Resource><HTTPMethod>ReturnsHttpResponseCode<ResponseCode>
-#    # The test controller is added by the AddGlueBackendApiControllerMethod* Spryks
-#    - AddMethod:
-#          arguments:
-#              isBulk:
-#                  inherit: true
-#              method:
-#                  description: "Method follows this pattern: test<Resource><HTTPMethod>(Collection)ReturnsHttpResponseCode<HTTPResponseCode>"
-#                  value: "test{{ resource | normalizeResourceName | singularize | ucfirst }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}ReturnsHttpResponseCode{{ httpResponseCode }}"
-#              body:
-#                  value: "$this->markTestIncomplete('Implement me!');"
-#              target:
-#                  value: "{{ organization }}Test\\Glue\\{{ module }}\\Controller\\{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}ResourceControllerTest"
-#              withInterface:
-#                  value: false
-#
-#    # TestHelper class
-#    - AddTestHelper:
-#          arguments:
-#              className:
-#                  value: "{{ resource | normalizeResourceName | ucfirst }}Helper"
-#
-#    # TestHelper class method haveValid<Resource><HTTPMethod>(Collection)Uri
-#    - AddMethod:
-#          arguments:
-#              isBulk:
-#                  inherit: true
-#              method:
-#                  value: "haveValid{{ resource | normalizeResourceName | ucfirst }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}Uri"
-#              output:
-#                  value: string
-#              body:
-#                  value: "throw new \\Exception(sprintf('%s::%s() not implemented.', __CLASS__, __METHOD__));"
-#              target:
-#                  value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | ucfirst }}Helper"
-#              withInterface:
-#                  value: false
-#
-#    # TestHelper class method haveInvalid<Resource><HTTPMethod>(Collection)Uri
-#    - AddMethod:
-#          arguments:
-#              isBulk:
-#                  inherit: true
-#              method:
-#                  value: "haveInvalid{{ resource | normalizeResourceName | ucfirst }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}Uri"
-#              output:
-#                  value: string
-#              body:
-#                  value: "throw new \\Exception(sprintf('%s::%s() not implemented.', __CLASS__, __METHOD__));"
-#              target:
-#                  value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | ucfirst }}Helper"
-#              withInterface:
-#                  value: false
-#    # TestHelper class method haveValid<Resource><HTTPMethod>(Collection)RequestData
-#    - AddMethod:
-#          arguments:
-#              isBulk:
-#                  inherit: true
-#              method:
-#                  value: "haveValid{{ resource | normalizeResourceName | ucfirst }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}RequestData"
-#              output:
-#                  value: string
-#              body:
-#                  value: "throw new \\Exception(sprintf('%s::%s() not implemented.', __CLASS__, __METHOD__));"
-#              target:
-#                  value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | ucfirst }}Helper"
-#              withInterface:
-#                  value: false
-#    # TestHelper class method haveInvalid<Resource><HTTPMethod>(Collection)RequestData
-#    - AddMethod:
-#          arguments:
-#              isBulk:
-#                  inherit: true
-#              method:
-#                  value: "haveInvalid{{ resource | normalizeResourceName | ucfirst }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}RequestData"
-#              output:
-#                  value: string
-#              body:
-#                  value: "throw new \\Exception(sprintf('%s::%s() not implemented.', __CLASS__, __METHOD__));"
-#              target:
-#                  value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | ucfirst }}Helper"
-#              withInterface:
-#                  value: false
+    # Add controller test method test<Resource><HTTPMethod>ReturnsHttpResponseCode<ResponseCode>
+    # The test controller is added by the AddGlueBackendApiControllerMethod* Spryks
+    - AddMethod:
+          arguments:
+              isBulk:
+                  inherit: true
+              method:
+                  description: "Method follows this pattern: test<Resource><HTTPMethod>(Collection)ReturnsHttpResponseCode<HTTPResponseCode>"
+                  value: "test{{ resource | normalizeResourceName | singularize | ucfirst }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}ReturnsHttpResponseCode{{ httpResponseCode }}"
+              body:
+                  value: "$this->markTestIncomplete('Implement me!');"
+              target:
+                  value: "{{ organization }}Test\\Glue\\{{ module }}\\Controller\\{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}ResourceControllerTest"
+              withInterface:
+                  value: false
+
+    # TestHelper class
+    - AddTestHelper:
+          arguments:
+              className:
+                  value: "{{ resource | normalizeResourceName | ucfirst }}Helper"
+
+    # TestHelper class method haveValid<Resource><HTTPMethod>(Collection)Uri
+    - AddMethod:
+          arguments:
+              isBulk:
+                  inherit: true
+              method:
+                  value: "haveValid{{ resource | normalizeResourceName | ucfirst }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}Uri"
+              output:
+                  value: string
+              body:
+                  value: "throw new \\Exception(sprintf('%s::%s() not implemented.', __CLASS__, __METHOD__));"
+              target:
+                  value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | ucfirst }}Helper"
+              withInterface:
+                  value: false
+
+    # TestHelper class method haveInvalid<Resource><HTTPMethod>(Collection)Uri
+    - AddMethod:
+          arguments:
+              isBulk:
+                  inherit: true
+              method:
+                  value: "haveInvalid{{ resource | normalizeResourceName | ucfirst }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}Uri"
+              output:
+                  value: string
+              body:
+                  value: "throw new \\Exception(sprintf('%s::%s() not implemented.', __CLASS__, __METHOD__));"
+              target:
+                  value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | ucfirst }}Helper"
+              withInterface:
+                  value: false
+    # TestHelper class method haveValid<Resource><HTTPMethod>(Collection)RequestData
+    - AddMethod:
+          arguments:
+              isBulk:
+                  inherit: true
+              method:
+                  value: "haveValid{{ resource | normalizeResourceName | ucfirst }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}RequestData"
+              output:
+                  value: string
+              body:
+                  value: "throw new \\Exception(sprintf('%s::%s() not implemented.', __CLASS__, __METHOD__));"
+              target:
+                  value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | ucfirst }}Helper"
+              withInterface:
+                  value: false
+    # TestHelper class method haveInvalid<Resource><HTTPMethod>(Collection)RequestData
+    - AddMethod:
+          arguments:
+              isBulk:
+                  inherit: true
+              method:
+                  value: "haveInvalid{{ resource | normalizeResourceName | ucfirst }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}RequestData"
+              output:
+                  value: string
+              body:
+                  value: "throw new \\Exception(sprintf('%s::%s() not implemented.', __CLASS__, __METHOD__));"
+              target:
+                  value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | ucfirst }}Helper"
+              withInterface:
+                  value: false
