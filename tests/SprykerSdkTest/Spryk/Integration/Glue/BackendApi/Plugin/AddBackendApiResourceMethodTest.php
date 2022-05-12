@@ -38,7 +38,8 @@ class AddBackendApiResourceMethodTest extends Unit
             '--mode' => 'project',
             '--organization' => 'Pyz',
             '--resource' => '/foo-bars',
-            '--method' => 'Post',
+            '--httpMethod' => 'Post',
+            '--zedDomainEntity' => 'FooBar',
         ]);
 
         $this->tester->assertClassMethodHasMethodCall(ClassName::PROJECT_GLUE_BACKEND_API_RESOURCE_PLUGIN, 'getDeclaredMethods', 'setPost');
