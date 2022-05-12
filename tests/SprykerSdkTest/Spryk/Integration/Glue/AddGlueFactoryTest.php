@@ -39,7 +39,7 @@ class AddGlueFactoryTest extends Unit
 
         $this->assertFileExists($targetClassFilePath);
 
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\Kernel\AbstractFactory');
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\Kernel\Backend\AbstractFactory');
     }
 
     /**
@@ -56,7 +56,7 @@ class AddGlueFactoryTest extends Unit
 
         $this->assertFileExists($targetClassFilePath);
 
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\Kernel\AbstractFactory');
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\Kernel\Backend\AbstractFactory');
     }
 
     /**

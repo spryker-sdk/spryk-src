@@ -57,7 +57,7 @@ class AddGlueBackendApiResponseMapperTest extends Unit
         $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_RESPONSE_MAPPER, 'addNotFoundError');
         $this->tester->assertClassOrInterfaceDoesNotHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_RESPONSE_MAPPER_INTERFACE, 'addNotFoundError');
 
-        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_RESPONSE_MAPPER, 'addResourceToGlueResponse');
-        $this->tester->assertClassOrInterfaceDoesNotHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_RESPONSE_MAPPER_INTERFACE, 'addResourceToGlueResponse');
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_RESPONSE_MAPPER, 'addFooBarTransferToGlueResponse');
+        $this->tester->assertClassOrInterfaceDoesNotHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_RESPONSE_MAPPER_INTERFACE, 'addFooBarTransferToGlueResponse');
     }
 }

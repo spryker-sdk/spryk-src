@@ -39,7 +39,7 @@ class AddGlueDependencyProviderTest extends Unit
 
         $this->assertFileExists($targetClassFilePath);
 
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\Kernel\AbstractBundleDependencyProvider');
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\Kernel\Backend\AbstractBundleDependencyProvider');
     }
 
     /**
@@ -56,7 +56,7 @@ class AddGlueDependencyProviderTest extends Unit
 
         $this->assertFileExists($targetClassFilePath);
 
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\Kernel\AbstractBundleDependencyProvider');
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\Kernel\Backend\AbstractBundleDependencyProvider');
     }
 
     /**

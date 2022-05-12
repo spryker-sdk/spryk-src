@@ -99,7 +99,7 @@ preSpryks:
                   value: Spryker/Glue/BackendApi/GlueBackendApiBootstrap.php.twig
 
     # Add GlueApplicationDependencyProvider
-    - AddGlueDependencyProvider:
+    -   AddGlueCommonDependencyProvider:
           arguments:
               module:
                   value: "GlueApplication"
@@ -250,7 +250,7 @@ preSpryks:
               method:
                   value: "getRequestResourceFilterPlugin"
               body:
-                  value: "return [];"
+                  value: "return new \\Spryker\\Glue\\GlueApplication\\Plugin\\GlueApplication\\RequestResourceFilterPlugin();"
               output:
                   value: "\\Spryker\\Glue\\GlueBackendApiApplicationExtension\\Dependency\\Plugin\\RequestResourceFilterPluginInterface"
               withInterface:
@@ -396,12 +396,6 @@ preSpryks:
                   value: "\\Spryker\\Glue\\GlueApplication\\Plugin\\GlueApplication\\ResourceRouteMatcherPlugin"
               target:
                   value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider::getRouteMatcherPlugins"
-    - WirePlugin:
-          arguments:
-              plugin:
-                  value: "\\Spryker\\Glue\\GlueApplication\\Plugin\\GlueApplication\\RequestResourceFilterPlugin"
-              target:
-                  value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider::getRequestResourceFilterPlugin"
     # Wire GlueRestApiConventionDependencyProvider plugins
     - WirePlugin:
           condition: "apiType === 'REST'"
