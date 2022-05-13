@@ -69,16 +69,15 @@ class AddImplementsSpryk extends AbstractBuilder
      */
     protected function shouldBuild(): bool
     {
+        $interface = $this->getInterface();
+
         /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface|null $resolvedClass */
         $resolvedClass = $this->fileResolver->resolve($this->getTarget());
 
-        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface|null $resolvedInterface */
-        $resolvedInterface = $this->fileResolver->resolve($this->getInterface());
-
         return (
-            $resolvedClass instanceof ResolvedClassInterface
-            && $resolvedInterface instanceof ResolvedClassInterface
-            && !$this->hasImplements($resolvedClass, $resolvedInterface)
+            $resolvedClass !== null
+            && ($this->fileResolver->hasResolved($interface) || interface_exists($interface))
+            && !$this->hasImplements($resolvedClass, $interface)
         );
     }
 
@@ -107,15 +106,15 @@ class AddImplementsSpryk extends AbstractBuilder
 
     /**
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolvedClass
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolvedInterface
+     * @param string $interface
      *
      * @return bool
      */
     protected function hasImplements(
         ResolvedClassInterface $resolvedClass,
-        ResolvedClassInterface $resolvedInterface
+        string $interface
     ): bool {
-        return $this->nodeFinder->findImplements($resolvedClass->getClassTokenTree(), $resolvedInterface->getClassName()) !== null;
+        return $this->nodeFinder->findImplements($resolvedClass->getClassTokenTree(), $interface) !== null;
     }
 
     /**

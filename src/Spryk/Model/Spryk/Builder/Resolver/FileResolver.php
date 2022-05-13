@@ -94,6 +94,16 @@ class FileResolver implements FileResolverInterface
     }
 
     /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function hasResolved(string $name): bool
+    {
+        return isset(static::$resolved[$name]);
+    }
+
+    /**
      * @param string $fileName
      *
      * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface

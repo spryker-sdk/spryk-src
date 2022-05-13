@@ -19,6 +19,13 @@ interface FileResolverInterface
     public function resolve(string $name): ?ResolvedInterface;
 
     /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function hasResolved(string $name): bool;
+
+    /**
      * @return iterable<string, \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface>
      */
     public function all(): iterable;
