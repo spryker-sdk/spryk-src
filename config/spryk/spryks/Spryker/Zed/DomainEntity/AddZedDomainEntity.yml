@@ -16,10 +16,6 @@ arguments:
         inherit: true
         default: Zed
 
-    layer:
-        inherit: true
-        default: Business
-
     extends:
         isOptional: true
 
@@ -30,7 +26,7 @@ arguments:
 
     subDirectory:
         inherit: true
-        default: "Business/{{ className }}"
+        default: "Business"
 
     className:
         inherit: true

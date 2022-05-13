@@ -16,16 +16,12 @@ arguments:
         inherit: true
         default: Zed
 
-    layer:
-        inherit: true
-        default: Business
-
     className:
         inherit: true
 
     subDirectory:
         inherit: true
-        default: "Business/{{ className }}"
+        default: "Business"
 
     modelMethod: ~
 
@@ -53,7 +49,7 @@ preSpryks:
         arguments:
             implements:
                 value:
-                    - "{{ organization }}\\Zed\\{{ module }}{% if subDirectory %}\\{{ subDirectory | convertToClassNameFragment }}{% endif %}\\{{ className }}Interface"
+                    - "\\{{ organization }}\\Zed\\{{ module }}{% if subDirectory %}\\{{ subDirectory | convertToClassNameFragment }}{% endif %}\\{{ className }}Interface"
 
 postSpryks:
     - AddZedDomainEntityInterfaceMethod

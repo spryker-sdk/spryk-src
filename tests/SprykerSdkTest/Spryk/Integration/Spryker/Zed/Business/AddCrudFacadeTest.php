@@ -147,6 +147,7 @@ class AddCrudFacadeTest extends Unit
         $this->assertPersistenceFactoryContainsMethods();
         $this->assertPersistenceEntityManagerExists();
         $this->assertPersistenceEntityManagerFactoryExists();
+        $this->assertPersistenceMapperExists();
     }
 
     /**
@@ -217,21 +218,13 @@ class AddCrudFacadeTest extends Unit
     {
         $this->assertFileExists(
             $this->tester->getSprykerModuleDirectory()
-            . 'src/Spryker/Zed/FooBar/Persistence/ZipZap/Mapper/ZipZapMapper.php',
+            . 'src/Spryker/Zed/FooBar/Persistence/Propel/ZipZap/Mapper/ZipZapMapper.php',
         );
 
-        $this->tester->assertClassOrInterfaceHasMethod('Spryker\Zed\FooBar\Persistence\ZipZap\Mapper\ZipZapMapper', 'mapZipZapTransferToZipZapEntity');
-        $this->tester->assertClassOrInterfaceHasMethod('Spryker\Zed\FooBar\Persistence\ZipZap\Mapper\ZipZapMapper', 'mapZipZapEntityToZipZapTransfer');
-        $this->tester->assertClassOrInterfaceHasMethod('Spryker\Zed\FooBar\Persistence\ZipZap\Mapper\ZipZapMapper', 'mapZipZapEntityCollectionToZipZapCollectionResponseTransfer');
-
-        $this->assertFileExists(
-            $this->tester->getSprykerModuleDirectory()
-            . 'src/Spryker/Zed/FooBar/Persistence/ZipZap/Mapper/ZipZapMapperInterface.php',
-        );
-
-        $this->tester->assertClassOrInterfaceHasMethod('Spryker\Zed\FooBar\Persistence\ZipZap\Mapper\ZipZapMapperInterface', 'mapZipZapTransferToZipZapEntity');
-        $this->tester->assertClassOrInterfaceHasMethod('Spryker\Zed\FooBar\Persistence\ZipZap\Mapper\ZipZapMapperInterface', 'mapZipZapEntityToZipZapTransfer');
-        $this->tester->assertClassOrInterfaceHasMethod('Spryker\Zed\FooBar\Persistence\ZipZap\Mapper\ZipZapMapperInterface', 'mapZipZapEntityCollectionToZipZapCollectionResponseTransfer');
+        $this->tester->assertClassOrInterfaceHasMethod('Spryker\Zed\FooBar\Persistence\Propel\ZipZap\Mapper\ZipZapMapper', 'mapZipZapTransferToZipZapEntity');
+        $this->tester->assertClassOrInterfaceHasMethod('Spryker\Zed\FooBar\Persistence\Propel\ZipZap\Mapper\ZipZapMapper', 'mapZipZapEntityToZipZapTransfer');
+        $this->tester->assertClassOrInterfaceHasMethod('Spryker\Zed\FooBar\Persistence\Propel\ZipZap\Mapper\ZipZapMapper', 'mapZipZapEntityCollectionToZipZapCollectionResponseTransfer');
+        $this->tester->assertClassOrInterfaceHasMethod('Spryker\Zed\FooBar\Persistence\Propel\ZipZap\Mapper\ZipZapMapper', 'mapZipZapEntityCollectionToZipZapCollectionTransfer');
     }
 
     /**
