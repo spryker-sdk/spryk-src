@@ -268,7 +268,7 @@ preSpryks:
               withInterface:
                   value: false
 
-    # Add GlueRestApiConventionDependencyProviderSpryk/Model/Spryk/Builder/Resolver/FileResolver.php:37
+    # Add GlueRestApiConventionDependencyProvider
     - AddGlueCommonDependencyProvider:
           condition: "apiType === 'REST'"
           arguments:
