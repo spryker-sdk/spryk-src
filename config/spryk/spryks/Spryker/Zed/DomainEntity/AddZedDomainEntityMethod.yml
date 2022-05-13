@@ -21,7 +21,7 @@ arguments:
 
     subDirectory:
         inherit: true
-        default: "Business"
+        default: "Business/{{ className }}"
 
     modelMethod: ~
 

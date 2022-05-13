@@ -26,7 +26,7 @@ arguments:
 
     subDirectory:
         inherit: true
-        default: "Business"
+        default: "Business/{{ className }}"
 
     className:
         inherit: true
