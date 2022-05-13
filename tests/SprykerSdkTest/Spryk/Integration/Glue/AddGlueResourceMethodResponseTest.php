@@ -87,6 +87,7 @@ class AddGlueResourceMethodResponseTest extends Unit
 
         // Controller test class
         $this->tester->assertClassOrInterfaceExists($expectedTestController);
+        $this->tester->assertClassOrInterfaceExtends($expectedTestController, Unit::class);
 
         // Test method in the test controller
         $this->tester->assertClassOrInterfaceHasMethod($expectedTestController, $expectedTestControllerMethodName);
