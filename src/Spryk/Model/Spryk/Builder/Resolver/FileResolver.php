@@ -76,10 +76,10 @@ class FileResolver implements FileResolverInterface
             return static::$resolved[$name];
         }
 
-        foreach ($this->all() as $resolved) {
-            if ($resolved instanceof ResolvedClassInterface && ($resolved->getClassName() === $name || $resolved->getFullyQualifiedClassName() === $name || $resolved->getFilePath() === $name)) {
-                return $resolved;
-            }
+        $resolved = $this->searchInResolved($name);
+
+        if ($resolved !== null) {
+            return $resolved;
         }
 
         if (file_exists($name)) {
@@ -100,7 +100,32 @@ class FileResolver implements FileResolverInterface
      */
     public function hasResolved(string $name): bool
     {
-        return isset(static::$resolved[$name]);
+        if (isset(static::$resolved[$name])) {
+            return true;
+        }
+
+        return $this->searchInResolved($name) !== null;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface|null
+     */
+    protected function searchInResolved(string $name): ?ResolvedInterface
+    {
+        foreach ($this->all() as $resolved) {
+            if (
+                $resolved instanceof ResolvedClassInterface
+                && ($resolved->getClassName() === $name
+                    || $resolved->getFullyQualifiedClassName() === $name
+                    || $resolved->getFilePath() === $name)
+            ) {
+                return $resolved;
+            }
+        }
+
+        return null;
     }
 
     /**
