@@ -15,6 +15,10 @@ arguments:
         inherit: true
         default: Spryker
 
+    application:
+        inherit: true
+        default: Zed
+
     layer:
         inherit: true
         default: Business
@@ -24,7 +28,7 @@ arguments:
 
     subDirectory:
         inherit: true
-        isOptional: true
+        default: "Business/{{ className }}"
 
     modelMethod: ~
 
@@ -42,7 +46,7 @@ arguments:
         value: "{{ className }}"
 
     fqcnPattern:
-        value: "{{ organization }}\\Zed\\{{ module }}\\{{ layer }}{% if subDirectory %}\\{{ subDirectory | convertToClassNameFragment }}{% endif %}\\{{ className }}Interface"
+        value: "{{ organization }}\\Zed\\{{ module }}{% if subDirectory %}\\{{ subDirectory | convertToClassNameFragment }}{% endif %}\\{{ className }}Interface"
 
 preSpryks:
     - AddZedDomainEntityInterface

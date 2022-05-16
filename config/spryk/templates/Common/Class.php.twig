@@ -1,16 +1,40 @@
 <?php
 
 {{ include('Partials/license.twig') }}
+{% block namespace %}
+namespace {{ organization }}{% if isTestClass.value == true %}Test{% endif %}\{{ application }}\{{ module }}{% if subDirectory is defined %}\{{ subDirectory | convertToClassNameFragment }}{% endif %};
+{% endblock %}
 
-namespace {{ organization }}\{{ subDirectory | replace({'/': '\\'}) }};
+{% block useStatements %}
+{% endblock %}
 
-{% if expanderClassName %}
-use {{ expanderClassName | replace({'/': '\\'}) | trim('\\') }};
+{% block classDocBlock %}
+{% if isTestClass.value == true %}
+/**
+ * Auto-generated group annotations
+ *
+ * @group {{ organization }}Test
+ * @group {{ application }}
+ * @group {{ module }}
+ * @group {{ className }}Test
+ * Add your own group annotations below this line
+ */
+{% elseif annotations.value is not empty %}
+/**
+{% for annotation in annotations.value %}
+ * {{ annotation }}
+ {% endfor %}
+*/
 {% endif %}
-{% if implementerInterfaceName %}
-use {{ implementerInterfaceName | replace({'/': '\\'}) | trim('\\') }};
-{% endif %}
-
-class {{ className }}{% if expanderClassName %} extends {{ expanderClassName | replace({'/': '\\'}) | classNameShort }}{% endif %}{% if implementerInterfaceName %} implements {{ implementerInterfaceName | replace({'/': '\\'}) | classNameShort }}{% endif ~%}
+{% endblock %}
+class {{ className }}{% if isTestClass.value == true %}Test{% endif %}{% if extends.value is not null and extends.value is not empty %} extends {{ extends | replace({'/': '\\'}) }}{% endif %}{% if implements.value is not null and implements.value is not empty %} implements {{ implements | replace({'/': '\\'}) }}{% endif ~%}
 {
+{% block body %}
+    {% block properties %}
+    {% endblock  %}
+    {% block constructor %}
+    {% endblock  %}
+    {% block methods %}
+    {% endblock  %}
+{% endblock %}
 }

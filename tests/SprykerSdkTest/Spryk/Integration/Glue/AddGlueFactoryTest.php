@@ -35,7 +35,11 @@ class AddGlueFactoryTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/FooBarFactory.php');
+        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/FooBarFactory.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\Kernel\Backend\AbstractFactory');
     }
 
     /**
@@ -48,6 +52,32 @@ class AddGlueFactoryTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->assertFileExists($this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'FooBarFactory.php');
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'FooBarFactory.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\Kernel\Backend\AbstractFactory');
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddsGlueFactoryThatExtendsSameCoreBaseClass(): void
+    {
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'core',
+        ]);
+
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'project',
+        ]);
+
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'FooBarFactory.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\FooBar\FooBarFactory');
     }
 }

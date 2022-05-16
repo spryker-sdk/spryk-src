@@ -135,8 +135,9 @@ class MethodSpryk extends AbstractBuilder
      */
     protected function getTargetClass(): ResolvedClassInterface
     {
+        $targetClassName = $this->getTargetClassName();
         /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface|null $resolvedClass */
-        $resolvedClass = $this->fileResolver->resolve($this->getTargetClassName());
+        $resolvedClass = $this->fileResolver->resolve($targetClassName);
 
         if (!$resolvedClass) {
             throw new Exception(sprintf('Could not find class "%s".', $this->getTargetClassName()));
@@ -150,9 +151,9 @@ class MethodSpryk extends AbstractBuilder
      */
     protected function build(): void
     {
+        $methodName = $this->getMethodName();
         $resolvedClass = $this->getTargetClass();
 
-        $methodName = $this->getMethodName();
         $methodExists = $this->methodExists($resolvedClass, $methodName);
 
         $methodArgument = new Argument();
@@ -283,7 +284,7 @@ class MethodSpryk extends AbstractBuilder
     protected function getMethodName(): string
     {
         foreach (static::ARGUMENT_METHOD_NAME_CANDIDATES as $methodNameCandidate) {
-            if ($this->arguments->hasArgument($methodNameCandidate)) {
+            if ($this->arguments->hasArgument($methodNameCandidate) && $this->arguments->getArgument($methodNameCandidate)->getValue() !== null) {
                 return $this->arguments->getArgument($methodNameCandidate);
             }
         }

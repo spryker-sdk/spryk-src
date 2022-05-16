@@ -1,0 +1,51 @@
+spryk: template
+description: "Adds a new class to the specified target."
+mode: both
+
+arguments:
+    organization:
+        inherit: true
+        default: Spryker
+
+    application:
+        inherit: true
+
+    module:
+        inherit: true
+
+    className:
+        description: "Short name of the class to add."
+
+    fqcn:
+        description: "Fully qualified class name. Will be constructed automatically from given arguments."
+        isOptional: true
+        value: "\\{{ organization }}{% if isTestClass.value == true %}Test{% endif %}\\{{ application }}\\{{ module }}{% if subDirectory is defined %}\\{{ subDirectory | convertToClassNameFragment }}{% endif %}\\{{ className }}{% if isTestClass.value == true %}Test{% endif %}"
+
+    isTestClass:
+        inherit: true
+        description: "When set to true organization and className will be suffixed with Test."
+        default: false
+
+    subDirectory:
+        inherit: true
+        isOptional: true
+
+    extends:
+        isOptional: true
+        isMultiple: true
+        callback: ResolveExtends
+
+    implements:
+        isOptional: true
+        isMultiple: true
+
+    targetFilename:
+        value: "{{ className }}{% if isTestClass.value == true %}Test{% endif %}.php"
+
+    targetPath:
+        description: "Target path will be extended with the subDirectory inside the TemplateSpryk when set."
+        value: "{% if isTestClass.value == true %}tests{% else %}src{% endif %}/{{ organization }}{% if isTestClass.value == true %}Test{% endif %}/{{ application }}/{{ module }}"
+
+    template:
+        value: Common/Class.php.twig
+

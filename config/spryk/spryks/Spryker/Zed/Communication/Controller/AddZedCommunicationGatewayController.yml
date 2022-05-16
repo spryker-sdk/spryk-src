@@ -10,17 +10,37 @@ arguments:
         inherit: true
         default: Spryker
 
-    template:
-        value: Zed/Communication/ZedCommunicationController.php.twig
-
     controller:
         value: GatewayController
+
+    application:
+        value: Zed
+
+    extends:
+        callback: ResolveExtends
+        value:
+            - "\\Spryker\\{{ application }}\\{{ module }}\\Communication\\Controller\\GatewayController"
+            - "\\Spryker\\{{ application }}\\Kernel\\Communication\\Controller\\AbstractController"
+
+    className:
+        value: "GatewayController"
+
+    annotations:
+        value:
+            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\Communication\\{{ module }}CommunicationFactory getFactory()"
+            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\Business\\{{ module }}FacadeInterface getFacade()"
+
+    template:
+        value: Common/Class.php.twig
+
+    subDirectory:
+        value: "Communication/Controller"
 
     targetFilename:
         value: "GatewayController.php"
 
     targetPath:
-        value: "src/{{ organization }}/Zed/{{ module }}/Communication/Controller/"
+        value: "src/{{ organization }}/Zed/{{ module }}/"
 
 preSpryks:
     - AddModule

@@ -35,7 +35,11 @@ class AddGlueDependencyProviderTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/FooBarDependencyProvider.php');
+        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/FooBarDependencyProvider.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\Kernel\Backend\AbstractBundleDependencyProvider');
     }
 
     /**
@@ -48,6 +52,32 @@ class AddGlueDependencyProviderTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->assertFileExists($this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'FooBarDependencyProvider.php');
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'FooBarDependencyProvider.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\Kernel\Backend\AbstractBundleDependencyProvider');
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddsGlueDependencyProviderFileThatExtendsSameCoreBaseClass(): void
+    {
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'core',
+        ]);
+
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'project',
+        ]);
+
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'FooBarDependencyProvider.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\FooBar\FooBarDependencyProvider');
     }
 }

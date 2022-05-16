@@ -1,0 +1,4 @@
+    ${{ zedDomainEntity | lcfirst }}CollectionRequestTransfer = new {{ zedDomainEntity }}CollectionRequestTransfer();
+    ${{ zedDomainEntity | lcfirst }}CollectionRequestTransfer->add{{ zedDomainEntity }}(${{ zedDomainEntity | lcfirst }}Transfer)->setIsTransactional(false);
+
+    return ${{ zedDomainEntity | lcfirst }}CollectionRequestTransfer;

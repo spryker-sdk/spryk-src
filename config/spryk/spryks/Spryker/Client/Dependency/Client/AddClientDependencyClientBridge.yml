@@ -1,11 +1,15 @@
 spryk: template
 description: "Adds a new *module*To*dependentModule*ClientBridge."
 mode: core
+deprecated: Use AddDependencyBridgeMethod instead.
 
 arguments:
     organization:
         inherit: true
         default: Spryker
+
+    application:
+        value: Client
 
     module:
         inherit: true

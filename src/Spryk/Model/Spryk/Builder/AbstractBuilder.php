@@ -7,6 +7,7 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Builder;
 
+use InvalidArgumentException;
 use Laminas\Filter\FilterChain;
 use Laminas\Filter\StringToLower;
 use Laminas\Filter\Word\CamelCaseToDash;
@@ -148,16 +149,37 @@ abstract class AbstractBuilder implements SprykBuilderInterface
      */
     protected function getTargetPath(): string
     {
-        $relativeTargetPath = $this->getStringArgument(static::ARGUMENT_TARGET_PATH);
+        return $this->getAbsoluteTargetPath($this->getStringArgument(static::ARGUMENT_TARGET_PATH));
+    }
 
+    /**
+     * @param string $relativeFilePath
+     *
+     * @return string
+     */
+    protected function getFileTargetPath(string $relativeFilePath): string
+    {
+        $relativeDirPath = dirname($relativeFilePath);
+        $fileName = basename($relativeFilePath);
+
+        return $this->getAbsoluteTargetPath($relativeDirPath) . DIRECTORY_SEPARATOR . $fileName;
+    }
+
+    /**
+     * @param string $relativeDirPath
+     *
+     * @return string
+     */
+    protected function getAbsoluteTargetPath(string $relativeDirPath): string
+    {
         if ($this->arguments->hasArgument('mode') && $this->getStringArgument('mode') === 'project') {
             $path = rtrim($this->config->getProjectRootDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
-            return $path . $relativeTargetPath;
+            return $path . $relativeDirPath;
         }
 
         if (!$this->arguments->hasArgument(static::ARGUMENT_MODULE) || $this->arguments->getArgument(static::ARGUMENT_MODULE)->getValue() === null) {
-            return rtrim($this->config->getProjectRootDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $relativeTargetPath;
+            return rtrim($this->config->getProjectRootDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $relativeDirPath;
         }
 
         $moduleName = $this->getModuleName();
@@ -168,7 +190,7 @@ abstract class AbstractBuilder implements SprykBuilderInterface
             $this->getDasherizeFilter()->filter($this->getStringArgument(static::ARGUMENT_ORGANIZATION)),
             'Bundles',
             $moduleName,
-            $relativeTargetPath,
+            $relativeDirPath,
         ];
 
         return rtrim($this->config->getProjectRootDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $targetPathFragments);
@@ -198,21 +220,37 @@ abstract class AbstractBuilder implements SprykBuilderInterface
     /**
      * @param string $argumentName
      *
+     * @throws \InvalidArgumentException
+     *
      * @return string
      */
     protected function getStringArgument(string $argumentName): string
     {
-        return $this->arguments->getArgument($argumentName)->getValue();
+        $value = $this->arguments->getArgument($argumentName)->getValue();
+
+        if (!is_string($value)) {
+            throw new InvalidArgumentException(sprintf('Argument value for "%s" should be a string, found "%s"', $argumentName, gettype($value)));
+        }
+
+        return $value;
     }
 
     /**
      * @param string $argumentName
      *
+     * @throws \InvalidArgumentException
+     *
      * @return array
      */
     protected function getArrayArgument(string $argumentName): array
     {
-        return $this->arguments->getArgument($argumentName)->getValue();
+        $value = $this->arguments->getArgument($argumentName)->getValue();
+
+        if (!is_array($value)) {
+            throw new InvalidArgumentException(sprintf('Argument value for "%s" should be an array, found "%s"', $argumentName, gettype($value)));
+        }
+
+        return $value;
     }
 
     /**

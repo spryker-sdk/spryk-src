@@ -1,0 +1,116 @@
+spryk: method
+description: "Adds a dependency type (Facade, Client, Service) to the *module*DependencyProvider."
+mode: both
+level: 1
+
+arguments:
+    module:
+        inherit: true
+
+    organization:
+        inherit: true
+        default: Spryker
+
+    application:
+        inherit: true
+
+    dependentModule:
+        inherit: true
+
+    dependencyType:
+        description: "Can be one of: Facade, Client, Service"
+        inherit: true
+
+    applicationType:
+        inherit: true
+        default: Backend
+
+    layer:
+        description: "Optional, only needed for Zed dependency provider. Can be one of: Communication, Business, Persistence."
+        isOptional: true
+
+    provideMethod:
+        description: "The callback decides based on the application + the optional layer which provide* method will be used."
+        callback: DependencyProviderProvideMethod
+
+    methods:
+        description: "The methods from the dependency type (Facade, Client, Service) that needs to be added to the bridge (only on core level)."
+        isOptional: true
+        isMultiple: true
+
+    input:
+        value: "\\Spryker\\{{ application }}\\Kernel\\{% if application.value == 'Glue' %}{{ applicationType }}\\{% endif %}Container $container"
+
+    output:
+        value: "\\Spryker\\{{ application }}\\Kernel\\{% if application.value == 'Glue' %}{{ applicationType }}\\{% endif %}Container"
+
+    method:
+        description: "Adds one of addFooBarFacade, addFooBarClient, addFooBarService."
+        value: "add{{ dependentModule | ucfirst }}{{ dependencyType | ucfirst }}"
+
+    visibility:
+        value: protected
+
+    template:
+        description: "Based on the mode (project|core) it will render the method with bridge or without."
+        value: Common/Dependency/DependencyProviderMethod.php.twig
+
+    target:
+        value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\{{ module }}DependencyProvider"
+
+preSpryks:
+    - AddDependencyProviderProvideMethod
+
+postSpryks:
+    # Adds a bridge and the defined methods when mode is core otherwise not.
+    - AddDependencyBridgeMethod
+    # Add factory, conditions in those will decide whether they need to be added or not.
+    - AddClientFactory
+    - AddGlueFactory
+    - AddServiceFactory
+    - AddZedBusinessFactory
+    - AddZedCommunicationFactory
+
+    # Add a factory method for non Zed applications.
+    - AddMethod:
+          condition: "application !== 'Zed'"
+          arguments:
+              method:
+                  value: "get{{dependentModule | ucfirst }}{{ dependencyType | ucfirst }}"
+              body:
+                  value: "return $this->getProvidedDependency(\\{{ organization }}\\{{ application }}\\{{ module }}\\{{ module }}DependencyProvider::{{ dependencyType | upper }}_{{ dependentModule | camelCaseToUnderscore | upper }});"
+              output:
+                  description: "Depending on the layer the output will be defined by the callback. For core the output will be the bridge for project the dependency directly."
+                  callback: DependencyFactoryMethodReturn
+              target:
+                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\{{ module }}Factory"
+              withInterface:
+                  value: false
+              visibility:
+                  value: "public"
+
+    # Add a factory method for Zed applications.
+    - AddMethod:
+          condition: "application === 'Zed'"
+          arguments:
+              method:
+                  value: "get{{dependentModule | ucfirst }}{{ dependencyType | ucfirst }}"
+              body:
+                  value: "return $this->getProvidedDependency(\\{{ organization }}\\{{ application }}\\{{ module }}\\{{ module }}DependencyProvider::{{ dependencyType | upper }}_{{ dependentModule | camelCaseToUnderscore | upper }});"
+              output:
+                  description: "Depending on the layer the output will be defined by the callback. For core the output will be the bridge for project the dependency directly."
+                  callback: DependencyFactoryMethodReturn
+              target:
+                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\{{ layer }}\\{{ module }}{{ layer }}Factory"
+              withInterface:
+                  value: false
+
+    - AddDependencyTypeToDependencyProviderProvideMethod
+    - AddConstant:
+          arguments:
+              name:
+                  value: "{{ dependencyType | upper }}_{{ dependentModule | camelCaseToUnderscore | upper }}"
+              value:
+                  value: "{{ dependencyType | upper }}_{{ dependentModule | camelCaseToUnderscore | upper }}"
+              visibility:
+                  value: "public"

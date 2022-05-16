@@ -1,0 +1,11 @@
+    ${{ zedDomainEntity | lcfirst }}DeleteCollectionCriteriaTransfer = new {{ zedDomainEntity }}CollectionDeleteCriteriaTransfer();
+
+    if (!isset($glueRequestTransfer->getQueryFields()['filter'])) {
+        return ${{ zedDomainEntity | lcfirst }}DeleteCollectionCriteriaTransfer;
+    }
+
+    foreach ($glueRequestTransfer->getQueryFields()['filter'] as $key => $value) {
+        // Apply conditions to ${{ zedDomainEntity | lcfirst }}DeleteCollectionCriteriaTransfer
+    }
+
+    return ${{ zedDomainEntity | lcfirst }}DeleteCollectionCriteriaTransfer;

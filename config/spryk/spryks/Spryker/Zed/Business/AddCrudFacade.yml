@@ -9,6 +9,10 @@ arguments:
         inherit: true
         default: Spryker
 
+    application:
+        inherit: true
+        value: Zed
+
     module:
         inherit: true
 
@@ -17,9 +21,6 @@ arguments:
 excludedSpryks:
     - AddZedPresentationTwig
     - AddZedNavigationNode
-
-preSpryks:
-    - AddModule
 
 postSpryks:
     - AddZedDomainEntityDeleter
@@ -577,7 +578,7 @@ postSpryks:
                 className:
                     value: "{{ domainEntity }}IdentifierBuilder"
                 subDirectory:
-                    value: "{{ domainEntity }}/IdentifierBuilder"
+                    value: "Business/{{ domainEntity }}/IdentifierBuilder"
                 modelMethod:
                     value: "buildIdentifier"
                 input:
@@ -589,7 +590,7 @@ postSpryks:
             className:
                 value: "{{ domainEntity }}IdentifierBuilder"
             subDirectory:
-                value: "{{ domainEntity }}/IdentifierBuilder"
+                value: "Business/{{ domainEntity }}/IdentifierBuilder"
             modelMethod:
                 value: "buildIdentifier"
             input:
@@ -668,12 +669,12 @@ postSpryks:
     #Add "{{ domainEntity }}Mapper" into Persistence layer.
     - AddZedDomainEntity:
           arguments:
-              layer:
-                  value: Persistence
               className:
                   value: "{{ domainEntity }}Mapper"
               subDirectory:
-                  value: "Propel/{{ domainEntity }}/Mapper"
+                  value: "Persistence/Propel/{{ domainEntity }}/Mapper"
+              implements:
+                  value: []
               modelMethod:
                   value: "map{{ domainEntity }}TransferTo{{ domainEntity }}Entity"
           excludedSpryks:
@@ -681,12 +682,10 @@ postSpryks:
 
     - AddZedDomainEntityMethod:
           arguments:
-              layer:
-                  value: Persistence
               className:
                   value: "{{ domainEntity }}Mapper"
               subDirectory:
-                  value: "Propel/{{ domainEntity }}/Mapper"
+                  value: "Persistence/Propel/{{ domainEntity }}/Mapper"
               modelMethod:
                   value: "map{{ domainEntity }}TransferTo{{ domainEntity }}Entity"
               input:
@@ -704,12 +703,10 @@ postSpryks:
 
     - AddZedDomainEntityMethod:
         arguments:
-            layer:
-                value: Persistence
             className:
                 value: "{{ domainEntity }}Mapper"
             subDirectory:
-                value: "Propel/{{ domainEntity }}/Mapper"
+                value: "Persistence/Propel/{{ domainEntity }}/Mapper"
             modelMethod:
                 value: "map{{ domainEntity }}EntityTo{{ domainEntity }}Transfer"
             input:
@@ -727,12 +724,10 @@ postSpryks:
 
     - AddZedDomainEntityMethod:
         arguments:
-            layer:
-                value: Persistence
             className:
                 value: "{{ domainEntity }}Mapper"
             subDirectory:
-                value: "Propel/{{ domainEntity }}/Mapper"
+                value: "Persistence/Propel/{{ domainEntity }}/Mapper"
             modelMethod:
                 value: "map{{ domainEntity }}EntityCollectionTo{{ domainEntity }}CollectionResponseTransfer"
             input:
@@ -755,12 +750,10 @@ postSpryks:
 
     -  AddZedDomainEntityMethod:
             arguments:
-                layer:
-                    value: Persistence
                 className:
                     value: "{{ domainEntity }}Mapper"
                 subDirectory:
-                    value: "Propel/{{ domainEntity }}/Mapper"
+                    value: "Persistence/Propel/{{ domainEntity }}/Mapper"
                 modelMethod:
                     value: "map{{ domainEntity }}EntityCollectionTo{{ domainEntity }}CollectionTransfer"
                 input:

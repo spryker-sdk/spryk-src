@@ -14,16 +14,25 @@ arguments:
         inherit: true
         default: Spryker
 
+    application:
+        value: Glue
+
+    extends:
+        callback: ResolveExtends
+        value:
+            - "\\Spryker\\{{ application }}\\{{ module }}\\{{ className | classNameShort | ensureResourceSuffix }}"
+            - "\\Spryker\\{{ application }}\\Kernel\\AbstractRestResource"
+
+    implements:
+        inherit: true
+        value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\{{ className | ensureResourceSuffix }}Interface"
+
     className:
         inherit: true
         callback: EnsureResourceSuffix
 
-    interfaceName:
-        inherit: true
-        value: "{{ className }}Interface"
-
     template:
-        value: Glue/GlueResource.php.twig
+        value: Common/Class.php.twig
 
     targetFilename:
         callbackOnly: true

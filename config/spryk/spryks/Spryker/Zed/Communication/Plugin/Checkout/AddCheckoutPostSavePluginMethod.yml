@@ -10,6 +10,10 @@ arguments:
         inherit: true
         default: SprykerEco
 
+    application:
+        inherit: true
+        default: Zed
+
     classNamePrefix:
         inherit: true
 
@@ -25,7 +29,7 @@ arguments:
         value: "void"
 
     subDirectory:
-        value: "Zed/{{ module }}/Communication/Plugin/Checkout"
+        value: "Communication/Plugin/Checkout"
 
     annotations:
         value:
@@ -39,7 +43,7 @@ arguments:
         value: "{{ classNamePrefix }}CheckoutPostSavePlugin"
 
     fqcnPattern:
-        value: "{{ organization }}\\{{ subDirectory | convertToClassNameFragment }}\\{{ classNamePrefix }}CheckoutPostSavePlugin"
+        value: "{{ organization }}\\{{ application }}\\{{ module }}\\{{ subDirectory | convertToClassNameFragment }}\\{{ classNamePrefix }}CheckoutPostSavePlugin"
 
 preSpryks:
     - AddCheckoutPostSavePlugin

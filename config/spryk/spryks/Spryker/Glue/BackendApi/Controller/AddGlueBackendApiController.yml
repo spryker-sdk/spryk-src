@@ -1,0 +1,72 @@
+spryk: wrapper
+description: "Adds a new Glue BackendApi Controller to the Glue application."
+mode: both
+level: 3
+
+condition: "applicationType === 'Backend'"
+
+arguments:
+    module:
+        description: "Based on the applicationType the module name will be suffixed with BackendApi or FrontendApi by the ResourceModuleName callback."
+        inherit: true
+        default: "{{ resource | normalizeResourceName }}"
+        callback: GlueResourceModuleName
+
+    organization:
+        inherit: true
+        default: Spryker
+
+    application:
+        inherit: true
+        value: Glue
+
+    applicationType:
+        inherit: true
+        description: "Can be one of: Backend or Frontend"
+        default: "Backend"
+
+    isTestClass:
+        inherit: true
+        isOptional: true
+        default: false
+
+    resource:
+        inherit: true
+        description: "Defines the resource name this controller will work with e.g. /customers"
+
+    subDirectory:
+        inherit: true
+        value: Controller
+
+    controller:
+        inherit: true
+        value: "{{ resource | normalizeResourceName }}ResourceController"
+
+postSpryks:
+    - AddClass:
+          condition: "isTestClass === false"
+          arguments:
+              subDirectory:
+                  value: Controller
+              className:
+                  value: "{{ controller }}"
+              extends:
+                  callback: ResolveExtends
+                  value:
+                      - "\\Spryker\\Glue\\{{ module }}\\Controller\\{{ controller }}"
+                      - "\\Spryker\\Glue\\Kernel\\Backend\\Controller\\AbstractController "
+              annotations:
+                  value:
+                      - "@method \\{{ organization }}\\Glue\\{{ module }}\\{{ module }}Factory getFactory()"
+
+    - AddClass:
+          condition: "isTestClass === true"
+          arguments:
+              subDirectory:
+                  value: Controller
+              className:
+                  value: "{{ controller }}"
+              extends:
+                  callback: ResolveExtends
+                  value:
+                      - "\\Codeception\\Test\\Unit"

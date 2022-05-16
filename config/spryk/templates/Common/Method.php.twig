@@ -22,17 +22,19 @@
      {% set inputs = inputString | split(',') -%}
      {%- if inputs is iterable -%}
      {% for input in inputs -%}
-     * @param {{ input | argumentToDocParameter }}
+     * @param {{ input | argumentToDocParameter | raw }}
      {% endfor -%}
      *
      {% endif -%}
      {% endif -%}
-     * @return {{ output | returnValueToDocParameter }}
+     * @return {{ output | returnValueToDocParameter | raw }}
      */
-    {% if visibility is defined %}{{ visibility }}{% else %}public{% endif %} function {{ method }}({% if inputString is not empty %}{{ inputString | typedArrayConvert }}{% endif %}){% if output.value is not empty %}: {{ output | typedArrayConvert }}{% endif %}
+    {% if visibility is defined %}{{ visibility }}{% else %}public{% endif %} {% if isStatic is defined and isStatic.value %}static {% endif %}function {{ method }}({% if inputString is not empty %}{{ inputString | typedArrayConvert }}{% endif %}){% if output.value is not empty %}: {{ output | typedArrayConvert | raw }}{% endif %}
 
     {
+{% block body %}
 {% if body is defined and body is not empty %}
 {{ body | raw }}
 {% endif -%}
+{% endblock %}
     }

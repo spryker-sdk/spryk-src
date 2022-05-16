@@ -36,7 +36,11 @@ class AddZedBusinessFacadeTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Business/FooBarFacade.php');
+        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Business/FooBarFacade.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Business\AbstractFacade');
     }
 
     /**
@@ -49,6 +53,32 @@ class AddZedBusinessFacadeTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->assertFileExists($this->tester->getProjectModuleDirectory() . 'Business/FooBarFacade.php');
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory() . 'Business/FooBarFacade.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Business\AbstractFacade');
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddsZedBusinessFacadeThatExtendsSameCoreBaseClass(): void
+    {
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'core',
+        ]);
+
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'project',
+        ]);
+
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Zed') . 'Business/FooBarFacade.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\FooBar\Business\FooBarFacade');
     }
 }

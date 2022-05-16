@@ -39,7 +39,7 @@ class AddYvesConfigMethodTest extends Unit
             '--output' => 'string',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::YVES_CONFIG, 'getConfigValue');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::YVES_CONFIG, 'getConfigValue');
     }
 
     /**
@@ -55,6 +55,6 @@ class AddYvesConfigMethodTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_YVES_CONFIG, 'getConfigValue');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_YVES_CONFIG, 'getConfigValue');
     }
 }

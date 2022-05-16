@@ -10,22 +10,26 @@ arguments:
         inherit: true
         default: SprykerEco
 
+    application:
+        inherit: true
+        default: Zed
+
     classNamePrefix:
         inherit: true
 
     className:
         value: "{{ classNamePrefix }}OrderPaymentExpanderPlugin"
 
-    implementerInterfaceName:
+    implements:
         inherit: true
         value: "Spryker/Zed/SalesPaymentExtension/Dependency/Plugin/OrderPaymentExpanderPluginInterface"
 
-    expanderClassName:
+    extends:
         inherit: true
         value: "Spryker/Zed/Kernel/Communication/AbstractPlugin"
 
     subDirectory:
-        value: "Zed/{{ module }}/Communication/Plugin"
+        value: "Communication/Plugin"
 
     template:
         value: Common/Class.php.twig
@@ -34,7 +38,7 @@ arguments:
         value: "{{ classNamePrefix }}OrderPaymentExpanderPlugin.php"
 
     targetPath:
-        value: "src/{{ organization }}/"
+         value: "src/{{ organization }}/{{ application }}/{{ module }}/"
 
 preSpryks:
     - AddModule

@@ -10,6 +10,7 @@ namespace SprykerSdkTest\Spryk\Integration\Client\Dependency\Client;
 use Codeception\Test\Unit;
 use SprykerSdk\Spryk\Exception\SprykWrongDevelopmentLayerException;
 use SprykerSdkTest\Module\ClassName;
+use SprykerSdkTest\SprykIntegrationTester;
 
 /**
  * Auto-generated group annotations
@@ -28,7 +29,7 @@ class AddClientDependencyClientBridgeMethodTest extends Unit
     /**
      * @var \SprykerSdkTest\SprykIntegrationTester
      */
-    protected $tester;
+    protected SprykIntegrationTester $tester;
 
     /**
      * @skip Skipped for further investigation prioritisation and fix.
@@ -55,18 +56,18 @@ class AddClientDependencyClientBridgeMethodTest extends Unit
             ],
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithStringArgument');
-        $this->tester->assertClassHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithArrayArgument');
-        $this->tester->assertClassHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodReturnsVoid');
-        $this->tester->assertClassHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithTransferInputAndTransferOutput');
-        $this->tester->assertClassHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithDefaultNull');
-        $this->tester->assertClassHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithDefaultArray');
-        $this->tester->assertClassHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithoutMethodReturnType');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithStringArgument');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithArrayArgument');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodReturnsVoid');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithTransferInputAndTransferOutput');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithDefaultNull');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithDefaultArray');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithoutMethodReturnType');
         $this->tester->assertClassNotContains(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithoutMethodReturnType(): void');
-        $this->tester->assertClassHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithoutDocBlockReturnType');
-        $this->tester->assertClassHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithMultipleReturn');
-        $this->tester->assertClassHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithMultipleReturnAndNullable');
-        $this->tester->assertClassHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithNullableReturn');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithoutDocBlockReturnType');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithMultipleReturn');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithMultipleReturnAndNullable');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithNullableReturn');
     }
 
     /**
@@ -98,7 +99,7 @@ class AddClientDependencyClientBridgeMethodTest extends Unit
                 'methodWithStringArgument',
             ],
         ]);
-        $this->tester->assertClassHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithStringArgument');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithStringArgument');
 
         $this->tester->run($this, [
             '--module' => 'FooBar',
@@ -107,6 +108,6 @@ class AddClientDependencyClientBridgeMethodTest extends Unit
                 'methodWithStringArgument',
             ],
         ]);
-        $this->tester->assertClassHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithStringArgument');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::CLIENT_CLIENT_BRIDGE, 'methodWithStringArgument');
     }
 }

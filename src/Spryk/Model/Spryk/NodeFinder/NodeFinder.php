@@ -12,6 +12,7 @@ namespace SprykerSdk\Spryk\Model\Spryk\NodeFinder;
 use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Identifier;
+use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassConst;
 use PhpParser\Node\Stmt\ClassMethod;
@@ -21,6 +22,32 @@ use PhpParser\NodeFinder as PhpParserNodeFinder;
 
 class NodeFinder implements NodeFinderInterface
 {
+    /**
+     * @param array<\PhpParser\Node\Stmt> $tokens
+     * @param string $extends
+     *
+     * @return \PhpParser\Node\Name|null
+     */
+    public function findExtends(array $tokens, string $extends): ?Name
+    {
+        /** @var \PhpParser\Node\Stmt\Class_|null $class */
+        $class = (new PhpParserNodeFinder())->findFirst($tokens, function (Node $node) {
+            return $node instanceof Class_;
+        });
+
+        if (!$class) {
+            return null;
+        }
+
+        $name = $class->extends;
+
+        if (!$name || (string)$name !== $extends) {
+            return null;
+        }
+
+        return $name;
+    }
+
     /**
      * @param array $tokens
      * @param string $methodName
@@ -68,9 +95,18 @@ class NodeFinder implements NodeFinderInterface
      */
     public function findMethods(array $tokens): array
     {
-        return (new PhpParserNodeFinder())->find($tokens, function (Node $node) {
+        /** @var array<\PhpParser\Node\Stmt\ClassMethod> $methodNodes */
+        $methodNodes = (new PhpParserNodeFinder())->find($tokens, function (Node $node) {
             return $node instanceof ClassMethod;
         });
+
+        $methods = [];
+
+        foreach ($methodNodes as $methodNode) {
+            $methods[(string)$methodNode->name] = $methodNode;
+        }
+
+        return $methods;
     }
 
     /**
@@ -148,6 +184,32 @@ class NodeFinder implements NodeFinderInterface
 
         if ($classOrInterfaceNode) {
             return sprintf('%s\\%s', (string)$namespaceNode->name, (string)$classOrInterfaceNode->name);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param array<\PhpParser\Node\Stmt> $tokens
+     * @param string $implement
+     *
+     * @return \PhpParser\Node\Name|null
+     */
+    public function findImplements(array $tokens, string $implement): ?Name
+    {
+        /** @var \PhpParser\Node\Stmt\Class_|null $class */
+        $class = (new PhpParserNodeFinder())->findFirst($tokens, function (Node $node) {
+            return $node instanceof Class_;
+        });
+
+        if (!$class) {
+            return null;
+        }
+
+        foreach ($class->implements as $currentImplement) {
+            if ((string)$currentImplement === $implement) {
+                return $currentImplement;
+            }
         }
 
         return null;

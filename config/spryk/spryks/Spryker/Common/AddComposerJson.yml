@@ -1,0 +1,24 @@
+spryk: template
+description: "Adds a new composer.json to the root of the module or the project."
+mode: both
+
+arguments:
+    module:
+        inherit: true
+
+    organization:
+        inherit: true
+        default: Spryker
+
+    template:
+        value: composer.json.twig
+
+    targetPath:
+        value: ""
+
+preSpryks:
+    - AddModule
+
+postCommands:
+    - ComposerReplaceGenerate
+    - ComposerDumpAutoload

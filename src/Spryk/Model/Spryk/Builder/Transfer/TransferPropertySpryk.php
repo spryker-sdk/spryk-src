@@ -127,11 +127,20 @@ class TransferPropertySpryk extends AbstractTransferSpryk
             ->getArgument(static::PROPERTY_NAME)
             ->getValue();
 
+        // When this property is an array it was executed with:
+        // --property propertyA --propertyB ...
+        // or with
+        // --property propertyA:string --propertyB:int ...
         if (is_array($properties)) {
             return $properties;
         }
 
-        if (strpos($properties, ',') !== false) {
+        // When this argument contains a `:` this Spryk was called in a way that multiple properties should be added with one call
+        // This will most likely come from other SDK tools to have fewer calls to this Spryk.
+        // Examples:
+        // --property propertyA:string
+        // --property propertyA:string,propertyB:int
+        if (strpos($properties, ':') !== false) {
             return explode(',', $properties);
         }
 

@@ -40,7 +40,7 @@ class AddZedCommunicationControllerActionTest extends Unit
             '--controllerMethod' => 'index',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::ZED_CONTROLLER, 'indexAction');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_CONTROLLER, 'indexAction');
     }
 
     /**
@@ -55,7 +55,7 @@ class AddZedCommunicationControllerActionTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_ZED_CONTROLLER, 'indexAction');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_ZED_CONTROLLER, 'indexAction');
     }
 
     /**
@@ -69,7 +69,7 @@ class AddZedCommunicationControllerActionTest extends Unit
             '--controllerMethod' => 'indexAction',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::ZED_CONTROLLER, 'indexAction');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_CONTROLLER, 'indexAction');
     }
 
     /**
@@ -84,7 +84,7 @@ class AddZedCommunicationControllerActionTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_ZED_CONTROLLER, 'indexAction');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_ZED_CONTROLLER, 'indexAction');
     }
 
     /**
@@ -100,7 +100,7 @@ class AddZedCommunicationControllerActionTest extends Unit
             '--controllerMethod' => 'indexAction',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::ZED_CONTROLLER, 'indexAction');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_CONTROLLER, 'indexAction');
     }
 
     /**
@@ -117,7 +117,7 @@ class AddZedCommunicationControllerActionTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_ZED_CONTROLLER, 'indexAction');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_ZED_CONTROLLER, 'indexAction');
     }
 
     /**

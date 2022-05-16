@@ -249,4 +249,18 @@ class SprykStyle implements SprykStyleInterface
     {
         return $this->input;
     }
+
+    /**
+     * @param string $message
+     *
+     * @return void
+     */
+    public function writelnVerbose(string $message): void
+    {
+        if (!$this->output->isVerbose()) {
+            return;
+        }
+
+        $this->output->writeln(sprintf('<fg=green>%s</>', $message));
+    }
 }

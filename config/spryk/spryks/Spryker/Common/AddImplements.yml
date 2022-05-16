@@ -1,0 +1,19 @@
+spryk: addImplements
+description: "Add implements interface notation to the target class."
+mode: both
+
+arguments:
+    module:
+        inherit: true
+
+    organization:
+        inherit: true
+        default: Spryker
+
+    application:
+        inherit: true
+
+    target:
+        description: "Target class"
+
+    interface: ~

@@ -1,17 +1,35 @@
 spryk: template
 description: "Adds a new *module*Factory to the Yves application."
 mode: both
+level: 3
+condition: "application === 'Yves'"
 
 arguments:
+    module:
+        inherit: true
+
     organization:
         inherit: true
         default: SprykerShop
 
-    module:
-        inherit: true
+    application:
+        value: Yves
+
+    extends:
+        callback: ResolveExtends
+        value:
+            - "\\SprykerShop\\{{ application }}\\{{ module }}\\{{ module }}Factory"
+            - "\\Spryker\\{{ application }}\\Kernel\\AbstractFactory"
+
+    className:
+        value: "{{ module }}Factory"
+
+    annotations:
+        value:
+            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\{{ module }}Config getConfig()"
 
     template:
-        value: Yves/YvesFactory.php.twig
+        value: Common/Class.php.twig
 
     targetFilename:
         value: "{{ module }}Factory.php"
@@ -24,4 +42,7 @@ preSpryks:
 
 postSpryks:
     - AddYvesDependencyProvider
-    - AddYvesConfig
+    - AddModuleConfig:
+          arguments:
+              application:
+                  value: Yves

@@ -7,6 +7,7 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer;
 
+use Exception;
 use Symfony\Bridge\Twig\Extension\CodeExtension;
 use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Twig\Extension\HttpFoundationExtension;
@@ -18,6 +19,7 @@ use Symfony\Bridge\Twig\Extension\StopwatchExtension;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Bridge\Twig\Extension\WebLinkExtension;
 use Symfony\Bridge\Twig\Extension\YamlExtension;
+use Throwable;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Extension\ExtensionInterface;
@@ -105,14 +107,21 @@ class TemplateRenderer implements TemplateRendererInterface
     /**
      * @param string $templateString
      * @param array $arguments
+     * @param string $sprykName
+     *
+     * @throws \Exception
      *
      * @return string
      */
-    public function renderString(string $templateString, array $arguments): string
+    public function renderString(string $templateString, array $arguments, string $sprykName): string
     {
-        $template = $this->renderer->createTemplate($templateString);
+        try {
+            $template = $this->renderer->createTemplate($templateString);
 
-        return $template->render($arguments);
+            return $template->render($arguments);
+        } catch (Throwable $e) {
+            throw new Exception(sprintf('Spryk "%s" failed due to a SyntaxError in "%s". Previous error message: %s', $sprykName, $templateString, $e->getMessage()), 0, $e);
+        }
     }
 
     /**

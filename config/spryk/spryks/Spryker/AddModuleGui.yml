@@ -9,6 +9,10 @@ arguments:
         inherit: true
         default: Spryker
 
+    application:
+        inherit: true
+        default: Zed
+
     module:
         inherit: true
         type: NewModuleType
@@ -24,6 +28,8 @@ arguments:
 postSpryks:
     - AddModule
     - AddSharedTransferSchema
-    - AddZedConfig
+    - AddModuleConfig:
+          arguments:
+              application: "Zed"
     - AddZedDependencyProvider
     - AddZedCommunicationFactory

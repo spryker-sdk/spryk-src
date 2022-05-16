@@ -39,7 +39,7 @@ class AddGlueDependencyClientFactoryMethodTest extends Unit
             '--dependentModule' => 'ZipZap',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::GLUE_BUSINESS_FACTORY, 'getZipZapClient');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::GLUE_BUSINESS_FACTORY, 'getZipZapClient');
     }
 
     /**
@@ -53,6 +53,6 @@ class AddGlueDependencyClientFactoryMethodTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_GLUE_BUSINESS_FACTORY, 'getZipZapClient');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_GLUE_BUSINESS_FACTORY, 'getZipZapClient');
     }
 }

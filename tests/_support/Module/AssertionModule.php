@@ -9,6 +9,7 @@ namespace SprykerSdkTest\Module;
 
 use Codeception\Module;
 use PhpParser\Node\Expr\MethodCall;
+use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\ClassConst;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\PrettyPrinter\Standard;
@@ -26,6 +27,77 @@ class AssertionModule extends Module
         $sprykHelper = $this->getModule(SprykHelper::class);
 
         return $sprykHelper;
+    }
+
+    /**
+     * @param string $classOrInterfaceName
+     *
+     * @return void
+     */
+    public function assertClassOrInterfaceExists(string $classOrInterfaceName): void
+    {
+        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolved */
+        $resolved = $this->getSprykHelper()->getFileResolver()->resolve($classOrInterfaceName);
+        $resolvedClasses = $this->getSprykHelper()->getFileResolver()->getResolvedByType(ResolvedClassInterface::class);
+
+        $this->assertNotNull(
+            $resolved,
+            sprintf(
+                "Expected that class or interface \"%s\" exists but was not found. Found classes: \n\n%s",
+                $classOrInterfaceName,
+                implode("\n", array_keys($resolvedClasses)),
+            ),
+        );
+    }
+
+    /**
+     * @param string $classOrInterfaceName
+     * @param string $extends
+     *
+     * @return void
+     */
+    public function assertClassOrInterfaceExtends(string $classOrInterfaceName, string $extends): void
+    {
+        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolved */
+        $resolved = $this->getSprykHelper()->getFileResolver()->resolve($classOrInterfaceName);
+
+        $this->assertNotNull(
+            $resolved,
+            sprintf(
+                'Expected that class or interface "%s" exists but was not found.',
+                $classOrInterfaceName,
+            ),
+        );
+
+        $extendFullyQualified = $this->getNodeFinder()->findExtends($resolved->getClassTokenTree(), $extends);
+
+        $this->assertNotNull(
+            $extendFullyQualified,
+            sprintf(
+                'Expected that class or interface "%s" extends "%s" but was not found.',
+                $classOrInterfaceName,
+                $extends,
+            ),
+        );
+    }
+
+    /**
+     * @param string $classOrInterfaceName
+     *
+     * @return void
+     */
+    public function assertClassOrInterfaceDoesNotExist(string $classOrInterfaceName): void
+    {
+        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolved */
+        $resolved = $this->getSprykHelper()->getFileResolver()->resolve($classOrInterfaceName);
+
+        $this->assertNull(
+            $resolved,
+            sprintf(
+                'Expected that class or interface "%s" does not exist but it was found.',
+                $classOrInterfaceName,
+            ),
+        );
     }
 
     /**
@@ -66,7 +138,7 @@ class AssertionModule extends Module
      *
      * @return void
      */
-    public function assertClassHasMethod(string $className, string $methodName): void
+    public function assertClassOrInterfaceHasMethod(string $className, string $methodName): void
     {
         $resolved = $this->getResolvedByClassName($className);
         $nodeFinder = $this->getNodeFinder();
@@ -77,11 +149,45 @@ class AssertionModule extends Module
             ClassMethod::class,
             $method,
             sprintf(
-                'Expected that class "%s" has method "%s" but method not found.',
+                'Expected that class "%s" has method "%s" but method not found. Found methods: %s',
+                $className,
+                $methodName,
+                implode(', ', $this->getMethodNamesFromResolvedClass($resolved)),
+            ),
+        );
+    }
+
+    /**
+     * @param string $className
+     * @param string $methodName
+     *
+     * @return void
+     */
+    public function assertClassOrInterfaceDoesNotHasMethod(string $className, string $methodName): void
+    {
+        $resolved = $this->getResolvedByClassName($className);
+        $nodeFinder = $this->getNodeFinder();
+
+        $method = $nodeFinder->findMethodNode($resolved->getClassTokenTree(), $methodName);
+
+        $this->assertNull(
+            $method,
+            sprintf(
+                'Expected that class "%s" does not has method "%s" but method was found.',
                 $className,
                 $methodName,
             ),
         );
+    }
+
+    /**
+     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolvedClass
+     *
+     * @return array<string, string>
+     */
+    protected function getMethodNamesFromResolvedClass(ResolvedClassInterface $resolvedClass): array
+    {
+        return $this->getNodeFinder()->findMethodNames($resolvedClass->getClassTokenTree());
     }
 
     /**
@@ -262,5 +368,72 @@ class AssertionModule extends Module
         }
 
         $this->assertCount($count, $tableXmlElements, 'Expected table not found in schema.');
+    }
+
+    /**
+     * @param string $className
+     * @param string $implement
+     *
+     * @return void
+     */
+    public function assertClassImplements(string $className, string $implement): void
+    {
+        $resolved = $this->getResolvedByClassName($className);
+        $implementNode = $this->getNodeFinder()->findImplements($resolved->getClassTokenTree(), $implement);
+
+        $this->assertInstanceOf(
+            Name::class,
+            $implementNode,
+            sprintf(
+                'Expected that class "%s" implements "%s" but node not found.',
+                $className,
+                $implement,
+            ),
+        );
+    }
+
+    /**
+     * Assert that a method inside of a class has method call.
+     *
+     * @example
+     * ```
+     * class FooBar { // className
+     *     public function zipZap() { // classMethodName
+     *         $this->bazBat(); // methodCallName
+     *     }
+     * }
+     * ```
+     *
+     * @param string $className
+     * @param string $classMethodName
+     * @param string $methodCallName
+     *
+     * @return void
+     */
+    public function assertClassMethodHasMethodCall(string $className, string $classMethodName, string $methodCallName): void
+    {
+        $this->assertClassOrInterfaceHasMethod($className, $classMethodName);
+
+        $resolved = $this->getResolvedByClassName($className);
+        $nodeFinder = $this->getNodeFinder();
+
+        $method = $nodeFinder->findMethodNode($resolved->getClassTokenTree(), $classMethodName);
+
+        if (!$method) {
+            $this->assertTrue(false, sprintf('Class method "%s" not found.', $classMethodName));
+        }
+
+        $methodCallNode = $this->getNodeFinder()->findMethodCallNode($method->getStmts(), $methodCallName);
+
+        $this->assertInstanceOf(
+            MethodCall::class,
+            $methodCallNode,
+            sprintf(
+                'Expected that class "%s::%s()" calls method "%s" but method call not found.',
+                $className,
+                $classMethodName,
+                $methodCallName,
+            ),
+        );
     }
 }

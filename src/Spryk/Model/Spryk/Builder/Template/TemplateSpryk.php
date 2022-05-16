@@ -8,6 +8,7 @@
 namespace SprykerSdk\Spryk\Model\Spryk\Builder\Template;
 
 use Exception;
+use PhpParser\Error;
 use SprykerSdk\Spryk\Model\Spryk\Builder\AbstractBuilder;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface;
@@ -15,9 +16,9 @@ use SprykerSdk\Spryk\SprykConfig;
 
 class TemplateSpryk extends AbstractBuilder
 {
- /**
-  * @var string
-  */
+    /**
+     * @var string
+     */
     public const ARGUMENT_TARGET_FILE_NAME = 'targetFilename';
 
     /**
@@ -60,7 +61,8 @@ class TemplateSpryk extends AbstractBuilder
      */
     protected function shouldBuild(): bool
     {
-        $resolved = $this->fileResolver->resolve($this->getTargetPath());
+        $targetPath = $this->getTargetPath();
+        $resolved = $this->fileResolver->resolve($targetPath);
 
         if ($resolved === null) {
             return true;
@@ -93,7 +95,11 @@ class TemplateSpryk extends AbstractBuilder
 
         $content = $this->getContent($templateName);
 
-        $this->fileResolver->addFile($targetPath, $content);
+        try {
+            $this->fileResolver->addFile($targetPath, $content);
+        } catch (Error $e) {
+            throw new Exception(sprintf('Could not parse content for Spryk "%s".', $this->getSprykName()), 0, $e);
+        }
 
         $this->log(sprintf('Created <fg=green>%s</>', $targetPath));
     }

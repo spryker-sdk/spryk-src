@@ -9,6 +9,7 @@ namespace SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Superseder;
 
 use SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\ArgumentInterface;
+use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Callback\Resolver\CallbackArgumentResolverInterface;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface;
 
 class Superseder implements SupersederInterface
@@ -21,19 +22,26 @@ class Superseder implements SupersederInterface
     /**
      * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface
      */
-    protected $templateRenderer;
+    protected TemplateRendererInterface $templateRenderer;
+
+    /**
+     * @var \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Callback\Resolver\CallbackArgumentResolverInterface
+     */
+    protected CallbackArgumentResolverInterface $callbackArgumentResolver;
 
     /**
      * @var array<string>
      */
-    protected $resolvedArguments = [];
+    protected array $resolvedArguments = [];
 
     /**
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface $templateRenderer
+     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Callback\Resolver\CallbackArgumentResolverInterface $callbackArgumentResolver
      */
-    public function __construct(TemplateRendererInterface $templateRenderer)
+    public function __construct(TemplateRendererInterface $templateRenderer, CallbackArgumentResolverInterface $callbackArgumentResolver)
     {
         $this->templateRenderer = $templateRenderer;
+        $this->callbackArgumentResolver = $callbackArgumentResolver;
     }
 
     /**
@@ -46,9 +54,14 @@ class Superseder implements SupersederInterface
     {
         foreach ($sprykArguments->getArguments() as $argument) {
             if ($argument->getValue() === null) {
+                $this->callbackArgumentResolver->resolveArgument($argument, $sprykArguments);
+
                 continue;
             }
             $this->resolveArgument($argument, $sprykArguments, $resolvedArguments);
+
+            // Need to resolve callbacks after value was received. Other arguments could need already the completely resolved value.
+            $this->callbackArgumentResolver->resolveArgument($argument, $sprykArguments);
         }
 
         return $sprykArguments;
@@ -77,24 +90,30 @@ class Superseder implements SupersederInterface
         }
 
         $argumentValues = [];
+
         foreach ($argumentValue as $value) {
             $argumentValues[] = $this->replacePlaceholderInValue($value, $sprykArguments, $resolvedArguments);
         }
+
         $argument->setValue($argumentValues);
     }
 
     /**
-     * @param string $argumentValue
+     * @param string|int|bool $argumentValue
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $sprykArguments
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $resolvedArguments
      *
-     * @return string
+     * @return string|int|bool
      */
     protected function replacePlaceholderInValue(
-        string $argumentValue,
+        $argumentValue,
         ArgumentCollectionInterface $sprykArguments,
         ArgumentCollectionInterface $resolvedArguments
-    ): string {
+    ) {
+        if (is_bool($argumentValue) || is_int($argumentValue)) {
+            return $argumentValue;
+        }
+
         preg_match_all(static::PLACEHOLDER_PATTERN, $argumentValue, $matches, PREG_SET_ORDER);
 
         if (count($matches) === 0) {
@@ -108,9 +127,9 @@ class Superseder implements SupersederInterface
             $replacements[$argumentName] = $resolvedArgumentValue;
         }
 
-        $argumentValue = $this->templateRenderer->renderString($argumentValue, $replacements);
+        $replacements = array_merge($replacements, $sprykArguments->getArguments());
 
-        return $argumentValue;
+        return $this->templateRenderer->renderString($argumentValue, $replacements, $sprykArguments->getSprykName());
     }
 
     /**

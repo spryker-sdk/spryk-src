@@ -7,6 +7,8 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Executor;
 
+use Exception;
+use InvalidArgumentException;
 use Jfcherng\Diff\DiffHelper;
 use SprykerSdk\Spryk\Exception\SprykWrongDevelopmentLayerException;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Collection\SprykBuilderCollectionInterface;
@@ -20,6 +22,11 @@ use SprykerSdk\Spryk\Style\SprykStyleInterface;
 
 class SprykExecutor implements SprykExecutorInterface
 {
+    /**
+     * @var \SprykerSdk\Spryk\SprykConfig
+     */
+    protected SprykConfig $sprykConfig;
+
     /**
      * @var \SprykerSdk\Spryk\Model\Spryk\Definition\Builder\SprykDefinitionBuilderInterface
      */
@@ -61,6 +68,12 @@ class SprykExecutor implements SprykExecutorInterface
     protected FileDumperInterface $fileDumper;
 
     /**
+     * @var int
+     */
+    protected int $currentExecutionLevel = 0;
+
+    /**
+     * @param \SprykerSdk\Spryk\SprykConfig $sprykConfig
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Builder\SprykDefinitionBuilderInterface $definitionBuilder
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Collection\SprykBuilderCollectionInterface $sprykBuilderCollection
      * @param array<\SprykerSdk\Spryk\Model\Spryk\Command\SprykCommandInterface> $sprykCommands
@@ -68,12 +81,14 @@ class SprykExecutor implements SprykExecutorInterface
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\FileDumperInterface $fileDumper
      */
     public function __construct(
+        SprykConfig $sprykConfig,
         SprykDefinitionBuilderInterface $definitionBuilder,
         SprykBuilderCollectionInterface $sprykBuilderCollection,
         array $sprykCommands,
         FileResolverInterface $fileResolver,
         FileDumperInterface $fileDumper
     ) {
+        $this->sprykConfig = $sprykConfig;
         $this->definitionBuilder = $definitionBuilder;
         $this->sprykBuilderCollection = $sprykBuilderCollection;
         $this->sprykCommands = $sprykCommands;
@@ -157,7 +172,7 @@ class SprykExecutor implements SprykExecutorInterface
      */
     protected function buildSpryk(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): void
     {
-        if ($sprykDefinition->getMode() !== $this->mainSprykDefinitionMode) {
+        if (($sprykDefinition->getMode() !== 'both' && $sprykDefinition->getMode() !== $this->mainSprykDefinitionMode) || !$this->conditionMatched($sprykDefinition)) {
             return;
         }
 
@@ -174,6 +189,61 @@ class SprykExecutor implements SprykExecutorInterface
 
     /**
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
+     *
+     * @throws \Exception
+     * @throws \InvalidArgumentException
+     *
+     * @return bool
+     */
+    protected function conditionMatched(SprykDefinitionInterface $sprykDefinition): bool
+    {
+        $conditionString = $sprykDefinition->getCondition();
+
+        if (!$conditionString) {
+            return true;
+        }
+
+        $conditions = explode('&&', $conditionString);
+
+        $conditionMatched = true;
+
+        foreach ($conditions as $condition) {
+            [$argument, $comparison, $expectedValue] = explode(' ', trim($condition));
+
+            if (!in_array($comparison, ['!==', '==='])) {
+                throw new Exception(sprintf('Allowed comparison types "!==" and "===" found "%s"', $comparison));
+            }
+
+            // TRy to find also in previous definitions. This is needed as condition values might be only available in the "parent" spryk.
+            if (!$sprykDefinition->getArgumentCollection()->hasArgument($argument, true)) {
+                throw new InvalidArgumentException(sprintf('Could not find the argument "%s" in the argument collection of "%s" to be used in the condition "%s"', $argument, $sprykDefinition->getSprykName(), $conditionString));
+            }
+
+            $argumentValue = $sprykDefinition->getArgumentCollection()->getArgument($argument, true)->getValue();
+
+            $expectedValue = trim($expectedValue, '\'"');
+
+            if ($expectedValue === 'true') {
+                $expectedValue = true;
+            }
+            if ($expectedValue === 'false') {
+                $expectedValue = false;
+            }
+
+            if ($comparison === '===' && $argumentValue !== $expectedValue) {
+                $conditionMatched = false;
+            }
+
+            if ($comparison === '!==' && $argumentValue === $expectedValue) {
+                $conditionMatched = false;
+            }
+        }
+
+        return $conditionMatched;
+    }
+
+    /**
+     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
      * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
      *
      * @return void
@@ -181,7 +251,9 @@ class SprykExecutor implements SprykExecutorInterface
     protected function executePreSpryks(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): void
     {
         $style->startPreSpryks($sprykDefinition);
+        ++$this->currentExecutionLevel;
         $this->buildPreSpryks($sprykDefinition, $style);
+        --$this->currentExecutionLevel;
         $style->endPreSpryks($sprykDefinition);
     }
 
@@ -194,7 +266,12 @@ class SprykExecutor implements SprykExecutorInterface
     protected function executeSpryk(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): void
     {
         $builder = $this->sprykBuilderCollection->getBuilder($sprykDefinition);
+
+        $style->writelnVerbose(sprintf('Starting: %s Level: %s', $sprykDefinition->getSprykName(), $this->currentExecutionLevel));
+
         $builder->runSpryk($sprykDefinition, $style);
+
+        $style->writelnVerbose(sprintf('Finished: %s', $sprykDefinition->getSprykName()));
 
         $this->executedSpryks[$sprykDefinition->getSprykDefinitionKey()] = $sprykDefinition;
     }
@@ -208,7 +285,9 @@ class SprykExecutor implements SprykExecutorInterface
     protected function executePostSpryks(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): void
     {
         $style->startPostSpryks($sprykDefinition);
+        ++$this->currentExecutionLevel;
         $this->buildPostSpryks($sprykDefinition, $style);
+        --$this->currentExecutionLevel;
         $style->endPostSpryks($sprykDefinition);
     }
 
@@ -382,6 +461,10 @@ class SprykExecutor implements SprykExecutorInterface
     {
         $sprykModeArgument = $style->getInput()->getOption(SprykConfig::NAME_ARGUMENT_MODE);
         $sprykModeDefinition = $sprykDefinition->getMode();
+
+        if ($sprykModeDefinition === 'both') {
+            return true;
+        }
 
         if ($sprykModeArgument === false || $sprykModeArgument === null) {
             return true;

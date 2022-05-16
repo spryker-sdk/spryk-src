@@ -142,4 +142,16 @@ interface SprykDefinitionInterface
      * @return $this
      */
     public function setMode(string $mode);
+
+    /**
+     * @param string $condition
+     *
+     * @return $this
+     */
+    public function setCondition(string $condition);
+
+    /**
+     * @return string
+     */
+    public function getCondition(): string;
 }

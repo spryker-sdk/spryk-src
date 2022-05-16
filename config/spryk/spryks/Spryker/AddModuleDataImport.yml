@@ -9,6 +9,10 @@ arguments:
         inherit: true
         default: Spryker
 
+    application:
+        inherit: true
+        default: Zed
+
     module:
         inherit: true
         type: NewModuleType
@@ -37,7 +41,7 @@ postSpryks:
         arguments:
             name:
                 value: DataImporterReport
-    - AddZedConfig:
+    - AddModuleConfig:
         arguments:
             extends:
                 value: \Spryker\Zed\DataImport\DataImportConfig
@@ -47,14 +51,18 @@ postSpryks:
                 value: \Spryker\Zed\DataImport\DataImportDependencyProvider
     - AddDataImportZedBusinessFactoryMethod
     - AddZedBusinessFacade
-    - AddZedConfigMethod:
+    - AddMethod:
         arguments:
-            configMethod:
+            method:
                 value: "get{{ entity }}DataImporterConfiguration"
             input:
                 value: ""
             output:
                 value: \Generated\Shared\Transfer\DataImporterConfigurationTransfer
+            target:
+                value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\{{ module }}Config"
+            withInterface:
+                value: false
     - AddConstant:
         arguments:
             name:

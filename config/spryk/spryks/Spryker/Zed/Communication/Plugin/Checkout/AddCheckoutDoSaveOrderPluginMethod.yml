@@ -10,11 +10,15 @@ arguments:
         inherit: true
         default: SprykerEco
 
+    application:
+        inherit: true
+        default: Zed
+
     classNamePrefix:
         inherit: true
 
     subDirectory:
-        value: "Zed/{{ module }}/Communication/Plugin/Checkout"
+        value: "Communication/Plugin/Checkout"
 
     method:
         inherit: true
@@ -36,7 +40,7 @@ arguments:
         value: Common/Method.php.twig
 
     target:
-        value: "{{ organization }}\\{{ subDirectory | convertToClassNameFragment }}\\{{ classNamePrefix }}CheckoutDoSaveOrderPlugin"
+        value: "{{ organization }}\\{{ application }}\\{{ module }}\\{{ subDirectory | convertToClassNameFragment }}\\{{ classNamePrefix }}CheckoutDoSaveOrderPlugin"
 
 preSpryks:
     - AddCheckoutDoSaveOrderPlugin

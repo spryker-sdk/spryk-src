@@ -1,6 +1,8 @@
 spryk: template
 description: "Adds a new *module*Factory to the Glue application."
 mode: both
+level: 3
+condition: "application === 'Glue'"
 
 arguments:
     module:
@@ -10,8 +12,24 @@ arguments:
         inherit: true
         default: Spryker
 
+    application:
+        value: Glue
+
+    applicationType:
+        inherit: true
+        default: Backend
+
+    extends:
+        callback: ResolveExtends
+        value:
+            - "\\Spryker\\{{ application }}\\{{ module }}\\{{ module }}Factory"
+            - "\\Spryker\\{{ application }}\\Kernel\\{{applicationType}}\\AbstractFactory"
+
+    className:
+        value: "{{ module }}Factory"
+
     template:
-        value: Glue/GlueFactory.php.twig
+        value: Common/Class.php.twig
 
     targetFilename:
         value: "{{ module }}Factory.php"
@@ -24,4 +42,7 @@ preSpryks:
 
 postSpryks:
     - AddGlueDependencyProvider
-    - AddGlueConfig
+    - AddModuleConfig:
+          arguments:
+              application:
+                  value: Glue

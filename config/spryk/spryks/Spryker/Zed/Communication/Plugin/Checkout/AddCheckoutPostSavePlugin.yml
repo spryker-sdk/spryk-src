@@ -10,22 +10,26 @@ arguments:
         inherit: true
         default: SprykerEco
 
+    application:
+        inherit: true
+        default: Zed
+
     classNamePrefix:
         inherit: true
 
     className:
         value: "{{ classNamePrefix }}CheckoutPostSavePlugin"
 
-    implementerInterfaceName:
+    implements:
         inherit: true
         value: \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPostSaveInterface
 
-    expanderClassName:
+    extends:
         inherit: true
-        value: "Spryker/Zed/Kernel/Communication/AbstractPlugin"
+        value: "\\Spryker\\Zed\\Kernel\\Communication\\AbstractPlugin"
 
     subDirectory:
-        value: "Zed/{{ module }}/Communication/Plugin/Checkout"
+        value: "Communication/Plugin/Checkout"
 
     template:
         value: Common/Class.php.twig
@@ -34,7 +38,7 @@ arguments:
         value: "{{ classNamePrefix }}CheckoutPostSavePlugin.php"
 
     targetPath:
-        value: "src/{{ organization }}/"
+         value: "src/{{ organization }}/{{ application }}/{{ module }}/"
 
 preSpryks:
     - AddModule

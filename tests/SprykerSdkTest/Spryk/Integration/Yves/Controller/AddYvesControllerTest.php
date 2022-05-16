@@ -38,10 +38,11 @@ class AddYvesControllerTest extends Unit
             '--controller' => ClassName::YVES_CONTROLLER,
         ]);
 
-        $this->assertFileExists(
-            $this->tester->getSprykerShopModuleDirectory()
-            . 'src/SprykerShop/Yves/FooBar/Controller/FooBarController.php',
-        );
+        $targetClassFilePath = $this->tester->getSprykerShopModuleDirectory() . 'src/SprykerShop/Yves/FooBar/Controller/FooBarController.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Yves\Kernel\Controller\AbstractController');
     }
 
     /**
@@ -55,9 +56,34 @@ class AddYvesControllerTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->assertFileExists(
-            $this->tester->getProjectModuleDirectory('FooBar', 'Yves')
-            . 'Controller/FooBarController.php',
-        );
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Yves') . 'Controller/FooBarController.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Yves\Kernel\Controller\AbstractController');
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddsYvesControllerFileThatExtendsSameCoreBaseClass(): void
+    {
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'core',
+            '--controller' => ClassName::YVES_CONTROLLER,
+        ]);
+
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'project',
+            '--controller' => ClassName::YVES_CONTROLLER,
+        ]);
+
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Yves') . 'Controller/FooBarController.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'SprykerShop\Yves\FooBar\Controller\FooBarController');
     }
 }

@@ -14,24 +14,26 @@ class ApplicationLayerExtenderPlugin extends AbstractExtender implements SprykCo
 {
     /**
      * @param array $sprykConfig
+     * @param array $context
      *
      * @return array
      */
-    public function extend(array $sprykConfig): array
+    public function extend(array $sprykConfig, array $context): array
     {
-        if (!$this->isProject($sprykConfig)) {
+        if (!$this->isProject($sprykConfig, $context)) {
             return $sprykConfig;
         }
 
-        return $this->buildApplicationLayerArgument($sprykConfig);
+        return $this->buildApplicationLayerArgument($sprykConfig, $context);
     }
 
     /**
      * @param array $sprykConfig
+     * @param array $context
      *
      * @return array
      */
-    protected function buildApplicationLayerArgument(array $sprykConfig): array
+    protected function buildApplicationLayerArgument(array $sprykConfig, array $context): array
     {
         $arguments = $this->getArguments($sprykConfig);
 

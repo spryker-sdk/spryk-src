@@ -332,6 +332,16 @@ interface ClassName
     /**
      * @var string
      */
+    public const SERVICE_CONFIG = 'Spryker\Service\FooBar\FooBarConfig';
+
+    /**
+     * @var string
+     */
+    public const PROJECT_SERVICE_CONFIG = 'Pyz\Service\FooBar\FooBarConfig';
+
+    /**
+     * @var string
+     */
     public const PROJECT_CONFIG_YVES = 'Pyz\Yves\FooBar\FooBarConfig';
 
     /**
@@ -543,4 +553,9 @@ interface ClassName
      * @var string
      */
     public const PROJECT_YVES_PLUGIN_SUB_FORM_PLUGIN = 'Pyz\Yves\FooBar\Plugin\TestPaymentSubFormPlugin';
+
+    /**
+     * @var string
+     */
+    public const PROJECT_GLUE_BACKEND_API_RESOURCE_PLUGIN = 'Pyz\Glue\FooBarsBackendApi\Plugin\FooBarsBackendApiResource';
 }

@@ -16,6 +16,7 @@ use SprykerSdk\Spryk\Console\SprykRunConsole;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\Dumper\ClassDumperInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\FileDumperInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface;
+use SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface;
 use SprykerSdk\Spryk\SprykConfig;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -76,6 +77,31 @@ class SprykHelper extends Module
     {
         $sprykName = $this->getSprykName($testClass);
 
+        /** @var \Codeception\Module\Symfony $symfony */
+        $symfony = $this->getModule('Symfony');
+
+        $command = $symfony->grabService(SprykRunConsole::class);
+
+        $tester = $this->getConsoleTester($command, $sprykName);
+
+        $arguments += [
+            'command' => $command->getName(),
+            SprykRunConsole::ARGUMENT_SPRYK => $sprykName,
+        ];
+
+        $arguments = $this->addDevelopmentModeFromConfig($arguments);
+
+        $tester->execute($arguments, ['interactive' => false]);
+    }
+
+    /**
+     * @param string $sprykName
+     * @param array $arguments
+     *
+     * @return void
+     */
+    public function runSpryk(string $sprykName, array $arguments): void
+    {
         /** @var \Codeception\Module\Symfony $symfony */
         $symfony = $this->getModule('Symfony');
 
@@ -234,6 +260,17 @@ class SprykHelper extends Module
         $fileResolver = $this->getContainer()->get(FileResolverInterface::class);
 
         return $fileResolver;
+    }
+
+    /**
+     * @return \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface
+     */
+    public function getNodeFinder(): NodeFinderInterface
+    {
+        /** @var \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface $nodeFinder */
+        $nodeFinder = $this->getContainer()->get(NodeFinderInterface::class);
+
+        return $nodeFinder;
     }
 
     /**

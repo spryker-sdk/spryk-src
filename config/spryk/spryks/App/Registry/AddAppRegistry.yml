@@ -9,6 +9,10 @@ arguments:
         inherit: true
         default: Spryker
 
+    application:
+        inherit: true
+        default: Zed
+
     module:
         inherit: true
 
@@ -136,6 +140,8 @@ postSpryks:
                       - "}"
                       - ""
                       - "return $this->jsonResponse([]);"
+              withInterface:
+                  value: false
 
     - AddZedCommunicationTest:
           arguments:
@@ -172,6 +178,8 @@ postSpryks:
                       - "$this->assertInstanceOf(\\Symfony\\Component\\HttpFoundation\\JsonResponse::class, $response);"
                       - "$this->assertTrue($response->isSuccessful());"
                       - "$this->assertSame($response->getContent(), json_encode([]));"
+              withInterface:
+                  value: false
 
     - AddMethod:
           arguments:
@@ -194,6 +202,8 @@ postSpryks:
                       - "$this->assertThat($response->getContent(), new \\Codeception\\PHPUnit\\Constraint\\JsonContains(["
                       - "    'errors' => [['code' => {{ module }}Config::RESPONSE_CODE_INVALID_HTTP_METHOD]],"
                       - "]));"
+              withInterface:
+                  value: false
 
     - AddMethod:
           arguments:
@@ -215,6 +225,8 @@ postSpryks:
                       - "$this->assertThat($response->getContent(), new \\Codeception\\PHPUnit\\Constraint\\JsonContains(["
                       - "    'errors' => [['code' => {{ module }}Config::RESPONSE_CODE_MISSING_TENANT_IDENTIFIER]],"
                       - "]));"
+              withInterface:
+                  value: false
 
     - AddMethod:
           arguments:
@@ -243,6 +255,8 @@ postSpryks:
                       - "}"
                       - ""
                       - "return $this->jsonResponse($responseData, \\Symfony\\Component\\HttpFoundation\\Response::HTTP_BAD_REQUEST);"
+              withInterface:
+                  value: false
 
     - AddZedBusinessFacadeMethod:
           arguments:

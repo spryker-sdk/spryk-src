@@ -1,6 +1,7 @@
 spryk: dependencyProvider
 description: "Adds a Facade dependency method to the Container in the *module*DependencyProvider."
 mode: both
+deprecated: Use AddDependencyBridgeMethod instead.
 
 arguments:
     module:

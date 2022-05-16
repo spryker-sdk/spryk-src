@@ -10,9 +10,15 @@ arguments:
     module:
         inherit: true
 
-    method: ~
+    application:
+        inherit: true
+
+    method:
+        description: "Name of the method."
 
     body:
+        description: "Body of the method. Can also be a template."
+        isOptional: true
         default: ""
 
     visibility:
@@ -20,13 +26,34 @@ arguments:
         default: public
 
     input:
+        description: "Input (arguments) for the method. Can be an array or a list separated by comma."
         isOptional: true
 
     output:
+        description: "Output (return) for the method."
         default: void
+
+    subDirectory:
+        description: "Only used to forward to the generated interface."
+        inherit: true
 
     template:
         value: Common/Method.php.twig
 
-    target: ~
+    target:
+        description: "Class where the method should be added to."
 
+    annotations:
+        isOptional: true
+        isMultiline: true
+
+    withInterface:
+        inherit: true
+        default: true
+
+postSpryks:
+    - AddInterfaceMethod:
+          condition: "visibility === 'public' && withInterface === true"
+          arguments:
+              className:
+                  vallue: "{{ target }}Interface"

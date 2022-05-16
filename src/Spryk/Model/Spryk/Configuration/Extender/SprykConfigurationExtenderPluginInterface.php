@@ -11,8 +11,9 @@ interface SprykConfigurationExtenderPluginInterface
 {
     /**
      * @param array $sprykConfig
+     * @param array $context
      *
      * @return array
      */
-    public function extend(array $sprykConfig): array;
+    public function extend(array $sprykConfig, array $context): array;
 }

@@ -67,6 +67,6 @@ class AddZedDependencyFacadeBridgeTest extends Unit
             '--dependentModule' => 'ZipZap',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::ZED_BUSINESS_FACTORY, 'getZipZapFacade');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_BUSINESS_FACTORY, 'getZipZapFacade');
     }
 }

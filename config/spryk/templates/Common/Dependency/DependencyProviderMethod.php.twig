@@ -1,0 +1,18 @@
+{% extends 'Common/Method.php.twig' %}
+{% block body %}
+    {% if mode == 'project' %}
+    $container->set(static::{{ dependencyType | upper }}_{{ dependentModule | camelCaseToUnderscore | upper }}, function (Container $container) {
+        return $container->getLocator()->{{ dependentModule | lcfirst }}()->{{ dependencyType | lcfirst }}();
+    });
+
+    return $container;
+    {% else %}
+    $container->set(static::{{ dependencyType | upper }}_{{ dependentModule | camelCaseToUnderscore | upper }}, function (Container $container) {
+        return new \Spryker\{{ application }}\{{ module }}\Dependency\{{ dependencyType }}\{{ module }}To{{ dependentModule }}{{ dependencyType }}Bridge(
+            $container->getLocator()->{{ dependentModule | lcfirst }}()->{{ dependencyType | lcfirst }}()
+        );
+    });
+
+    return $container;
+    {% endif %}
+{% endblock %}

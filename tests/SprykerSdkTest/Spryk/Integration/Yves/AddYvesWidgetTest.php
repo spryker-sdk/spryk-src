@@ -36,7 +36,11 @@ class AddYvesWidgetTest extends Unit
             '--widget' => 'ZipZap',
         ]);
 
-        $this->assertFileExists($this->tester->getSprykerShopModuleDirectory() . 'src/SprykerShop/Yves/FooBar/Widget/ZipZapWidget.php');
+        $targetClassFilePath = $this->tester->getSprykerShopModuleDirectory() . 'src/SprykerShop/Yves/FooBar/Widget/ZipZapWidget.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Yves\Kernel\Widget\AbstractWidget');
     }
 
     /**
@@ -50,9 +54,34 @@ class AddYvesWidgetTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->assertFileExists(
-            $this->tester->getProjectModuleDirectory('FooBar', 'Yves')
-            . 'Widget/ZipZapWidget.php',
-        );
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Yves') . 'Widget/ZipZapWidget.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Yves\Kernel\Widget\AbstractWidget');
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddsYvesWidgetFileThatExtendsSameCoreBaseClass(): void
+    {
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'core',
+            '--widget' => 'ZipZap',
+        ]);
+
+        $this->tester->run($this, [
+            '--module' => 'FooBar',
+            '--mode' => 'project',
+            '--widget' => 'ZipZap',
+        ]);
+
+        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Yves') . 'Widget/ZipZapWidget.php';
+
+        $this->assertFileExists($targetClassFilePath);
+
+        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'SprykerShop\Yves\FooBar\Widget\ZipZapWidget');
     }
 }

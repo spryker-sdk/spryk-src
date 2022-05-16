@@ -42,7 +42,7 @@ class AddZedBusinessModelInterfaceMethodTest extends Unit
             '--output' => 'bool',
         ]);
 
-        $this->tester->assertClassHasMethod('Spryker\Zed\FooBar\Business\Foo\BarInterface', 'addSomething');
+        $this->tester->assertClassOrInterfaceHasMethod('Spryker\Zed\FooBar\Business\Foo\BarInterface', 'addSomething');
     }
 
     /**
@@ -60,7 +60,7 @@ class AddZedBusinessModelInterfaceMethodTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(
+        $this->tester->assertClassOrInterfaceHasMethod(
             'Pyz\Zed\FooBar\Business\Foo\BarInterface',
             'addSomething',
         );

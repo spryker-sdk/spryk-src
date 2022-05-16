@@ -1,0 +1,7 @@
+    $glueResponseTransfer = new GlueResponseTransfer();
+
+    foreach (${{ zedDomainEntity | lcfirst }}CollectionTransfer->get{{ zedDomainEntity | pluralize }}() as ${{ zedDomainEntity | lcfirst }}Transfer) {
+        $glueResponseTransfer = $this->add{{ zedDomainEntity }}TransferToGlueResponse(${{ zedDomainEntity | lcfirst }}Transfer, $glueResponseTransfer);
+    }
+
+    return $glueResponseTransfer;

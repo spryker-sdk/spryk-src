@@ -7,6 +7,7 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Builder\Resolver;
 
+use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Exception\FileDoesNotContainClassOrInterfaceException;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\ParserInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface;
@@ -75,10 +76,10 @@ class FileResolver implements FileResolverInterface
             return static::$resolved[$name];
         }
 
-        foreach ($this->all() as $resolved) {
-            if ($resolved instanceof ResolvedClassInterface && ($resolved->getClassName() === $name || $resolved->getFullyQualifiedClassName() === $name)) {
-                return $resolved;
-            }
+        $resolved = $this->searchInResolved($name);
+
+        if ($resolved !== null) {
+            return $resolved;
         }
 
         if (file_exists($name)) {
@@ -87,6 +88,41 @@ class FileResolver implements FileResolverInterface
 
         if (class_exists($name) || interface_exists($name)) {
             return static::$resolved[$name] = $this->classParser->parse($name);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function hasResolved(string $name): bool
+    {
+        if (isset(static::$resolved[$name])) {
+            return true;
+        }
+
+        return $this->searchInResolved($name) !== null;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface|null
+     */
+    protected function searchInResolved(string $name): ?ResolvedInterface
+    {
+        foreach ($this->all() as $resolved) {
+            if (
+                $resolved instanceof ResolvedClassInterface
+                && ($resolved->getClassName() === $name
+                    || $resolved->getFullyQualifiedClassName() === $name
+                    || $resolved->getFilePath() === $name)
+            ) {
+                return $resolved;
+            }
         }
 
         return null;
@@ -103,8 +139,13 @@ class FileResolver implements FileResolverInterface
 
         switch ($extension) {
             case 'php':
-                return $this->classParser->parse($fileName);
+                try {
+                    return $this->classParser->parse($fileName);
+                } catch (FileDoesNotContainClassOrInterfaceException $e) {
+                    return $this->fileParser->parse($fileName);
+                }
             case 'yml':
+            case 'yaml':
                 return $this->ymlParser->parse($fileName);
             case 'json':
                 return $this->jsonParser->parse($fileName);
@@ -147,6 +188,7 @@ class FileResolver implements FileResolverInterface
 
                 break;
             case 'yml':
+            case 'yaml':
                 $this->addYmlFile($filePath, $content);
 
                 break;
@@ -171,8 +213,15 @@ class FileResolver implements FileResolverInterface
      */
     protected function addPhpFile(string $filePath, string $content): void
     {
-        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolved */
-        $resolved = $this->classParser->parse($content);
+        try {
+            /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolved */
+            $resolved = $this->classParser->parse($content);
+        } catch (FileDoesNotContainClassOrInterfaceException $e) {
+            $this->addDefaultFile($filePath, $content);
+
+            return;
+        }
+
         $resolved->setFilePath($filePath);
         $resolved->setOriginalContent('');
 
@@ -255,5 +304,17 @@ class FileResolver implements FileResolverInterface
     public function reset(): void
     {
         static::$resolved = [];
+    }
+
+    /**
+     * @param string $type The interface name.
+     *
+     * @return array<\SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface>
+     */
+    public function getResolvedByType(string $type): array
+    {
+        return array_filter(static::$resolved, function (ResolvedInterface $resolved) use ($type) {
+            return $resolved instanceof $type;
+        });
     }
 }

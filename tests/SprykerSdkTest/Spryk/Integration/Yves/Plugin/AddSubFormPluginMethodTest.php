@@ -39,7 +39,7 @@ class AddSubFormPluginMethodTest extends Unit
             '--classNamePrefix' => 'TestPayment',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::YVES_PLUGIN_SUB_FORM_PLUGIN, 'createSubForm');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::YVES_PLUGIN_SUB_FORM_PLUGIN, 'createSubForm');
     }
 
     /**
@@ -53,6 +53,6 @@ class AddSubFormPluginMethodTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassHasMethod(ClassName::PROJECT_YVES_PLUGIN_SUB_FORM_PLUGIN, 'createSubForm');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_YVES_PLUGIN_SUB_FORM_PLUGIN, 'createSubForm');
     }
 }
