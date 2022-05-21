@@ -1,0 +1,218 @@
+spryk: template
+condition: "httpMethod === 'get' || httpMethod === 'delete' || ((httpMethod === 'patch' || httpMethod === 'post') && isBulk === false)"
+description: "Adds a new ApiCest class."
+mode: both
+level: 2
+
+priority: 1
+
+arguments:
+    resource:
+        inherit: true
+
+    isBulk:
+        inherit: true
+
+    module:
+        value: "{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api"
+
+    organization:
+        inherit: true
+        default: Spryker
+
+    applicationType:
+        inherit: true
+        default: Backend
+
+    suite:
+        value: "RestApi"
+
+    application:
+        value: "Glue"
+
+    zedDomainEntity:
+        inherit: true
+
+    httpMethod:
+        inherit: true
+
+    httpResponseCode:
+        inherit: true
+
+    template:
+        value: Glue/Test/GlueTestApiCest/ApiCest.php.twig
+
+    className:
+        inherit: true
+        default: "{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Cest"
+
+    targetFilename:
+        value: "{{ className }}.php"
+
+    targetPath:
+        value: "tests/{{ organization }}Test/{{ application }}/{{ module }}/{{suite | ucfirst}}"
+
+    fixtureClass:
+        value: "{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Fixtures"
+
+preSpryks:
+    - AddGlueTestHelper
+    - AddGlueTestFixtures
+    - AddGlueTestTester
+
+postSpryks:
+    - AddMethod:
+          condition: "httpMethod === 'get' && isBulk === false"
+          arguments:
+              isBulk:
+                  inherit: true
+              httpResponseCode:
+                  inherit: true
+              zedDomainEntity:
+                  inherit: true
+              resource:
+                  inherit: true
+              httpMethod:
+                  inherit: true
+              method:
+                  value: "request{{ resource | normalizeResourceName | singularize | ucfirst }}{{ httpMethod | ucfirst }}ReturnsHttpResponseCode{{ httpResponseCode }}"
+              input:
+                  value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I"
+              output:
+                 value: "void"
+              body:
+                  value: Glue/Test/GlueTestApiCest/GetCestMethod.php.twig
+              target:
+                  value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{suite | ucfirst}}\\{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Cest"
+              withInterface:
+                  value: false
+
+    - AddMethod:
+        condition: "httpMethod === 'get' && isBulk === true"
+        arguments:
+            isBulk:
+                inherit: true
+            httpResponseCode:
+                inherit: true
+            zedDomainEntity:
+                inherit: true
+            resource:
+                inherit: true
+            httpMethod:
+                inherit: true
+            method:
+                value: "request{{ resource | normalizeResourceName | singularize | ucfirst }}{{ httpMethod | ucfirst }}CollectionReturnsHttpResponseCode{{ httpResponseCode }}"
+            input:
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I"
+            output:
+                value: "void"
+            body:
+                value: Glue/Test/GlueTestApiCest/GetCollectionCestMethod.php.twig
+            target:
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{suite | ucfirst}}\\{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Cest"
+            withInterface:
+                value: false
+
+    - AddMethod:
+        condition: "httpMethod === 'delete' && isBulk === true"
+        arguments:
+            isBulk:
+                inherit: true
+            httpResponseCode:
+                inherit: true
+            zedDomainEntity:
+                inherit: true
+            resource:
+                inherit: true
+            httpMethod:
+                inherit: true
+            method:
+                value: "request{{ resource | normalizeResourceName | singularize | ucfirst }}{{ httpMethod | ucfirst }}CollectionReturnsHttpResponseCode{{ httpResponseCode }}"
+            input:
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I"
+            output:
+                value: "void"
+            body:
+                value: Glue/Test/GlueTestApiCest/DeleteCollectionCestMethod.php.twig
+            target:
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{suite | ucfirst}}\\{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Cest"
+            withInterface:
+                value: false
+
+    - AddMethod:
+        condition: "httpMethod === 'post' && isBulk === false"
+        arguments:
+            isBulk:
+                inherit: true
+            httpResponseCode:
+                inherit: true
+            zedDomainEntity:
+                inherit: true
+            resource:
+                inherit: true
+            httpMethod:
+                inherit: true
+            method:
+                value: "request{{ resource | normalizeResourceName | singularize | ucfirst }}{{ httpMethod | ucfirst }}ReturnsHttpResponseCode{{ httpResponseCode }}"
+            input:
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I"
+            output:
+                value: "void"
+            body:
+                value: Glue/Test/GlueTestApiCest/PostCestMethod.php.twig
+            target:
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{suite | ucfirst}}\\{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Cest"
+            withInterface:
+                value: false
+
+    - AddMethod:
+        condition: "httpMethod === 'delete' && isBulk === false"
+        arguments:
+            isBulk:
+                inherit: true
+            httpResponseCode:
+                inherit: true
+            zedDomainEntity:
+                inherit: true
+            resource:
+                inherit: true
+            httpMethod:
+                inherit: true
+            method:
+                value: "request{{ resource | normalizeResourceName | singularize | ucfirst }}{{ httpMethod | ucfirst }}ReturnsHttpResponseCode{{ httpResponseCode }}"
+            input:
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I"
+            output:
+                value: "void"
+            body:
+                value: Glue/Test/GlueTestApiCest/DeleteCestMethod.php.twig
+            target:
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{suite | ucfirst}}\\{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Cest"
+            withInterface:
+                value: false
+
+    - AddMethod:
+        condition: "httpMethod === 'patch' && isBulk === false"
+        arguments:
+            isBulk:
+                inherit: true
+            httpResponseCode:
+                inherit: true
+            zedDomainEntity:
+                inherit: true
+            resource:
+                inherit: true
+            httpMethod:
+                inherit: true
+            method:
+                value: "request{{ resource | normalizeResourceName | singularize | ucfirst }}{{ httpMethod | ucfirst }}ReturnsHttpResponseCode{{ httpResponseCode }}"
+            input:
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I"
+            output:
+                value: "void"
+            body:
+                value: Glue/Test/GlueTestApiCest/PatchCestMethod.php.twig
+            target:
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{suite | ucfirst}}\\{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Cest"
+            withInterface:
+                value: false

@@ -1,0 +1,12 @@
+// Arrange
+${{ zedDomainEntity | lcfirst }}Id = $this->fixtures->get{{ zedDomainEntity }}Transfer()->getIdApp();
+$newUuid = (\Ramsey\Uuid\Uuid::uuid4())->toString();
+$url = $I->build{{ resource | normalizeResourceName | ucfirst }}Url(${{ zedDomainEntity | lcfirst }}Id);
+
+// Act
+$I->sendPatch($url, $I->build{{ zedDomainEntity }}RequestData(${{ zedDomainEntity | lcfirst }}Id, $newUuid));
+
+// Assert
+$I->seeResponseCodeIs({{ httpResponseCode | httpResponseCodeToConstantName }});
+$I->seeResponseIsJson();
+$I->seeResponseJsonContains{{ zedDomainEntity }}IdWithUuid(${{ zedDomainEntity | lcfirst }}Id, $newUuid );

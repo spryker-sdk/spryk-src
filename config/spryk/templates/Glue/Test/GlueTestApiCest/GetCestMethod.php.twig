@@ -1,0 +1,12 @@
+// Arrange
+${{ zedDomainEntity | lcfirst }}Id = $this->fixtures->get{{ zedDomainEntity }}Transfer()->getIdApp();
+$uuid = $this->fixtures->get{{ zedDomainEntity }}Transfer()->getUuid();
+$url = $I->build{{ resource | normalizeResourceName | ucfirst }}Url(${{ zedDomainEntity | lcfirst }}Id);
+
+// Act
+$I->sendGet($url);
+
+// Assert
+$I->seeResponseCodeIs({{ httpResponseCode | httpResponseCodeToConstantName }});
+$I->seeResponseIsJson();
+$I->seeResponseJsonContains{{ zedDomainEntity }}IdWithUuid(${{ zedDomainEntity | lcfirst }}Id, $uuid );

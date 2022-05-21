@@ -1,0 +1,124 @@
+spryk: wrapper
+description: "Adds <Resource>Helper."
+mode: both
+level: 2
+application: Glue
+
+priority: 1
+
+arguments:
+    module:
+        inherit: true
+
+    dataModule: # dataModule
+        inherit: true
+
+    organization:
+        inherit: true
+        default: Spryker
+
+    application:
+        inherit: true
+        default: Glue
+
+    apiType:
+        inherit: true
+
+    applicationType:
+        inherit: true
+        default: "Backend"
+
+    suite:
+        value: "RestApi"
+
+    isBulk:
+        inherit: true
+        default: false
+
+    resource:
+        inherit: true
+
+    httpMethod:
+        inherit: true
+
+    httpResponseCode:
+        inherit: true
+
+    controller:
+        default: "{{ resource | normalizeResourceName }}ResourceController"
+
+    zedDomainEntity:
+        inherit: true
+
+    resourceDataObject:
+        inherit: true
+
+postSpryks:
+    - AddTestHelper:
+        arguments:
+            className:
+                value: "{{ resource | normalizeResourceName | ucfirst }}Helper"
+        excludedSpryks:
+            - EnableTestHelper
+
+    - AddMethod:
+          arguments:
+              httpMethod:
+                  inherit: true
+              isBulk:
+                  inherit: true
+              method:
+                  value: "build{{ resource | normalizeResourceName | ucfirst }}Url"
+              input:
+                  value: "?int ${{ zedDomainEntity | lcfirst }}Identifier = null"
+              output:
+                  value: string
+              body:
+                  value: "return ${{ zedDomainEntity | lcfirst }}Identifier !== null ? $this->build{{ applicationType | ucfirst }}ApiUrl('{{ resource | normalizeResourceName | lcfirst }}/{id}', ['id' => ${{ zedDomainEntity | lcfirst }}Identifier]) : $this->build{{ applicationType | ucfirst }}ApiUrl('{{ resource | normalizeResourceName | lcfirst }}');"
+              target:
+                  value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | ucfirst }}Helper"
+              withInterface:
+                  value: false
+
+    - AddMethod:
+            arguments:
+                applicationType:
+                    inherit: true
+                method:
+                    value: "build{{ applicationType }}ApiUrl"
+                input:
+                    value:
+                        - "string $url"
+                        - "array<mixed> $params = []"
+                output:
+                    value: string
+                body:
+                    value: Glue/Test/GlueTestHelper/BuildBackendApiUrlMethod.php.twig
+                target:
+                    value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | ucfirst }}Helper"
+                withInterface:
+                    value: false
+                visibility:
+                    value: protected
+
+    - AddMethod:
+            arguments:
+                applicationType:
+                    inherit: true
+                method:
+                    value: "formatUrl"
+                input:
+                    value:
+                        - "string $url"
+                        - "array<mixed> $params"
+                output:
+                    value: string
+                body:
+                    value: Glue/Test/GlueTestHelper/FormatUrlMethod.php.twig
+                target:
+                    value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | ucfirst }}Helper"
+                withInterface:
+                    value: false
+                visibility:
+                    value: protected
+

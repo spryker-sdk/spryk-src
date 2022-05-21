@@ -41,6 +41,16 @@ class AddBackendApiResourceMethodSpryk extends AbstractBuilder
     public const ARGUMENT_METHOD = 'httpMethod';
 
     /**
+     * @var string
+     */
+    public const ARGUMENT_IS_BULK = 'isBulk';
+
+    /**
+     * @var string
+     */
+    protected const COLLECTION_POSTFIX = 'Collection';
+
+    /**
      * @var \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface
      */
     protected NodeFinderInterface $nodeFinder;
@@ -109,7 +119,7 @@ class AddBackendApiResourceMethodSpryk extends AbstractBuilder
         $methodName = $this->getMethodName();
         $resourceDataObject = $this->getResourceDataObject();
 
-        $methodName = sprintf('set%s', ucfirst(strtolower($methodName)));
+        $methodName = sprintf('set%s', ucfirst(strtolower($methodName)) . ($this->getIsBulk() ? static::COLLECTION_POSTFIX : ''));
 
         $traverser = new NodeTraverser();
         $traverser->addVisitor(new AddGlueResourceMethodVisitor($methodName, $resourceDataObject, $this->nodeFinder));
@@ -191,5 +201,13 @@ class AddBackendApiResourceMethodSpryk extends AbstractBuilder
     protected function getResourceDataObject(): string
     {
         return $this->getStringArgument(static::ARGUMENT_RESOURCE_DATA_OBJECT);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function getIsBulk(): bool
+    {
+        return (bool)$this->arguments->getArgument(static::ARGUMENT_IS_BULK)->getValue();
     }
 }

@@ -1,0 +1,13 @@
+$url = sprintf(
+    '%s://%s/%s',
+    \Spryker\Shared\Config\Config::get(\Spryker\Shared\ZedRequest\ZedRequestConstants::ZED_API_SSL_ENABLED) ? 'https' : 'http',
+    {% if applicationType == 'Backend' %}
+        \Spryker\Shared\Config\Config::get(\Spryker\Shared\GlueBackendApiApplication\GlueBackendApiApplicationConstants::GLUE_BACKEND_API_HOST),
+    {% else %}
+        {# extension point for other types of APIs #}
+        \Spryker\Shared\Config\Config::get(\Spryker\Shared\GlueBackendApiApplication\GlueBackendApiApplicationConstants::GLUE_STOREFRONT_API_HOST),
+    {% endif %}
+    $this->formatUrl($url, $params)
+);
+
+return rtrim($url, '/');

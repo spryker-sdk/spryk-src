@@ -61,6 +61,7 @@ class AddGlueResourceMethodResponseTest extends Unit
         $expectedControllerMethodName = $httpMethod . 'Action';
         $expectedTestController = $this->getExpectedTestController($httpMethod, $isBulk);
         $expectedTestControllerMethodName = $this->getExpectedTestControllerMethodName($httpMethod, $httpResponseCode, $isBulk);
+        $expectedFixtureClass = $this->getFixtureClassName($httpMethod, (bool)$isBulk);
 
         if ($isBulk) {
             $commandOptions['--isBulk'] = $isBulk;
@@ -87,16 +88,29 @@ class AddGlueResourceMethodResponseTest extends Unit
 
         // Controller test class
         $this->tester->assertClassOrInterfaceExists($expectedTestController);
-        $this->tester->assertClassOrInterfaceExtends($expectedTestController, Unit::class);
 
         // Test method in the test controller
         $this->tester->assertClassOrInterfaceHasMethod($expectedTestController, $expectedTestControllerMethodName);
 
-        // Test Helper methods
-        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_TEST_HELPER, sprintf('haveValidFooBars%s%sUri', ucfirst($httpMethod), ($isBulk) ? 'Collection' : ''));
-        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_TEST_HELPER, sprintf('haveInvalidFooBars%s%sUri', ucfirst($httpMethod), ($isBulk) ? 'Collection' : ''));
-        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_TEST_HELPER, sprintf('haveValidFooBars%s%sRequestData', ucfirst($httpMethod), ($isBulk) ? 'Collection' : ''));
-        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_TEST_HELPER, sprintf('haveInvalidFooBars%s%sRequestData', ucfirst($httpMethod), ($isBulk) ? 'Collection' : ''));
+        // Tester class
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_TESTER_CLASS);
+
+        // Tester class methods
+        foreach ($this->getExpectedTesterMethods($httpMethod, (bool)$isBulk) as $methodName) {
+            $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_TESTER_CLASS, $methodName);
+        }
+
+        // Fixtures classes
+        if ($httpMethod !== 'post') {
+            $this->tester->assertClassOrInterfaceExists($expectedFixtureClass);
+
+            // Fixtures methods
+            $this->tester->assertClassOrInterfaceHasMethod($expectedFixtureClass, 'buildFixtures');
+
+            foreach ($this->getFixtureMethodNames((bool)$isBulk) as $methodName) {
+                $this->tester->assertClassOrInterfaceHasMethod($expectedFixtureClass, $methodName);
+            }
+        }
 
         // Resource
         $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_RESOURCE_PLUGIN);
@@ -172,6 +186,56 @@ class AddGlueResourceMethodResponseTest extends Unit
 
     /**
      * @param string $httpMethod
+     * @param bool $isBulk
+     *
+     * @return array
+     */
+    protected function getExpectedTesterMethods(string $httpMethod, bool $isBulk): array
+    {
+        $methods = [];
+
+        if ($isBulk === true) {
+            if ($httpMethod === 'get') {
+                $methods[] = sprintf('build%sCollectionFooBarRequestParameters', ucfirst($httpMethod));
+                $methods[] = 'seeResponseJsonContainsFooBarCollection';
+            }
+        } else {
+            if ($httpMethod === 'patch' || $httpMethod === 'get') {
+                $methods[] = 'seeResponseJsonContainsFooBarIdWithUuid';
+            }
+            if ($httpMethod === 'patch') {
+                $methods[] = 'buildFooBarRequestData';
+            }
+        }
+
+        return $methods;
+    }
+
+    /**
+     * @param string $httpMethod
+     * @param bool $isBulk
+     *
+     * @return string
+     */
+    protected function getFixtureClassName(string $httpMethod, bool $isBulk): string
+    {
+        return sprintf(GlueBackendApiClassNames::GLUE_BACKEND_API_FIXTURES_CLASS, ucfirst($httpMethod), $isBulk ? 'Collection' : '');
+    }
+
+    /**
+     * @param bool $isBulk
+     *
+     * @return array
+     */
+    protected function getFixtureMethodNames(bool $isBulk): array
+    {
+        return $isBulk
+            ? ['getFooBarTransferOne', 'getFooBarTransferTwo']
+            : ['getFooBarTransfer'];
+    }
+
+    /**
+     * @param string $httpMethod
      * @param int $httpResponseCode
      * @param bool|null $isBulk
      *
@@ -179,6 +243,6 @@ class AddGlueResourceMethodResponseTest extends Unit
      */
     protected function getExpectedTestControllerMethodName(string $httpMethod, int $httpResponseCode, ?bool $isBulk): string
     {
-        return sprintf('testFooBar%s%sReturnsHttpResponseCode%s', ucfirst($httpMethod), ($isBulk) ? 'Collection' : '', $httpResponseCode);
+        return sprintf('requestFooBar%s%sReturnsHttpResponseCode%s', ucfirst($httpMethod), ($isBulk) ? 'Collection' : '', $httpResponseCode);
     }
 }

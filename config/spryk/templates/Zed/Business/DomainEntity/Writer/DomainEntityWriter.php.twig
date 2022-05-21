@@ -125,7 +125,7 @@ class {{ domainEntity }}{{ className }} implements {{ domainEntity }}{{ classNam
         $persisted{{ domainEntity }}Transfers = [];
 
         foreach (${{ domainEntity | lcfirst }}Transfers as ${{ domainEntity | lcfirst }}Transfer) {
-            $persisted{{ domainEntity }}Transfers[] = $this->ayEntityManager->{{ type | lcfirst }}{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
+            $persisted{{ domainEntity }}Transfers[] = $this->{{ module | lcfirst }}EntityManager->{{ type | lcfirst }}{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
         }
 
         // Run post-save plugins

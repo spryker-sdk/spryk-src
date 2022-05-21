@@ -1,0 +1,41 @@
+spryk: update-yml
+description: "Updates the *module* test configuration and adds the suite configuration for Glue tests."
+mode: both
+
+arguments:
+    module:
+        value: "{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api"
+
+    organization:
+        inherit: true
+        default: Spryker
+
+    suite:
+        value: "RestApi"
+
+    zedDomainEntity:
+        inherit: true
+
+    application:
+        inherit: true
+
+    resource:
+        inherit: true
+
+    applicationType:
+        inherit: true
+
+    template:
+        value: Glue/Test/GlueTestCodeceptionConfiguration.yml.twig
+
+    afterElement:
+        value: coverage
+
+    addToElement:
+        value: suites
+
+    targetPath:
+        value: "tests/{{ organization }}Test/{{ application }}/{{ module }}/codeception.yml"
+
+preSpryks:
+    - AddSuiteCodeceptionConfiguration

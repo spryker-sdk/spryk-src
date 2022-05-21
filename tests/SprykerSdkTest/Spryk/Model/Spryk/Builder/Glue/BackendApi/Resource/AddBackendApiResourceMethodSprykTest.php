@@ -45,6 +45,7 @@ class AddBackendApiResourceMethodSprykTest extends Unit
             AddBackendApiResourceMethodSpryk::ARGUMENT_RESOURCE => 'ZipZap',
             AddBackendApiResourceMethodSpryk::ARGUMENT_RESOURCE_DATA_OBJECT => '\Generated\Shared\Transfer\ZipZapTransfer',
             AddBackendApiResourceMethodSpryk::ARGUMENT_METHOD => 'Post', // Should add a `setPost` method call
+            AddBackendApiResourceMethodSpryk::ARGUMENT_IS_BULK => false,
         ]);
 
         /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Glue\BackendApi\Resource\AddBackendApiResourceMethodSpryk $addBackendApiResourceMethodSpryk */
