@@ -48,7 +48,7 @@ class AddBackendApiResourceMethodSpryk extends AbstractBuilder
     /**
      * @var string
      */
-    protected const COLLECTION_POSTFIX = 'Collection';
+    protected const COLLECTION_SUFFIX = 'Collection';
 
     /**
      * @var \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface
@@ -119,7 +119,7 @@ class AddBackendApiResourceMethodSpryk extends AbstractBuilder
         $methodName = $this->getMethodName();
         $resourceDataObject = $this->getResourceDataObject();
 
-        $methodName = sprintf('set%s', ucfirst(strtolower($methodName)) . ($this->getIsBulk() ? static::COLLECTION_POSTFIX : ''));
+        $methodName = sprintf('set%s', ucfirst(strtolower($methodName)) . ($this->getIsBulk() ? static::COLLECTION_SUFFIX : ''));
 
         $traverser = new NodeTraverser();
         $traverser->addVisitor(new AddGlueResourceMethodVisitor($methodName, $resourceDataObject, $this->nodeFinder));

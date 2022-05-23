@@ -4,28 +4,30 @@ mode: both
 level: 2
 application: Glue
 
-priority: 1
-
 arguments:
     module:
         inherit: true
 
-    dataModule: # dataModule
+    dataModule:
         inherit: true
 
     organization:
         inherit: true
+        description: "Defines the organization name"
         default: Spryker
 
     application:
         inherit: true
+        description: "Defines the application e.g. Glue"
         default: Glue
 
     apiType:
         inherit: true
+        description: "Can be one of: REST or JSON"
 
     applicationType:
         inherit: true
+        description: "Can be one of: Backend or Frontend"
         default: "Backend"
 
     suite:
@@ -33,22 +35,27 @@ arguments:
 
     isBulk:
         inherit: true
+        description: "Defines if this resource should work with Collections. When set to true the method will use collections when possible."
         default: false
 
     resource:
         inherit: true
+        description: "Defines the resource name this controller will work with e.g. /customers"
 
     httpMethod:
         inherit: true
+        description: "The HTTP method e.g. POST"
 
     httpResponseCode:
         inherit: true
+        description: "The response code e.g. 200"
 
     controller:
         default: "{{ resource | normalizeResourceName }}ResourceController"
 
     zedDomainEntity:
         inherit: true
+        description: "Defines the domain entity that should be tested"
 
     resourceDataObject:
         inherit: true

@@ -8,6 +8,7 @@ arguments:
 
     organization:
         inherit: true
+        description: "Defines the organization name"
         default: Spryker
 
     suite:
@@ -15,15 +16,21 @@ arguments:
 
     zedDomainEntity:
         inherit: true
+        description: "Defines the domain entity that should be tested"
 
     application:
         inherit: true
+        description: "Defines application that is used"
+        default: "Glue"
 
     resource:
         inherit: true
+        description: "Defines the resource name this controller will work with e.g. /customers"
 
     applicationType:
         inherit: true
+        description: "Can be one of: Backend or Frontend"
+        default: Backend
 
     template:
         value: Glue/Test/GlueTestCodeceptionConfiguration.yml.twig

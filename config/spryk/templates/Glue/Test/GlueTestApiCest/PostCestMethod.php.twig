@@ -2,7 +2,7 @@
 $url = $I->build{{ resource | normalizeResourceName | ucfirst }}Url();
 
 // Act
-$I->send{{ httpMethod | ucfirst }}($url);
+$I->sendPost($url);
 
 // Assert
 $I->seeResponseCodeIs({{ httpResponseCode | httpResponseCodeToConstantName }});

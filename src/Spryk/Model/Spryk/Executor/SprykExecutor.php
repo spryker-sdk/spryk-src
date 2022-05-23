@@ -74,7 +74,7 @@ class SprykExecutor implements SprykExecutorInterface
     /**
      * @var \SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface
      */
-    private $conditionMatcher;
+    protected ConditionMatcherInterface $conditionMatcher;
 
     /**
      * @param \SprykerSdk\Spryk\SprykConfig $sprykConfig

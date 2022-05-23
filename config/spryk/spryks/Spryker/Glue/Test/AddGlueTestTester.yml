@@ -3,24 +3,27 @@ description: "Adds a new Api Tester."
 mode: both
 level: 2
 
-priority: 1
-
 arguments:
     resource:
         inherit: true
+        description: "Defines the resource name this controller will work with e.g. /customers"
 
     isBulk:
         inherit: true
+        description: "Defines if this resource should work with Collections. When set to true the method will use collections when possible."
+        default: false
 
     module:
         value: "{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api"
 
     organization:
         inherit: true
+        description: "Defines the organization name"
         default: Spryker
 
     applicationType:
         inherit: true
+        description: "Can be one of: Backend or Frontend"
         default: Backend
 
     application:
@@ -28,12 +31,15 @@ arguments:
 
     zedDomainEntity:
         inherit: true
+        description: "Defines the domain entity that should be tested"
 
     httpMethod:
         inherit: true
+        description: "The HTTP method e.g. POST"
 
     httpResponseCode:
         inherit: true
+        description: "The response code e.g. 200"
 
     template:
         value: Glue/Test/GlueTestTester/ApiTester.php.twig
@@ -54,7 +60,7 @@ postSpryks:
             httpMethod:
                 inherit: true
             method:
-                value: "seeResponseJsonContains{{ zedDomainEntity }}IdWithUuid"
+                value: "seeResponseJsonContains{{ zedDomainEntity }}IdAndUuid"
             input:
                 value:
                     - "int ${{ zedDomainEntity | lcfirst }}Id"

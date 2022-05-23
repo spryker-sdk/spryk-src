@@ -1,5 +1,5 @@
 // Arrange
-${{ zedDomainEntity | lcfirst }}Id = $this->fixtures->get{{ zedDomainEntity }}Transfer()->getIdApp();
+${{ zedDomainEntity | lcfirst }}Id = $this->fixtures->get{{ zedDomainEntity }}Transfer()->getId{{ zedDomainEntity }}();
 $uuid = $this->fixtures->get{{ zedDomainEntity }}Transfer()->getUuid();
 $url = $I->build{{ resource | normalizeResourceName | ucfirst }}Url(${{ zedDomainEntity | lcfirst }}Id);
 
@@ -9,4 +9,4 @@ $I->sendGet($url);
 // Assert
 $I->seeResponseCodeIs({{ httpResponseCode | httpResponseCodeToConstantName }});
 $I->seeResponseIsJson();
-$I->seeResponseJsonContains{{ zedDomainEntity }}IdWithUuid(${{ zedDomainEntity | lcfirst }}Id, $uuid );
+$I->seeResponseJsonContains{{ zedDomainEntity }}IdAndUuid(${{ zedDomainEntity | lcfirst }}Id, $uuid );

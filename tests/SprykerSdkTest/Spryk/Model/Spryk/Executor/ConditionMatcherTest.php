@@ -10,28 +10,15 @@ namespace SprykerSdkTest\Spryk\Model\Spryk\Executor;
 use Codeception\Test\Unit;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Argument;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollection;
-use SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcher;
-use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use SprykerSdkTest\SprykTester;
 use Symfony\Component\ExpressionLanguage\SyntaxError;
 
 class ConditionMatcherTest extends Unit
 {
     /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcher
+     * @var \SprykerSdkTest\SprykTester
      */
-    protected $conditionMatcher;
-
-    /**
-     * @return void
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        if ($this->conditionMatcher === null) {
-            $this->conditionMatcher = new ConditionMatcher(new ExpressionLanguage());
-        }
-    }
+    protected SprykTester $tester;
 
     /**
      * @dataProvider getConditionMatcherTestData
@@ -44,7 +31,7 @@ class ConditionMatcherTest extends Unit
      */
     public function testContiditionMatcherParseAndExecuteContitionString(string $condition, array $arguments, bool $expectedResult): void
     {
-        $this->assertSame($expectedResult, $this->conditionMatcher->match($condition, $this->createArgumentCollection($arguments)));
+        $this->assertSame($expectedResult, $this->tester->getConditionMatcher()->match($condition, $this->createArgumentCollection($arguments)));
     }
 
     /**
@@ -81,7 +68,7 @@ class ConditionMatcherTest extends Unit
     {
         $this->expectException(SyntaxError::class);
 
-        $this->conditionMatcher->match($condition, $this->createArgumentCollection($arguments));
+        $this->tester->getConditionMatcher()->match($condition, $this->createArgumentCollection($arguments));
     }
 
     /**

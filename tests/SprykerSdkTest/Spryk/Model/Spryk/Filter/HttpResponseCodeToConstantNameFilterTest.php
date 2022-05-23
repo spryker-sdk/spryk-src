@@ -8,26 +8,14 @@
 namespace SprykerSdkTest\Spryk\Model\Spryk\Filter;
 
 use Codeception\Test\Unit;
-use SprykerSdk\Spryk\Model\Spryk\Filter\HttpResponseCodeToConstantNameFilter;
+use SprykerSdkTest\SprykTester;
 
 class HttpResponseCodeToConstantNameFilterTest extends Unit
 {
     /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Filter\HttpResponseCodeToConstantNameFilter
+     * @var \SprykerSdkTest\SprykTester
      */
-    protected $filter;
-
-    /**
-     * @return void
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        if ($this->filter === null) {
-            $this->filter = new HttpResponseCodeToConstantNameFilter();
-        }
-    }
+    protected SprykTester $tester;
 
     /**
      * @dataProvider getFilterTestData
@@ -39,7 +27,7 @@ class HttpResponseCodeToConstantNameFilterTest extends Unit
      */
     public function testFilterTransformDataProperly(int $responseCode, string $expectedResult): void
     {
-        $this->assertSame($expectedResult, $this->filter->filter($responseCode));
+        $this->assertSame($expectedResult, $this->tester->getHttpResponseCodeToConstantNameFilter()->filter($responseCode));
     }
 
     /**

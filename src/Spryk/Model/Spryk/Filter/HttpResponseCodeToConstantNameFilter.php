@@ -16,7 +16,7 @@ class HttpResponseCodeToConstantNameFilter implements FilterInterface
     /**
      * @var array<string, mixed>
      */
-    protected $responseClassConstants = [];
+    protected array $responseClassConstants = [];
 
     /**
      * @return string
