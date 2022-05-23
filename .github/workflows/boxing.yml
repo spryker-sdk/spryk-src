@@ -28,15 +28,8 @@ jobs:
             - name: Composer install
               run: composer install --no-interaction --no-progress
 
-            - name: Build caches
-              run: |
-                  bin/console spryk:build
-                  bin/console cache:clear -e prod
-                  bin/console cache:warmup -e prod
-
-            - name: Compile PHAR
-              working-directory: "compiler/build"
-              run: php box.phar compile --no-parallel
+            - name: Build caches and compile the PHAR
+              run: bin/console spryk:compile
 
             - uses: actions/upload-artifact@v3
               with:
