@@ -201,7 +201,7 @@ class AddGlueResourceMethodResponseTest extends Unit
             }
         } else {
             if ($httpMethod === 'patch' || $httpMethod === 'get') {
-                $methods[] = 'seeResponseJsonContainsFooBarIdWithUuid';
+                $methods[] = 'seeResponseJsonContainsFooBarIdAndUuid';
             }
             if ($httpMethod === 'patch') {
                 $methods[] = 'buildFooBarRequestData';
