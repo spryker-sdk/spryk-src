@@ -44,7 +44,7 @@ Is used only for spryk dumper to dump the specific level spryks
 `vendor/bin/spryk-dump --level=1` or `vendor/bin/spryk-dump --level=all`.
 
 ### condition
-The condition of the spryk execution. If condition evaluates to false the spryk execution will be skipped with it's (pre)postSpryks. The arguments that are used in condition should be defined in spryk arguments list.
+Defines the condition of the spryk execution. If condition evaluates to false the spryk execution will be skipped with it's (pre)postSpryks. The arguments that are used in condition should be defined in spryk arguments list.
 
 ### arguments
 The spryk argument list. These arguments are used in the spryk builder. See below for more detailed description.

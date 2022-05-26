@@ -89,3 +89,9 @@ To compile the `spryk.phar` you need to run the following steps:
 This will install the latest dependencies, create a fresh cache, compile the archive and copy it to the `spryker-sdk/spryk` repository.
 
 You also need to push the `spryk.phar` to `spryker-sdk/spryk`.
+
+### See more
+
+- [Spryk configuration reference](docs/Spryk configuration reference.md)
+- [Developer's guide](docs/Developer guiges.md)
+- [Building new spryks](docs/Building new spryks.md)
