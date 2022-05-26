@@ -26,7 +26,7 @@ postSpryks:
                 value: \Spryker\Zed\DataImport\DataImportDependencyProvider
 ```
 
-Also you can manipulate `preSpryks` or `postSpryks` in spryks if you don't need the full spryk hierarchy.
+Also you can even manipulate `preSpryks` or `postSpryks` in overridden spryks if you don't need the full spryk hierarchy.
 
 ```yaml
 postSpryks:
