@@ -2,17 +2,17 @@
 
 
 To build the new spryk you need to define spryke yml configuration in `config/spryk/spryks`. You need to define a spryk builder name into `spryk` option.
-Depends on what builder is used the appropriate number of arguments is used.
+Depends on what builder is used the appropriate number of arguments you should to define.
 
 ### The spryks hierarchy structure
 
 The spryk can depends on some other spryks and some other spryks should be executed before or after. It looks like a tree (or even a graph in some cases) structure that's controlled by
 `preSpryks` and `postSpryks` configuration keys.
 
-Is best practice when spryk builds all the needed structures (classes, interfaces, configs and so on) as well. When someone executed some spryk he should get completely valid structure of files.
-But in another hand the deep hierarchical structure hard to debug that is why try not to create deep structures.
+Is the best practice when spryk builds all the needed structures (classes, interfaces, configs and so on) as well. When someone executes the spryk he should get completely valid structure of files.
+But in another hand the deep hierarchical structure hard to debug that is why try not to create deep structures and use only the required dependencies.
 
-The arguments can inherit the values for that you should define `inherit: true` option in definition.
+The arguments of the children spryks can inherit the values of the same arguments of the paren spryks. To achieve that you should define [`inherit: true`](/docs/spryk_configuration_reference.md#inherit) option in argument definition.
 
 ### The spryks overriding
 

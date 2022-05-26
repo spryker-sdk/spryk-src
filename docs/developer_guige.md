@@ -10,6 +10,7 @@ cd vendor
 git clone git@github.com:spryker-sdk/spryk-src.git
 cd spryker-sdk/spryk-src
 git checkout <your branch>
+composer install
 ```
 
 To run spryks you can use command from the cli or testing environments.
@@ -28,16 +29,16 @@ php vendor/spryker-sdk/spryk-src/bin/spryk AddCrudFacade --mode project --organi
 
 ### How to disable/enable code sniffer
 
-Before the writing all the files into the project codeSniffer fix all the issues related to code style and import missed namespaces into the use statements.
-That is why we need to use the FQCNs everywhere(templates, spryks arguments and so on).
-To check what the files were generated without the affecting the code sniffer need to pass `TESTING=true` env variable into the command also the code compiling much more faster without codeSniffer.
+Before the writing all the files into the project `codeSniffer` fix all the code style issues and import missed namespaces, that's why we need to use the FQCNs everywhere(templates, spryks arguments and so on).
+To check what the files were generated without the affecting of the `codeSniffer` need to pass `TESTING=true` env variable into the command.
 ```shell
 TESTING=true php vendor/spryker-sdk/spryk-src/bin/spryk <spryk name> <spryk arguments>
 ```
+This is the good practice firstly check raw generated code without any post-processing also the commands are executed much faster.
 
 ### What is `FileResolver`
 
-`\SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface` - this is the core part of file management into the spryk-src.
+`\SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface` - this is the core part of file management.
 It collects all the updated or created files and then flushes them into the filesystem at the end of the command execution.
 All the new or updated files should always be added into the FileResolver.
 Normally you shouldn't work with file system directly by php functions like `file_put_contents`, `file_get_contents`, `file_exists` and so on.
