@@ -91,7 +91,6 @@ This will install the latest dependencies, create a fresh cache, compile the arc
 You also need to push the `spryk.phar` to `spryker-sdk/spryk`.
 
 ### See more
-
-- [Spryk configuration reference](docs/spryk_configuration_reference.md)
-- [Developer's guide](docs/developer_guige.md)
-- [Building new spryks](docs/building_new_spryks.md)
+[Spryk configuration reference](/docs/spryk_configuration_reference.md)
+[Developer's guide](/docs/developer_guige.md)
+[Building new spryks](/docs/building_new_spryks.md)
