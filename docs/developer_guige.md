@@ -2,10 +2,9 @@
 
 ### How to check and debug
 
-To avoid dependency conflicts spryker-sdk/spryk-src is compiled into the phar archive then push to the spryker-sdk/spryk and this dependency is used for the target projects.
-You can just recompile it everytime to check something.
-But it's not suitable when you need constantly make some updates or debug it.
-But you can install package into the vendor folder without adding the dependency via composer.json and test it directly on project files (on for development purposes).
+To avoid dependency conflicts spryker-sdk/spryk-src is compiled into the phar archive then push to the spryker-sdk/spryk and included as dependency into the target project.
+You have to recompile it everytime to check something but it's not suitable when you constantly need to make some updates and debug it.
+You can install package into the vendor folder without adding the dependency in composer.json and test it directly on project files (on for development purposes).
 ```shell
 cd vendor
 git clone git@github.com:spryker-sdk/spryk-src.git
@@ -29,9 +28,9 @@ php vendor/spryker-sdk/spryk-src/bin/spryk AddCrudFacade --mode project --organi
 
 ### How to disable/enable code sniffer
 
-Before the writing all the files into the project CS fix all the issues related to code style and import missed namespaces into the use statements.
+Before the writing all the files into the project codeSniffer fix all the issues related to code style and import missed namespaces into the use statements.
 That is why we need to use the FQCNs everywhere(templates, spryks arguments and so on).
-To check what the files were generated without the affecting the code sniffer need to pass `TESTING=true` env variable into the command also the code compiling much more faster without CS.
+To check what the files were generated without the affecting the code sniffer need to pass `TESTING=true` env variable into the command also the code compiling much more faster without codeSniffer.
 ```shell
 TESTING=true php vendor/spryker-sdk/spryk-src/bin/spryk <spryk name> <spryk arguments>
 ```

@@ -92,6 +92,6 @@ You also need to push the `spryk.phar` to `spryker-sdk/spryk`.
 
 ### See more
 
-- [Spryk configuration reference](docs/Spryk configuration reference.md)
-- [Developer's guide](docs/Developer guiges.md)
-- [Building new spryks](docs/Building new spryks.md)
+- [Spryk configuration reference](docs/spryk_configuration_reference.md)
+- [Developer's guide](docs/developer_guige.md)
+- [Building new spryks](docs/building_new_spryks.md)
