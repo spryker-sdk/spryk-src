@@ -25,8 +25,6 @@ postSpryks:
 
 Spryk name is defined by its filename.
 
-## Specification
-
 ## The root configuration
 
 ### spryk
@@ -37,10 +35,10 @@ and should implement `\SprykerSdk\Spryk\Model\Spryk\Builder\SprykBuilderInterfac
 Description of the spryk. Should be populated for every spryk for the informational purposes.
 
 ### mode
-The mode of the spryk. It used for running the specific spryks by passing the `--mode` option into the command. The reserved `both` value allow to run spryk in any case.
+The mode of the spryk. It used for running the specific spryks by passing the `--mode` option into the command. The reserved `both` value allows to run spryk in any case.
 
 ### level
-Is used only for spryk dumper to dump the specific level spryks
+Is used only for spryk dumper to dump the specific level of spryks
 `vendor/bin/spryk-dump --level=1` or `vendor/bin/spryk-dump --level=all`.
 
 ### condition

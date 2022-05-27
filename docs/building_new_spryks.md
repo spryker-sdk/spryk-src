@@ -6,10 +6,10 @@ Depends on what builder is used the appropriate number of arguments you should t
 
 ### The spryks hierarchy structure
 
-The spryk can depends on some other spryks and some other spryks should be executed before or after. It looks like a tree (or even a graph in some cases) structure that's controlled by
+The spryk can depend on some other spryks and in this case some other spryks should be executed before or after. It looks like a tree (or even a graph in some cases) structure that's controlled by
 `preSpryks` and `postSpryks` configuration keys.
 
-Is the best practice when spryk builds all the needed structures (classes, interfaces, configs and so on) as well. When someone executes the spryk he should get completely valid structure of files.
+It's the best practice when spryk builds only one small structural unit and calls other spryks that build all rest the needed structures (classes, interfaces, configs and so on). When someone executes the spryk he should get completely valid structure of the files.
 But in another hand the deep hierarchical structure hard to debug that is why try not to create deep structures and use only the required dependencies.
 
 The arguments of the children spryks can inherit the values of the same arguments of the paren spryks. To achieve that you should define [`inherit: true`](/docs/spryk_configuration_reference.md#inherit) option in argument definition.
@@ -26,7 +26,7 @@ postSpryks:
                 value: \Spryker\Zed\DataImport\DataImportDependencyProvider
 ```
 
-Also you can even manipulate `preSpryks` or `postSpryks` in overridden spryks if you don't need the full spryk hierarchy.
+if you don't need the full hierarchy of overridden spryk you can manipulate it by `excludedSpryks` option.
 
 ```yaml
 postSpryks:
@@ -114,4 +114,4 @@ postSpryks:
 - Prefer usage of basic common sprykes (located in `config/spryk/spryks/Spryker/Common`) for re-usage
 - As mentioned above try not to create the deep hierarchy of spryks
 - Always populate spryks and arguments descriptions
-- Try not to generate unused methods, classes, configs and so on. Use conditions to resolve it
+- Try not to generate unused methods, classes, configs and so on. Use `conditions` option to resolve it

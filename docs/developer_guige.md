@@ -2,7 +2,7 @@
 
 ### How to check and debug
 
-To avoid dependency conflicts spryker-sdk/spryk-src is compiled into the phar archive then push to the spryker-sdk/spryk and included as dependency into the target project.
+To avoid dependency conflicts spryker-sdk/spryk-src is compiled into the phar archive then is pushed to the spryker-sdk/spryk and is included as dependency into the target project.
 You have to recompile it everytime to check something but it's not suitable when you constantly need to make some updates and debug it.
 You can install package into the vendor folder without adding the dependency in composer.json and test it directly on project files (on for development purposes).
 ```shell
