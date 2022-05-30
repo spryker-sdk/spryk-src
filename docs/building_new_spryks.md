@@ -1,22 +1,24 @@
-## Building the new spryks
+## Add a new Spryk
 
+To add a new Spryk you need to add a YAML configuration in the `config/spryk/spryks/` directory.
 
-To build the new spryk you need to define spryke yml configuration in `config/spryk/spryks/`. You need to define a spryk builder name into `spryk` option.
-Depends on what builder is used the appropriate number of arguments you should to define.
+The `spryk` option defines which builder is used to work with the defined Spryk definition.
+
+Example: `spryk: Template` will use the `SprykerSdk\Spryk\Model\Spryk\Builder\Template\TemplateSpryk` class to fulfill the Spryk definition.
 
 ### The spryks hierarchy structure
 
-The spryk can depend on some other spryks and in this case some other spryks should be executed before or after. It looks like a tree (or even a graph in some cases) structure that's controlled by
+Spryks can depend on other Spryks that will be executed before or after the current Spryk is executed. It looks like a tree (or even a graph in some cases) structure that's controlled by
 `preSpryks` and `postSpryks` configuration keys.
 
-It's the best practice when spryk builds only one small structural unit and calls other spryks that build all rest the needed structures (classes, interfaces, configs and so on). When someone executes the spryk he should get completely valid structure of the files.
-But in another hand the deep hierarchical structure hard to debug that is why try not to create deep structures and use only the required dependencies.
+A best practice is when a Spryk builds only one small structural unit and calls other Spryks that build all rest of the needed structures (classes, interfaces, configs, and so on). When someone executes a Spryk he should get a completely valid structure of files.
 
-The arguments of the children spryks can inherit the values of the same arguments of the paren spryks. To achieve that you should define [`inherit: true`](/docs/spryk_configuration_reference.md#inherit) option in argument definition.
+The arguments of the children's Spryks can inherit the values of the same arguments of the parent Spryk. To achieve that you need to define the [`inherit: true`](/docs/spryk_configuration_reference.md#inherit) option in the argument definition block.
 
-### The spryks overriding
+### Overriding arguments in pre/postSpryks
 
-The spryk overriding is useful for customisation the existing spryks in `preSpryks` or `postSpryks` by passing or overriding the arguments. You can even pass the arguments that are not defined in overridden spryk.
+Overriding is useful for the customization of a used Spryk in the `preSpryks` or `postSpryks` section. You can pass or override arguments here.
+You can even add arguments that are not defined in the used Spryk itself. This is mainly useful when you use a Twig template with more arguments than the original used template has.
 ```yaml
 postSpryks:
     - AddSharedTransferSchema # spryk is used as is
@@ -26,7 +28,7 @@ postSpryks:
                 value: \Spryker\Zed\DataImport\DataImportDependencyProvider
 ```
 
-if you don't need the full hierarchy of overridden spryk you can manipulate it by `excludedSpryks` option.
+As explained before, you can look at Spryks as some sort of hierarchy where one Spryk uses several other Spryks. In some cases, you don't need the full hierarchy. To exclude the execution of one or more Spryks you can use the `excludedSpryks` option.
 
 ```yaml
 postSpryks:
@@ -50,9 +52,9 @@ postSpryks:
                   value: "App/Registry/ZedControllerDisconnectMethod.php.twig"
 ```
 
-### How to use spryk condition
+### Conditional Spryks
 
-Useful when you need to limit some spryk execution by some conditions. For example in one case you need to create one method in another case another method.
+In some cases, you need to run a Spryk only when a specific condition is matched. For example one of the passed arguments has a specific value. For these cases, you can use the `condition` option.
 For condition evaluation `symfony/expression-language` component is used.
 
 ```yaml
