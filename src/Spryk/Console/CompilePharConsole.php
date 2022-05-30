@@ -34,10 +34,10 @@ class CompilePharConsole extends AbstractSprykConsole
         $this->executeProcess(['php', 'bin/console', 'spryk:build']);
 
         $output->writeln('Clean the cache...');
-        $this->executeProcess(['php', 'bin/console', 'cache:clear', '-e', 'prod']);
+        $this->executeProcess(['php', 'bin/console', 'cache:clear', '-e', 'prod', '--no-debug']);
 
         $output->writeln('Warm up the cache...');
-        $this->executeProcess(['php', 'bin/console', 'cache:warmup', '-e', 'prod']);
+        $this->executeProcess(['php', 'bin/console', 'cache:warmup', '-e', 'prod', '--no-debug']);
 
         $output->writeln('Build the PHAR...');
         $this->executeProcess(['php', 'box.phar', 'compile', '--no-parallel'], getcwd() . '/compiler/build');
