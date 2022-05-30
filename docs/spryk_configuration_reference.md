@@ -28,8 +28,8 @@ Spryk name is defined by its filename.
 ## The root configuration
 
 ### spryk
-This is name of the builder that is used for processing this spryk. All the builders can be found in `src/Spryk/Model/Spryk/Builder`
-and should implement `\SprykerSdk\Spryk\Model\Spryk\Builder\SprykBuilderInterface::getName`.
+This is name of the builder that is used for processing this spryk. All the builders can be found in `src/Spryk/Model/Spryk/Builder/`
+and should implement `SprykerSdk\Spryk\Model\Spryk\Builder\SprykBuilderInterface::getName()`.
 
 ### description
 Description of the spryk. Should be populated for every spryk for the informational purposes.
@@ -112,4 +112,4 @@ body:
 ```
 
 ### callback
-The pre-processing callback that will be applied on value before passing into the spryk. Should implement `\SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Callback\CallbackInterface`.
+The pre-processing callback that will be applied on value before passing into the spryk. Should implement `SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Callback\CallbackInterface`.

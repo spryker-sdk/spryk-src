@@ -6,9 +6,9 @@ To avoid dependency conflicts spryker-sdk/spryk-src is compiled into the phar ar
 You have to recompile it everytime to check something but it's not suitable when you constantly need to make some updates and debug it.
 You can install package into the vendor folder without adding the dependency in composer.json and test it directly on project files (on for development purposes).
 ```shell
-cd vendor
+cd vendor/spryker-sdk
 git clone git@github.com:spryker-sdk/spryk-src.git
-cd spryker-sdk/spryk-src
+cd spryk-src
 git checkout <your branch>
 composer install
 ```
@@ -38,19 +38,19 @@ This is the good practice firstly check raw generated code without any post-proc
 
 ### What is `FileResolver`
 
-`\SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface` - this is the core part of file management.
+`SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface` - this is the core part of file management.
 It collects all the updated or created files and then flushes them into the filesystem at the end of the command execution.
 All the new or updated files should always be added into the FileResolver.
 Normally you shouldn't work with file system directly by php functions like `file_put_contents`, `file_get_contents`, `file_exists` and so on.
-You should use `FileResolverInterface::hasResolved`, `FileResolverInterface::resolve`, `FileResolverInterface::addFile`.
+You should use `FileResolverInterface::hasResolved()`, `FileResolverInterface::resolve()`, `FileResolverInterface::addFile()`.
 **Never use `resolve` or `addFile` for the core files or namespaces. You can just check them by `FileResolverInterface::hasResolved`!**
 
 ### How to get the file path
 
 To get the target file path need to use these methods.
-`\SprykerSdk\Spryk\Model\Spryk\Builder\AbstractBuilder::getTargetPath`
-`\SprykerSdk\Spryk\Model\Spryk\Builder\AbstractBuilder::getFileTargetPath`
-`\SprykerSdk\Spryk\Model\Spryk\Builder\AbstractBuilder::getAbsoluteTargetPath`
+`SprykerSdk\Spryk\Model\Spryk\Builder\AbstractBuilder::getTargetPath()`
+`SprykerSdk\Spryk\Model\Spryk\Builder\AbstractBuilder::getFileTargetPath()`
+`SprykerSdk\Spryk\Model\Spryk\Builder\AbstractBuilder::getAbsoluteTargetPath()`
 
 In testing environment these methods returns virtual filesystem root path.
 

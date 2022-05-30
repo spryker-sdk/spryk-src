@@ -1,7 +1,7 @@
 ## Building the new spryks
 
 
-To build the new spryk you need to define spryke yml configuration in `config/spryk/spryks`. You need to define a spryk builder name into `spryk` option.
+To build the new spryk you need to define spryke yml configuration in `config/spryk/spryks/`. You need to define a spryk builder name into `spryk` option.
 Depends on what builder is used the appropriate number of arguments you should to define.
 
 ### The spryks hierarchy structure
@@ -111,7 +111,7 @@ postSpryks:
 ### The best practices
 
 - Try not to create the own spryks until you're sure that you can not customise some existing spryk
-- Prefer usage of basic common sprykes (located in `config/spryk/spryks/Spryker/Common`) for re-usage
+- Prefer usage of basic common sprykes (located in `config/spryk/spryks/Spryker/Common/`) for re-usage
 - As mentioned above try not to create the deep hierarchy of spryks
 - Always populate spryks and arguments descriptions
 - Try not to generate unused methods, classes, configs and so on. Use `conditions` option to resolve it
