@@ -175,6 +175,8 @@ class AddPluginToPluginListVisitor extends NodeVisitorAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @param \PhpParser\Node\Expr\Array_ $node
      *
      * @return \PhpParser\Node
