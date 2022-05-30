@@ -84,9 +84,8 @@ class OrderStatementsInClassVisitor extends NodeVisitorAbstract
         $orderedStatements = array_merge($orderedStatements, $this->orderTraitStatements($traitStatements));
         $orderedStatements = array_merge($orderedStatements, $this->orderByVisibility($constStatements));
         $orderedStatements = array_merge($orderedStatements, $this->orderByVisibility($propertyStatements));
-        $orderedStatements = array_merge($orderedStatements, $this->orderMethodStatements($methodStatements));
 
-        return $orderedStatements;
+        return array_merge($orderedStatements, $this->orderMethodStatements($methodStatements));
     }
 
     /**

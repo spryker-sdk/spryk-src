@@ -50,10 +50,6 @@ class DirectoriesExtenderPlugin extends AbstractExtender implements SprykConfigu
             return $sprykConfig;
         }
 
-        if (!isset($arguments[static::NAME_ARGUMENT_DIRECTORIES])) {
-            return $sprykConfig;
-        }
-
 //        $arguments[static::NAME_ARGUMENT_DIRECTORIES][SprykConfig::NAME_ARGUMENT_KEY_VALUE] = [''];
 //        $sprykConfig = $this->setArguments($arguments, $sprykConfig);
 

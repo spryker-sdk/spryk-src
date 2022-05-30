@@ -61,6 +61,12 @@ jobs:
               run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
               id: extract_branch
 
+            - uses: 8BitJonny/gh-get-current-pr@2.0.0
+              id: PR
+              with:
+                  github-token: ${{ secrets.PAT }}
+                  sha: ${{ github.event.pull_request.head.sha }}
+
             - name: "Checkout target repository"
               uses: actions/checkout@v3
               with:
@@ -83,10 +89,10 @@ jobs:
               with:
                   token: ${{ secrets.PAT }}
                   path: spryk-target
-                  branch: ${{steps.extract_branch.outputs.branch}}
+                  branch: sdk/${{steps.extract_branch.outputs.branch}}
                   delete-branch: true
                   title: Automatic spryk.phar update
-                  body: Automatic update of the spryk.phar after "${{steps.extract_branch.outputs.branch}}" was merged to master
+                  body: ${{ steps.PR.outputs.pr_body }}
 
             - name: Check outputs
               if: ${{ steps.cpr.outputs.pull-request-number }}
