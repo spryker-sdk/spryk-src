@@ -40,7 +40,7 @@ class CompilePharConsole extends AbstractSprykConsole
         $this->executeProcess(['php', 'bin/console', 'cache:warmup', '-e', 'prod']);
 
         $output->writeln('Build the PHAR...');
-        $this->executeProcess(['php', 'compiler/build/box.phar', 'compile', '--no-parallel']);
+        $this->executeProcess(['php', 'box.phar', 'compile', '--no-parallel'], getcwd() . '/compiler/build');
 
         return static::CODE_SUCCESS;
     }
@@ -49,12 +49,13 @@ class CompilePharConsole extends AbstractSprykConsole
      * @codeCoverageIgnore
      *
      * @param array $processDefinition
+     * @param string|null $cwd
      *
      * @return void
      */
-    protected function executeProcess(array $processDefinition): void
+    protected function executeProcess(array $processDefinition, ?string $cwd = null): void
     {
-        $process = new Process($processDefinition);
+        $process = new Process($processDefinition, $cwd);
         $process->start();
         $iterator = $process->getIterator($process::ITER_SKIP_ERR | $process::ITER_KEEP_OUTPUT);
 
