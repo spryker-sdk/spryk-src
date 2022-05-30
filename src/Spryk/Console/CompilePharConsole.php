@@ -31,16 +31,16 @@ class CompilePharConsole extends AbstractSprykConsole
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Building argument list cache...');
-        $this->executeProcess(['php', 'bin/console', 'spryk:build'], (string)getcwd());
+        $this->executeProcess(['php', 'bin/console', 'spryk:build']);
 
         $output->writeln('Clean the cache...');
-        $this->executeProcess(['php', 'bin/console', 'cache:clear', '-e', 'prod'], (string)getcwd());
+        $this->executeProcess(['php', 'bin/console', 'cache:clear', '-e', 'prod']);
 
         $output->writeln('Warm up the cache...');
-        $this->executeProcess(['php', 'bin/console', 'cache:warmup', '-e', 'prod'], (string)getcwd());
+        $this->executeProcess(['php', 'bin/console', 'cache:warmup', '-e', 'prod']);
 
         $output->writeln('Build the PHAR...');
-        $this->executeProcess(['php', 'box.phar', 'compile', '--no-parallel'], getcwd() . '/compiler/build');
+        $this->executeProcess(['php', 'compiler/build/box.phar', 'compile', '--no-parallel']);
 
         return static::CODE_SUCCESS;
     }
@@ -49,13 +49,12 @@ class CompilePharConsole extends AbstractSprykConsole
      * @codeCoverageIgnore
      *
      * @param array $processDefinition
-     * @param string $cwd
      *
      * @return void
      */
-    protected function executeProcess(array $processDefinition, string $cwd): void
+    protected function executeProcess(array $processDefinition): void
     {
-        $process = new Process($processDefinition, $cwd);
+        $process = new Process($processDefinition);
         $process->start();
         $iterator = $process->getIterator($process::ITER_SKIP_ERR | $process::ITER_KEEP_OUTPUT);
 
