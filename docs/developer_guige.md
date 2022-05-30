@@ -13,7 +13,7 @@ git checkout <your branch>
 composer install
 ```
 
-To run spryks you can use command from the cli or testing environments.
+To run Spryks you can use command from the cli or testing environments.
 ```shell
 # from the host
 SPRYKER_XDEBUG_ENABLE=1 docker/sdk testing
@@ -21,7 +21,7 @@ or
 SPRYKER_XDEBUG_ENABLE=1 docker/sdk cli
 
 #inside the docker
-php vendor/spryker-sdk/spryk-src/bin/spryk <spryk name> <spryk arguments>
+php vendor/spryker-sdk/spryk-src/bin/spryk <Spryk name> <Spryk arguments>
 
 #ex.
 php vendor/spryker-sdk/spryk-src/bin/spryk AddCrudFacade --mode project --organization Pyz --module Ay --domainEntity Entity -n
@@ -29,10 +29,10 @@ php vendor/spryker-sdk/spryk-src/bin/spryk AddCrudFacade --mode project --organi
 
 ### How to disable/enable code sniffer
 
-Before the writing all the files into the project `codeSniffer` fix all the code style issues and import missed namespaces, that's why we need to use the FQCNs everywhere(templates, spryks arguments and so on).
-To check what the files were generated without the affecting of the `codeSniffer` need to pass `TESTING=true` env variable into the command.
+Before the writing all the files into the project `codeSniffer` fix all the code style issues and import missed namespaces, that's why we need to use the FQCNs everywhere(templates, arguments and so on).
+To check how files look after generating them without running the CodeSniffer you need to disable the CodeSniffer by prefixing the console command with `TESTING=true`.
 ```shell
-TESTING=true php vendor/spryker-sdk/spryk-src/bin/spryk <spryk name> <spryk arguments>
+TESTING=true php vendor/spryker-sdk/spryk-src/bin/spryk <Spryk name> <Spryk arguments>
 ```
 This is the good practice firstly check raw generated code without any post-processing also the commands are executed much faster.
 
@@ -40,17 +40,36 @@ This is the good practice firstly check raw generated code without any post-proc
 
 `SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface` - this is the core part of file management.
 It collects all the updated or created files and then flushes them into the filesystem at the end of the command execution.
-All the new or updated files should always be added into the FileResolver.
+All the new or updated files must always be added into the FileResolver.
 Normally you shouldn't work with file system directly by php functions like `file_put_contents`, `file_get_contents`, `file_exists` and so on.
-You should use `FileResolverInterface::hasResolved()`, `FileResolverInterface::resolve()`, `FileResolverInterface::addFile()`.
+You must use `FileResolverInterface::hasResolved()`, `FileResolverInterface::resolve()`, `FileResolverInterface::addFile()`.
 **Never use `resolve` or `addFile` for the core files or namespaces. You can just check them by `FileResolverInterface::hasResolved`!**
 
 ### How to get the file path
 
-To get the target file path need to use these methods.
+Get absolut path from `targetPath` argument:
 `SprykerSdk\Spryk\Model\Spryk\Builder\AbstractBuilder::getTargetPath()`
-`SprykerSdk\Spryk\Model\Spryk\Builder\AbstractBuilder::getFileTargetPath()`
-`SprykerSdk\Spryk\Model\Spryk\Builder\AbstractBuilder::getAbsoluteTargetPath()`
+Get absolut path from relative path:
+`SprykerSdk\Spryk\Model\Spryk\Builder\AbstractBuilder::getFileTargetPath(string $relativeFilePath)`
+
+```php
+class SomeSpryk extends AbstractBuilder
+{
+    // ...
+
+    /**
+     * @return void
+     */
+    protected function build(): void
+    {
+        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedXmlInterface $resolved */
+        $resolved = $this->fileResolver->resolve($this->getTargetPath());
+
+        // ...
+    }
+}
+```
+
 
 In testing environment these methods returns virtual filesystem root path.
 
