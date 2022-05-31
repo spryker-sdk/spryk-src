@@ -8,12 +8,14 @@ on:
 
     pull_request:
         types:
+            - edited
             - merged
 
 jobs:
     build:
         name: Build
-        if: github.event.pull_request.merged == true
+#        if: github.event.pull_request.merged == true
+        if: github.event.pull_request.edited == true
         runs-on: "ubuntu-latest"
         timeout-minutes: 60
 
