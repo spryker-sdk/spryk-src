@@ -1,21 +1,21 @@
 name: "Build spryk.phar"
 
 on:
-#    workflow_run:
-#        workflows: [ "CI" ]
-#        types:
+    workflow_run:
+        workflows: [ "CI" ]
+        types: [completed]
 #            - completed
 
-    pull_request:
-        types:
-            - edited
+#    pull_request:
+#        types: [edited]
+#            - edited
 #            - merged
 
 jobs:
     build:
         name: Build
 #        if: github.event.pull_request.merged == true
-        if: github.event.pull_request.edited == true
+#        if: github.event.pull_request.edited == true
         runs-on: "ubuntu-latest"
         timeout-minutes: 60
 
