@@ -11,9 +11,6 @@
 >
     <projectFiles>
         <directory name="src/Spryk/"/>
-<!--        <ignoreFiles>-->
-<!--            <directory name="src/Propel/Generator/Command/templates/" />-->
-<!--        </ignoreFiles>-->
     </projectFiles>
 
     <issueHandlers>
@@ -26,10 +23,5 @@
         <ImplementedReturnTypeMismatch errorLevel="suppress"/>
         <ImplicitToStringCast errorLevel="suppress"/>
         <UndefinedMagicMethod errorLevel="suppress"/>
-<!--        <UndefinedMethod>-->
-<!--            <errorLevel type="suppress">-->
-<!--                <referencedMethod name="Symfony\Component\Config\Definition\Builder\TreeBuilder::root"/>-->
-<!--            </errorLevel>-->
-<!--        </UndefinedMethod>-->
     </issueHandlers>
 </psalm>
