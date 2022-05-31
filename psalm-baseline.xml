@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.x-dev@">
+  <file src="src/Spryk/Model/Spryk/Builder/CopyModule/CopyModuleSpryk.php">
+    <InvalidArgument occurrences="1">
+      <code>'glob'</code>
+    </InvalidArgument>
+    <TooManyTemplateParams occurrences="1">
+      <code>\Symfony\Component\Finder\Finder&lt;\Symfony\Component\Finder\SplFileInfo&gt;</code>
+    </TooManyTemplateParams>
+  </file>
+  <file src="src/Spryk/Model/Spryk/Builder/Json/UpdateJsonSpryk.php">
+    <InvalidReturnStatement occurrences="2">
+      <code>$jsonAsArray</code>
+      <code>$jsonAsArray</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="1">
+      <code>array</code>
+    </InvalidReturnType>
+  </file>
+  <file src="src/Spryk/Model/Spryk/Builder/Template/Renderer/TemplateRenderer.php">
+    <UndefinedConstant occurrences="1">
+      <code>APPLICATION_ROOT_DIR</code>
+    </UndefinedConstant>
+  </file>
+  <file src="src/Spryk/Model/Spryk/Command/AbstractSprykCommand.php">
+    <UndefinedConstant occurrences="1">
+      <code>APPLICATION_ROOT_DIR</code>
+    </UndefinedConstant>
+  </file>
+  <file src="src/Spryk/Model/Spryk/Dumper/Finder/SprykDefinitionFinder.php">
+    <TooManyTemplateParams occurrences="1">
+      <code>\Symfony\Component\Finder\Finder&lt;\Symfony\Component\Finder\SplFileInfo&gt;</code>
+    </TooManyTemplateParams>
+  </file>
+  <file src="src/Spryk/Model/Spryk/Dumper/Finder/SprykDefinitionFinderInterface.php">
+    <TooManyTemplateParams occurrences="1">
+      <code>\Symfony\Component\Finder\Finder&lt;\Symfony\Component\Finder\SplFileInfo&gt;</code>
+    </TooManyTemplateParams>
+  </file>
+  <file src="src/Spryk/SprykConfig.php">
+    <UndefinedConstant occurrences="2">
+      <code>APPLICATION_ROOT_DIR</code>
+      <code>SPRYK_ROOT_DIR</code>
+    </UndefinedConstant>
+  </file>
+</files>

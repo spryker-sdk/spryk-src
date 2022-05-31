@@ -75,7 +75,7 @@ class AddUseVisitor extends NodeVisitorAbstract
             return $this->compareUseStatements($nodeA, $nodeB);
         });
 
-        $node->stmts = array_merge($uses, $other);
+        $node->stmts = [...$uses, ...$other];
 
         return $node;
     }
