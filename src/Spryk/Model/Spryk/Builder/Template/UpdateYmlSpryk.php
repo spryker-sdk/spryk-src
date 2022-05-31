@@ -135,9 +135,8 @@ class UpdateYmlSpryk extends AbstractBuilder
     protected function getDataForYml(): array
     {
         $content = $this->getContent($this->getTemplateName());
-        $yaml = Yaml::parse($content);
 
-        return $yaml;
+        return Yaml::parse($content);
     }
 
     /**

@@ -175,6 +175,8 @@ class AddPluginToPluginListVisitor extends NodeVisitorAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @param \PhpParser\Node\Expr\Array_ $node
      *
      * @return \PhpParser\Node
@@ -188,10 +190,15 @@ class AddPluginToPluginListVisitor extends NodeVisitorAbstract
         $items = [];
         $itemAdded = false;
         foreach ($node->items as $item) {
-            if ($item === null || !($item->value instanceof New_) || !($item->value->class instanceof Name)) {
+            if ($item === null) {
                 continue;
             }
-
+            if (!($item->value instanceof New_)) {
+                continue;
+            }
+            if (!($item->value->class instanceof Name)) {
+                continue;
+            }
             $nodeClassName = $item->value->class->toString();
             if ($nodeClassName === $this->before) {
                 $items[] = $this->createArrayItemWithInstanceOf();
@@ -228,10 +235,15 @@ class AddPluginToPluginListVisitor extends NodeVisitorAbstract
     protected function isPluginAdded(Array_ $node): bool
     {
         foreach ($node->items as $item) {
-            if ($item === null || !($item->value instanceof New_) || !($item->value->class instanceof Name)) {
+            if ($item === null) {
                 continue;
             }
-
+            if (!($item->value instanceof New_)) {
+                continue;
+            }
+            if (!($item->value->class instanceof Name)) {
+                continue;
+            }
             $nodeClassName = $item->value->class->toString();
 
             if ($nodeClassName === $this->pluginClassName && $this->isKeyEqualsToCurrentOne($item)) {
