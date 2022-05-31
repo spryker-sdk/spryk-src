@@ -2,18 +2,18 @@ name: "Compile"
 
 on:
     push:
-    workflow_run:
-        workflows: [CI]
-        types: [completed]
-
-    pull_request:
-        types: [edited] # merged
+#    workflow_run:
+#        workflows: [CI]
+#        types: [completed]
+#
+#    pull_request:
+#        types: [edited] # merged
 
 jobs:
     build:
         name: Build
 #        if: ${{ github.event.workflow_run.conclusion == 'success' }}
-        if: ${{github.event.pull_request.edited == true }}
+#        if: ${{github.event.pull_request.edited == true }}
         runs-on: "ubuntu-latest"
         timeout-minutes: 60
 
