@@ -12,8 +12,7 @@ on:
 jobs:
     build:
         name: Build
-#        if: ${{ github.event.workflow_run.conclusion == 'success' }}
-#        if: ${{github.event.pull_request.edited == true }}
+        if: ${{github.event.pull_request.edited == true }} && ${{ github.event.workflow_run.conclusion == 'success' }}
         runs-on: "ubuntu-latest"
         timeout-minutes: 60
 
