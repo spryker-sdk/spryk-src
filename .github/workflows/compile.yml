@@ -1,15 +1,22 @@
 name: "Build spryk.phar"
 
 on:
-    push:
-#    workflow_run:
-#        workflows: [ "CI" ]
-#        types:
-#            - completed
+    pull_request:
+        types:
+            - closed
+
+jobs:
+    if_merged:
+        if: github.event.pull_request.merged == true
+        runs-on: ubuntu-latest
+        steps:
+            - run: |
+                  echo The PR was merged
 
 jobs:
     build:
         name: Build
+        if: github.event.pull_request.merged == true
         runs-on: "ubuntu-latest"
         timeout-minutes: 60
 
@@ -28,19 +35,8 @@ jobs:
             - name: Composer install
               run: composer install --no-interaction --no-progress
 
-# This should replace the next two steps
             - name: Build caches and compile the PHAR
               run: bin/console spryk:compile
-
-#            - name: Build caches and compile the PHAR
-#              run: |
-#                  bin/console spryk:build
-#                  bin/console cache:clear -e prod
-#                  bin/console cache:warmup -e prod
-
-#            - name: Compile PHAR
-#              working-directory: "compiler/build"
-#              run: php box.phar compile --no-parallel
 
             - uses: actions/upload-artifact@v3
               with:
