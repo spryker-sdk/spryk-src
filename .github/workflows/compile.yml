@@ -2,9 +2,7 @@ name: "Build spryk.phar"
 
 on:
     workflow_run:
-        workflows: [CI]
-        types: [completed]
-#            - completed
+        workflows: ["CI"]
 
 #    pull_request:
 #        types: [edited]
