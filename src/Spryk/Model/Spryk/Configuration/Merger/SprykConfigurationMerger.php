@@ -25,9 +25,8 @@ class SprykConfigurationMerger implements SprykConfigurationMergerInterface
     public function merge(array $sprykDefinition, array $rootConfiguration): array
     {
         $sprykDefinition = $this->doMerge($rootConfiguration, $sprykDefinition);
-        $sprykDefinition = $this->doMergeSubSpryks($rootConfiguration, $sprykDefinition);
 
-        return $sprykDefinition;
+        return $this->doMergeSubSpryks($rootConfiguration, $sprykDefinition);
     }
 
     /**

@@ -152,9 +152,8 @@ class CopyModuleSpryk extends AbstractBuilder
         $fileName = $this->renameFile($fileInfo->getFilename());
 
         $searchAndReplaceMap = $this->buildSearchAndReplaceMapForFilePath();
-        $targetPath .= str_replace(array_keys($searchAndReplaceMap), array_values($searchAndReplaceMap), $sourcePathRelative) . $fileName;
 
-        return $targetPath;
+        return $targetPath . (str_replace(array_keys($searchAndReplaceMap), array_values($searchAndReplaceMap), $sourcePathRelative) . $fileName);
     }
 
     /**

@@ -88,11 +88,10 @@ class DependencyFactoryMethodReturn implements CallbackInterface
      */
     protected function getSubNameSpace(ArgumentCollectionInterface $argumentCollection): string
     {
-        $subNamespace = '';
         if ($argumentCollection->getArgument('dependencyType', true)->getValue() === 'Facade') {
-            $subNamespace = 'Business\\';
+            return 'Business\\';
         }
 
-        return $subNamespace;
+        return '';
     }
 }

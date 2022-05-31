@@ -53,9 +53,7 @@ class ApplicationLayerExtenderPlugin extends AbstractExtender implements SprykCo
             $arguments[SprykConfig::NAME_ARGUMENT_LAYER][SprykConfig::NAME_ARGUMENT_KEY_VALUE] = $applicationLayer;
         }
 
-        $sprykConfig = $this->setArguments($arguments, $sprykConfig);
-
-        return $sprykConfig;
+        return $this->setArguments($arguments, $sprykConfig);
     }
 
     /**
