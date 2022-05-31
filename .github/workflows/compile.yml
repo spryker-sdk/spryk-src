@@ -1,4 +1,4 @@
-name: "Build spryk.phar"
+name: "Compile"
 
 on:
 #    workflow_run:
