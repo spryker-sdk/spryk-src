@@ -59,6 +59,7 @@ jobs:
                   sha: ${{ github.event.pull_request.head.sha }}
 
             - name: Get PR details
+              run: echo "The PR number is ${prNumber}"
               if: success() && steps.PR.outputs.number
               env:
                  prNumber: ${{ steps.PR.outputs.number }}
