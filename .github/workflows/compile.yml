@@ -75,8 +75,7 @@ jobs:
               with:
                   token: ${{ secrets.PAT }}
                   path: spryk-target
-#                  branch: spryker-sdk/spryk-src/pr-${{ github.event.pull_request.number }}
-                  branch: spryker-sdk/spryk-src/${{ steps.PR.outputs.branch }}
+                  branch: spryker-sdk/spryk-src/pr-${{ github.event.pull_request.number }}
                   delete-branch: true
                   title: PR ${{ github.event.pull_request.number }} (spryker-sdk/spryk-src) spryk.phar update
                   body: ${{ steps.PR.outputs.pr_body }}
