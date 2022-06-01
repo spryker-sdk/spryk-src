@@ -47,32 +47,20 @@ jobs:
         runs-on: "ubuntu-latest"
         timeout-minutes: 60
         steps:
-            - name: Checkout
-              uses: actions/checkout@v3
-              with:
-                  fetch-depth: 0
-
             - uses: 8BitJonny/gh-get-current-pr@2.0.0
               id: PR
               with:
                   github-token: ${{ secrets.PAT }}
                   sha: ${{ github.event.pull_request.head.sha }}
 
-            - run: echo "Your PR is ${prNumber} and its JSON is ${prJSON}"
+            - name: Get PR details
               if: success() && steps.PR.outputs.number
               env:
                  prNumber: ${{ steps.PR.outputs.number }}
-                 # JSON object with the full PR object
                  prJSON: ${{ steps.PR.outputs.pr }}
-                 # Direct access to common PR properties
-                 prUrl: ${{ steps.PR.outputs.pr_url }}
                  prBranchName: ${{fromJson(steps.PR.outputs.pr).head.ref}}
                  prTitle: ${{ steps.PR.outputs.pr_title }}
                  prBody: ${{ steps.PR.outputs.pr_body }}
-                 prCreatedAt: ${{ steps.PR.outputs.pr_created_at }}
-                 prMergedAt: ${{ steps.PR.outputs.pr_merged_at }}
-                 prClosedAt: ${{ steps.PR.outputs.pr_closed_at }}
-                 prLabel: ${{ steps.PR.outputs.pr_labels }}
 
             - name: "Checkout target repository"
               uses: actions/checkout@v3
@@ -96,9 +84,9 @@ jobs:
               with:
                   token: ${{ secrets.PAT }}
                   path: spryk-target
-                  branch: spryker-sdk/spryk-src/${{ prBranchName }}
+                  branch: spryker-sdk/spryk-src/$prBranchName
                   delete-branch: true
-                  title: PR ${{ prNumber }} (spryker-sdk/spryk-src) spryk.phar update
+                  title: PR $prNumber (spryker-sdk/spryk-src) spryk.phar update
                   body: ${{ steps.PR.outputs.pr_body }}
 
             - name: Check outputs
