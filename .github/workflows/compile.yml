@@ -90,9 +90,9 @@ jobs:
               with:
                   token: ${{ secrets.PAT }}
                   path: spryk-target
-                  branch: spryker-sdk/spryk-src/${{ env.prBranchName }}
+                  branch: "spryker-sdk/spryk-src/${{ env.prBranchName }}"
                   delete-branch: true
-                  title: PR ${{ env.prNumber }} (spryker-sdk/spryk-src) spryk.phar update
+                  title: "PR ${{ env.prNumber }} (spryker-sdk/spryk-src) spryk.phar update"
                   body: ${{ steps.PR.outputs.pr_body }}
 
             - name: Check outputs
