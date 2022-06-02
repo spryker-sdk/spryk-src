@@ -63,10 +63,6 @@ jobs:
               if: success() && steps.PR.outputs.number
               env:
                  prNumber: ${{ steps.PR.outputs.number }}
-                 prJSON: ${{ steps.PR.outputs.pr }}
-                 prBranchName: ${{fromJson(steps.PR.outputs.pr).head.ref}}
-                 prTitle: ${{ steps.PR.outputs.pr_title }}
-                 prBody: ${{ steps.PR.outputs.pr_body }}
 
             - name: "Checkout target repository"
               uses: actions/checkout@v3
@@ -90,10 +86,13 @@ jobs:
               with:
                   token: ${{ secrets.PAT }}
                   path: spryk-target
-                  branch: "spryker-sdk/spryk-src/${{ env.prBranchName }}"
+                  branch: spryker-sdk/spryk-src/${{ env.prBranchName }}
                   delete-branch: true
-                  title: "PR ${{ env.prNumber }} (spryker-sdk/spryk-src) spryk.phar update"
+                  title: PR ${{ env.prNumber }} (spryker-sdk/spryk-src) spryk.phar update
                   body: ${{ steps.PR.outputs.pr_body }}
+              env:
+                  prNumber: ${{ steps.PR.outputs.number }}
+                  prBranchName: ${{ fromJson(steps.PR.outputs.pr).head.ref }}
 
             - name: Check outputs
               if: ${{ steps.cpr.outputs.pull-request-number }}
