@@ -1,0 +1,7 @@
+$refinedParams = [];
+
+foreach ($params as $key => $value) {
+    $refinedParams['{' . $key . '}'] = urlencode($value);
+}
+
+return strtr($url, $refinedParams);
