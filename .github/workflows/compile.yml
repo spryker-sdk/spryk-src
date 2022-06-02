@@ -1,19 +1,17 @@
-name: "Build spryk.phar"
+name: "Compile"
 
 on:
     workflow_run:
-        workflows: [ "CI" ]
-        types:
-            - completed
+        workflows: [CI]
+        types: [completed]
 
     pull_request:
-        types:
-            - closed
+        types: [merged]
 
 jobs:
     build:
         name: Build
-        if: github.event.pull_request.merged == true
+        if: ${{github.event.pull_request.merged == true }} && ${{ github.event.workflow_run.conclusion == 'success' }}
         runs-on: "ubuntu-latest"
         timeout-minutes: 60
 
@@ -49,16 +47,22 @@ jobs:
         runs-on: "ubuntu-latest"
         timeout-minutes: 60
         steps:
-            - name: Extract branch name
-              shell: bash
-              run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-              id: extract_branch
+            - name: Checkout
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
 
             - uses: 8BitJonny/gh-get-current-pr@2.0.0
               id: PR
               with:
                   github-token: ${{ secrets.PAT }}
                   sha: ${{ github.event.pull_request.head.sha }}
+
+            - name: Get PR details
+              run: echo "The PR number is ${prNumber}"
+              if: success() && steps.PR.outputs.number
+              env:
+                 prNumber: ${{ steps.PR.outputs.number }}
 
             - name: "Checkout target repository"
               uses: actions/checkout@v3
@@ -82,10 +86,13 @@ jobs:
               with:
                   token: ${{ secrets.PAT }}
                   path: spryk-target
-                  branch: sdk/${{steps.extract_branch.outputs.branch}}
+                  branch: spryker-sdk/spryk-src/${{ env.prBranchName }}
                   delete-branch: true
-                  title: Automatic spryk.phar update
+                  title: PR ${{ env.prNumber }} (spryker-sdk/spryk-src) spryk.phar update
                   body: ${{ steps.PR.outputs.pr_body }}
+              env:
+                  prNumber: ${{ steps.PR.outputs.number }}
+                  prBranchName: ${{ fromJson(steps.PR.outputs.pr).head.ref }}
 
             - name: Check outputs
               if: ${{ steps.cpr.outputs.pull-request-number }}
