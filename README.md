@@ -83,6 +83,4 @@ To compile the `spryk.phar` you need to run the following steps:
 - `composer update`
 - `bin/console spryk:compile`
 
-This will install the latest dependencies, create a fresh cache, compile the archive and copy it to the `spryker-sdk/spryk` repository.
-
-You also need to push the `spryk.phar` to `spryker-sdk/spryk`.
+This will install the latest dependencies, create a fresh cache and compiles the archive.
