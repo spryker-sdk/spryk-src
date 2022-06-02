@@ -81,10 +81,7 @@ When this is done re-run your tests. Now you should see a green test.
 To compile the `spryk.phar` you need to run the following steps:
 
 - `composer update`
-- `bin/console spryk:build`
-- `php bin/console cache:clear -e prod`
-- `php bin/console cache:warmup -e prod`
-- `cd compile/build && box compile && cp ../../tmp/spryk.phar ../../../spryk`
+- `bin/console spryk:compile`
 
 This will install the latest dependencies, create a fresh cache, compile the archive and copy it to the `spryker-sdk/spryk` repository.
 
