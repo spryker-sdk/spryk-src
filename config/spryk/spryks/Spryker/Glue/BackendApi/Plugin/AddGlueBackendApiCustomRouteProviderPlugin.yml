@@ -1,5 +1,5 @@
 spryk: template
-description: "Adds a new GlueBackendApi Custom Route Provider Plugin."
+description: "Adds a new GlueBackendApi CustomRouteProviderPlugin."
 mode: both
 
 arguments:
@@ -20,7 +20,7 @@ arguments:
         default: Backend
 
     resource:
-        description: "Defines the resource name this resource plugin will work with."
+        description: "Defines the resource name this custom route provider plugin will work with."
         inherit: true
 
     className:
@@ -31,6 +31,9 @@ arguments:
         value:
             - "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
             - "\\{{ organization }}\\{{ application }}\\GlueBackendApiApplication\\Plugin\\GlueBackendApiApplication\\RouteProvider\\AbstractRouteProviderPlugin"
+
+    implements:
+        value: "\\{{ organization }}\\{{ application }}\\GlueBackendApiApplicationExtension\\Dependency\\Plugin\\RouteProviderPluginInterface"
 
     template:
         value: Common/Class.php.twig
@@ -53,7 +56,7 @@ postSpryks:
               method:
                   value: "addRoutes"
               input:
-                  value: "\\Symfony\\Component\\Routing\\RouteCollection"
+                  value: "\\Symfony\\Component\\Routing\\RouteCollection $routeCollection"
               output:
                   value: "\\Symfony\\Component\\Routing\\RouteCollection"
               body:
@@ -63,16 +66,10 @@ postSpryks:
                   value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
               withInterface:
                   value: false
-    - AddImplements:
-          arguments:
-              interface:
-                  value: "{{ organization }}\\{{ application }}\\GlueBackendApiApplicationExtension\\Dependency\\Plugin\\RouteProviderPluginInterface"
-              target:
-                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
-    # Wir the plugin after it was created
+    # Wire the plugin after it was created
     - WirePlugin:
           arguments:
               plugin:
                   value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
               target:
-                  value: "\\{{ organization }}\\{{ application }}\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider::getResourcePlugins"
+                  value: "\\{{ organization }}\\{{ application }}\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider::getRouteProviderPlugins"

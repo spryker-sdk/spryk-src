@@ -558,4 +558,9 @@ interface ClassName
      * @var string
      */
     public const PROJECT_GLUE_BACKEND_API_RESOURCE_PLUGIN = 'Pyz\Glue\FooBarsBackendApi\Plugin\FooBarsBackendApiResource';
+
+    /**
+     * @var string
+     */
+    public const PROJECT_GLUE_BACKEND_API_ROUTE_PROVIDER_PLUGIN = 'Pyz\Glue\FooBarsBackendApi\Plugin\FooBarsBackendApiRouteProviderPlugin';
 }
