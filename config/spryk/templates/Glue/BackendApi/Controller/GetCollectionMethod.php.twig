@@ -1,6 +1,8 @@
+        {% set paramName = input | split(' ') %}
+
         ${{ zedDomainEntity | lcfirst }}CriteriaTransfer = $this->getFactory()
             ->createGlueRequest{{ zedDomainEntity }}Mapper()
-            ->mapGlueRequestTransferTo{{ zedDomainEntity }}CriteriaTransfer($glueRequestTransfer);
+            ->mapGlueRequestTransferTo{{ zedDomainEntity }}CriteriaTransfer({{ paramName[1] }});
 
         ${{ zedDomainEntity | lcfirst }}CollectionTransfer = $this->getFactory()
             ->get{{ dataModule }}Facade()
