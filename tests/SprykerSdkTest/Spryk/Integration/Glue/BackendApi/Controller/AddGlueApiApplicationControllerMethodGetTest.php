@@ -9,7 +9,6 @@ namespace SprykerSdkTest\Spryk\Integration\Glue\BackendApi\Controller;
 
 use Codeception\Test\Unit;
 use SprykerSdkTest\Module\GlueBackendApiClassNames;
-use SprykerSdkTest\SprykIntegrationTester;
 
 /**
  * Auto-generated group annotations
@@ -18,25 +17,28 @@ use SprykerSdkTest\SprykIntegrationTester;
  * @group Spryk
  * @group Integration
  * @group Glue
- * @group AddGlueBackendApiControllerTest
+ * @group AddGlueBackendApiControllerMethodGetTest
  * Add your own group annotations below this line
  */
-class AddGlueBackendApiControllerTest extends Unit
+class AddGlueApiApplicationControllerMethodGetTest extends Unit
 {
     /**
      * @var \SprykerSdkTest\SprykIntegrationTester
      */
-    protected SprykIntegrationTester $tester;
+    protected $tester;
 
     /**
      * @return void
      */
-    public function testAddsGlueBackendApiController(): void
+    public function testAddsGlueBackendApiControllerMethodGet(): void
     {
         $this->tester->run($this, [
             '--resource' => '/foo-bars',
+            '--zedDomainEntity' => 'ZipZap',
         ]);
 
         $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER);
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_GET_CONTROLLER_TEST);
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER, 'getAction');
     }
 }

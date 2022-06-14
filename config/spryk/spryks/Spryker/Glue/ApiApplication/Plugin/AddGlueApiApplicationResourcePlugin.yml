@@ -1,5 +1,5 @@
 spryk: template
-description: "Adds a new GlueBackendApi Resource Plugin."
+description: "Adds a new Glue Application Resource Plugin."
 mode: both
 
 arguments:
@@ -48,7 +48,7 @@ arguments:
         value: Plugin
 
 preSpryks:
-    - AddGlueBackendApiApplication
+    - AddGlueApiApplication
 postSpryks:
     - AddMethod:
           arguments:
@@ -112,5 +112,5 @@ postSpryks:
               plugin:
                   value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
               target:
-                  value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider::getResourcePlugins"
+                  value: "\\{{ organization }}\\Glue\\GlueApiApplication\\GlueApiApplicationDependencyProvider::getResourcePlugins"
 

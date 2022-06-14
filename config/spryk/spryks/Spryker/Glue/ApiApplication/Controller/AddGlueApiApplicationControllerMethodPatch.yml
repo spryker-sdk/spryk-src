@@ -1,5 +1,5 @@
 spryk: wrapper
-description: "Adds a new method to the BackendApi Glue controller."
+description: "Adds a new method to the Glue controller."
 mode: both
 level: 2
 
@@ -59,8 +59,8 @@ arguments:
 
 preSpryks:
     # Add the BackendApi Controller
-    - AddGlueBackendApiController
-    - AddGlueBackendApiController:
+    - AddGlueApiApplicationController
+    - AddGlueApiApplicationController:
           arguments:
               isTestClass:
                   value: true
@@ -68,7 +68,7 @@ preSpryks:
                   value: "{{ resource | normalizeResourceName }}PatchResourceController"
 
 postSpryks:
-    - AddBackendApiResourceMethod
+    - AddApiApplicationResourceMethod
     # Add controller patchAction
     - AddMethod:
           arguments:

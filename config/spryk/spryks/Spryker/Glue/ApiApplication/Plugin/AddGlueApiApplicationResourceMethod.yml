@@ -1,5 +1,5 @@
 spryk: addBackendApiRestResourceMethod
-description: "Adds a new method call to the GlueResourceMethodCollectionTransfer in GlueBackendApi Resource Plugin."
+description: "Adds a new method call to the GlueResourceMethodCollectionTransfer in Glue Application Resource Plugin."
 mode: both
 
 arguments:
@@ -43,4 +43,4 @@ arguments:
         description: "Can be oneOf: Get, GetCollection, Post, Patch, Delete, DeleteCollection"
 
 preSpryks:
-    - AddGlueBackendApiResourcePlugin
+    - AddGlueApiApplicationResourcePlugin

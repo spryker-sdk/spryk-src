@@ -1,5 +1,5 @@
 spryk: wrapper
-description: "Adds a new method to the BackendApi Glue controller."
+description: "Adds a new method to the Glue controller."
 mode: both
 level: 2
 
@@ -25,7 +25,7 @@ arguments:
 
     httpMethod:
         inherit: true
-        default: "get"
+        default: "delete"
 
     isBulk:
         description: "Defines if this resource should work with Collections. When set to true the method will use collections when possible."
@@ -63,23 +63,23 @@ arguments:
 
 preSpryks:
     # Add the BackendApi Controller
-    - AddGlueBackendApiController
-    - AddGlueBackendApiController:
+    - AddGlueApiApplicationController
+    - AddGlueApiApplicationController:
           arguments:
               isTestClass:
                   value: true
               controller:
-                  value: "{{ resource | normalizeResourceName }}GetCollectionResourceController"
+                  value: "{{ resource | normalizeResourceName }}DeleteResourceController"
 
 postSpryks:
-    - AddBackendApiResourceMethod
-    # Add controller getCollectionAction
+    - AddApiApplicationResourceMethod
+    # Add controller deleteAction
     - AddMethod:
           arguments:
               method:
-                  value: "getCollectionAction"
+                  value: "deleteAction"
               input:
-                  value: "\\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
+                  value: "string $id, \\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               dataModule:
@@ -89,7 +89,7 @@ postSpryks:
               resourceDataObject:
                   inherit: true
               body:
-                  value: Glue/BackendApi/Controller/GetCollectionMethod.php.twig
+                  value: Glue/BackendApi/Controller/DeleteMethod.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Controller\\{{ resource | normalizeResourceName }}ResourceController"
               withInterface:

@@ -1,5 +1,5 @@
 spryk: wrapper
-description: "Adds a new method to the BackendApi Glue controller."
+description: "Adds a new method to the Glue controller."
 mode: both
 level: 2
 
@@ -25,7 +25,11 @@ arguments:
 
     httpMethod:
         inherit: true
-        default: "post"
+        default: "get"
+
+    isBulk:
+        description: "Defines if this resource should work with Collections. When set to true the method will use collections when possible."
+        inherit: true
 
     apiType:
         inherit: true
@@ -59,23 +63,23 @@ arguments:
 
 preSpryks:
     # Add the BackendApi Controller
-    - AddGlueBackendApiController
-    - AddGlueBackendApiController:
+    - AddGlueApiApplicationController
+    - AddGlueApiApplicationController:
           arguments:
               isTestClass:
                   value: true
               controller:
-                  value: "{{ resource | normalizeResourceName }}PostResourceController"
+                  value: "{{ resource | normalizeResourceName }}GetCollectionResourceController"
 
 postSpryks:
-    - AddBackendApiResourceMethod
-    # Add controller postAction
+    - AddApiApplicationResourceMethod
+    # Add controller getCollectionAction
     - AddMethod:
           arguments:
               method:
-                  value: "postAction"
+                  value: "getCollectionAction"
               input:
-                  value: "\\Generated\\Shared\\Transfer\\{{ zedDomainEntity }}Transfer ${{ zedDomainEntity | lcfirst }}Transfer, \\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
+                  value: "\\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               dataModule:
@@ -85,7 +89,7 @@ postSpryks:
               resourceDataObject:
                   inherit: true
               body:
-                  value: Glue/BackendApi/Controller/PostMethod.php.twig
+                  value: Glue/BackendApi/Controller/GetCollectionMethod.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Controller\\{{ resource | normalizeResourceName }}ResourceController"
               withInterface:

@@ -1,5 +1,5 @@
 spryk: wrapper
-description: "Adds a new GlueBackendApi Application."
+description: "Adds a new Glue API Application."
 mode: both
 
 arguments:
@@ -86,7 +86,7 @@ preSpryks:
               template:
                   value: Spryker/Glue/BackendApi/index.php.twig
 
-    # Add AddGlueBackendApiBootstrap
+    # Add AddGlueApiApplicationBootstrap
     - AddFileFromTemplate:
           arguments:
               targetFilename:
@@ -165,16 +165,16 @@ preSpryks:
               withInterface:
                   value: false
 
-    # Add GlueBackendApiApplicationDependencyProvider
+    # Add GlueApiApplicationDependencyProvider
     - AddGlueDependencyProvider:
           arguments:
               module:
-                  value: "GlueBackendApiApplication"
-    # Methods for the GlueBackendApiApplicationDependencyProvider
+                  value: "GlueApiApplication"
+    # Methods for the GlueApiApplicationDependencyProvider
     - AddMethod:
           arguments:
               target:
-                  value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider"
+                  value: "\\{{ organization }}\\Glue\\GlueApiApplication\\GlueApiApplicationDependencyProvider"
               method:
                   value: "getApplicationPlugins"
               body:
@@ -186,79 +186,79 @@ preSpryks:
     - AddMethod:
           arguments:
               target:
-                  value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider"
+                  value: "\\{{ organization }}\\Glue\\GlueApiApplication\\GlueApiApplicationDependencyProvider"
               method:
                   value: "getRequestBuilderPlugins"
               body:
                   value: "return [];"
               output:
-                  value: "array<\\Spryker\\Glue\\GlueBackendApiApplicationExtension\\Dependency\\Plugin\\RequestBuilderPluginInterface>"
+                  value: "array<\\Spryker\\Glue\\GlueApiApplicationExtension\\Dependency\\Plugin\\RequestBuilderPluginInterface>"
               withInterface:
                   value: false
     - AddMethod:
           arguments:
               target:
-                  value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider"
+                  value: "\\{{ organization }}\\Glue\\GlueApiApplication\\GlueApiApplicationDependencyProvider"
               method:
                   value: "getRequestAfterRoutingValidatorPlugins"
               body:
                   value: "return [];"
               output:
-                  value: "array<\\Spryker\\Glue\\GlueBackendApiApplicationExtension\\Dependency\\Plugin\\RequestAfterRoutingValidatorPluginInterface>"
+                  value: "array<\\Spryker\\Glue\\GlueApiApplicationExtension\\Dependency\\Plugin\\RequestAfterRoutingValidatorPluginInterface>"
               withInterface:
                   value: false
     - AddMethod:
           arguments:
               target:
-                  value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider"
+                  value: "\\{{ organization }}\\Glue\\GlueApiApplication\\GlueApiApplicationDependencyProvider"
               method:
                   value: "getResponseFormatterPlugins"
               body:
                   value: "return [];"
               output:
-                  value: "array<\\Spryker\\Glue\\GlueBackendApiApplicationExtension\\Dependency\\Plugin\\ResponseFormatterPluginInterface>"
+                  value: "array<\\Spryker\\Glue\\GlueApiApplicationExtension\\Dependency\\Plugin\\ResponseFormatterPluginInterface>"
               withInterface:
                   value: false
     - AddMethod:
           arguments:
               target:
-                  value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider"
+                  value: "\\{{ organization }}\\Glue\\GlueApiApplication\\GlueApiApplicationDependencyProvider"
               method:
                   value: "getRouterPlugins"
               body:
                   value: "return [];"
               output:
-                  value: "array<\\Spryker\\Glue\\GlueBackendApiApplicationExtension\\Dependency\\Plugin\\RouterPluginInterface>"
+                  value: "array<\\Spryker\\Glue\\GlueApiApplicationExtension\\Dependency\\Plugin\\RouterPluginInterface>"
               withInterface:
                   value: false
     - AddMethod:
           arguments:
               target:
-                  value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider"
+                  value: "\\{{ organization }}\\Glue\\GlueApiApplication\\GlueApiApplicationDependencyProvider"
               method:
                   value: "getRouteMatcherPlugins"
               body:
                   value: "return [];"
               output:
-                  value: "array<\\Spryker\\Glue\\GlueBackendApiApplicationExtension\\Dependency\\Plugin\\RouteMatcherPluginInterface>"
+                  value: "array<\\Spryker\\Glue\\GlueApiApplicationExtension\\Dependency\\Plugin\\RouteMatcherPluginInterface>"
               withInterface:
                   value: false
     - AddMethod:
           arguments:
               target:
-                  value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider"
+                  value: "\\{{ organization }}\\Glue\\GlueApiApplication\\GlueApiApplicationDependencyProvider"
               method:
                   value: "getRequestResourceFilterPlugin"
               body:
                   value: "return new \\Spryker\\Glue\\GlueApplication\\Plugin\\GlueApplication\\RequestResourceFilterPlugin();"
               output:
-                  value: "\\Spryker\\Glue\\GlueBackendApiApplicationExtension\\Dependency\\Plugin\\RequestResourceFilterPluginInterface"
+                  value: "\\Spryker\\Glue\\GlueApiApplicationExtension\\Dependency\\Plugin\\RequestResourceFilterPluginInterface"
               withInterface:
                   value: false
     - AddMethod:
           arguments:
               target:
-                  value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider"
+                  value: "\\{{ organization }}\\Glue\\GlueApiApplication\\GlueApiApplicationDependencyProvider"
               method:
                   value: "getResourcePlugins"
               body:
@@ -332,7 +332,7 @@ preSpryks:
     - WirePlugin:
           arguments:
               plugin:
-                  value: "\\Spryker\\Glue\\GlueBackendApiApplication\\Plugin\\GlueApplication\\BackendApiGlueApplicationBootstrapPlugin"
+                  value: "\\Spryker\\Glue\\GlueApiApplication\\Plugin\\GlueApplication\\BackendApiGlueApplicationBootstrapPlugin"
               target:
                   value: "\\{{ organization }}\\Glue\\GlueApplication\\GlueApplicationDependencyProvider::getGlueApplicationBootstrapPlugins"
     - WirePlugin:
@@ -371,31 +371,31 @@ preSpryks:
               target:
                   value: "\\{{ organization }}\\Glue\\GlueApplication\\GlueApplicationDependencyProvider::getResourceFilterPlugins"
 
-    # Wire GlueBackendApiApplicationDependencyProvider plugins
+    # Wire GlueApiApplicationDependencyProvider plugins
     - WirePlugin:
           arguments:
               plugin:
                   value: "\\Spryker\\Zed\\Propel\\Communication\\Plugin\\Application\\PropelApplicationPlugin"
               target:
-                  value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider::getApplicationPlugins"
+                  value: "\\{{ organization }}\\Glue\\GlueApiApplication\\GlueApiApplicationDependencyProvider::getApplicationPlugins"
     - WirePlugin:
           arguments:
               plugin:
-                  value: "\\Spryker\\Glue\\GlueHttp\\Plugin\\GlueBackendApiApplication\\CorsHeaderExistenceRequestAfterRoutingValidatorPlugin"
+                  value: "\\Spryker\\Glue\\GlueHttp\\Plugin\\GlueApiApplication\\CorsHeaderExistenceRequestAfterRoutingValidatorPlugin"
               target:
-                  value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider::getRequestAfterRoutingValidatorPlugins"
+                  value: "\\{{ organization }}\\Glue\\GlueApiApplication\\GlueApiApplicationDependencyProvider::getRequestAfterRoutingValidatorPlugins"
     - WirePlugin:
           arguments:
               plugin:
-                  value: "\\Spryker\\Glue\\GlueBackendApiApplication\\Plugin\\GlueBackendApiApplication\\SecurityHeaderResponseFormatterPlugin"
+                  value: "\\Spryker\\Glue\\GlueApiApplication\\Plugin\\GlueApiApplication\\SecurityHeaderResponseFormatterPlugin"
               target:
-                  value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider::getResponseFormatterPlugins"
+                  value: "\\{{ organization }}\\Glue\\GlueApiApplication\\GlueApiApplicationDependencyProvider::getResponseFormatterPlugins"
     - WirePlugin:
           arguments:
               plugin:
                   value: "\\Spryker\\Glue\\GlueApplication\\Plugin\\GlueApplication\\ResourceRouteMatcherPlugin"
               target:
-                  value: "\\{{ organization }}\\Glue\\GlueBackendApiApplication\\GlueBackendApiApplicationDependencyProvider::getRouteMatcherPlugins"
+                  value: "\\{{ organization }}\\Glue\\GlueApiApplication\\GlueApiApplicationDependencyProvider::getRouteMatcherPlugins"
     # Wire GlueRestApiConventionDependencyProvider plugins
     - WirePlugin:
           condition: "apiType === 'REST'"

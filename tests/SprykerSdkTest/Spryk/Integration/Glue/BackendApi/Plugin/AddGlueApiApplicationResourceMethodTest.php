@@ -22,7 +22,7 @@ use SprykerSdkTest\SprykIntegrationTester;
  * @group AddBackendApiResourceMethodTest
  * Add your own group annotations below this line
  */
-class AddBackendApiResourceMethodTest extends Unit
+class AddGlueApiApplicationResourceMethodTest extends Unit
 {
     /**
      * @var \SprykerSdkTest\SprykIntegrationTester

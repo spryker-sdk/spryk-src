@@ -66,10 +66,10 @@ arguments:
         default: "{{ resource | normalizeResourceName | singularize }}"
 
 postSpryks:
-    - AddGlueBackendApiApplication
-    - AddGlueBackendApiRequestMapper
-    - AddGlueBackendApiResponseMapper
-    - AddGlueBackendApiResourcePlugin
+    - AddGlueApiApplication
+    - AddGlueApiApplicationRequestMapper
+    - AddGlueApiApplicationResponseMapper
+    - AddGlueApiApplicationResourcePlugin
     # Add CrudFacade code
     - AddCrudFacade:
           condition: "applicationType === 'Backend'"
@@ -146,21 +146,21 @@ postSpryks:
     # What are the client methods we would need to bridge??
 
     # Add the controller method to handle the request
-    - AddGlueBackendApiControllerMethodGet:
+    - AddGlueApiApplicationControllerMethodGet:
           condition: "applicationType === 'Backend' && httpMethod === 'get' && isBulk === false"
-    - AddGlueBackendApiControllerMethodGetCollection:
+    - AddGlueApiApplicationControllerMethodGetCollection:
           condition: "applicationType === 'Backend' && httpMethod === 'get' && isBulk === true"
-    - AddGlueBackendApiControllerMethodPost:
+    - AddGlueApiApplicationControllerMethodPost:
           condition: "applicationType === 'Backend' && httpMethod === 'post'"
-    - AddGlueBackendApiControllerMethodPatch:
+    - AddGlueApiApplicationControllerMethodPatch:
           condition: "applicationType === 'Backend' && httpMethod === 'patch'"
-    - AddGlueBackendApiControllerMethodDelete:
+    - AddGlueApiApplicationControllerMethodDelete:
           condition: "applicationType === 'Backend' && httpMethod === 'delete' && isBulk === false"
-    - AddGlueBackendApiControllerMethodDeleteCollection:
+    - AddGlueApiApplicationControllerMethodDeleteCollection:
           condition: "applicationType === 'Backend' && httpMethod === 'delete' && isBulk === true"
 
     # Add controller test method test<Resource><HTTPMethod>ReturnsHttpResponseCode<ResponseCode>
-    # The test controller is added by the AddGlueBackendApiControllerMethod* Spryks
+    # The test controller is added by the AddGlueApiApplicationControllerMethod* Spryks
     - AddMethod:
           arguments:
               isBulk:

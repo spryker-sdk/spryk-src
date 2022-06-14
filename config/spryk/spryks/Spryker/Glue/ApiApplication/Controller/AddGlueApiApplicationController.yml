@@ -1,5 +1,5 @@
 spryk: wrapper
-description: "Adds a new Glue BackendApi Controller to the Glue application."
+description: "Adds a new Glue Controller to the Glue Application."
 mode: both
 level: 3
 
@@ -22,7 +22,7 @@ arguments:
 
     applicationType:
         inherit: true
-        description: "Can be one of: Backend or Frontend"
+        description: "Can be one of: Backend or Storefront"
         default: "Backend"
 
     isTestClass:

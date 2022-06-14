@@ -62,7 +62,7 @@ arguments:
         value: "src/{{ organization }}/Glue/{{ module }}/"
 
 preSpryks:
-    - AddGlueBackendApiController
+    - AddGlueApiApplicationController
 
 postSpryks:
     - AddMethod:
