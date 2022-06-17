@@ -3,11 +3,9 @@ description: "Adds a new Glue Controller to the Glue Application."
 mode: both
 level: 3
 
-condition: "applicationType === 'Backend'"
-
 arguments:
     module:
-        description: "Based on the applicationType the module name will be suffixed with BackendApi or FrontendApi by the ResourceModuleName callback."
+        description: "Based on the applicationType the module name will be suffixed with BackendApi or StorefrontApi by the ResourceModuleName callback."
         inherit: true
         default: "{{ resource | normalizeResourceName }}"
         callback: GlueResourceModuleName
