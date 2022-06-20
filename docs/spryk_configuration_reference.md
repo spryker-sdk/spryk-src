@@ -3,7 +3,7 @@ ___
 
 All the Spryk definitions are located in the `config/spryk/spryks` directory.
 
-Example of Spryk configuration.
+Here is the example of the Spryk configuration:
 ```yaml
 spryk: wrapper
 description: "Adds CRUD code for a Domain Entity."
@@ -27,41 +27,43 @@ Spryk name is defined by its filename.
 
 ## The root configuration
 
+In Spryk configuration, the following elements are used:
+
 ### spryk
-This is name of the builder that is used for processing this Spryk. All the builders can be found in `src/Spryk/Model/Spryk/Builder/`
+This is name of the builder that is used for processing the Spryk. All the builders reside in `src/Spryk/Model/Spryk/Builder/`
 and must implement `SprykerSdk\Spryk\Model\Spryk\Builder\SprykBuilderInterface::getName()`.
 
 ### description
-Description of the Spryk. Must be added to give the reader of the Spryk definition a clear description of what this Spryk is doing.
+Description of the Spryk. Must be added to give the reader of the Spryk definition a clear description of what this Spryk does.
 
 ### mode
-The mode of the Spryk. It used for running the specific Spryks by passing the `--mode` option into the command. The reserved `both` value allows to run Spryk in any case.
+The mode of the Spryk. It is used for running the specific Spryks by passing the `--mode` option to the command. The reserved `both` value allows to run Spryk in any case.
 
-`mode: project` - Spryk will be run only with `--mode=project` option in CLI command.
+`mode: project` - Spryk is run only with `--mode=project` option in the CLI command.
 
-`mode: core` - Spryk will be run only with `--mode=core` option in CLI command.
+`mode: core` - Spryk is run only with the `--mode=core` option in the CLI command.
 
-`mode: both` - Spryk will be run regardless the `--mode` option value or without this option at all in CLI command.
+`mode: both` - Spryk is run regardless of the `--mode` option value or without this option at all in the CLI command.
 
 
 ### level
-Is used only for Spryk dumper to dump the specific level of Spryks
+Used only for Spryk dumper to dump the specific level of Spryks.
 `vendor/bin/spryk-dump --level=1` or `vendor/bin/spryk-dump --level=all`.
 
 ### condition
-Defines the condition of the Spryk execution. If condition evaluates to false the Spryk execution will be skipped with it's (pre)postSpryks. The arguments that are used in condition must be defined in Spryk arguments list.
+Defines the condition of the Spryk execution. If condition is `false`, the Spryk execution is skipped with it's (pre)postSpryks. The arguments that are used in condition must be defined in the Spryk arguments list.
 
 ### arguments
-The Spryk argument list. These arguments are used in the Spryk builder. See below for more detailed description.
+The Spryk argument list. These arguments are used in the Spryk builder. See below [Arguments](#arguments) for details.
 
 ### preSpryks
-The Spryks that will be executed before the current Spryk.
+The Spryks that should be executed before the current Spryk.
 
 ### postSpryks
 The Spryks that should be executed after the current Spryk.
 
 ### excludedSpryks
-Exclude the execution of the Spryks that are placed is `preSpryks` and `postSpryks`. Useful when you reuse the Spryk and you don't need some Spryks that are defined in `preSpryks` or `postSpryks`.
+Excludes the execution of the Spryks that are placed is `preSpryks` and `postSpryks`. Useful when you reuse a Spryk and you don't need some Spryks that are defined in `preSpryks` or `postSpryks`.
 
 ### preCommands
 The commands that should be executed before the current Spryk.
@@ -85,7 +87,7 @@ Declares that the argument value can be inherited from the parent Spryk when not
 The default value for the argument if not passed from CLI.
 
 ### value
-The argument value that will be used. Useful when need to compose value from another arguments values or/and apply some twig filters or functions.
+The argument value to be used. Useful when you need to compose a value from another argument values or apply some twig filters or functions.
 ```yaml
 arguments:
     target:
@@ -96,10 +98,10 @@ arguments:
 ```
 
 ### isOptional
-If argument is optional the values can be empty otherwise the argument value should be provided. This option is `false` by default which means the value is required.
+If argument is optional, the values can be empty. Otherwise, the argument value should be provided. This option is `false` by default, which means the value is required.
 
 ### isMultiple
-The argument can have multiply values and value can be provided as list of values.
+The argument can have multiple values, and a value can be provided as a list of values.
 ```yaml
 arguments:
     target:
@@ -107,7 +109,7 @@ arguments:
 ```
 
 ### allowOverride
-This option is only valid for the body argument of method Spryk and define you can or not to override existing method body.
+This option is only valid for the body argument of a Spryk method and defines whether you can override the existing method body.
 
 ```yaml
 body:
@@ -116,4 +118,4 @@ body:
 ```
 
 ### callback
-The pre-processing callback that will be applied on value before passing into the Spryk. Should implement `SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Callback\CallbackInterface`.
+The pre-processing callback that will be applied on value before passing to the Spryk. It should implement `SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Callback\CallbackInterface`.
