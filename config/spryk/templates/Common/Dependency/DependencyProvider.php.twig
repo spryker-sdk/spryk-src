@@ -8,7 +8,11 @@ namespace {{ organization }}\{{ application }}\{{ module }};
 {% if application == 'Client' %}
     {% set extends = 'Spryker\\Client\\Kernel\\AbstractDependencyProvider' %}
 {% elseif application == 'Glue' %}
-    {% set extends = 'Spryker\\Glue\\Kernel\\AbstractBundleDependencyProvider' %}
+    {% if applicationType == 'Storefront' %}
+        {% set extends = 'Spryker\\Glue\\Kernel\\AbstractBundleDependencyProvider' %}
+    {% else %}
+        {% set extends = 'Spryker\\Glue\\Kernel\\' ~ applicationType ~ '\\AbstractBundleDependencyProvider' %}
+    {% endif %}
 {% elseif application == 'Service' %}
     {% set extends = 'Spryker\\Service\\Kernel\\AbstractDependencyProvider' %}
 {% elseif application == 'Zed' %}

@@ -42,7 +42,7 @@ arguments:
 
 postSpryks:
     - AddClass:
-          condition: "isTestClass === false"
+          condition: "isTestClass === false && applicationType !== 'Storefront'"
           arguments:
               subDirectory:
                   value: Controller
@@ -52,7 +52,22 @@ postSpryks:
                   callback: ResolveExtends
                   value:
                       - "\\Spryker\\Glue\\{{ module }}\\Controller\\{{ controller }}"
-                      - "\\Spryker\\Glue\\Kernel\\Backend\\Controller\\AbstractController "
+                      - "\\Spryker\\Glue\\Kernel\\{{applicationType}}\\Controller\\AbstractController"
+              annotations:
+                  value:
+                      - "@method \\{{ organization }}\\Glue\\{{ module }}\\{{ module }}Factory getFactory()"
+    - AddClass:
+          condition: "isTestClass === false && applicationType === 'Storefront'"
+          arguments:
+              subDirectory:
+                  value: Controller
+              className:
+                  value: "{{ controller }}"
+              extends:
+                  callback: ResolveExtends
+                  value:
+                      - "\\Spryker\\Glue\\{{ module }}\\Controller\\{{ controller }}"
+                      - "\\Spryker\\Glue\\Kernel\\Controller\\AbstractController"
               annotations:
                   value:
                       - "@method \\{{ organization }}\\Glue\\{{ module }}\\{{ module }}Factory getFactory()"

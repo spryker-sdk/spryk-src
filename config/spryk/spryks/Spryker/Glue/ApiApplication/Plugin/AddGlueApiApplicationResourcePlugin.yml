@@ -33,7 +33,7 @@ arguments:
         callback: ResolveExtends
         value:
             - "\\Spryker\\{{ application }}\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
-            - "\\Spryker\\Glue\\GlueApplication\\Plugin\\GlueApplication\\{{applicationType}}\\AbstractResourcePlugin"
+            - "\\Spryker\\Glue\\GlueApplication\\Plugin\\GlueApplication{% if applicationType != 'Storefront' %}\\{{ applicationType }}{% endif %}\\AbstractResourcePlugin"
 
     template:
         value: Common/Class.php.twig
