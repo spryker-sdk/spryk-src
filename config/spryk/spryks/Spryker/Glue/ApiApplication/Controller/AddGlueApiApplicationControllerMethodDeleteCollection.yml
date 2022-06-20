@@ -72,7 +72,7 @@ preSpryks:
                   value: "{{ resource | normalizeResourceName }}DeleteCollectionResourceController"
 
 postSpryks:
-    - AddApiApplicationResourceMethod
+    - AddGlueApiApplicationResourceMethod
     # Add controller deleteCollectionAction
     - AddMethod:
           arguments:

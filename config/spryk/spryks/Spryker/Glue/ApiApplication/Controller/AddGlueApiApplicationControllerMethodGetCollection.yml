@@ -72,7 +72,7 @@ preSpryks:
                   value: "{{ resource | normalizeResourceName }}GetCollectionResourceController"
 
 postSpryks:
-    - AddApiApplicationResourceMethod
+    - AddGlueApiApplicationResourceMethod
     # Add controller getCollectionAction
     - AddMethod:
           arguments:

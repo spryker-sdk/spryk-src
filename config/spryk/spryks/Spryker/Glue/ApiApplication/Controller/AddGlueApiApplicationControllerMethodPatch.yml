@@ -68,7 +68,7 @@ preSpryks:
                   value: "{{ resource | normalizeResourceName }}PatchResourceController"
 
 postSpryks:
-    - AddApiApplicationResourceMethod
+    - AddGlueApiApplicationResourceMethod
     # Add controller patchAction
     - AddMethod:
           arguments:

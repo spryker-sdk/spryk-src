@@ -117,7 +117,7 @@ preSpryks:
     - AddMethod:
           arguments:
               target:
-                  value: "\\{{ organization }}\\Glue\\Glue{{ applicationType }}ApiApplication\\GlueApplicationDependencyProvider"
+                  value: "\\{{ organization }}\\Glue\\GlueApplication\\GlueApplicationDependencyProvider"
               method:
                   value: "getGlueApplicationBootstrapPlugins"
               body:
@@ -129,7 +129,7 @@ preSpryks:
     - AddMethod:
           arguments:
               target:
-                  value: "\\{{ organization }}\\Glue\\Glue{{ applicationType }}ApiApplication\\Glue{{ applicationType }}ApiApplicationDependencyProvider"
+                  value: "\\{{ organization }}\\Glue\\GlueApplication\\GlueApplicationDependencyProvider"
               method:
                   value: "getGlueContextExpanderPlugins"
               body:
@@ -141,7 +141,7 @@ preSpryks:
     - AddMethod:
           arguments:
               target:
-                  value: "\\{{ organization }}\\Glue\\Glue{{ applicationType }}ApiApplication\\Glue{{ applicationType }}ApiApplicationDependencyProvider"
+                  value: "\\{{ organization }}\\Glue\\GlueApplication\\GlueApplicationDependencyProvider"
               method:
                   value: "getCommunicationProtocolPlugins"
               body:
@@ -165,7 +165,7 @@ preSpryks:
     - AddMethod:
           arguments:
               target:
-                  value: "\\{{ organization }}\\Glue\\Glue{{ applicationType }}ApiApplication\\Glue{{ applicationType }}ApiApplicationDependencyProvider"
+                  value: "\\{{ organization }}\\Glue\\GlueApplication\\GlueApplicationDependencyProvider"
               method:
                   value: "getResourceFilterPlugins"
               body:
@@ -175,11 +175,11 @@ preSpryks:
               withInterface:
                   value: false
 
-    # Add GlueApiApplicationDependencyProvider
+    # Add Glue{{ applicationType }}ApiApplication
     - AddGlueDependencyProvider:
           arguments:
               module:
-                  value: "GlueApiApplication"
+                  value: "Glue{{ applicationType }}ApiApplication"
     # Methods for the GlueApiApplicationDependencyProvider
     - AddMethod:
           arguments:
@@ -381,7 +381,7 @@ preSpryks:
               target:
                   value: "\\{{ organization }}\\Glue\\GlueApplication\\GlueApplicationDependencyProvider::getResourceFilterPlugins"
 
-    # Wire GlueApiApplicationDependencyProvider plugins
+    # Wire Glue{{ applicationType }}ApiApplication plugins
     - WirePlugin:
           arguments:
               plugin:
@@ -399,7 +399,7 @@ preSpryks:
               plugin:
                   value: "\\Spryker\\Glue\\Glue{{ applicationType }}ApiApplication\\Plugin\\GlueApiApplication\\SecurityHeaderResponseFormatterPlugin"
               target:
-                  value: "\\{{ organization }}\\Glue\\GlueApiApplication\\GlueApiApplicationDependencyProvider::getResponseFormatterPlugins"
+                  value: "\\{{ organization }}\\Glue\\Glue{{ applicationType }}ApiApplication\\Glue{{ applicationType }}ApiApplicationDependencyProvider::getResponseFormatterPlugins"
     - WirePlugin:
           arguments:
               plugin:

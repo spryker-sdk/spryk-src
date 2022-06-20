@@ -37,12 +37,12 @@ interface GlueBackendApiClassNames
     /**
      * @var string
      */
-    public const GLUE_BACKEND_API_APPLICATION_DEPENDENCY_PROVIDER = 'Spryker\Glue\GlueApiApplication\GlueApiApplicationDependencyProvider';
+    public const GLUE_BACKEND_API_APPLICATION_DEPENDENCY_PROVIDER = 'Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationDependencyProvider';
 
     /**
      * @var string
      */
-    public const PROJECT_GLUE_BACKEND_API_APPLICATION_DEPENDENCY_PROVIDER = 'Pyz\Glue\GlueApiApplication\GlueApiApplicationDependencyProvider';
+    public const PROJECT_GLUE_BACKEND_API_APPLICATION_DEPENDENCY_PROVIDER = 'Pyz\Glue\GlueBackendApiApplication\GlueBackendApiApplicationDependencyProvider';
 
     /**
      * @var string

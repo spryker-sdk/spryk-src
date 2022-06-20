@@ -27,7 +27,7 @@ arguments:
         inherit: true
 
     className:
-        default: "{{ resource | normalizeResourceName }}BackendApiResource"
+        default: "{{ resource | normalizeResourceName }}{{ applicationType }}ApiResource"
 
     extends:
         callback: ResolveExtends
@@ -112,5 +112,5 @@ postSpryks:
               plugin:
                   value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
               target:
-                  value: "\\{{ organization }}\\Glue\\GlueApiApplication\\GlueApiApplicationDependencyProvider::getResourcePlugins"
+                  value: "\\{{ organization }}\\Glue\\Glue{{ applicationType }}ApiApplication\\Glue{{ applicationType }}ApiApplicationDependencyProvider::getResourcePlugins"
 
