@@ -1,0 +1,97 @@
+spryk: wrapper
+description: "Adds a new method to the Glue controller."
+mode: both
+level: 2
+
+arguments:
+    module:
+        description: "Based on the applicationType the module name will be suffixed with BackendApi or FrontendApi by the ResourceModuleName callback."
+        inherit: true
+        default: "{{ resource | normalizeResourceName }}"
+        callback: GlueResourceModuleName
+
+    dataModule:
+        inherit: true
+        description: "The module name for the Zed Application. It's the same name as for the Glue Module but without the Api suffix."
+        value: "{{ module | removeApiSuffix | singularize }}"
+
+    organization:
+        inherit: true
+        default: Spryker
+
+    application:
+        inherit: true
+        default: Glue
+
+    httpMethod:
+        inherit: true
+        default: "get"
+
+    isBulk:
+        description: "Defines if this resource should work with Collections. When set to true the method will use collections when possible."
+        inherit: true
+
+    apiType:
+        inherit: true
+        description: "Can be one of: REST or JSON"
+        default: "JSON"
+
+    applicationType:
+        inherit: true
+        description: "Can be one of: Backend or Frontend"
+        value: "Backend"
+
+    resource:
+        inherit: true
+        description: "Defines the resource name this controller will work with e.g. /customers"
+
+    controller:
+        inherit: true
+        description: "Defines the Controller name to use."
+        value: "{{ resource | normalizeResourceName }}ResourceController"
+
+    zedDomainEntity:
+        description: "Defines the domainEntity used on Zed side for the CRUD Facade. It will be used to create all needed Transfer Objects."
+        value: "{{ resource | normalizeResourceName | singularize }}"
+
+    resourceDataObject:
+        description: "Defines the Transfer that will be used in the Controller. Do not use Transfer as suffix, it will be added automatically. Example: Customer (ok) CustomerTransfer (wrong)."
+        value: "{{ resource | normalizeResourceName }}"
+
+    target:
+        value: "{{ organization }}\\Glue\\{{ module }}\\Controller\\{{ controller | classNameShort | ensureControllerSuffix }}"
+
+preSpryks:
+    # Add the BackendApi Controller
+    - AddGlueApiApplicationController
+    - AddGlueApiApplicationController:
+          arguments:
+              isTestClass:
+                  value: true
+              controller:
+                  value: "{{ resource | normalizeResourceName }}GetCollectionResourceController"
+
+postSpryks:
+    - AddGlueApiApplicationResourceMethod
+    # Add controller getCollectionAction
+    - AddMethod:
+          arguments:
+              method:
+                  value: "getCollectionAction"
+              input:
+                  value: "\\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
+              output:
+                  value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
+              dataModule:
+                  inherit: true
+              zedDomainEntity:
+                  inherit: true
+              resourceDataObject:
+                  inherit: true
+              body:
+                  value: Glue/BackendApi/Controller/GetCollectionMethod.php.twig
+              target:
+                  value: "{{ organization }}\\Glue\\{{ module }}\\Controller\\{{ resource | normalizeResourceName }}ResourceController"
+              withInterface:
+                  value: false
+

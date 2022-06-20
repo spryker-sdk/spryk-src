@@ -62,9 +62,7 @@ class TargetPathExtenderPlugin extends AbstractExtender implements SprykConfigur
             $arguments['targetPath'][SprykConfig::NAME_ARGUMENT_KEY_VALUE] = $targetPath;
         }
 
-        $sprykConfig = $this->setArguments($arguments, $sprykConfig);
-
-        return $sprykConfig;
+        return $this->setArguments($arguments, $sprykConfig);
     }
 
     /**

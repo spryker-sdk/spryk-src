@@ -148,7 +148,7 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         ?ArgumentCollectionInterface $parentArgumentCollection = null
     ): SprykDefinitionInterface {
         $this->debugData['countAll'] = isset($this->debugData['countAll']) ? ++$this->debugData['countAll'] : 1;
-        $this->debugData['countAdded'] = $this->debugData['countAdded'] ?? 0;
+        $this->debugData['countAdded'] ??= 0;
 
         if ($this->calledSpryk === null) {
             $this->calledSpryk = $sprykName;
@@ -374,17 +374,15 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
      */
     protected function getCondition(array $sprykConfiguration, ?array $preDefinedDefinition = null): string
     {
-        $condition = '';
-
         if (isset($sprykConfiguration[static::CONFIGURATION_KEY_CONDITION])) {
-            $condition = $sprykConfiguration[static::CONFIGURATION_KEY_CONDITION];
+            return $sprykConfiguration[static::CONFIGURATION_KEY_CONDITION];
         }
 
         if (isset($preDefinedDefinition[static::CONFIGURATION_KEY_CONDITION])) {
-            $condition = $preDefinedDefinition[static::CONFIGURATION_KEY_CONDITION];
+            return $preDefinedDefinition[static::CONFIGURATION_KEY_CONDITION];
         }
 
-        return $condition;
+        return '';
     }
 
     /**
