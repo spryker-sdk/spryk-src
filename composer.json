@@ -23,12 +23,7 @@
         "symfony/twig-bundle": "^5.4",
         "symfony/yaml": "^5.0.0 || ^6.0.0",
         "symplify/autowire-array-parameter": "^9.3.0",
-        "twig/twig": "^3.0.0",
-        "spryker/glue-backend-api-application": "^0.2.3",
-        "spryker/glue-storefront-api-application": "^0.3.3",
-        "spryker/glue-application": "^1.39.0",
-        "spryker/glue-http": "^0.2.0",
-        "spryker/glue-json-api-convention": "^0.2.0"
+        "twig/twig": "^3.0.0"
     },
     "require-dev": {
         "codeception/codeception": "^4.0.0",
