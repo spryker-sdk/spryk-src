@@ -1,6 +1,17 @@
+        {% set items = [] %}
+        {% for inputParams in input.value %}
+            {% set explodedParams = inputParams | split(',') -%}
+
+            {% for param in explodedParams -%}
+                {% set paramName = param | split('$') -%}
+                {% set item = '$' ~ paramName[1] -%}
+                {% set items = items | merge([item]) %}
+            {% endfor -%}
+        {% endfor -%}
+
         ${{ zedDomainEntity | lcfirst }}CollectionDeleteCriteriaTransfer = $this->getFactory()
             ->createGlueRequest{{ zedDomainEntity }}Mapper()
-            ->mapIdentifierTo{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer($id, $glueRequestTransfer);
+            ->mapIdentifierTo{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer({{ items | join(', ') }});
 
         ${{ zedDomainEntity | lcfirst }}CollectionResponseTransfer = $this->getFactory()
             ->get{{ dataModule }}Facade()
