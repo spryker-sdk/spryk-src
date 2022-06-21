@@ -18,6 +18,7 @@ arguments:
         default: JSON
 
     applicationType:
+        inherit: true
         default: Backend
 
 preSpryks:
@@ -100,13 +101,13 @@ preSpryks:
     - AddFileFromTemplate:
           arguments:
               targetFilename:
-                  value: GlueBackendApiBootstrap.php
+                  value: "Glue{{ applicationType }}ApiBootstrap.php"
 
               targetPath:
                   value: "src/{{ organization }}/Glue/GlueApplication/Bootstrap"
 
               template:
-                  value: Spryker/Glue/BackendApi/GlueBackendApiBootstrap.php.twig
+                  value: "Spryker/Glue/{{ applicationType }}Api/Glue{{ applicationType }}ApiBootstrap.php.twig"
 
     # Add GlueApplicationDependencyProvider
     -   AddGlueCommonDependencyProvider:

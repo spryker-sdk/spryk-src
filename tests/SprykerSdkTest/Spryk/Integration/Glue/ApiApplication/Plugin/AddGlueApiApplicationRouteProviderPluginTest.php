@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerSdkTest\Spryk\Integration\Common;
+namespace SprykerSdkTest\Spryk\Integration\Glue\ApiApplication\Plugin;
 
 use Codeception\Test\Unit;
 use SprykerSdkTest\Module\ClassName;
@@ -19,6 +19,7 @@ use SprykerSdkTest\SprykIntegrationTester;
  * @group Spryk
  * @group Integration
  * @group Glue
+ * @group ApiApplication
  * @group Plugin
  * @group AddGlueApiApplicationRouteProviderPluginTest
  * Add your own group annotations below this line

@@ -34,7 +34,7 @@ arguments:
 
     className:
         inherit: true
-        default: "{{ resource | normalizeResourceName }}BackendApiResource"
+        default: "{{ resource | normalizeResourceName }}{{ applicationType }}ApiResource"
 
     target:
         value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"

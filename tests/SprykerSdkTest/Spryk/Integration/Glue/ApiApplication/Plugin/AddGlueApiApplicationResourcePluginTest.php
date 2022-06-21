@@ -10,6 +10,7 @@ namespace SprykerSdkTest\Spryk\Integration\Common;
 use Codeception\Test\Unit;
 use SprykerSdkTest\Module\ClassName;
 use SprykerSdkTest\Module\GlueBackendApiClassNames;
+use SprykerSdkTest\Module\GlueStorefrontApiClassNames;
 use SprykerSdkTest\SprykIntegrationTester;
 
 /**
@@ -19,8 +20,9 @@ use SprykerSdkTest\SprykIntegrationTester;
  * @group Spryk
  * @group Integration
  * @group Glue
+ * @group ApiApplication
  * @group Plugin
- * @group AddGlueBackendApiResourcePluginTest
+ * @group AddGlueApiApplicationResourcePluginTest
  * Add your own group annotations below this line
  */
 class AddGlueApiApplicationResourcePluginTest extends Unit
@@ -38,8 +40,9 @@ class AddGlueApiApplicationResourcePluginTest extends Unit
         $this->tester->run($this, [
             '--organization' => 'Pyz',
             '--resource' => '/foo-bars',
-
+            '--applicationType' => 'Backend',
         ]);
+
         $expectedMethod = 'getResourcePlugins';
         $expectedBody = 'return [new FooBarsBackendApiResource()];';
 
@@ -49,5 +52,27 @@ class AddGlueApiApplicationResourcePluginTest extends Unit
         $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_GLUE_BACKEND_API_RESOURCE_PLUGIN, 'getType');
         $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_GLUE_BACKEND_API_RESOURCE_PLUGIN, 'getController');
         $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_GLUE_BACKEND_API_RESOURCE_PLUGIN, 'getDeclaredMethods');
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddsGlueStorefrontApiResourcePlugin(): void
+    {
+        $this->tester->run($this, [
+            '--organization' => 'Pyz',
+            '--resource' => '/foo-bars',
+            '--applicationType' => 'Storefront',
+        ]);
+
+        $expectedMethod = 'getResourcePlugins';
+        $expectedBody = 'return [new FooBarsStorefrontApiResource()];';
+
+        $this->tester->assertClassOrInterfaceExists(ClassName::PROJECT_GLUE_STOREFRONT_API_RESOURCE_PLUGIN);
+        $this->tester->assertClassOrInterfaceHasMethod(GlueStorefrontApiClassNames::PROJECT_GLUE_STOREFRONT_API_APPLICATION_DEPENDENCY_PROVIDER, $expectedMethod);
+        $this->tester->assertMethodBody(GlueStorefrontApiClassNames::PROJECT_GLUE_STOREFRONT_API_APPLICATION_DEPENDENCY_PROVIDER, $expectedMethod, $expectedBody);
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_GLUE_STOREFRONT_API_RESOURCE_PLUGIN, 'getType');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_GLUE_STOREFRONT_API_RESOURCE_PLUGIN, 'getController');
+        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_GLUE_STOREFRONT_API_RESOURCE_PLUGIN, 'getDeclaredMethods');
     }
 }

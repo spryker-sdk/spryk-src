@@ -5,9 +5,9 @@ level: 2
 
 arguments:
     module:
-        description: "Module name should be suffixed either with Api or with BackendApi depending on the choosen applicationType."
+        description: "Module name should be suffixed either with StorefrontApi or with BackendApi depending on the chosen applicationType."
         inherit: true
-        default: "{{ resource | normalizeResourceName }}{% if applicationType == 'Frontend' %}Api{% else %}BackendApi{% endif %}"
+        default: "{{ resource | normalizeResourceName }}{{ applicationType }}Api"
 
     organization:
         inherit: true
@@ -29,7 +29,7 @@ arguments:
 
     applicationType:
         inherit: true
-        description: "Can be one of: Backend or Frontend"
+        description: "Can be one of: Backend or Storefront"
         default: "Backend"
 
     isTestClass:
