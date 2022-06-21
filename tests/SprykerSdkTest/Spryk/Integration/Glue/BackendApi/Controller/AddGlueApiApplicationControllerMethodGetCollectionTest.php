@@ -20,10 +20,10 @@ use SprykerSdkTest\Module\GlueStorefrontApiClassNames;
  * @group Glue
  * @group BackendApi
  * @griup StorefrontApi
- * @group AddGlueApiApplicationControllerMethodGetTest
+ * @group AddGlueApiApplicationControllerMethodGetCollectionTest
  * Add your own group annotations below this line
  */
-class AddGlueApiApplicationControllerMethodGetTest extends Unit
+class AddGlueApiApplicationControllerMethodGetCollectionTest extends Unit
 {
     /**
      * @var \SprykerSdkTest\SprykIntegrationTester
@@ -33,7 +33,7 @@ class AddGlueApiApplicationControllerMethodGetTest extends Unit
     /**
      * @return void
      */
-    public function testAddsGlueBackendApiControllerMethodGet(): void
+    public function testAddsGlueBackendApiControllerMethodGetCollection(): void
     {
         $this->tester->run($this, [
             '--resource' => '/foo-bars',
@@ -42,14 +42,14 @@ class AddGlueApiApplicationControllerMethodGetTest extends Unit
         ]);
 
         $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER);
-        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_GET_CONTROLLER_TEST);
-        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER, 'getAction');
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_GET_COLLECTION_CONTROLLER_TEST);
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER, 'getCollectionAction');
     }
 
     /**
      * @return void
      */
-    public function testAddsGlueStorefrontApiControllerMethodGet(): void
+    public function testAddsGlueStorefrontApiControllerMethodGetCollection(): void
     {
         $this->tester->run($this, [
             '--resource' => '/foo-bars',
@@ -58,7 +58,7 @@ class AddGlueApiApplicationControllerMethodGetTest extends Unit
         ]);
 
         $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_CONTROLLER);
-        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_GET_CONTROLLER_TEST);
-        $this->tester->assertClassOrInterfaceHasMethod(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_CONTROLLER, 'getAction');
+        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_GET_COLLECTION_CONTROLLER_TEST);
+        $this->tester->assertClassOrInterfaceHasMethod(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_CONTROLLER, 'getCollectionAction');
     }
 }

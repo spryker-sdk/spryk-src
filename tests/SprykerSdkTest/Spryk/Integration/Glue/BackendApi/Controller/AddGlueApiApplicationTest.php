@@ -9,6 +9,7 @@ namespace SprykerSdkTest\Spryk\Integration\Glue\BackendApi\Controller;
 
 use Codeception\Test\Unit;
 use SprykerSdkTest\Module\GlueBackendApiClassNames;
+use SprykerSdkTest\Module\GlueStorefrontApiClassNames;
 use SprykerSdkTest\SprykIntegrationTester;
 
 /**
@@ -19,8 +20,9 @@ use SprykerSdkTest\SprykIntegrationTester;
  * @group Integration
  * @group Glue
  * @group BackendApi
+ * @group StorefrontApi
  * @group Controller
- * @group AddGlueBackendApiApplicationTest
+ * @group AddGlueApiApplicationTest
  * Add your own group annotations below this line
  */
 class AddGlueApiApplicationTest extends Unit
@@ -61,5 +63,38 @@ class AddGlueApiApplicationTest extends Unit
         $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_BOOTSTRAP);
         $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_APPLICATION_DEPENDENCY_PROVIDER);
         $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_APPLICATION_DEPENDENCY_PROVIDER);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddsGlueStorefrontApiApplicationOnProjectLevel(): void
+    {
+        $this->tester->run($this, [
+            '--mode' => 'project',
+            '--organization' => 'Pyz',
+            '--module' => 'FooBar',
+            '--applicationType' => 'Storefront',
+        ]);
+
+        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::PROJECT_GLUE_STOREFRONT_API_BOOTSTRAP);
+        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::PROJECT_GLUE_APPLICATION_DEPENDENCY_PROVIDER);
+        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::PROJECT_GLUE_STOREFRONT_API_APPLICATION_DEPENDENCY_PROVIDER);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddsGlueStorefrontApiApplication(): void
+    {
+        $this->tester->run($this, [
+            '--mode' => 'core',
+            '--module' => 'FooBar',
+            '--applicationType' => 'Storefront',
+        ]);
+
+        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_BOOTSTRAP);
+        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_APPLICATION_DEPENDENCY_PROVIDER);
+        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_APPLICATION_DEPENDENCY_PROVIDER);
     }
 }

@@ -9,6 +9,7 @@ namespace SprykerSdkTest\Spryk\Integration\Glue\BackendApi\Controller;
 
 use Codeception\Test\Unit;
 use SprykerSdkTest\Module\GlueBackendApiClassNames;
+use SprykerSdkTest\Module\GlueStorefrontApiClassNames;
 use SprykerSdkTest\SprykIntegrationTester;
 
 /**
@@ -18,7 +19,9 @@ use SprykerSdkTest\SprykIntegrationTester;
  * @group Spryk
  * @group Integration
  * @group Glue
- * @group AddGlueBackendApiControllerTest
+ * @group BackendApi
+ * @group StorefrontApi
+ * @group AddGlueApiApplicationControllerTest
  * Add your own group annotations below this line
  */
 class AddGlueApiApplicationControllerTest extends Unit
@@ -35,8 +38,22 @@ class AddGlueApiApplicationControllerTest extends Unit
     {
         $this->tester->run($this, [
             '--resource' => '/foo-bars',
+            '--applicationType' => 'Backend',
         ]);
 
         $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddsGlueStorefrontApiController(): void
+    {
+        $this->tester->run($this, [
+            '--resource' => '/foo-bars',
+            '--applicationType' => 'Storefront',
+        ]);
+
+        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_CONTROLLER);
     }
 }
