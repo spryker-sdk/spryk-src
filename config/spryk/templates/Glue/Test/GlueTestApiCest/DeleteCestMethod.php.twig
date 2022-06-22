@@ -1,0 +1,9 @@
+// Arrange
+${{ zedDomainEntity | lcfirst }}Id = $this->fixtures->get{{ zedDomainEntity }}Transfer()->getId{{ zedDomainEntity }}();
+$url = $I->build{{ resource | normalizeResourceName | ucfirst }}Url(${{ zedDomainEntity | lcfirst }}Id);
+
+// Act
+$I->sendDelete($url, '');
+
+// Assert
+$I->seeResponseCodeIs({{ httpResponseCode | httpResponseCodeToConstantName }});

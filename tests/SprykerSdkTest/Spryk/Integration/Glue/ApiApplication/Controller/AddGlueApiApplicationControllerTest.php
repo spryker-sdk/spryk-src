@@ -55,4 +55,20 @@ class AddGlueApiApplicationControllerTest extends Unit
 
         $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_CONTROLLER);
     }
+
+    /**
+     * @return void
+     */
+    public function testAddsGlueBackendApiTestController(): void
+    {
+        $this->tester->run($this, [
+            '--resource' => '/foo-bars',
+            '--applicationType' => 'Backend',
+            '--isTestClass' => 'true',
+        ]);
+
+        // Controller test class
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER_TEST);
+        $this->tester->assertClassOrInterfaceExtends(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER_TEST, Unit::class);
+    }
 }

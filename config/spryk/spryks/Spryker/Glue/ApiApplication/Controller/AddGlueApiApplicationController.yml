@@ -38,11 +38,11 @@ arguments:
 
     controller:
         inherit: true
-        value: "{{ resource | normalizeResourceName }}ResourceController"
+        default: "{{ resource | normalizeResourceName }}ResourceController"
 
 postSpryks:
     - AddClass:
-          condition: "applicationType !== 'Storefront'"
+          condition: "isTestClass === false && applicationType !== 'Storefront'"
           arguments:
               subDirectory:
                   value: Controller
@@ -57,7 +57,7 @@ postSpryks:
                   value:
                       - "@method \\{{ organization }}\\Glue\\{{ module }}\\{{ module }}Factory getFactory()"
     - AddClass:
-          condition: "applicationType === 'Storefront'"
+          condition: "isTestClass === false && applicationType === 'Storefront'"
           arguments:
               subDirectory:
                   value: Controller
@@ -83,3 +83,5 @@ postSpryks:
                   callback: ResolveExtends
                   value:
                       - "\\Codeception\\Test\\Unit"
+              isTestClass:
+                  value: true

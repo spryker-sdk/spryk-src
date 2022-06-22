@@ -25,6 +25,7 @@ use SprykerSdk\Spryk\Model\Spryk\Dumper\SprykDefinitionDumper;
 use SprykerSdk\Spryk\Model\Spryk\Executor\SprykExecutor;
 use SprykerSdk\Spryk\SprykConfig;
 use SprykerSdk\Spryk\SprykFactory;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 return function (ContainerConfigurator $configurator) {
     $services = $configurator->services()
@@ -34,6 +35,8 @@ return function (ContainerConfigurator $configurator) {
 
     $services->load('SprykerSdk\\', '../src/')
         ->exclude('../src/{DependencyInjection,Tests,Kernel.php}');
+
+    $services->set(ExpressionLanguage::class);
 
     // Make SprykFactory public for instantiating the SprykFacade from external packages like `spryker-sdk/spryk-gui`
     $services->get(SprykFactory::class)->public();

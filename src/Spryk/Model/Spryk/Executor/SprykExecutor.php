@@ -7,8 +7,6 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Executor;
 
-use Exception;
-use InvalidArgumentException;
 use Jfcherng\Diff\DiffHelper;
 use SprykerSdk\Spryk\Exception\SprykWrongDevelopmentLayerException;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Collection\SprykBuilderCollectionInterface;
@@ -16,6 +14,7 @@ use SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\FileDumperInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Builder\SprykDefinitionBuilderInterface;
 use SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface;
+use SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface;
 use SprykerSdk\Spryk\Model\Spryk\Executor\Configuration\SprykExecutorConfigurationInterface;
 use SprykerSdk\Spryk\SprykConfig;
 use SprykerSdk\Spryk\Style\SprykStyleInterface;
@@ -73,12 +72,18 @@ class SprykExecutor implements SprykExecutorInterface
     protected int $currentExecutionLevel = 0;
 
     /**
+     * @var \SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface
+     */
+    protected ConditionMatcherInterface $conditionMatcher;
+
+    /**
      * @param \SprykerSdk\Spryk\SprykConfig $sprykConfig
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Builder\SprykDefinitionBuilderInterface $definitionBuilder
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Collection\SprykBuilderCollectionInterface $sprykBuilderCollection
      * @param array<\SprykerSdk\Spryk\Model\Spryk\Command\SprykCommandInterface> $sprykCommands
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface $fileResolver
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\FileDumperInterface $fileDumper
+     * @param \SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface $conditionMatcher
      */
     public function __construct(
         SprykConfig $sprykConfig,
@@ -86,7 +91,8 @@ class SprykExecutor implements SprykExecutorInterface
         SprykBuilderCollectionInterface $sprykBuilderCollection,
         array $sprykCommands,
         FileResolverInterface $fileResolver,
-        FileDumperInterface $fileDumper
+        FileDumperInterface $fileDumper,
+        ConditionMatcherInterface $conditionMatcher
     ) {
         $this->sprykConfig = $sprykConfig;
         $this->definitionBuilder = $definitionBuilder;
@@ -94,6 +100,7 @@ class SprykExecutor implements SprykExecutorInterface
         $this->sprykCommands = $sprykCommands;
         $this->fileResolver = $fileResolver;
         $this->fileDumper = $fileDumper;
+        $this->conditionMatcher = $conditionMatcher;
     }
 
     /**
@@ -190,9 +197,6 @@ class SprykExecutor implements SprykExecutorInterface
     /**
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
      *
-     * @throws \Exception
-     * @throws \InvalidArgumentException
-     *
      * @return bool
      */
     protected function conditionMatched(SprykDefinitionInterface $sprykDefinition): bool
@@ -203,43 +207,7 @@ class SprykExecutor implements SprykExecutorInterface
             return true;
         }
 
-        $conditions = explode('&&', $conditionString);
-
-        $conditionMatched = true;
-
-        foreach ($conditions as $condition) {
-            [$argument, $comparison, $expectedValue] = explode(' ', trim($condition));
-
-            if (!in_array($comparison, ['!==', '==='])) {
-                throw new Exception(sprintf('Allowed comparison types "!==" and "===" found "%s"', $comparison));
-            }
-
-            // TRy to find also in previous definitions. This is needed as condition values might be only available in the "parent" spryk.
-            if (!$sprykDefinition->getArgumentCollection()->hasArgument($argument, true)) {
-                throw new InvalidArgumentException(sprintf('Could not find the argument "%s" in the argument collection of "%s" to be used in the condition "%s"', $argument, $sprykDefinition->getSprykName(), $conditionString));
-            }
-
-            $argumentValue = $sprykDefinition->getArgumentCollection()->getArgument($argument, true)->getValue();
-
-            $expectedValue = trim($expectedValue, '\'"');
-
-            if ($expectedValue === 'true') {
-                $expectedValue = true;
-            }
-            if ($expectedValue === 'false') {
-                $expectedValue = false;
-            }
-
-            if ($comparison === '===' && $argumentValue !== $expectedValue) {
-                $conditionMatched = false;
-            }
-
-            if ($comparison === '!==' && $argumentValue === $expectedValue) {
-                $conditionMatched = false;
-            }
-        }
-
-        return $conditionMatched;
+        return $this->conditionMatcher->match($conditionString, $sprykDefinition->getArgumentCollection());
     }
 
     /**

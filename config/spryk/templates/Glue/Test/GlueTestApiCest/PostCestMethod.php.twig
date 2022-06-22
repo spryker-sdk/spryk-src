@@ -1,0 +1,11 @@
+// Arrange
+$url = $I->build{{ resource | normalizeResourceName | ucfirst }}Url();
+
+// Act
+$I->sendPost($url);
+
+// Assert
+$I->seeResponseCodeIs({{ httpResponseCode | httpResponseCodeToConstantName }});
+$I->seeResponseIsJson();
+$I->seeResponseJsonContains{{ zedDomainEntity }}();
+

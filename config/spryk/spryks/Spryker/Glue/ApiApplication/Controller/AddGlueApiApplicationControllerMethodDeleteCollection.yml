@@ -66,14 +66,9 @@ arguments:
         default: "\\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
 
 preSpryks:
-    # Add the BackendApi Controller
+    # Add the Api Controller
     - AddGlueApiApplicationController
-    - AddGlueApiApplicationController:
-          arguments:
-              isTestClass:
-                  value: true
-              controller:
-                  value: "{{ resource | normalizeResourceName }}DeleteCollectionResourceController"
+    - AddGlueTestApiCest
 
 postSpryks:
     - AddGlueApiApplicationResourceMethod

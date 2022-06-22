@@ -16,6 +16,9 @@ use SprykerSdk\Spryk\Console\SprykRunConsole;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\Dumper\ClassDumperInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\FileDumperInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface;
+use SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcher;
+use SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface;
+use SprykerSdk\Spryk\Model\Spryk\Filter\HttpResponseCodeToConstantNameFilter;
 use SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface;
 use SprykerSdk\Spryk\SprykConfig;
 use Symfony\Component\Console\Application;
@@ -292,6 +295,28 @@ class SprykHelper extends Module
     public function getClass(string $classOrInterfaceName): object
     {
         return $this->getContainer()->get($classOrInterfaceName);
+    }
+
+    /**
+     * @return \SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface
+     */
+    public function getConditionMatcher(): ConditionMatcherInterface
+    {
+        /** @var \SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface $conditionMatcher */
+        $conditionMatcher = $this->getContainer()->get(ConditionMatcher::class);
+
+        return $conditionMatcher;
+    }
+
+    /**
+     * @return \SprykerSdk\Spryk\Model\Spryk\Filter\HttpResponseCodeToConstantNameFilter
+     */
+    public function getHttpResponseCodeToConstantNameFilter(): HttpResponseCodeToConstantNameFilter
+    {
+        /** @var \SprykerSdk\Spryk\Model\Spryk\Filter\HttpResponseCodeToConstantNameFilter $filter */
+        $filter = $this->getContainer()->get(HttpResponseCodeToConstantNameFilter::class);
+
+        return $filter;
     }
 
     /**

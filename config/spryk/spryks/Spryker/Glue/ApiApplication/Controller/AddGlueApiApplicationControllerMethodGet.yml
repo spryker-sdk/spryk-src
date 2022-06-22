@@ -68,12 +68,7 @@ arguments:
 preSpryks:
     # Add the Api Controller
     - AddGlueApiApplicationController
-    - AddGlueApiApplicationController:
-          arguments:
-              isTestClass:
-                  value: true
-              controller:
-                  value: "{{ resource | normalizeResourceName }}GetResourceController"
+    - AddGlueTestApiCest
 
 postSpryks:
     - AddGlueApiApplicationResourceMethod
