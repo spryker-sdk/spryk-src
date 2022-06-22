@@ -1,0 +1,54 @@
+spryk: template
+condition: "httpMethod === 'get' || httpMethod === 'delete' || (httpMethod === 'patch' && isBulk === false)"
+description: "Adds a new Test Fixtures class."
+mode: both
+level: 2
+
+arguments:
+    resource:
+        inherit: true
+        description: "Defines the resource name this controller will work with e.g. /customers"
+
+    module:
+        value: "{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api"
+
+    organization:
+        inherit: true
+        description: "Defines the organization name"
+        default: Spryker
+
+    applicationType:
+        inherit: true
+        description: "Can be one of: Backend or Frontend"
+        default: Backend
+
+    suite:
+        value: "RestApi"
+
+    application:
+        value: "Glue"
+
+    zedDomainEntity:
+        inherit: true
+        description: "Defines the domain entity that should be tested"
+
+    isBulk:
+        inherit: true
+        description: "Defines if this resource should work with Collections. When set to true the method will use collections when possible."
+        default: false
+
+    httpMethod:
+        inherit: true
+        description: "The HTTP method e.g. POST"
+
+    template:
+        value: Glue/Test/GlueTestFixtures/TestFixtures.php.twig
+
+    className:
+        value: "{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Fixtures"
+
+    targetFilename:
+        value: "{{ className }}.php"
+
+    targetPath:
+        value: "tests/{{ organization }}Test/{{ application }}/{{ module }}/{{suite | ucfirst}}/Fixtures"

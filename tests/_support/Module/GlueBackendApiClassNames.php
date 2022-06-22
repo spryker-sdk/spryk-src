@@ -67,32 +67,42 @@ interface GlueBackendApiClassNames
     /**
      * @var string
      */
-    public const GLUE_BACKEND_API_GET_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\Controller\FooBarsGetResourceControllerTest';
+    public const GLUE_BACKEND_API_GET_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\RestApi\FooBarsGetRestApiCest';
 
     /**
      * @var string
      */
-    public const GLUE_BACKEND_API_GET_COLLECTION_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\Controller\FooBarsGetCollectionResourceControllerTest';
+    public const GLUE_BACKEND_API_GET_COLLECTION_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\RestApi\FooBarsGetCollectionRestApiCest';
 
     /**
      * @var string
      */
-    public const GLUE_BACKEND_API_POST_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\Controller\FooBarsPostResourceControllerTest';
+    public const GLUE_BACKEND_API_POST_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\RestApi\FooBarsPostRestApiCest';
 
     /**
      * @var string
      */
-    public const GLUE_BACKEND_API_PATCH_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\Controller\FooBarsPatchResourceControllerTest';
+    public const GLUE_BACKEND_API_PATCH_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\RestApi\FooBarsPatchRestApiCest';
 
     /**
      * @var string
      */
-    public const GLUE_BACKEND_API_DELETE_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\Controller\FooBarsDeleteResourceControllerTest';
+    public const GLUE_BACKEND_API_DELETE_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\RestApi\FooBarsDeleteRestApiCest';
 
     /**
      * @var string
      */
-    public const GLUE_BACKEND_API_DELETE_COLLECTION_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\Controller\FooBarsDeleteCollectionResourceControllerTest';
+    public const GLUE_BACKEND_API_DELETE_COLLECTION_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\RestApi\FooBarsDeleteCollectionRestApiCest';
+
+    /**
+     * @var string
+     */
+    public const GLUE_BACKEND_API_TESTER_CLASS = 'SprykerTest\Glue\FooBarsBackendApi\FooBarsBackendApiTester';
+
+    /**
+     * @var string
+     */
+    public const GLUE_BACKEND_API_FIXTURES_CLASS = 'SprykerTest\Glue\FooBarsBackendApi\RestApi\Fixtures\FooBars%s%sRestApiFixtures';
 
     /**
      * @var string
