@@ -20,8 +20,7 @@ use SprykerSdkTest\SprykIntegrationTester;
  * @group Spryk
  * @group Integration
  * @group Glue
- * @group BackendApi
- * @group StorefrontApi
+ * @group ApiApplication
  * @group Plugin
  * @group AddGlueApiApplicationResourcePluginTest
  * Add your own group annotations below this line

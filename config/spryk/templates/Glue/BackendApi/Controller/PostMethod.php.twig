@@ -1,6 +1,6 @@
         ${{ zedDomainEntity | lcfirst }}CollectionRequestTransfer = $this->getFactory()
             ->createGlueRequest{{ zedDomainEntity }}Mapper()
-            ->map{{ zedDomainEntity }}TransferTo{{ zedDomainEntity }}CollectionRequestTransfer(${{ zedDomainEntity | lcfirst }}Transfer, $glueRequestTransfer);
+            ->map{{ zedDomainEntity }}TransferTo{{ zedDomainEntity }}CollectionRequestTransfer({{ input | removeParametersTypeFilter }});
 
         ${{ zedDomainEntity | lcfirst }}CollectionResponseTransfer = $this->getFactory()
             ->get{{ dataModule }}Facade()

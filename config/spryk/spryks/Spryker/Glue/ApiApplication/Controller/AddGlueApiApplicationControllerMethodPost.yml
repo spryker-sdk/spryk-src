@@ -57,6 +57,10 @@ arguments:
     target:
         value: "{{ organization }}\\Glue\\{{ module }}\\Controller\\{{ controller | classNameShort | ensureControllerSuffix }}"
 
+    input:
+        inherit: true
+        default: "\\Generated\\Shared\\Transfer\\{{ zedDomainEntity }}Transfer ${{ zedDomainEntity | lcfirst }}Transfer, \\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
+
 preSpryks:
     # Add the Api Controller
     - AddGlueApiApplicationController
@@ -70,7 +74,7 @@ postSpryks:
               method:
                   value: "postAction"
               input:
-                  value: "\\Generated\\Shared\\Transfer\\{{ zedDomainEntity }}Transfer ${{ zedDomainEntity | lcfirst }}Transfer, \\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
+                  inherit: true
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               dataModule:

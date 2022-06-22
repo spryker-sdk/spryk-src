@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerSdkTest\Spryk\Integration\Glue\BackendApi\Mapper;
+namespace SprykerSdkTest\Spryk\Integration\Glue\ApiApplication\Mapper;
 
 use Codeception\Test\Unit;
 use SprykerSdkTest\Module\GlueBackendApiClassNames;
@@ -19,8 +19,7 @@ use SprykerSdkTest\SprykIntegrationTester;
  * @group Spryk
  * @group Integration
  * @group Glue
- * @group BackendApi
- * @group StorefrontApi
+ * @group ApiApplication
  * @group Mapper
  * @group AddGlueApiApplicationResponseMapperTest
  * Add your own group annotations below this line

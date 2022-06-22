@@ -18,8 +18,7 @@ use SprykerSdkTest\Module\GlueStorefrontApiClassNames;
  * @group Spryk
  * @group Integration
  * @group Glue
- * @group BackendApi
- * @griup StorefrontApi
+ * @group ApiApplication
  * @group AddGlueApiApplicationControllerMethodGetCollectionTest
  * Add your own group annotations below this line
  */

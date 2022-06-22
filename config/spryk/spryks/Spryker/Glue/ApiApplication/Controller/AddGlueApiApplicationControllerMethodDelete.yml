@@ -61,6 +61,10 @@ arguments:
     target:
         value: "{{ organization }}\\Glue\\{{ module }}\\Controller\\{{ controller | classNameShort | ensureControllerSuffix }}"
 
+    input:
+        inherit: true
+        default: "string $id, \\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
+
 preSpryks:
     # Add the Api Controller
     - AddGlueApiApplicationController
@@ -74,7 +78,7 @@ postSpryks:
               method:
                   value: "deleteAction"
               input:
-                  value: "string $id, \\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
+                  inherit: true
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               dataModule:

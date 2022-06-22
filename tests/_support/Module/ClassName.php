@@ -562,5 +562,10 @@ interface ClassName
     /**
      * @var string
      */
+    public const PROJECT_GLUE_BACKEND_API_ROUTE_PROVIDER_PLUGIN = 'Pyz\Glue\FooBarsBackendApi\Plugin\FooBarsBackendApiRouteProviderPlugin';
+
+    /**
+     * @var string
+     */
     public const PROJECT_GLUE_STOREFRONT_API_RESOURCE_PLUGIN = 'Pyz\Glue\FooBarsStorefrontApi\Plugin\FooBarsStorefrontApiResource';
 }

@@ -1,6 +1,6 @@
         ${{ zedDomainEntity | lcfirst }}CriteriaTransfer = $this->getFactory()
             ->createGlueRequest{{ zedDomainEntity }}Mapper()
-            ->mapGlueRequestTransferTo{{ zedDomainEntity }}CriteriaTransfer($glueRequestTransfer);
+            ->mapGlueRequestTransferTo{{ zedDomainEntity }}CriteriaTransfer({{ input | removeParametersTypeFilter }});
 
         ${{ zedDomainEntity | lcfirst }}CollectionTransfer = $this->getFactory()
             ->get{{ dataModule }}Facade()
