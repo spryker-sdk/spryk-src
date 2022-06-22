@@ -40,6 +40,7 @@ class AddGlueApiApplicationRouteProviderPluginTest extends Unit
             '--organization' => 'Pyz',
             '--resource' => '/foo-bars',
             '--applicationType' => 'Backend',
+            '--isTestClass' => 'true',
         ]);
         $expectedMethod = 'getRouteProviderPlugins';
         $expectedBody = 'return [new FooBarsBackendApiRouteProviderPlugin()];';
