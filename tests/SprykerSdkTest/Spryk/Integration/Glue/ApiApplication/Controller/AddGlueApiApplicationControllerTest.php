@@ -60,7 +60,8 @@ class AddGlueApiApplicationControllerTest extends Unit
     /**
      * @return void
      */
-    public function testAddsGlueBackendApiTestController(): void {
+    public function testAddsGlueBackendApiTestController(): void
+    {
         $this->tester->run($this, [
             '--resource' => '/foo-bars',
             '--applicationType' => 'Backend',
