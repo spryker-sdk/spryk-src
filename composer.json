@@ -30,7 +30,9 @@
         "codeception/codeception": "^4.0.0",
         "codeception/module-symfony": "^2.1",
         "mikey179/vfsstream": "^1.6",
+        "psalm/phar": "^4.23",
         "rector/rector": "*",
+        "spryker-sdk/architector": "0.1.x-dev",
         "spryker/code-sniffer": "*"
     },
     "autoload": {
@@ -65,10 +67,17 @@
         "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml --ignore=/Fixtures/,/tests/_data/ src/ tests/",
         "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml --ignore=/Fixtures/,/tests/_data/ src/ tests/",
         "stan": "phpstan analyse",
+        "stan-baseline": "phpstan analyze --generate-baseline",
+        "psalm": "psalm.phar --show-info=false",
+        "psalm-update-baseline": "psalm.phar --update-baseline",
+        "psalm-set-baseline": "psalm.phar --set-baseline=psalm-baseline.xml",
+        "psalm-update-report": "psalm.phar --report=psalm-report.xml",
         "test": "codecept build && codecept run",
         "test-cover": "codecept build && codecept run --coverage-xml",
         "lowest": "validate-prefer-lowest -m",
-        "lowest-setup": "composer update --prefer-lowest --prefer-stable --prefer-dist --no-interaction && cp composer.json composer.backup && composer require --dev dereuromark/composer-prefer-lowest && mv composer.backup composer.json"
+        "lowest-setup": "composer update --prefer-lowest --prefer-stable --prefer-dist --no-interaction && cp composer.json composer.backup && composer require --dev dereuromark/composer-prefer-lowest && mv composer.backup composer.json",
+        "rector": "vendor/bin/rector process src/Spryk/ --config architector.php --ansi",
+        "rector-diff": "vendor/bin/rector process src/Spryk/ --config architector.php --ansi --dry-run"
     },
     "extra": {
         "branch-alias": {
