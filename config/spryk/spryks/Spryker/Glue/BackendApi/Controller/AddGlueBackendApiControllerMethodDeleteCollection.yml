@@ -64,12 +64,7 @@ arguments:
 preSpryks:
     # Add the BackendApi Controller
     - AddGlueBackendApiController
-    - AddGlueBackendApiController:
-          arguments:
-              isTestClass:
-                  value: true
-              controller:
-                  value: "{{ resource | normalizeResourceName }}DeleteCollectionResourceController"
+    - AddGlueTestApiCest
 
 postSpryks:
     - AddBackendApiResourceMethod

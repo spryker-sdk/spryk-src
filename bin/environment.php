@@ -48,3 +48,5 @@ $autoloadProjectAutoloaderFile('/../../autoload.php');
 $devOrPharLoader->register(true);
 
 define('SPRYK_ROOT_DIR', __DIR__ . '/../');
+
+defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', getcwd());

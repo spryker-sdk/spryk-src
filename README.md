@@ -84,3 +84,46 @@ To compile the `spryk.phar` you need to run the following steps:
 - `bin/console spryk:compile`
 
 This will install the latest dependencies, create a fresh cache and compiles the archive.
+
+### Console commands
+
+#### Run Spryks
+
+Runs a Spryk build process.
+
+```shell
+bin/spryk [options] [--] <spryk> [<targetModule> [<dependentModule>]]
+#or
+php bin/spryk-run [options] [--] <spryk> [<targetModule> [<dependentModule>]]
+```
+
+`spryk` Name of a specific Spryk to build.
+
+Options:
+- `--dry-run` Only prints a diff, doesn't change the files.
+- `--include-optional=INCLUDE-OPTIONAL` Name(s) of the Spryks which are marked as optional but should be build.
+
+#### Dump Spryks
+
+Dumps a list of all Spryk definitions.
+
+```shell
+php bin/spryk-dump [options] [--] [<spryk>...]
+```
+`spryk` Name of a specific Spryk for which the options should be dumped.
+
+Options:
+- `--level=LEVEL` Spryk visibility level (1, 2, 3, all). By default = 1 (main spryk commands).
+
+#### Build Spryks
+
+Builds a cache for all possible Spryk arguments. This command must only be used if a new argument was supplied.
+
+```shell
+php bin/spryk-build
+```
+
+### See more
+- [Spryk configuration reference](/docs/spryk_configuration_reference.md)
+- [Developer's guide](/docs/developer_guige.md)
+- [Add a new Spryk](/docs/add_new_spryk.md)

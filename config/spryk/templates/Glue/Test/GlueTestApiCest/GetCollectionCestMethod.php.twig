@@ -1,0 +1,9 @@
+// Arrange
+$url = $I->build{{ resource | normalizeResourceName | ucfirst }}Url();
+
+// Act
+$I->sendGet($url, $I->build{{ httpMethod | ucfirst }}Collection{{ zedDomainEntity }}RequestParameters());
+
+// Assert
+$I->seeResponseCodeIs({{ httpResponseCode | httpResponseCodeToConstantName }});
+$I->seeResponseJsonContains{{ zedDomainEntity }}Collection();
