@@ -39,7 +39,7 @@ class AddGlueApiApplicationRouteProviderPluginTest extends Unit
         $this->tester->run($this, [
             '--organization' => 'Pyz',
             '--resource' => '/foo-bars',
-            '--applicationType' => 'Backend'
+            '--applicationType' => 'Backend',
         ]);
         $expectedMethod = 'getRouteProviderPlugins';
         $expectedBody = 'return [new FooBarsBackendApiRouteProviderPlugin()];';

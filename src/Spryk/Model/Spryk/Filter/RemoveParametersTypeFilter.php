@@ -34,6 +34,7 @@ class RemoveParametersTypeFilter implements FilterInterface
     {
         $value = trim($value);
         preg_match_all('/\$[a-zA-Z]+/', $value, $argumentParts);
+
         return implode(', ', $argumentParts[0]);
     }
 }
