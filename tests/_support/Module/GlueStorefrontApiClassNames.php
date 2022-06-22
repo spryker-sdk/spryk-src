@@ -62,6 +62,11 @@ interface GlueStorefrontApiClassNames
     /**
      * @var string
      */
+    public const GLUE_BACKEND_API_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsStorefrontApi\Controller\FooBarsResourceControllerTest';
+
+    /**
+     * @var string
+     */
     public const GLUE_STOREFRONT_API_GET_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsStorefrontApi\Controller\FooBarsGetResourceControllerTest';
 
     /**

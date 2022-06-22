@@ -5,11 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerSdkTest\Spryk\Integration\Glue\BackendApi\Controller;
+namespace SprykerSdkTest\Spryk\Integration\Glue\ApiApplication\Controller;
 
 use Codeception\Test\Unit;
 use SprykerSdkTest\Module\GlueBackendApiClassNames;
 use SprykerSdkTest\Module\GlueStorefrontApiClassNames;
+use SprykerSdkTest\SprykIntegrationTester;
 
 /**
  * Auto-generated group annotations
@@ -19,46 +20,55 @@ use SprykerSdkTest\Module\GlueStorefrontApiClassNames;
  * @group Integration
  * @group Glue
  * @group BackendApi
- * @griup StorefrontApi
- * @group AddGlueApiApplicationControllerMethodGetCollectionTest
+ * @group StorefrontApi
+ * @group AddGlueApiApplicationControllerTest
  * Add your own group annotations below this line
  */
-class AddGlueApiApplicationControllerMethodGetCollectionTest extends Unit
+class AddGlueApiApplicationControllerTest extends Unit
 {
     /**
      * @var \SprykerSdkTest\SprykIntegrationTester
      */
-    protected $tester;
+    protected SprykIntegrationTester $tester;
 
     /**
      * @return void
      */
-    public function testAddsGlueBackendApiControllerMethodGetCollection(): void
+    public function testAddsGlueBackendApiController(): void
     {
         $this->tester->run($this, [
             '--resource' => '/foo-bars',
-            '--zedDomainEntity' => 'ZipZap',
             '--applicationType' => 'Backend',
         ]);
 
         $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER);
-        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_GET_COLLECTION_CONTROLLER_TEST);
-        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER, 'getCollectionAction');
     }
 
     /**
      * @return void
      */
-    public function testAddsGlueStorefrontApiControllerMethodGetCollection(): void
+    public function testAddsGlueStorefrontApiController(): void
     {
         $this->tester->run($this, [
             '--resource' => '/foo-bars',
-            '--zedDomainEntity' => 'ZipZap',
             '--applicationType' => 'Storefront',
         ]);
 
         $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_CONTROLLER);
-        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_GET_COLLECTION_CONTROLLER_TEST);
-        $this->tester->assertClassOrInterfaceHasMethod(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_CONTROLLER, 'getCollectionAction');
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddsGlueBackendApiTestController(): void {
+        $this->tester->run($this, [
+            '--resource' => '/foo-bars',
+            '--applicationType' => 'Backend',
+            '--isTestClass' => 'true',
+        ]);
+
+        // Controller test class
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER_TEST);
+        $this->tester->assertClassOrInterfaceExtends(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER_TEST, Unit::class);
     }
 }

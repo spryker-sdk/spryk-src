@@ -5,12 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerSdkTest\Spryk\Integration\Glue\BackendApi\Controller;
+namespace SprykerSdkTest\Spryk\Integration\Glue\ApiApplication\Controller;
 
 use Codeception\Test\Unit;
 use SprykerSdkTest\Module\GlueBackendApiClassNames;
 use SprykerSdkTest\Module\GlueStorefrontApiClassNames;
-use SprykerSdkTest\SprykIntegrationTester;
 
 /**
  * Auto-generated group annotations
@@ -20,40 +19,46 @@ use SprykerSdkTest\SprykIntegrationTester;
  * @group Integration
  * @group Glue
  * @group BackendApi
- * @group StorefrontApi
- * @group AddGlueApiApplicationControllerTest
+ * @griup StorefrontApi
+ * @group AddGlueApiApplicationControllerMethodDeleteTest
  * Add your own group annotations below this line
  */
-class AddGlueApiApplicationControllerTest extends Unit
+class AddGlueApiApplicationControllerMethodDeleteTest extends Unit
 {
     /**
      * @var \SprykerSdkTest\SprykIntegrationTester
      */
-    protected SprykIntegrationTester $tester;
+    protected $tester;
 
     /**
      * @return void
      */
-    public function testAddsGlueBackendApiController(): void
+    public function testAddsGlueBackendApiControllerMethodPost(): void
     {
         $this->tester->run($this, [
             '--resource' => '/foo-bars',
+            '--zedDomainEntity' => 'ZipZap',
             '--applicationType' => 'Backend',
         ]);
 
         $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER);
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER_TEST);
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER, 'deleteAction');
     }
 
     /**
      * @return void
      */
-    public function testAddsGlueStorefrontApiController(): void
+    public function testAddsGlueStorefrontApiControllerMethodPost(): void
     {
         $this->tester->run($this, [
             '--resource' => '/foo-bars',
+            '--zedDomainEntity' => 'ZipZap',
             '--applicationType' => 'Storefront',
         ]);
 
         $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_CONTROLLER);
+        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_BACKEND_API_CONTROLLER_TEST);
+        $this->tester->assertClassOrInterfaceHasMethod(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_CONTROLLER, 'deleteAction');
     }
 }

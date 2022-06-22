@@ -62,6 +62,11 @@ interface GlueBackendApiClassNames
     /**
      * @var string
      */
+    public const GLUE_BACKEND_API_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\Controller\FooBarsResourceControllerTest';
+
+    /**
+     * @var string
+     */
     public const GLUE_BACKEND_API_GET_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\Controller\FooBarsGetResourceControllerTest';
 
     /**
