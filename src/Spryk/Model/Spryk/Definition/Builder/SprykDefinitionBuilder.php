@@ -432,25 +432,6 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
     }
 
     /**
-     * @param array $sprykConfiguration
-     * @param string $parentSprykDefinitionKey
-     *
-     * @return array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition>
-     */
-    protected function getSpryks(array $sprykConfiguration, string $parentSprykDefinitionKey): array
-    {
-        $spryks = [];
-        if (isset($sprykConfiguration[static::CONFIGURATION_KEY_SPRYKS])) {
-            $spryks = $this->buildPreSprykDefinitions(
-                $sprykConfiguration[static::CONFIGURATION_KEY_SPRYKS],
-                $parentSprykDefinitionKey,
-            );
-        }
-
-        return array_filter($spryks);
-    }
-
-    /**
      * @param array $preSpryks
      * @param string $parentSprykDefinitionKey
      *
@@ -464,6 +445,41 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         }
 
         return $preSprykDefinitions;
+    }
+
+    /**
+     * @param array $sprykConfiguration
+     * @param string $parentSprykDefinitionKey
+     *
+     * @return array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition>
+     */
+    protected function getSpryks(array $sprykConfiguration, string $parentSprykDefinitionKey): array
+    {
+        $spryks = [];
+        if (isset($sprykConfiguration[static::CONFIGURATION_KEY_SPRYKS])) {
+            $spryks = $this->buildSprykDefinitions(
+                $sprykConfiguration[static::CONFIGURATION_KEY_SPRYKS],
+                $parentSprykDefinitionKey,
+            );
+        }
+
+        return array_filter($spryks);
+    }
+
+    /**
+     * @param array $spryks
+     * @param string $parentSprykDefinitionKey
+     *
+     * @return array
+     */
+    protected function buildSprykDefinitions(array $spryks, string $parentSprykDefinitionKey): array
+    {
+        $sprykDefinitions = [];
+        foreach ($spryks as $sprykName) {
+            $sprykDefinitions[] = $this->buildSubSprykDefinition($sprykName, $parentSprykDefinitionKey);
+        }
+
+        return $sprykDefinitions;
     }
 
     /**
