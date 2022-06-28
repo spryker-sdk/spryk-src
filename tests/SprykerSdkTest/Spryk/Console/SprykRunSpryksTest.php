@@ -29,7 +29,7 @@ class SprykRunSpryksTest extends Unit
     /**
      * @return void
      */
-    public function testExecutesSpryks(): void
+    public function testExecutesSprykWrapperWithSpryks(): void
     {
         /** @var \SprykerSdk\Spryk\Console\SprykRunConsole $command */
         $command = $this->tester->getClass(SprykRunConsole::class);
@@ -37,7 +37,7 @@ class SprykRunSpryksTest extends Unit
 
         $arguments = [
             'command' => $command->getName(),
-            SprykRunConsole::ARGUMENT_SPRYK => 'SprykWithSpryks',
+            SprykRunConsole::ARGUMENT_SPRYK => 'SprykWrapperWithSpryks',
             '--mode' => 'core',
         ];
 
@@ -50,7 +50,7 @@ class SprykRunSpryksTest extends Unit
     /**
      * @return void
      */
-    public function testExecutesNotUniqueSpryks(): void
+    public function testExecutesSprykWrapperWithSprykUsedMoreThanOnce(): void
     {
         /** @var \SprykerSdk\Spryk\Console\SprykRunConsole $command */
         $command = $this->tester->getClass(SprykRunConsole::class);
@@ -58,7 +58,7 @@ class SprykRunSpryksTest extends Unit
 
         $arguments = [
             'command' => $command->getName(),
-            SprykRunConsole::ARGUMENT_SPRYK => 'SprykWithNotUniqueSpryks',
+            SprykRunConsole::ARGUMENT_SPRYK => 'SprykWrapperWithSprykUsedMoreThanOnce',
             '--mode' => 'core',
         ];
 
@@ -71,7 +71,7 @@ class SprykRunSpryksTest extends Unit
     /**
      * @return void
      */
-    public function testExecutesSpryksIfSprykeHasExecutedSpryks(): void
+    public function testExecutesSprykWrapperWithSpryksAndExcludedSpryks(): void
     {
         /** @var \SprykerSdk\Spryk\Console\SprykRunConsole $command */
         $command = $this->tester->getClass(SprykRunConsole::class);
@@ -79,7 +79,7 @@ class SprykRunSpryksTest extends Unit
 
         $arguments = [
             'command' => $command->getName(),
-            SprykRunConsole::ARGUMENT_SPRYK => 'SprykWithSpryksAndExecutedSpryks',
+            SprykRunConsole::ARGUMENT_SPRYK => 'SprykWrapperWithSpryksAndExcludedSpryks',
             '--mode' => 'core',
         ];
 
