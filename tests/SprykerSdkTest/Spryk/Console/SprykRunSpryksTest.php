@@ -29,7 +29,7 @@ class SprykRunSpryksTest extends Unit
     /**
      * @return void
      */
-    public function testExecutesSprykWrapperWithSpryks(): void
+    public function testExecuteSprykWrapperWithSpryks(): void
     {
         /** @var \SprykerSdk\Spryk\Console\SprykRunConsole $command */
         $command = $this->tester->getClass(SprykRunConsole::class);
@@ -48,9 +48,13 @@ class SprykRunSpryksTest extends Unit
     }
 
     /**
+     * Tests that when a Spryk with the same arguments was already executed it will not be executed again.
+     * It might happen in the whole chain of Spryks with pre and postSpryks that one defines exactly the same Spryk.
+     * Running it only once is ensured because of performance reasons.
+     *
      * @return void
      */
-    public function testExecutesSprykWrapperWithSprykUsedMoreThanOnce(): void
+    public function testExecuteOnlyRunsUniqueSpryks(): void
     {
         /** @var \SprykerSdk\Spryk\Console\SprykRunConsole $command */
         $command = $this->tester->getClass(SprykRunConsole::class);
@@ -71,7 +75,7 @@ class SprykRunSpryksTest extends Unit
     /**
      * @return void
      */
-    public function testExecutesSprykWrapperWithSpryksAndExcludedSpryks(): void
+    public function testExecuteSprykWrapperWithSpryksAndExcludedSpryks(): void
     {
         /** @var \SprykerSdk\Spryk\Console\SprykRunConsole $command */
         $command = $this->tester->getClass(SprykRunConsole::class);
