@@ -33,6 +33,11 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
     /**
      * @var string
      */
+    protected const CONFIGURATION_KEY_SPRYKS = 'spryks';
+
+    /**
+     * @var string
+     */
     protected const CONFIGURATION_KEY_EXCLUDED_SPRYKS = 'excludedSpryks';
 
     /**
@@ -214,6 +219,7 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
                 ->setPreCommands($this->getPreCommands($sprykConfiguration))
                 ->setExcludedSpryks($this->getExcludedSpryks($sprykConfiguration))
                 ->setPreSpryks($this->getPreSpryks($sprykConfiguration, $sprykDefinitionKey))
+                ->setSpryks($this->getSpryks($sprykConfiguration, $sprykDefinitionKey))
                 ->setPostSpryks($this->getPostSpryks($sprykConfiguration, $sprykDefinitionKey))
                 ->setPostCommands($this->getPostCommands($sprykConfiguration))
                 ->setConfig($this->getConfig($sprykConfiguration, $preDefinedDefinition))
@@ -423,6 +429,25 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         }
 
         return array_filter($preSpryks);
+    }
+
+    /**
+     * @param array $sprykConfiguration
+     * @param string $parentSprykDefinitionKey
+     *
+     * @return array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition>
+     */
+    protected function getSpryks(array $sprykConfiguration, string $parentSprykDefinitionKey): array
+    {
+        $spryks = [];
+        if (isset($sprykConfiguration[static::CONFIGURATION_KEY_SPRYKS])) {
+            $spryks = $this->buildPreSprykDefinitions(
+                $sprykConfiguration[static::CONFIGURATION_KEY_SPRYKS],
+                $parentSprykDefinitionKey,
+            );
+        }
+
+        return array_filter($spryks);
     }
 
     /**

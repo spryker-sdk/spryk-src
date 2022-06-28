@@ -59,6 +59,9 @@ The Spryk argument list. These arguments are used in the Spryk builder. See belo
 ### preSpryks
 The Spryks that should be executed before the current Spryk.
 
+### spryks
+The Spyrks to be execute in the current Spryk. This argument should be used if the current Spryk is not doing anything itself.
+
 ### postSpryks
 The Spryks that should be executed after the current Spryk.
 

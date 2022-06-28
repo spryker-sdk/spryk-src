@@ -59,6 +59,11 @@ class SprykDefinition implements SprykDefinitionInterface
     /**
      * @var array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition>
      */
+    protected array $spryks = [];
+
+    /**
+     * @var array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition>
+     */
     protected array $postSpryks = [];
 
     /**
@@ -217,6 +222,26 @@ class SprykDefinition implements SprykDefinitionInterface
     public function setPreSpryks(array $preSpryks)
     {
         $this->preSpryks = $preSpryks;
+
+        return $this;
+    }
+
+    /**
+     * @return array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition>
+     */
+    public function getSpryks(): array
+    {
+        return $this->spryks;
+    }
+
+    /**
+     * @param array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition> $spryks
+     *
+     * @return $this
+     */
+    public function setSpryks(array $spryks)
+    {
+        $this->spryks = $spryks;
 
         return $this;
     }

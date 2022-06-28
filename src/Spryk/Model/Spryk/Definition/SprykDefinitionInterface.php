@@ -98,6 +98,18 @@ interface SprykDefinitionInterface
     /**
      * @return array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition>
      */
+    public function getSpryks(): array;
+
+    /**
+     * @param array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition> $spryks
+     *
+     * @return $this
+     */
+    public function setSpryks(array $spryks);
+
+    /**
+     * @return array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition>
+     */
     public function getPostSpryks(): array;
 
     /**
