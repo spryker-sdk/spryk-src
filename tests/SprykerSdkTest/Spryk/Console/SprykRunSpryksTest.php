@@ -46,4 +46,46 @@ class SprykRunSpryksTest extends Unit
         $this->assertDirectoryExists($this->tester->getVirtualDirectory() . 'vendor/spryker/spryker/Bundles/FooBar/firstDirectory');
         $this->assertDirectoryExists($this->tester->getVirtualDirectory() . 'vendor/spryker/spryker/Bundles/FooBar/secondDirectory');
     }
+
+    /**
+     * @return void
+     */
+    public function testExecutesNotUniqueSpryks(): void
+    {
+        /** @var \SprykerSdk\Spryk\Console\SprykRunConsole $command */
+        $command = $this->tester->getClass(SprykRunConsole::class);
+        $tester = $this->tester->getConsoleTester($command);
+
+        $arguments = [
+            'command' => $command->getName(),
+            SprykRunConsole::ARGUMENT_SPRYK => 'SprykWithNotUniqueSpryks',
+            '--mode' => 'core',
+        ];
+
+        $tester->execute($arguments);
+
+        $this->assertDirectoryExists($this->tester->getVirtualDirectory() . 'vendor/spryker/spryker/Bundles/FooBar/firstDirectory');
+        $this->assertDirectoryExists($this->tester->getVirtualDirectory() . 'vendor/spryker/spryker/Bundles/FooBar/secondDirectory');
+    }
+
+    /**
+     * @return void
+     */
+    public function testExecutesSpryksIfSprykeHasExecutedSpryks(): void
+    {
+        /** @var \SprykerSdk\Spryk\Console\SprykRunConsole $command */
+        $command = $this->tester->getClass(SprykRunConsole::class);
+        $tester = $this->tester->getConsoleTester($command);
+
+        $arguments = [
+            'command' => $command->getName(),
+            SprykRunConsole::ARGUMENT_SPRYK => 'SprykWithSpryksAndExecutedSpryks',
+            '--mode' => 'core',
+        ];
+
+        $tester->execute($arguments);
+
+        $this->assertDirectoryDoesNotExist($this->tester->getVirtualDirectory() . 'vendor/spryker/spryker/Bundles/FooBar/firstDirectory');
+        $this->assertDirectoryDoesNotExist($this->tester->getVirtualDirectory() . 'vendor/spryker/spryker/Bundles/FooBar/secondDirectory');
+    }
 }

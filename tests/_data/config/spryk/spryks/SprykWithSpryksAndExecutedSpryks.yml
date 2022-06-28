@@ -1,0 +1,18 @@
+spryk: wrapper
+description: "Unit Test configuration"
+mode: both
+arguments:
+    organization:
+        default: Spryker
+
+    module:
+        value: FooBar
+
+    targetPath:
+        value: ""
+
+excludedSpryks:
+    - StructureWithoutInteraction
+
+spryks:
+    - StructureWithoutInteraction
