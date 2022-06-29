@@ -9,6 +9,8 @@ namespace SprykerSdkTest\Spryk\Console;
 
 use Codeception\Test\Unit;
 use SprykerSdk\Spryk\Console\SprykRunConsole;
+use SprykerSdk\Spryk\Model\Spryk\Builder\Structure\StructureSpryk;
+use SprykerSdkTest\SprykConsoleTester;
 
 /**
  * Auto-generated group annotations
@@ -24,7 +26,7 @@ class SprykRunSpryksTest extends Unit
     /**
      * @var \SprykerSdkTest\SprykConsoleTester
      */
-    protected $tester;
+    protected SprykConsoleTester $tester;
 
     /**
      * @return void
@@ -66,16 +68,18 @@ class SprykRunSpryksTest extends Unit
             '--mode' => 'core',
         ];
 
-        $tester->execute($arguments);
+        $structureSprykMock = $this->createPartialMock(StructureSpryk::class, ['runSpryk']);
+        $structureSprykMock->expects(static::once())->method('runSpryk');
 
-        $this->assertDirectoryExists($this->tester->getVirtualDirectory() . 'vendor/spryker/spryker/Bundles/FooBar/firstDirectory');
-        $this->assertDirectoryExists($this->tester->getVirtualDirectory() . 'vendor/spryker/spryker/Bundles/FooBar/secondDirectory');
+        $this->tester->setDependency('SprykerSdk\\Spryk\\Model\\Spryk\\Builder\\Structure\\StructureSpryk', $structureSprykMock);
+
+        $tester->execute($arguments);
     }
 
     /**
      * @return void
      */
-    public function testExecuteSprykWrapperWithSpryksAndExcludedSpryks(): void
+    public function testExecuteOnlyNotExcludedSpryks(): void
     {
         /** @var \SprykerSdk\Spryk\Console\SprykRunConsole $command */
         $command = $this->tester->getClass(SprykRunConsole::class);
@@ -89,7 +93,8 @@ class SprykRunSpryksTest extends Unit
 
         $tester->execute($arguments);
 
-        $this->assertDirectoryDoesNotExist($this->tester->getVirtualDirectory() . 'vendor/spryker/spryker/Bundles/FooBar/firstDirectory');
-        $this->assertDirectoryDoesNotExist($this->tester->getVirtualDirectory() . 'vendor/spryker/spryker/Bundles/FooBar/secondDirectory');
+        $this->assertFileDoesNotExist($this->tester->getVirtualDirectory() . 'vendor/spryker/spryker/Bundles/FooBar/README.md');
+        $this->assertDirectoryExists($this->tester->getVirtualDirectory() . 'vendor/spryker/spryker/Bundles/FooBar/firstDirectory');
+        $this->assertDirectoryExists($this->tester->getVirtualDirectory() . 'vendor/spryker/spryker/Bundles/FooBar/secondDirectory');
     }
 }

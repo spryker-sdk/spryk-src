@@ -12,7 +12,8 @@ arguments:
         value: ""
 
 excludedSpryks:
-    - StructureWithoutInteraction
+    - TemplateWithoutInteraction
 
 spryks:
     - StructureWithoutInteraction
+    - TemplateWithoutInteraction
