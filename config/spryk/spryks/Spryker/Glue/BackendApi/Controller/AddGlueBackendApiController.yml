@@ -58,15 +58,3 @@ postSpryks:
               annotations:
                   value:
                       - "@method \\{{ organization }}\\Glue\\{{ module }}\\{{ module }}Factory getFactory()"
-
-    - AddClass:
-          condition: "isTestClass === true"
-          arguments:
-              subDirectory:
-                  value: Controller
-              className:
-                  value: "{{ controller }}"
-              extends:
-                  callback: ResolveExtends
-                  value:
-                      - "\\Codeception\\Test\\Unit"

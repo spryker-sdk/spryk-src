@@ -1,0 +1,89 @@
+<?php
+
+{{ include('Partials/license.twig') }}
+namespace {{ organization }}Test\{{ application }}\{{ module }}\{{ suite }}\Fixtures;
+
+use {{ organization }}Test\{{ application }}\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester;
+use Generated\Shared\Transfer\{{ zedDomainEntity }}Transfer;
+use Ramsey\Uuid\Uuid;
+use SprykerTest\Shared\Testify\Fixtures\FixturesBuilderInterface;
+use SprykerTest\Shared\Testify\Fixtures\FixturesContainerInterface;
+
+class {{ className }} implements FixturesBuilderInterface, FixturesContainerInterface
+{
+{% if isBulk.value %}
+    /**
+     * @var \Generated\Shared\Transfer\{{ zedDomainEntity }}Transfer
+     */
+    protected ${{ zedDomainEntity | lcfirst }}TransferOne;
+
+    /**
+     * @var \Generated\Shared\Transfer\{{ zedDomainEntity }}Transfer
+     */
+    protected ${{ zedDomainEntity | lcfirst }}TransferTwo;
+{% else %}
+    /**
+     * @var \Generated\Shared\Transfer\{{ zedDomainEntity }}Transfer
+     */
+    protected ${{ zedDomainEntity | lcfirst }}Transfer;
+{% endif %}
+    /**
+     * @param {{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I
+     *
+     * @return \SprykerTest\Shared\Testify\Fixtures\FixturesContainerInterface
+     */
+    public function buildFixtures({{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I): FixturesContainerInterface
+    {
+{% if isBulk.value %}
+        $this->{{ zedDomainEntity | lcfirst }}TransferOne = $this->build{{ zedDomainEntity }}TransferFixture($I);
+
+        $this->{{ zedDomainEntity | lcfirst }}TransferTwo = $this->build{{ zedDomainEntity }}TransferFixture($I);
+{% else %}
+        $this->{{ zedDomainEntity | lcfirst }}Transfer = $this->build{{ zedDomainEntity }}TransferFixture($I);
+{% endif %}
+
+        return $this;
+    }
+
+    /**
+    * @param {{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I
+    *
+    * @return \Generated\Shared\Transfer\{{ zedDomainEntity }}Transfer
+    */
+    protected function build{{ zedDomainEntity }}TransferFixture({{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I): {{ zedDomainEntity }}Transfer
+    {
+        $seed = ['uuid' => (Uuid::uuid4())->toString()];
+        ${{ zedDomainEntity | lcfirst }}Transfer = $I->have{{ zedDomainEntity }}TransferPersisted($seed);
+
+        if (${{ zedDomainEntity | lcfirst }}Transfer === null) {
+            throw new \RuntimeException(sprintf('Unable to create fixture data %s', json_encode($seed, \JSON_THROW_ON_ERROR)));
+        }
+
+        return ${{ zedDomainEntity | lcfirst }}Transfer;
+    }
+{% if isBulk.value %}
+    /**
+    * @return \Generated\Shared\Transfer\{{ zedDomainEntity }}Transfer
+    */
+    public function get{{ zedDomainEntity }}TransferOne(): {{ zedDomainEntity }}Transfer
+    {
+        return $this->{{ zedDomainEntity | lcfirst }}TransferOne;
+    }
+
+    /**
+    * @return \Generated\Shared\Transfer\{{ zedDomainEntity }}Transfer
+    */
+    public function get{{ zedDomainEntity }}TransferTwo(): {{ zedDomainEntity }}Transfer
+    {
+        return $this->{{ zedDomainEntity | lcfirst }}TransferTwo;
+    }
+{% else %}
+    /**
+    * @return \Generated\Shared\Transfer\{{ zedDomainEntity }}Transfer
+    */
+    public function get{{ zedDomainEntity }}Transfer(): {{ zedDomainEntity }}Transfer
+    {
+        return $this->{{ zedDomainEntity | lcfirst }}Transfer;
+    }
+{% endif %}
+}

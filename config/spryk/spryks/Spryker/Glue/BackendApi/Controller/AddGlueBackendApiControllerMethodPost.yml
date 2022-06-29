@@ -27,6 +27,10 @@ arguments:
         inherit: true
         default: "post"
 
+    isBulk:
+        description: "Defines if this resource should work with Collections. When set to true the method will use collections when possible."
+        inherit: true
+
     apiType:
         inherit: true
         description: "Can be one of: REST or JSON"
@@ -60,12 +64,7 @@ arguments:
 preSpryks:
     # Add the BackendApi Controller
     - AddGlueBackendApiController
-    - AddGlueBackendApiController:
-          arguments:
-              isTestClass:
-                  value: true
-              controller:
-                  value: "{{ resource | normalizeResourceName }}PostResourceController"
+    - AddGlueTestApiCest
 
 postSpryks:
     - AddBackendApiResourceMethod

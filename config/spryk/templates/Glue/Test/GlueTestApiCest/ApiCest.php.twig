@@ -1,0 +1,39 @@
+<?php
+
+{{ include('Partials/license.twig') }}
+namespace {{ organization }}Test\{{ application }}\{{ module }}\{{ suite }};
+
+{% if httpMethod | lower != 'post' %}
+use {{ organization }}Test\{{ application }}\{{ module }}\{{ suite }}\Fixtures\{{ fixtureClass }};
+{% endif %}
+
+/**
+ * Auto-generated group annotations
+ *
+ * @group {{ organization }}Test
+ * @group {{ application }}
+ * @group {{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api
+ * @group {{ resource | normalizeResourceName | ucfirst }}{{ httpMethod | ucfirst }}{{ suite }}Cest
+ */
+class {{ className }}
+{
+{% if httpMethod | lower != 'post' %}
+    /**
+     * @var \{{ organization }}Test\{{ application }}\{{ module }}\{{ suite }}\Fixtures\{{ fixtureClass }}
+     */
+    protected \{{ organization }}Test\{{ application }}\{{ module }}\{{ suite }}\Fixtures\{{ fixtureClass }} $fixtures;
+
+    /**
+     * @param \{{ organization }}Test\{{ application }}\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I
+     *
+     * @return void
+     */
+    public function loadFixtures(\{{ organization }}Test\{{ application }}\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I): void
+    {
+        /** @var \{{ organization }}Test\{{ application }}\{{ module }}\{{ suite }}\Fixtures\{{ fixtureClass }} $fixtures */
+        $fixtures = $I->loadFixtures({{ fixtureClass }}::class);
+
+        $this->fixtures = $fixtures;
+    }
+{% endif %}
+}
