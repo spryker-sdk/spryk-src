@@ -71,10 +71,18 @@ class ArgumentResolver implements ArgumentResolverInterface
         $argumentCollection->setPreviousSprykArguments($resolvedArgumentCollection);
 
         foreach ($arguments as $argumentName => $argumentDefinition) {
+            $finalArgumentDefinition = [];
+
+            if (!is_array($argumentDefinition)) {
+                $finalArgumentDefinition['value'] = $argumentDefinition;
+            } else {
+                $finalArgumentDefinition = $argumentDefinition;
+            }
+
             $argument = $this->resolveArgument(
                 $argumentName,
                 $sprykName,
-                (array)$argumentDefinition,
+                $finalArgumentDefinition,
                 $resolvedArgumentCollection,
             );
             $argumentCollection->addArgument($argument);
