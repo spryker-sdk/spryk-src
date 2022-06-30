@@ -192,7 +192,7 @@ class SprykRunPostCommandTest extends Unit
      */
     protected function getVerifyCallIndexCallback(int &$currentCallIndex, array $expectedAtIndexes): Closure
     {
-        return function() use (&$currentCallIndex, $expectedAtIndexes): void {
+        return function () use (&$currentCallIndex, $expectedAtIndexes): void {
             $this->assertContains($currentCallIndex, $expectedAtIndexes, 'Invalid call order.');
             $currentCallIndex++;
         };
