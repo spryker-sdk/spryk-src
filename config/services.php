@@ -20,6 +20,9 @@ use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\JsonParser;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\ParserInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\XmlParser;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\YmlParser;
+use SprykerSdk\Spryk\Model\Spryk\Builder\Structure\StructureSpryk;
+use SprykerSdk\Spryk\Model\Spryk\Command\ComposerDumpAutoloadSprykCommand;
+use SprykerSdk\Spryk\Model\Spryk\Command\ComposerReplaceGenerateSprykCommand;
 use SprykerSdk\Spryk\Model\Spryk\Configuration\Loader\SprykConfigurationLoader;
 use SprykerSdk\Spryk\Model\Spryk\Dumper\SprykDefinitionDumper;
 use SprykerSdk\Spryk\Model\Spryk\Executor\SprykExecutor;
@@ -76,4 +79,10 @@ return function (ContainerConfigurator $configurator) {
     $services->set(Lexer::class)
         ->factory([service(SprykFactory::class), 'createLexer'])
         ->args([service(SprykConfig::class)]);
+
+    if ($configurator->env() === 'test') {
+        $services->get(StructureSpryk::class)->public();
+        $services->get(ComposerDumpAutoloadSprykCommand::class)->public();
+        $services->get(ComposerReplaceGenerateSprykCommand::class)->public();
+    }
 };
