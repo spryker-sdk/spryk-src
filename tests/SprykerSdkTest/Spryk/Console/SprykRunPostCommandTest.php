@@ -156,7 +156,7 @@ class SprykRunPostCommandTest extends Unit
             ->expects(static::any())
             ->method($method)
             ->willReturnCallback(
-                $this->getVerifyCallIndexCallback($currentCallIndex, $expectedAtIndexes)
+                $this->getVerifyCallIndexCallback($currentCallIndex, $expectedAtIndexes),
             );
 
         $this->tester->setDependency($service, $sprykMock);
@@ -188,12 +188,12 @@ class SprykRunPostCommandTest extends Unit
      * @param int $currentCallIndex
      * @param array<int> $expectedAtIndexes
      *
-     * @return Closure
+     * @return \Closure
      */
     protected function getVerifyCallIndexCallback(int &$currentCallIndex, array $expectedAtIndexes): Closure
     {
-        return function() use (&$currentCallIndex, $expectedAtIndexes) {
-            $this->assertContains($currentCallIndex, $expectedAtIndexes, "Invalid call order.");
+        return function() use (&$currentCallIndex, $expectedAtIndexes): void {
+            $this->assertContains($currentCallIndex, $expectedAtIndexes, 'Invalid call order.');
             $currentCallIndex++;
         };
     }
