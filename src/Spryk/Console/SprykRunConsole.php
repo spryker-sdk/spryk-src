@@ -151,9 +151,9 @@ class SprykRunConsole extends AbstractSprykConsole
     }
 
     /**
-     * @param SprykExecutorConfigurationInterface $sprykExecutorConfiguration
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * @param \SprykerSdk\Spryk\Model\Spryk\Executor\Configuration\SprykExecutorConfigurationInterface $sprykExecutorConfiguration
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return callable
      */
@@ -161,9 +161,8 @@ class SprykRunConsole extends AbstractSprykConsole
         SprykExecutorConfigurationInterface $sprykExecutorConfiguration,
         InputInterface $input,
         OutputInterface $output
-    ): callable
-    {
-        return function() use ($sprykExecutorConfiguration, $input, $output) {
+    ): callable {
+        return function () use ($sprykExecutorConfiguration, $input, $output): void {
             $this->getFacade()->executeSpryk(
                 $sprykExecutorConfiguration,
                 new SprykStyle($input, $output),
@@ -173,14 +172,13 @@ class SprykRunConsole extends AbstractSprykConsole
 
     /**
      * @param callable $callback
-     * @param array $args
      *
      * @return void
      */
     protected function runStrictly(callable $callback): void
     {
         set_error_handler(function (int $code, string $message): bool {
-            throw new \RuntimeException($message);
+            throw new RuntimeException($message);
         });
 
         try {
@@ -228,12 +226,13 @@ class SprykRunConsole extends AbstractSprykConsole
     }
 
     /**
-     * @param InputInterface $input
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
      * @return bool
      */
     protected function isStrictRun(InputInterface $input): bool
     {
-        return $input->getArgument(static::OPTION_STRICT_RUN) !== false;
+        return $input->getOption(static::OPTION_STRICT_RUN) !== false;
     }
 
     /**
