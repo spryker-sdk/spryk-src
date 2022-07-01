@@ -20,7 +20,6 @@ use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\JsonParser;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\ParserInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\XmlParser;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\YmlParser;
-use SprykerSdk\Spryk\Model\Spryk\Builder\Structure\StructureSpryk;
 use SprykerSdk\Spryk\Model\Spryk\Command\ComposerDumpAutoloadSprykCommand;
 use SprykerSdk\Spryk\Model\Spryk\Command\ComposerReplaceGenerateSprykCommand;
 use SprykerSdk\Spryk\Model\Spryk\Configuration\Loader\SprykConfigurationLoader;
@@ -81,7 +80,6 @@ return function (ContainerConfigurator $configurator) {
         ->args([service(SprykConfig::class)]);
 
     if ($configurator->env() === 'test') {
-        $services->get(StructureSpryk::class)->public();
         $services->get(ComposerDumpAutoloadSprykCommand::class)->public();
         $services->get(ComposerReplaceGenerateSprykCommand::class)->public();
     }
