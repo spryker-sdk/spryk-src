@@ -53,6 +53,16 @@ class SprykRunConsole extends AbstractSprykConsole
     /**
      * @var string
      */
+    public const OPTION_STRICT_RUN = 'strict-run';
+
+    /**
+     * @var string
+     */
+    public const OPTION_STRICT_RUN_SHORT = 's';
+
+    /**
+     * @var string
+     */
     public const OPTION_INCLUDE_OPTIONALS_SHORT = 'i';
 
     /**
@@ -89,6 +99,7 @@ class SprykRunConsole extends AbstractSprykConsole
             ->addArgument(static::ARGUMENT_TARGET_MODULE, InputArgument::OPTIONAL, 'Name of the target module in format "[Organization.]ModuleName[.LayerName]".')
             ->addArgument(static::ARGUMENT_DEPENDENT_MODULE, InputArgument::OPTIONAL, 'Name of the dependent module in format "[Organization.]ModuleName[.LayerName]".')
             ->addOption(static::OPTION_INCLUDE_OPTIONALS, static::OPTION_INCLUDE_OPTIONALS_SHORT, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Name(s) of the Spryks which are marked as optional but should be build.')
+            ->addOption(static::OPTION_STRICT_RUN, static::OPTION_STRICT_RUN_SHORT, InputOption::VALUE_NONE, 'Exit with error in case of any notice or warning')
             ->addOption('dry-run', 'd', InputOption::VALUE_NONE, 'Only print a diff, do not change files');
 
         foreach ($this->getSprykArguments() as $argumentDefinition) {
@@ -132,12 +143,51 @@ class SprykRunConsole extends AbstractSprykConsole
             $this->getDependentModuleName($input),
         );
 
-        $this->getFacade()->executeSpryk(
-            $sprykExecutorConfiguration,
-            new SprykStyle($input, $output),
-        );
+        $executionCallable = $this->getExecuteSprykCallable($sprykExecutorConfiguration, $input, $output);
+
+        $this->isStrictRun($input) ? $this->runStrictly($executionCallable) : $executionCallable();
 
         return static::CODE_SUCCESS;
+    }
+
+    /**
+     * @param SprykExecutorConfigurationInterface $sprykExecutorConfiguration
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     *
+     * @return callable
+     */
+    protected function getExecuteSprykCallable(
+        SprykExecutorConfigurationInterface $sprykExecutorConfiguration,
+        InputInterface $input,
+        OutputInterface $output
+    ): callable
+    {
+        return function() use ($sprykExecutorConfiguration, $input, $output) {
+            $this->getFacade()->executeSpryk(
+                $sprykExecutorConfiguration,
+                new SprykStyle($input, $output),
+            );
+        };
+    }
+
+    /**
+     * @param callable $callback
+     * @param array $args
+     *
+     * @return void
+     */
+    protected function runStrictly(callable $callback): void
+    {
+        set_error_handler(function (int $code, string $message): bool {
+            throw new \RuntimeException($message);
+        });
+
+        try {
+            $callback();
+        } finally {
+            restore_error_handler();
+        }
     }
 
     /**
@@ -175,6 +225,15 @@ class SprykRunConsole extends AbstractSprykConsole
     protected function getDependentModuleName(InputInterface $input): string
     {
         return current((array)$input->getArgument(static::ARGUMENT_DEPENDENT_MODULE)) ?: '';
+    }
+
+    /**
+     * @param InputInterface $input
+     * @return bool
+     */
+    protected function isStrictRun(InputInterface $input): bool
+    {
+        return $input->getArgument(static::OPTION_STRICT_RUN) !== false;
     }
 
     /**
