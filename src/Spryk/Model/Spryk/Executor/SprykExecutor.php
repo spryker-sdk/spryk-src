@@ -77,9 +77,9 @@ class SprykExecutor implements SprykExecutorInterface
     protected ConditionMatcherInterface $conditionMatcher;
 
     /**
-     * @var array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface>
+     * @var array<string, \SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface>
      */
-    protected array $spryksWithPostCommands = [];
+    protected array $postCommandCache = [];
 
     /**
      * @param \SprykerSdk\Spryk\SprykConfig $sprykConfig
@@ -195,7 +195,7 @@ class SprykExecutor implements SprykExecutorInterface
         $this->executePreSpryks($sprykDefinition, $style);
         $this->executeSpryk($sprykDefinition, $style);
         $this->executePostSpryks($sprykDefinition, $style);
-        $this->storeSpryksWithPostCommands($sprykDefinition);
+        $this->cachePostCommands($sprykDefinition);
 
         $style->endSpryk($sprykDefinition);
     }
@@ -287,6 +287,8 @@ class SprykExecutor implements SprykExecutorInterface
     }
 
     /**
+     * For performance reasons this method must be executed after all Spryks were executed.
+     *
      * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
      *
      * @return void
@@ -295,16 +297,8 @@ class SprykExecutor implements SprykExecutorInterface
     {
         $style->commandsEventReport('Post commands start');
 
-        $executedPostCommands = [];
-        foreach ($this->spryksWithPostCommands as $sprykDefinition) {
-            foreach ($sprykDefinition->getPostCommands() as $postCommandName) {
-                if (in_array($postCommandName, $executedPostCommands)) {
-                    continue;
-                }
-
-                $this->executeCommand($postCommandName, $sprykDefinition, $style);
-                $executedPostCommands[] = $postCommandName;
-            }
+        foreach ($this->postCommandCache as $postCommand => $sprykDefinition) {
+            $this->executeCommand($postCommand, $sprykDefinition, $style);
         }
 
         $style->commandsEventReport('Post commands end');
@@ -315,13 +309,15 @@ class SprykExecutor implements SprykExecutorInterface
      *
      * @return void
      */
-    protected function storeSpryksWithPostCommands(SprykDefinitionInterface $sprykDefinition): void
+    protected function cachePostCommands(SprykDefinitionInterface $sprykDefinition): void
     {
         if (!$sprykDefinition->getPostCommands()) {
             return;
         }
 
-        $this->spryksWithPostCommands[] = $sprykDefinition;
+        foreach ($sprykDefinition->getPostCommands() as $postCommand) {
+            $this->postCommandCache[$postCommand] = $sprykDefinition;
+        }
     }
 
     /**
