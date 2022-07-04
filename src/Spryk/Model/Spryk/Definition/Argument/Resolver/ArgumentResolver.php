@@ -71,18 +71,10 @@ class ArgumentResolver implements ArgumentResolverInterface
         $argumentCollection->setPreviousSprykArguments($resolvedArgumentCollection);
 
         foreach ($arguments as $argumentName => $argumentDefinition) {
-            $finalArgumentDefinition = [];
-
-            if (!is_array($argumentDefinition)) {
-                $finalArgumentDefinition['value'] = $argumentDefinition;
-            } else {
-                $finalArgumentDefinition = $argumentDefinition;
-            }
-
             $argument = $this->resolveArgument(
                 $argumentName,
                 $sprykName,
-                $finalArgumentDefinition,
+                $this->normalizeArgumentDefinition($argumentDefinition),
                 $resolvedArgumentCollection,
             );
             $argumentCollection->addArgument($argument);
@@ -324,5 +316,20 @@ class ArgumentResolver implements ArgumentResolverInterface
         );
 
         return $this->style->askQuestion($question);
+    }
+
+    /**
+     * @param $argumentDefinition
+     * @return array
+     */
+    protected function normalizeArgumentDefinition($argumentDefinition): array
+    {
+        if (is_array($argumentDefinition)) {
+            return $argumentDefinition;
+        }
+
+        return [
+            'value' => $argumentDefinition,
+        ];
     }
 }

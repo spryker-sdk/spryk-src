@@ -9,6 +9,7 @@ namespace SprykerSdkTest\Spryk\Console;
 
 use Codeception\Test\Unit;
 use SprykerSdk\Spryk\Console\SprykRunConsole;
+use SprykerSdkTest\SprykConsoleTester;
 
 /**
  * Auto-generated group annotations
@@ -24,9 +25,15 @@ class SprykRunPreSprykWithFlexibleArgumentsKeyValueTest extends Unit
     /**
      * @var \SprykerSdkTest\SprykConsoleTester
      */
-    protected $tester;
+    protected SprykConsoleTester $tester;
 
     /**
+     * Tests that a value can be assigned directly to an argument when the argument doesn't need any further configuration.
+     *
+     * Example:
+     *
+     * argumentName: argumentValue
+     *
      * @return void
      */
     public function testExecutesPreSprykWithoutValueKeyInArgument(): void
@@ -48,6 +55,14 @@ class SprykRunPreSprykWithFlexibleArgumentsKeyValueTest extends Unit
     }
 
     /**
+     * Tests that a value can be assigned in the arguments definition list.
+     *
+     * Example:
+     *
+     * argumentName:
+     *     value: argumentValue
+     *     otherArgumentOption: foo
+     *
      * @return void
      */
     public function testExecutesPreSprykWithValueKeyInArgument(): void
