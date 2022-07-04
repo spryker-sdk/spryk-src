@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Zed\Business;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\ClassName;
 
 /**
  * Auto-generated group annotations
@@ -36,11 +37,10 @@ class AddZedBusinessFacadeTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Business/FooBarFacade.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Business\AbstractFacade');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::ZED_FACADE,
+            'Spryker\Zed\Kernel\Business\AbstractFacade',
+        );
     }
 
     /**
@@ -53,11 +53,10 @@ class AddZedBusinessFacadeTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory() . 'Business/FooBarFacade.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Business\AbstractFacade');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_ZED_FACADE,
+            'Spryker\Zed\Kernel\Business\AbstractFacade',
+        );
     }
 
     /**
@@ -75,10 +74,9 @@ class AddZedBusinessFacadeTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Zed') . 'Business/FooBarFacade.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\FooBar\Business\FooBarFacade');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_ZED_FACADE,
+            'Spryker\Zed\FooBar\Business\FooBarFacade',
+        );
     }
 }

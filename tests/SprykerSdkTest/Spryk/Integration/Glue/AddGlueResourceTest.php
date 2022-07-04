@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Glue;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\ClassName;
 
 /**
  * Auto-generated group annotations
@@ -37,11 +38,10 @@ class AddGlueResourceTest extends Unit
             '--mode' => 'core',
         ]);
 
-        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/BarResource.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\Kernel\AbstractRestResource');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::GLUE_RESOURCE,
+            'Spryker\Glue\Kernel\AbstractRestResource',
+        );
     }
 
     /**
@@ -55,11 +55,10 @@ class AddGlueResourceTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'BarResource.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\Kernel\AbstractRestResource');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_GLUE_RESOURCE,
+            'Spryker\Glue\Kernel\AbstractRestResource',
+        );
     }
 
     /**
@@ -79,10 +78,9 @@ class AddGlueResourceTest extends Unit
             '--className' => 'Bar',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'BarResource.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\FooBar\BarResource');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_GLUE_RESOURCE,
+            'Spryker\Glue\FooBar\BarResource',
+        );
     }
 }

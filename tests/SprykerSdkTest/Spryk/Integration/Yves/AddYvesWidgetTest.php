@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Yves;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\ClassName;
 
 /**
  * Auto-generated group annotations
@@ -36,11 +37,10 @@ class AddYvesWidgetTest extends Unit
             '--widget' => 'ZipZap',
         ]);
 
-        $targetClassFilePath = $this->tester->getSprykerShopModuleDirectory() . 'src/SprykerShop/Yves/FooBar/Widget/ZipZapWidget.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Yves\Kernel\Widget\AbstractWidget');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::YVES_WIDGET,
+            'Spryker\Yves\Kernel\Widget\AbstractWidget',
+        );
     }
 
     /**
@@ -54,11 +54,10 @@ class AddYvesWidgetTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Yves') . 'Widget/ZipZapWidget.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Yves\Kernel\Widget\AbstractWidget');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_YVES_WIDGET,
+            'Spryker\Yves\Kernel\Widget\AbstractWidget',
+        );
     }
 
     /**
@@ -78,10 +77,9 @@ class AddYvesWidgetTest extends Unit
             '--widget' => 'ZipZap',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Yves') . 'Widget/ZipZapWidget.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'SprykerShop\Yves\FooBar\Widget\ZipZapWidget');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_YVES_WIDGET,
+            'SprykerShop\Yves\FooBar\Widget\ZipZapWidget',
+        );
     }
 }

@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Zed\Persistence;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\ClassName;
 
 /**
  * Auto-generated group annotations
@@ -36,11 +37,10 @@ class AddZedPersistenceFactoryTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Persistence/FooBarPersistenceFactory.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::ZED_PERSISTENCE_FACTORY,
+            'Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory',
+        );
     }
 
     /**
@@ -53,11 +53,10 @@ class AddZedPersistenceFactoryTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory() . 'Persistence/FooBarPersistenceFactory.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_ZED_PERSISTENCE_FACTORY,
+            'Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory',
+        );
     }
 
     /**
@@ -75,10 +74,9 @@ class AddZedPersistenceFactoryTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Zed') . 'Persistence/FooBarPersistenceFactory.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\FooBar\Persistence\FooBarPersistenceFactory');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_ZED_PERSISTENCE_FACTORY,
+            'Spryker\Zed\FooBar\Persistence\FooBarPersistenceFactory',
+        );
     }
 }

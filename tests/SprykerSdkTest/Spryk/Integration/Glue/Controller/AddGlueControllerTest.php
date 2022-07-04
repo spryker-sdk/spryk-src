@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Glue\Controller;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\ClassName;
 
 /**
  * Auto-generated group annotations
@@ -37,11 +38,10 @@ class AddGlueControllerTest extends Unit
             '--controller' => 'Bar',
         ]);
 
-        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/Controller/BarController.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\Kernel\Controller\AbstractController');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::GLUE_CONTROLLER,
+            'Spryker\Glue\Kernel\Controller\AbstractController',
+        );
     }
 
     /**
@@ -55,11 +55,10 @@ class AddGlueControllerTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'Controller/BarController.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\Kernel\Controller\AbstractController');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_GLUE_CONTROLLER,
+            'Spryker\Glue\Kernel\Controller\AbstractController',
+        );
     }
 
     /**
@@ -79,10 +78,9 @@ class AddGlueControllerTest extends Unit
             '--controller' => 'Bar',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'Controller/BarController.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\FooBar\Controller\BarController');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_GLUE_CONTROLLER,
+            'Spryker\Glue\FooBar\Controller\BarController',
+        );
     }
 }

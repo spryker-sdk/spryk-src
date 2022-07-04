@@ -558,4 +558,89 @@ interface ClassName
      * @var string
      */
     public const PROJECT_GLUE_BACKEND_API_RESOURCE_PLUGIN = 'Pyz\Glue\FooBarsBackendApi\Plugin\FooBarsBackendApiResource';
+
+    /**
+     * @var string
+     */
+    public const ZED_BUSINESS_VALIDATOR = 'Spryker\Zed\FooBar\Business\ZipZap\Validator\ZipZapValidator';
+
+    /**
+     * @var string
+     */
+    public const ZED_BUSINESS_VALIDATOR_INTERFACE = 'Spryker\Zed\FooBar\Business\ZipZap\Validator\ZipZapValidatorInterface';
+
+    /**
+     * @var string
+     */
+    public const GLUE_RESOURCE = 'Spryker\Glue\FooBar\BarResource';
+
+    /**
+     * @var string
+     */
+    public const PROJECT_GLUE_RESOURCE = 'Pyz\Glue\FooBar\BarResource';
+
+    /**
+     * @var string
+     */
+    public const YVES_WIDGET = 'SprykerShop\Yves\FooBar\Widget\ZipZapWidget';
+
+    /**
+     * @var string
+     */
+    public const PROJECT_YVES_WIDGET = 'Pyz\Yves\FooBar\Widget\ZipZapWidget';
+
+    /**
+     * @var string
+     */
+    public const ZED_GATEWAY_CONTROLLER = 'Spryker\Zed\FooBar\Communication\Controller\GatewayController';
+
+    /**
+     * @var string
+     */
+    public const PROJECT_ZED_GATEWAY_CONTROLLER = 'Pyz\Zed\FooBar\Communication\Controller\GatewayController';
+
+    /**
+     * @var string
+     */
+    public const ZED_COMMUNICATION_FACTORY = 'Spryker\Zed\FooBar\Communication\FooBarCommunicationFactory';
+
+    /**
+     * @var string
+     */
+    public const PROJECT_ZED_COMMUNICATION_FACTORY = 'Pyz\Zed\FooBar\Communication\FooBarCommunicationFactory';
+
+    /**
+     * @var string
+     */
+    public const SERVICE_DEPENDENCY_PROVIDER = 'Spryker\Service\FooBar\FooBarDependencyProvider';
+
+    /**
+     * @var string
+     */
+    public const PROJECT_SERVICE_DEPENDENCY_PROVIDER = 'Pyz\Service\FooBar\FooBarDependencyProvider';
+
+    /**
+     * @var string
+     */
+    public const SERVICE_FACTORY = 'Spryker\Service\FooBar\FooBarFactory';
+
+    /**
+     * @var string
+     */
+    public const PROJECT_SERVICE_FACTORY = 'Pyz\Service\FooBar\FooBarFactory';
+
+    /**
+     * @var string
+     */
+    public const SERVICE = 'Spryker\Service\FooBar\FooBarService';
+
+    /**
+     * @var string
+     */
+    public const PROJECT_SERVICE = 'Pyz\Service\FooBar\FooBarService';
+
+    /**
+     * @var string
+     */
+    public const PROJECT_ZED_PERSISTENCE_FACTORY = 'Pyz\Zed\FooBar\Persistence\FooBarPersistenceFactory';
 }

@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Yves;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\ClassName;
 
 /**
  * Auto-generated group annotations
@@ -35,11 +36,10 @@ class AddYvesDependencyProviderTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $targetClassFilePath = $this->tester->getSprykerShopModuleDirectory() . 'src/SprykerShop/Yves/FooBar/FooBarDependencyProvider.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Yves\Kernel\AbstractBundleDependencyProvider');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::YVES_DEPENDENCY_PROVIDER,
+            'Spryker\Yves\Kernel\AbstractBundleDependencyProvider',
+        );
     }
 
     /**
@@ -52,11 +52,10 @@ class AddYvesDependencyProviderTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Yves') . 'FooBarDependencyProvider.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Yves\Kernel\AbstractBundleDependencyProvider');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_YVES_DEPENDENCY_PROVIDER,
+            'Spryker\Yves\Kernel\AbstractBundleDependencyProvider',
+        );
     }
 
     /**
@@ -74,10 +73,9 @@ class AddYvesDependencyProviderTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFile = $this->tester->getProjectModuleDirectory('FooBar', 'Yves') . 'FooBarDependencyProvider.php';
-
-        $this->assertFileExists($targetClassFile);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFile, 'SprykerShop\Yves\FooBar\FooBarDependencyProvider');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_YVES_DEPENDENCY_PROVIDER,
+            'SprykerShop\Yves\FooBar\FooBarDependencyProvider',
+        );
     }
 }

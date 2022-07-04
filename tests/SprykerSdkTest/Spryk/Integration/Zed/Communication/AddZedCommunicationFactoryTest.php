@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Zed\Communication;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\ClassName;
 
 /**
  * Auto-generated group annotations
@@ -36,11 +37,10 @@ class AddZedCommunicationFactoryTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Communication/FooBarCommunicationFactory.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::ZED_COMMUNICATION_FACTORY,
+            'Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory',
+        );
     }
 
     /**
@@ -53,11 +53,10 @@ class AddZedCommunicationFactoryTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory() . 'Communication/FooBarCommunicationFactory.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_ZED_COMMUNICATION_FACTORY,
+            'Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory',
+        );
     }
 
     /**
@@ -75,10 +74,9 @@ class AddZedCommunicationFactoryTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Zed') . 'Communication/FooBarCommunicationFactory.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\FooBar\Communication\FooBarCommunicationFactory');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_ZED_COMMUNICATION_FACTORY,
+            'Spryker\Zed\FooBar\Communication\FooBarCommunicationFactory',
+        );
     }
 }

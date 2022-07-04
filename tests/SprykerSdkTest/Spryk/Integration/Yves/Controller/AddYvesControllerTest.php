@@ -38,11 +38,10 @@ class AddYvesControllerTest extends Unit
             '--controller' => ClassName::YVES_CONTROLLER,
         ]);
 
-        $targetClassFilePath = $this->tester->getSprykerShopModuleDirectory() . 'src/SprykerShop/Yves/FooBar/Controller/FooBarController.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Yves\Kernel\Controller\AbstractController');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::YVES_CONTROLLER,
+            'Spryker\Yves\Kernel\Controller\AbstractController',
+        );
     }
 
     /**
@@ -56,11 +55,10 @@ class AddYvesControllerTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Yves') . 'Controller/FooBarController.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Yves\Kernel\Controller\AbstractController');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_YVES_CONTROLLER,
+            'Spryker\Yves\Kernel\Controller\AbstractController',
+        );
     }
 
     /**
@@ -80,10 +78,9 @@ class AddYvesControllerTest extends Unit
             '--controller' => ClassName::YVES_CONTROLLER,
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Yves') . 'Controller/FooBarController.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'SprykerShop\Yves\FooBar\Controller\FooBarController');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_YVES_CONTROLLER,
+            'SprykerShop\Yves\FooBar\Controller\FooBarController',
+        );
     }
 }

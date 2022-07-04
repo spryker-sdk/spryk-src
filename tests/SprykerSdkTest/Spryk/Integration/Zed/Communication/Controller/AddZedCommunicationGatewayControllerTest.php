@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Zed\Communication\Controller;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\ClassName;
 
 /**
  * Auto-generated group annotations
@@ -37,11 +38,10 @@ class AddZedCommunicationGatewayControllerTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Communication/Controller/GatewayController.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Communication\Controller\AbstractController');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::ZED_GATEWAY_CONTROLLER,
+            'Spryker\Zed\Kernel\Communication\Controller\AbstractController',
+        );
     }
 
     /**
@@ -54,11 +54,10 @@ class AddZedCommunicationGatewayControllerTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory() . 'Communication/Controller/GatewayController.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Communication\Controller\AbstractController');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_ZED_GATEWAY_CONTROLLER,
+            'Spryker\Zed\Kernel\Communication\Controller\AbstractController',
+        );
     }
 
     /**
@@ -76,10 +75,9 @@ class AddZedCommunicationGatewayControllerTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Zed') . 'Communication/Controller/GatewayController.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\FooBar\Communication\Controller\GatewayController');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_ZED_GATEWAY_CONTROLLER,
+            'Spryker\Zed\FooBar\Communication\Controller\GatewayController',
+        );
     }
 }

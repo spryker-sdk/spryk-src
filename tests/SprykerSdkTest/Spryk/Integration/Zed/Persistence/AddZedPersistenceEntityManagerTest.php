@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Zed\Persistence;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\ClassName;
 
 /**
  * Auto-generated group annotations
@@ -36,11 +37,10 @@ class AddZedPersistenceEntityManagerTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Persistence/FooBarEntityManager.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Persistence\AbstractEntityManager');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::ENTITY_MANAGER,
+            'Spryker\Zed\Kernel\Persistence\AbstractEntityManager',
+        );
     }
 
     /**
@@ -53,11 +53,10 @@ class AddZedPersistenceEntityManagerTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory() . 'Persistence/FooBarEntityManager.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Persistence\AbstractEntityManager');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_ENTITY_MANAGER,
+            'Spryker\Zed\Kernel\Persistence\AbstractEntityManager',
+        );
     }
 
     /**
@@ -75,10 +74,9 @@ class AddZedPersistenceEntityManagerTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Zed') . 'Persistence/FooBarEntityManager.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\FooBar\Persistence\FooBarEntityManager');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_ENTITY_MANAGER,
+            'Spryker\Zed\FooBar\Persistence\FooBarEntityManager',
+        );
     }
 }

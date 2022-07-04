@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Glue;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\ClassName;
 
 /**
  * Auto-generated group annotations
@@ -35,11 +36,10 @@ class AddGlueDependencyProviderTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/FooBarDependencyProvider.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\Kernel\Backend\AbstractBundleDependencyProvider');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::GLUE_DEPENDENCY_PROVIDER,
+            'Spryker\Glue\Kernel\Backend\AbstractBundleDependencyProvider',
+        );
     }
 
     /**
@@ -52,11 +52,10 @@ class AddGlueDependencyProviderTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'FooBarDependencyProvider.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\Kernel\Backend\AbstractBundleDependencyProvider');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_GLUE_DEPENDENCY_PROVIDER,
+            'Spryker\Glue\Kernel\Backend\AbstractBundleDependencyProvider',
+        );
     }
 
     /**
@@ -74,10 +73,9 @@ class AddGlueDependencyProviderTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'FooBarDependencyProvider.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\FooBar\FooBarDependencyProvider');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_GLUE_DEPENDENCY_PROVIDER,
+            'Spryker\Glue\FooBar\FooBarDependencyProvider',
+        );
     }
 }
