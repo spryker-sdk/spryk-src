@@ -338,7 +338,7 @@ class SprykHelper extends Module
      *
      * @return void
      */
-    public function mockCommand(Unit $testClass, string $class, int $expectedNumberOfCalls): void
+    public function getMockWithExpectedNumberOfMethodCalls(Unit $testClass, string $class, int $expectedNumberOfCalls): void
     {
         $commandMock = Stub::make($class, [
             'execute' => Expected::exactly($expectedNumberOfCalls),

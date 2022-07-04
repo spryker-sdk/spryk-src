@@ -45,7 +45,7 @@ class SprykRunPostCommandTest extends Unit
             '--mode' => 'core',
         ];
 
-        $this->tester->mockCommand($this, ComposerDumpAutoloadSprykCommand::class, 1);
+        $this->tester->getMockWithExpectedNumberOfMethodCalls($this, ComposerDumpAutoloadSprykCommand::class, 1);
 
         // Act
         $tester->execute($arguments);
@@ -70,8 +70,8 @@ class SprykRunPostCommandTest extends Unit
             '--mode' => 'core',
         ];
 
-        $this->tester->mockCommand($this, ComposerDumpAutoloadSprykCommand::class, 1);
-        $this->tester->mockCommand($this, ComposerReplaceGenerateSprykCommand::class, 1);
+        $this->tester->getMockWithExpectedNumberOfMethodCalls($this, ComposerDumpAutoloadSprykCommand::class, 1);
+        $this->tester->getMockWithExpectedNumberOfMethodCalls($this, ComposerReplaceGenerateSprykCommand::class, 1);
 
         // Act
         $tester->execute($arguments);
@@ -97,7 +97,7 @@ class SprykRunPostCommandTest extends Unit
             '--mode' => 'core',
         ];
 
-        $this->tester->mockCommand($this, ComposerDumpAutoloadSprykCommand::class, 1);
+        $this->tester->getMockWithExpectedNumberOfMethodCalls($this, ComposerDumpAutoloadSprykCommand::class, 1);
 
         // Act
         $tester->execute($arguments);
