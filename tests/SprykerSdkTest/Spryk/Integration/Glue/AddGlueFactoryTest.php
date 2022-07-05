@@ -38,7 +38,7 @@ class AddGlueFactoryTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::GLUE_BUSINESS_FACTORY,
-            'Spryker\Glue\Kernel\Backend\AbstractFactory',
+            ClassName::GLUE_ABSTRACT_FACTORY,
         );
     }
 
@@ -54,7 +54,7 @@ class AddGlueFactoryTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_GLUE_BUSINESS_FACTORY,
-            'Spryker\Glue\Kernel\Backend\AbstractFactory',
+            ClassName::GLUE_ABSTRACT_FACTORY,
         );
     }
 
@@ -75,7 +75,7 @@ class AddGlueFactoryTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_GLUE_BUSINESS_FACTORY,
-            'Spryker\Glue\FooBar\FooBarFactory',
+            ClassName::GLUE_BUSINESS_FACTORY,
         );
     }
 }

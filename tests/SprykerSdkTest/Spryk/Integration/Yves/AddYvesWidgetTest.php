@@ -37,10 +37,7 @@ class AddYvesWidgetTest extends Unit
             '--widget' => 'ZipZap',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::YVES_WIDGET,
-            'Spryker\Yves\Kernel\Widget\AbstractWidget',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::YVES_WIDGET, ClassName::YVES_ABSTRACT_WIDGET);
     }
 
     /**
@@ -54,10 +51,7 @@ class AddYvesWidgetTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::PROJECT_YVES_WIDGET,
-            'Spryker\Yves\Kernel\Widget\AbstractWidget',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_YVES_WIDGET, ClassName::YVES_ABSTRACT_WIDGET);
     }
 
     /**
@@ -77,9 +71,6 @@ class AddYvesWidgetTest extends Unit
             '--widget' => 'ZipZap',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::PROJECT_YVES_WIDGET,
-            'SprykerShop\Yves\FooBar\Widget\ZipZapWidget',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_YVES_WIDGET, ClassName::YVES_WIDGET);
     }
 }

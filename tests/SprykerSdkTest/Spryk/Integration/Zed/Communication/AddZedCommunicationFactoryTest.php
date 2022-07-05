@@ -39,7 +39,7 @@ class AddZedCommunicationFactoryTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::ZED_COMMUNICATION_FACTORY,
-            'Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory',
+            ClassName::ZED_ABSTRACT_COMMUNICATION_FACTORY,
         );
     }
 
@@ -55,7 +55,7 @@ class AddZedCommunicationFactoryTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_ZED_COMMUNICATION_FACTORY,
-            'Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory',
+            ClassName::ZED_ABSTRACT_COMMUNICATION_FACTORY,
         );
     }
 
@@ -76,7 +76,7 @@ class AddZedCommunicationFactoryTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_ZED_COMMUNICATION_FACTORY,
-            'Spryker\Zed\FooBar\Communication\FooBarCommunicationFactory',
+            ClassName::ZED_COMMUNICATION_FACTORY,
         );
     }
 }

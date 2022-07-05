@@ -37,10 +37,7 @@ class AddZedBusinessFactoryTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::ZED_BUSINESS_FACTORY,
-            'Spryker\Zed\Kernel\Business\AbstractBusinessFactory',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::ZED_BUSINESS_FACTORY, ClassName::ZED_ABSTRACT_FACTORY);
     }
 
     /**
@@ -55,7 +52,7 @@ class AddZedBusinessFactoryTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_ZED_BUSINESS_FACTORY,
-            'Spryker\Zed\Kernel\Business\AbstractBusinessFactory',
+            ClassName::ZED_ABSTRACT_FACTORY,
         );
     }
 
@@ -76,7 +73,7 @@ class AddZedBusinessFactoryTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_DATA_IMPORT_BUSINESS_FACTORY,
-            'Spryker\Zed\FooBar\Business\FooBarBusinessFactory',
+            ClassName::ZED_BUSINESS_FACTORY,
         );
     }
 }

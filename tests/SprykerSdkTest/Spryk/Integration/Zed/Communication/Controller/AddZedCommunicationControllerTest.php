@@ -39,10 +39,7 @@ class AddZedCommunicationControllerTest extends Unit
             '--controller' => 'Index',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::CONTROLLER_ZED,
-            'Spryker\Zed\Kernel\Communication\Controller\AbstractController',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::CONTROLLER_ZED, ClassName::ZED_ABSTRACT_CONTROLLER);
     }
 
     /**
@@ -62,10 +59,7 @@ class AddZedCommunicationControllerTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::PROJECT_ZED_CONTROLLER,
-            'Spryker\Zed\FooBar\Communication\Controller\IndexController',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_ZED_CONTROLLER, ClassName::CONTROLLER_ZED);
     }
 
     /**
@@ -94,7 +88,7 @@ class AddZedCommunicationControllerTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_ZED_CONTROLLER,
-            'Spryker\Zed\Kernel\Communication\Controller\AbstractController',
+            ClassName::ZED_ABSTRACT_CONTROLLER,
         );
     }
 

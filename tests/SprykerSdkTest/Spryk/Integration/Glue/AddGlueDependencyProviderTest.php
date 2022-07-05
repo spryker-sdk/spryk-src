@@ -38,7 +38,7 @@ class AddGlueDependencyProviderTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::GLUE_DEPENDENCY_PROVIDER,
-            'Spryker\Glue\Kernel\Backend\AbstractBundleDependencyProvider',
+            ClassName::GLUE_ABSTRACT_DEPENDENCY_PROVIDER,
         );
     }
 
@@ -54,7 +54,7 @@ class AddGlueDependencyProviderTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_GLUE_DEPENDENCY_PROVIDER,
-            'Spryker\Glue\Kernel\Backend\AbstractBundleDependencyProvider',
+            ClassName::GLUE_ABSTRACT_DEPENDENCY_PROVIDER,
         );
     }
 
@@ -75,7 +75,7 @@ class AddGlueDependencyProviderTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_GLUE_DEPENDENCY_PROVIDER,
-            'Spryker\Glue\FooBar\FooBarDependencyProvider',
+            ClassName::GLUE_DEPENDENCY_PROVIDER,
         );
     }
 }

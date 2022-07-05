@@ -38,7 +38,7 @@ class AddServiceFactoryTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::SERVICE_FACTORY,
-            'Spryker\Service\Kernel\AbstractServiceFactory',
+            ClassName::SERVICE_ABSTRACT_FACTORY,
         );
     }
 
@@ -54,7 +54,7 @@ class AddServiceFactoryTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_SERVICE_FACTORY,
-            'Spryker\Service\Kernel\AbstractServiceFactory',
+            ClassName::SERVICE_ABSTRACT_FACTORY,
         );
     }
 
@@ -75,7 +75,7 @@ class AddServiceFactoryTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_SERVICE_FACTORY,
-            'Spryker\Service\FooBar\FooBarFactory',
+            ClassName::SERVICE_FACTORY,
         );
     }
 }

@@ -40,7 +40,7 @@ class AddZedCommunicationGatewayControllerTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::ZED_GATEWAY_CONTROLLER,
-            'Spryker\Zed\Kernel\Communication\Controller\AbstractController',
+            ClassName::ZED_ABSTRACT_CONTROLLER,
         );
     }
 
@@ -56,7 +56,7 @@ class AddZedCommunicationGatewayControllerTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_ZED_GATEWAY_CONTROLLER,
-            'Spryker\Zed\Kernel\Communication\Controller\AbstractController',
+            ClassName::ZED_ABSTRACT_CONTROLLER,
         );
     }
 
@@ -77,7 +77,7 @@ class AddZedCommunicationGatewayControllerTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_ZED_GATEWAY_CONTROLLER,
-            'Spryker\Zed\FooBar\Communication\Controller\GatewayController',
+            ClassName::ZED_GATEWAY_CONTROLLER,
         );
     }
 }

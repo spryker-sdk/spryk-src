@@ -36,10 +36,7 @@ class AddYvesFactoryTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::YVES_FACTORY,
-            'Spryker\Yves\Kernel\AbstractFactory',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::YVES_FACTORY, ClassName::YVES_ABSTRACT_FACTORY);
     }
 
     /**
@@ -52,10 +49,7 @@ class AddYvesFactoryTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::PROJECT_YVES_FACTORY,
-            'Spryker\Yves\Kernel\AbstractFactory',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_YVES_FACTORY, ClassName::YVES_ABSTRACT_FACTORY);
     }
 
     /**
@@ -73,9 +67,6 @@ class AddYvesFactoryTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::PROJECT_YVES_FACTORY,
-            'SprykerShop\Yves\FooBar\FooBarFactory',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_YVES_FACTORY, ClassName::YVES_FACTORY);
     }
 }

@@ -37,10 +37,7 @@ class AddZedBusinessFacadeTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::ZED_FACADE,
-            'Spryker\Zed\Kernel\Business\AbstractFacade',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::ZED_FACADE, ClassName::ZED_ABSTRACT_FACADE);
     }
 
     /**
@@ -53,10 +50,7 @@ class AddZedBusinessFacadeTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::PROJECT_ZED_FACADE,
-            'Spryker\Zed\Kernel\Business\AbstractFacade',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_ZED_FACADE, ClassName::ZED_ABSTRACT_FACADE);
     }
 
     /**
@@ -74,9 +68,6 @@ class AddZedBusinessFacadeTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::PROJECT_ZED_FACADE,
-            'Spryker\Zed\FooBar\Business\FooBarFacade',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_ZED_FACADE, ClassName::ZED_FACADE);
     }
 }

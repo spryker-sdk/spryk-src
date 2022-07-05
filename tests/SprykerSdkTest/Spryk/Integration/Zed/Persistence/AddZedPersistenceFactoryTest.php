@@ -39,7 +39,7 @@ class AddZedPersistenceFactoryTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::ZED_PERSISTENCE_FACTORY,
-            'Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory',
+            ClassName::ZED_ABSTRACT_PERSISTENCE_FACTORY,
         );
     }
 
@@ -55,7 +55,7 @@ class AddZedPersistenceFactoryTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_ZED_PERSISTENCE_FACTORY,
-            'Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory',
+            ClassName::ZED_ABSTRACT_PERSISTENCE_FACTORY,
         );
     }
 
@@ -76,7 +76,7 @@ class AddZedPersistenceFactoryTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_ZED_PERSISTENCE_FACTORY,
-            'Spryker\Zed\FooBar\Persistence\FooBarPersistenceFactory',
+            ClassName::ZED_PERSISTENCE_FACTORY,
         );
     }
 }

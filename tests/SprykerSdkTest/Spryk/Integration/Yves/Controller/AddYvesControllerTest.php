@@ -38,10 +38,7 @@ class AddYvesControllerTest extends Unit
             '--controller' => ClassName::YVES_CONTROLLER,
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::YVES_CONTROLLER,
-            'Spryker\Yves\Kernel\Controller\AbstractController',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::YVES_CONTROLLER, ClassName::YVES_ABSTRACT_CONTROLLER);
     }
 
     /**
@@ -57,7 +54,7 @@ class AddYvesControllerTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_YVES_CONTROLLER,
-            'Spryker\Yves\Kernel\Controller\AbstractController',
+            ClassName::YVES_ABSTRACT_CONTROLLER,
         );
     }
 
@@ -78,9 +75,6 @@ class AddYvesControllerTest extends Unit
             '--controller' => ClassName::YVES_CONTROLLER,
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::PROJECT_YVES_CONTROLLER,
-            'SprykerShop\Yves\FooBar\Controller\FooBarController',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_YVES_CONTROLLER, ClassName::YVES_CONTROLLER);
     }
 }

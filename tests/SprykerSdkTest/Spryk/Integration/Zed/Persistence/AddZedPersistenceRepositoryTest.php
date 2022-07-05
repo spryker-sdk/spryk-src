@@ -37,10 +37,7 @@ class AddZedPersistenceRepositoryTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::REPOSITORY,
-            'Spryker\Zed\Kernel\Persistence\AbstractRepository',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::REPOSITORY, ClassName::ZED_ABSTRACT_REPOSITORY);
     }
 
     /**
@@ -55,7 +52,7 @@ class AddZedPersistenceRepositoryTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_ZED_REPOSITORY,
-            'Spryker\Zed\Kernel\Persistence\AbstractRepository',
+            ClassName::ZED_ABSTRACT_REPOSITORY,
         );
     }
 
@@ -74,9 +71,6 @@ class AddZedPersistenceRepositoryTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::PROJECT_ZED_REPOSITORY,
-            'Spryker\Zed\FooBar\Persistence\FooBarRepository',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_ZED_REPOSITORY, ClassName::ZED_REPOSITORY);
     }
 }

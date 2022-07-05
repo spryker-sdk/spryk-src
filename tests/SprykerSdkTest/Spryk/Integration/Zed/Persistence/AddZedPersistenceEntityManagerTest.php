@@ -37,10 +37,7 @@ class AddZedPersistenceEntityManagerTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::ENTITY_MANAGER,
-            'Spryker\Zed\Kernel\Persistence\AbstractEntityManager',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::ENTITY_MANAGER, ClassName::ZED_ABSTRACT_ENTITY_MANAGER);
     }
 
     /**
@@ -55,7 +52,7 @@ class AddZedPersistenceEntityManagerTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_ENTITY_MANAGER,
-            'Spryker\Zed\Kernel\Persistence\AbstractEntityManager',
+            ClassName::ZED_ABSTRACT_ENTITY_MANAGER,
         );
     }
 
@@ -74,9 +71,6 @@ class AddZedPersistenceEntityManagerTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::PROJECT_ENTITY_MANAGER,
-            'Spryker\Zed\FooBar\Persistence\FooBarEntityManager',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_ENTITY_MANAGER, ClassName::ENTITY_MANAGER);
     }
 }

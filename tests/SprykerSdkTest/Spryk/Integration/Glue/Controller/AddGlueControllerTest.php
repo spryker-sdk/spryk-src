@@ -38,10 +38,7 @@ class AddGlueControllerTest extends Unit
             '--controller' => 'Bar',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::GLUE_CONTROLLER,
-            'Spryker\Glue\Kernel\Controller\AbstractController',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::GLUE_CONTROLLER, ClassName::GLUE_ABSTRACT_CONTROLLER);
     }
 
     /**
@@ -57,7 +54,7 @@ class AddGlueControllerTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_GLUE_CONTROLLER,
-            'Spryker\Glue\Kernel\Controller\AbstractController',
+            ClassName::GLUE_ABSTRACT_CONTROLLER,
         );
     }
 
@@ -80,7 +77,7 @@ class AddGlueControllerTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_GLUE_CONTROLLER,
-            'Spryker\Glue\FooBar\Controller\BarController',
+            ClassName::GLUE_CONTROLLER,
         );
     }
 }

@@ -38,7 +38,7 @@ class AddZedDependencyProviderTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::ZED_DEPENDENCY_PROVIDER,
-            'Spryker\Zed\Kernel\AbstractBundleDependencyProvider',
+            ClassName::ZED_ABSTRACT_DEPENDENCY_PROVIDER,
         );
     }
 
@@ -54,7 +54,7 @@ class AddZedDependencyProviderTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_ZED_DEPENDENCY_PROVIDER,
-            'Spryker\Zed\Kernel\AbstractBundleDependencyProvider',
+            ClassName::ZED_ABSTRACT_DEPENDENCY_PROVIDER,
         );
     }
 
@@ -75,7 +75,7 @@ class AddZedDependencyProviderTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_ZED_DEPENDENCY_PROVIDER,
-            'Spryker\Zed\FooBar\FooBarDependencyProvider',
+            ClassName::ZED_DEPENDENCY_PROVIDER,
         );
     }
 }

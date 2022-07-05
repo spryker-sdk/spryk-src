@@ -38,7 +38,7 @@ class AddClientDependencyProviderTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::CLIENT_DEPENDENCY_PROVIDER,
-            'Spryker\Client\Kernel\AbstractDependencyProvider',
+            ClassName::CLIENT_ABSTRACT_DEPENDENCY_PROVIDER,
         );
     }
 
@@ -54,7 +54,7 @@ class AddClientDependencyProviderTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_CLIENT_DEPENDENCY_PROVIDER,
-            'Spryker\Client\Kernel\AbstractDependencyProvider',
+            ClassName::CLIENT_ABSTRACT_DEPENDENCY_PROVIDER,
         );
     }
 
@@ -75,7 +75,7 @@ class AddClientDependencyProviderTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_CLIENT_DEPENDENCY_PROVIDER,
-            'Spryker\Client\FooBar\FooBarDependencyProvider',
+            ClassName::CLIENT_DEPENDENCY_PROVIDER,
         );
     }
 }

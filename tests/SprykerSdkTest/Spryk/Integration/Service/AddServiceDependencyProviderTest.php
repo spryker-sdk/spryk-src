@@ -38,7 +38,7 @@ class AddServiceDependencyProviderTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::SERVICE_DEPENDENCY_PROVIDER,
-            'Spryker\Service\Kernel\AbstractBundleDependencyProvider',
+            ClassName::SERVICE_ABSTRACT_DEPENDENCY_PROVIDER,
         );
     }
 
@@ -54,7 +54,7 @@ class AddServiceDependencyProviderTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_SERVICE_DEPENDENCY_PROVIDER,
-            'Spryker\Service\Kernel\AbstractBundleDependencyProvider',
+            ClassName::SERVICE_ABSTRACT_DEPENDENCY_PROVIDER,
         );
     }
 
@@ -75,7 +75,7 @@ class AddServiceDependencyProviderTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_SERVICE_DEPENDENCY_PROVIDER,
-            'Spryker\Service\FooBar\FooBarDependencyProvider',
+            ClassName::SERVICE_DEPENDENCY_PROVIDER,
         );
     }
 }

@@ -41,10 +41,7 @@ class AddClientFactoryTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::CLIENT_FACTORY,
-            'Spryker\Client\Kernel\AbstractFactory',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::CLIENT_FACTORY, ClassName::CLIENT_ABSTRACT_FACTORY);
     }
 
     /**
@@ -59,7 +56,7 @@ class AddClientFactoryTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_CLIENT_FACTORY,
-            'Spryker\Client\Kernel\AbstractFactory',
+            ClassName::CLIENT_ABSTRACT_FACTORY,
         );
     }
 
@@ -78,9 +75,6 @@ class AddClientFactoryTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::PROJECT_CLIENT_FACTORY,
-            'Spryker\Client\FooBar\FooBarFactory',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_CLIENT_FACTORY, ClassName::CLIENT_FACTORY);
     }
 }

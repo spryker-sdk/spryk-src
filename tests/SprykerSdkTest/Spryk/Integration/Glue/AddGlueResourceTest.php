@@ -40,7 +40,7 @@ class AddGlueResourceTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::GLUE_RESOURCE,
-            'Spryker\Glue\Kernel\AbstractRestResource',
+            ClassName::GLUE_ABSTRACT_REST_RESOURCE,
         );
     }
 
@@ -57,7 +57,7 @@ class AddGlueResourceTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_GLUE_RESOURCE,
-            'Spryker\Glue\Kernel\AbstractRestResource',
+            ClassName::GLUE_ABSTRACT_REST_RESOURCE,
         );
     }
 
@@ -80,7 +80,7 @@ class AddGlueResourceTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_GLUE_RESOURCE,
-            'Spryker\Glue\FooBar\BarResource',
+            ClassName::GLUE_RESOURCE,
         );
     }
 }

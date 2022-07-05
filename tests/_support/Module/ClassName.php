@@ -643,4 +643,114 @@ interface ClassName
      * @var string
      */
     public const PROJECT_ZED_PERSISTENCE_FACTORY = 'Pyz\Zed\FooBar\Persistence\FooBarPersistenceFactory';
+
+    /**
+     * @var string
+     */
+    public const ZED_ABSTRACT_COMMUNICATION_FACTORY = 'Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory';
+
+    /**
+     * @var string
+     */
+    public const ZED_ABSTRACT_CONTROLLER = 'Spryker\Zed\Kernel\Communication\Controller\AbstractController';
+
+    /**
+     * @var string
+     */
+    public const ZED_ABSTRACT_ENTITY_MANAGER = 'Spryker\Zed\Kernel\Persistence\AbstractEntityManager';
+
+    /**
+     * @var string
+     */
+    public const ZED_ABSTRACT_PERSISTENCE_FACTORY = 'Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory';
+
+    /**
+     * @var string
+     */
+    public const ZED_ABSTRACT_REPOSITORY = 'Spryker\Zed\Kernel\Persistence\AbstractRepository';
+
+    /**
+     * @var string
+     */
+    public const CLIENT_ABSTRACT_DEPENDENCY_PROVIDER = 'Spryker\Client\Kernel\AbstractDependencyProvider';
+
+    /**
+     * @var string
+     */
+    public const CLIENT_ABSTRACT_FACTORY = 'Spryker\Client\Kernel\AbstractFactory';
+
+    /**
+     * @var string
+     */
+    public const ABSTRACT_CLIENT = 'Spryker\Client\Kernel\AbstractClient';
+
+    /**
+     * @var string
+     */
+    public const GLUE_ABSTRACT_DEPENDENCY_PROVIDER = 'Spryker\Glue\Kernel\Backend\AbstractBundleDependencyProvider';
+
+    /**
+     * @var string
+     */
+    public const GLUE_ABSTRACT_FACTORY = 'Spryker\Glue\Kernel\Backend\AbstractFactory';
+
+    /**
+     * @var string
+     */
+    public const GLUE_ABSTRACT_REST_RESOURCE = 'Spryker\Glue\Kernel\AbstractRestResource';
+
+    /**
+     * @var string
+     */
+    public const GLUE_ABSTRACT_CONTROLLER = 'Spryker\Glue\Kernel\Controller\AbstractController';
+
+    /**
+     * @var string
+     */
+    public const SERVICE_ABSTRACT_DEPENDENCY_PROVIDER = 'Spryker\Service\Kernel\AbstractBundleDependencyProvider';
+
+    /**
+     * @var string
+     */
+    public const SERVICE_ABSTRACT_FACTORY = 'Spryker\Service\Kernel\AbstractServiceFactory';
+
+    /**
+     * @var string
+     */
+    public const ABSTRACT_SERVICE = 'Spryker\Service\Kernel\AbstractService';
+
+    /**
+     * @var string
+     */
+    public const YVES_ABSTRACT_DEPENDENCY_PROVIDER = 'Spryker\Yves\Kernel\AbstractBundleDependencyProvider';
+
+    /**
+     * @var string
+     */
+    public const YVES_ABSTRACT_FACTORY = 'Spryker\Yves\Kernel\AbstractFactory';
+
+    /**
+     * @var string
+     */
+    public const YVES_ABSTRACT_WIDGET = 'Spryker\Yves\Kernel\Widget\AbstractWidget';
+
+    /**
+     * @var string
+     */
+    public const ZED_ABSTRACT_DEPENDENCY_PROVIDER = 'Spryker\Zed\Kernel\AbstractBundleDependencyProvider';
+
+    /**
+     * @var string
+     */
+    public const ZED_ABSTRACT_FACADE = 'Spryker\Zed\Kernel\Business\AbstractFacade';
+
+    /**
+     * @var string
+     */
+    public const ZED_ABSTRACT_FACTORY = 'Spryker\Zed\Kernel\Business\AbstractBusinessFactory';
+
+    /**
+     * @var string
+     */
+    public const YVES_ABSTRACT_CONTROLLER = 'Spryker\Yves\Kernel\Controller\AbstractController';
 }

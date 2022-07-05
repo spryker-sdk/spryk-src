@@ -38,7 +38,7 @@ class AddYvesDependencyProviderTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::YVES_DEPENDENCY_PROVIDER,
-            'Spryker\Yves\Kernel\AbstractBundleDependencyProvider',
+            ClassName::YVES_ABSTRACT_DEPENDENCY_PROVIDER,
         );
     }
 
@@ -54,7 +54,7 @@ class AddYvesDependencyProviderTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_YVES_DEPENDENCY_PROVIDER,
-            'Spryker\Yves\Kernel\AbstractBundleDependencyProvider',
+            ClassName::YVES_ABSTRACT_DEPENDENCY_PROVIDER,
         );
     }
 
@@ -75,7 +75,7 @@ class AddYvesDependencyProviderTest extends Unit
 
         $this->tester->assertClassOrInterfaceExtends(
             ClassName::PROJECT_YVES_DEPENDENCY_PROVIDER,
-            'SprykerShop\Yves\FooBar\FooBarDependencyProvider',
+            ClassName::YVES_DEPENDENCY_PROVIDER,
         );
     }
 }

@@ -36,10 +36,7 @@ class AddServiceTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::SERVICE,
-            'Spryker\Service\Kernel\AbstractService',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::SERVICE, ClassName::ABSTRACT_SERVICE);
     }
 
     /**
@@ -52,10 +49,7 @@ class AddServiceTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::PROJECT_SERVICE,
-            'Spryker\Service\Kernel\AbstractService',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_SERVICE, ClassName::ABSTRACT_SERVICE);
     }
 
     /**
@@ -73,9 +67,6 @@ class AddServiceTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::PROJECT_SERVICE,
-            'Spryker\Service\FooBar\FooBarService',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_SERVICE, ClassName::SERVICE);
     }
 }

@@ -36,10 +36,7 @@ class AddClientTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::CLIENT,
-            'Spryker\Client\Kernel\AbstractClient',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::CLIENT, ClassName::ABSTRACT_CLIENT);
     }
 
     /**
@@ -52,10 +49,7 @@ class AddClientTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::PROJECT_CLIENT,
-            'Spryker\Client\Kernel\AbstractClient',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_CLIENT, ClassName::ABSTRACT_CLIENT);
     }
 
     /**
@@ -73,9 +67,6 @@ class AddClientTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $this->tester->assertClassOrInterfaceExtends(
-            ClassName::PROJECT_CLIENT,
-            'Spryker\Client\FooBar\FooBarClient',
-        );
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_CLIENT, ClassName::CLIENT);
     }
 }
