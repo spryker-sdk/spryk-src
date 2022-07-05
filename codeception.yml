@@ -1,6 +1,7 @@
 namespace: SprykerSdkTest
 
 paths:
+    # paths should not end with slashes, see https://github.com/spryker-sdk/spryk-src/pull/47
     tests: tests
     log: tests/_output
     data: tests/_data
