@@ -350,7 +350,6 @@ class ArgumentResolver implements ArgumentResolverInterface
                     return $argumentDefinition;
                 case (isset($argumentDefinition['default'])):
                 case (isset($argumentDefinition['value'])):
-
                     return $argumentDefinition;
                 default:
                     $argumentDefinition['value'] = null;
