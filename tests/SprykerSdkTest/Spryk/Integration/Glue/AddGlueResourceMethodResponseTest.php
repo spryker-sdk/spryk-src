@@ -48,13 +48,14 @@ class AddGlueResourceMethodResponseTest extends Unit
         ?string $module = null,
         ?string $dataModule = null,
         ?string $zedDomainEntity = null,
-        ?string $resourceDataObject = null
+        ?string $resourceDataObject = null,
+        ?string $resource = null
     ): void {
         $commandOptions = [
             // TODO We also need to add tests for project level
 //            '--mode' => 'project',
 //            '--organization' => 'Pyz',
-            '--resource' => '/foo-bars',
+            '--resource' => $resource ?? '/foo-bars',
             '--httpMethod' => $httpMethod,
             '--httpResponseCode' => $httpResponseCode,
         ];
@@ -153,6 +154,7 @@ class AddGlueResourceMethodResponseTest extends Unit
             ['patch', 200],
             ['delete', 200],
             ['delete', 200, true],
+            ['get', 200, true, null, null, null, null, '/foo-bars/index'],
         ];
     }
 

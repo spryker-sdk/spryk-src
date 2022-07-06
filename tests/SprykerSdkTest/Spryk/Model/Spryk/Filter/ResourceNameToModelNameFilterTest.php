@@ -33,10 +33,11 @@ class ResourceNameToModelNameFilterTest extends Unit
     {
         return [
             ['', ''],
-            ['customer', 'Customer'],
-            ['/customer', 'Customer'],
-            ['/customer/account', 'Account'],
-            ['/customer/account/history', 'History'],
+            ['foo', 'Foo'],
+            ['/foo', 'Foo'],
+            ['/foo/bar', 'Foo'],
+            ['/foo/bar/baz', 'Foo'],
+            ['/fuz/baz', 'Fuz'],
         ];
     }
 }

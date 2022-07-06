@@ -11,9 +11,8 @@ namespace SprykerSdk\Spryk\Model\Spryk\Filter;
  * Converts a resource name to model name
  *
  * Examples:
- * $this->filter('/customer') == 'Customer';
- * $this->filter('/customer/account') == 'Account';
- * $this->filter('/customer/account/history') == 'History';
+ * $this->filter('/foo') == 'Foo';
+ * $this->filter('/foo/*') == 'Foo';
  */
 class ResourceNameToModelNameFilter implements FilterInterface
 {
@@ -43,6 +42,6 @@ class ResourceNameToModelNameFilter implements FilterInterface
             $parts = [''];
         }
 
-        return ucfirst(end($parts));
+        return ucfirst(current($parts));
     }
 }

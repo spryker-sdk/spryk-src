@@ -10,9 +10,13 @@ namespace SprykerSdk\Spryk\Model\Spryk\Filter;
 /**
  * Converts a resource name to the appropriate controller name
  *
+ * The scheme follows the same convention as used in Spryker's Zed controllers and actions
+ *
+ * @see https://docs.spryker.com/docs/scos/dev/back-end-development/zed/communication-layer/communication-layer.html#input-parameters
+ *
  * Example:
- * $this->filter('/foo/bar/baz') == 'Bar'
  * $this->filter('/foo') == 'Index'
+ * $this->filter('/foo/bar/baz') == 'Bar'
  */
 class ResourceNameToControllerNameFilter implements FilterInterface
 {
