@@ -38,6 +38,10 @@ class ResourceNameToModuleNameFilter implements FilterInterface
     {
         $parts = array_filter(explode('/', $value));
 
+        if (count($parts) === 0) {
+            $parts = [''];
+        }
+
         return ucfirst(current($parts));
     }
 }

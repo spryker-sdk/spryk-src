@@ -14,34 +14,10 @@ namespace SprykerSdk\Spryk\Model\Spryk\Filter;
  * $this->filter('/foo') == 'Foo';
  * $this->filter('/foo/*') == 'Foo';
  */
-class ResourceNameToModelNameFilter implements FilterInterface
+class ResourceNameToModelNameFilter extends ResourceNameToModuleNameFilter
 {
     /**
      * @var string
      */
     protected const FILTER_NAME = 'resourceNameToModelName';
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return static::FILTER_NAME;
-    }
-
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
-    public function filter(string $value): string
-    {
-        $parts = array_filter(explode('/', $value));
-
-        if (count($parts) === 0) {
-            $parts = [''];
-        }
-
-        return ucfirst(current($parts));
-    }
 }

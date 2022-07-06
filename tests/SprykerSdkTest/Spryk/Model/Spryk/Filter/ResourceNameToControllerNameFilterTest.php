@@ -40,8 +40,8 @@ class ResourceNameToControllerNameFilterTest extends Unit
             ['/foo/bar', 'Bar'],
             ['foo/bar/baz', 'Bar'],
             ['/foo/bar/baz', 'Bar'],
-            ['foo//bar', 'Index'],
-            ['/foo//bar', 'Index'],
+            ['foo//bar', 'Bar'],
+            ['/foo//bar', 'Bar'],
         ];
     }
 }

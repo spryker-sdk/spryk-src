@@ -40,9 +40,9 @@ class ResourceNameToControllerNameFilter implements FilterInterface
      */
     public function filter(string $value): string
     {
-        $normalized = trim($value, '/');
-        $parts = explode('/', $normalized);
-
+        $parts = array_filter(explode('/', $value));
+        # resets indexes used further down
+        $parts = array_values($parts);
         $name = 'Index';
         if (!empty($parts[1])) {
             $name = $parts[1];
