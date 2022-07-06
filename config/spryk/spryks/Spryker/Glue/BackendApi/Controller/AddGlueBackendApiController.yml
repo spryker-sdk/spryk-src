@@ -9,7 +9,7 @@ arguments:
     module:
         description: "Based on the applicationType the module name will be suffixed with BackendApi or FrontendApi by the ResourceModuleName callback."
         inherit: true
-        default: "{{ resource | normalizeResourceName }}"
+        default: "{{ resource | normalizeResourceName | resourceNameToModuleName }}"
         callback: GlueResourceModuleName
 
     organization:
@@ -40,7 +40,7 @@ arguments:
 
     controller:
         inherit: true
-        value: "{{ resource | normalizeResourceName }}ResourceController"
+        value: "{{ resource | normalizeResourceName | resourceNameToControllerName }}ResourceController"
 
 postSpryks:
     - AddClass:

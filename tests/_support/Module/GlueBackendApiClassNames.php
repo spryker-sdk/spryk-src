@@ -57,7 +57,7 @@ interface GlueBackendApiClassNames
     /**
      * @var string
      */
-    public const GLUE_BACKEND_API_CONTROLLER = 'Spryker\Glue\FooBarsBackendApi\Controller\FooBarsResourceController';
+    public const GLUE_BACKEND_API_CONTROLLER = 'Spryker\Glue\FooBarsBackendApi\Controller\IndexResourceController';
 
     /**
      * @var string

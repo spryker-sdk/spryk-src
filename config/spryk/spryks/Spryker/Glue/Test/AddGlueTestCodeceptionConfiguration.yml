@@ -4,7 +4,7 @@ mode: both
 
 arguments:
     module:
-        value: "{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api"
+        value: "{{ resource | normalizeResourceName | resourceNameToModuleName }}{{ applicationType }}Api"
 
     organization:
         inherit: true

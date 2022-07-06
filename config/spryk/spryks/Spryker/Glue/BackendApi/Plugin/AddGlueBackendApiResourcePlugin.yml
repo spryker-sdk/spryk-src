@@ -5,7 +5,7 @@ mode: both
 arguments:
     module:
         inherit: true
-        default: "{{ resource | normalizeResourceName }}"
+        default: "{{ resource | normalizeResourceName | resourceNameToModuleName }}"
         callback: GlueResourceModuleName
 
     organization:
@@ -27,7 +27,7 @@ arguments:
         inherit: true
 
     className:
-        default: "{{ resource | normalizeResourceName }}BackendApiResource"
+        default: "{{ resource | normalizeResourceName | resourceNameToModelName }}BackendApiResource"
 
     extends:
         callback: ResolveExtends
@@ -69,12 +69,12 @@ postSpryks:
                   value: "getController"
               annotations:
                   value:
-                      - "@uses \\{{ organization }}\\{{ application }}\\{{ module }}\\Controller\\{{ resource | normalizeResourceName }}ResourceController"
+                      - "@uses \\{{ organization }}\\{{ application }}\\{{ module }}\\Controller\\{{ resource | normalizeResourceName | resourceNameToControllerName }}ResourceController"
               output:
                   value: "string"
               body:
                   value:
-                      - "return \\{{ organization }}\\{{ application }}\\{{ module }}\\Controller\\{{ resource | normalizeResourceName }}ResourceController::class;"
+                      - "return \\{{ organization }}\\{{ application }}\\{{ module }}\\Controller\\{{ resource | normalizeResourceName | resourceNameToControllerName }}ResourceController::class;"
               target:
                   value: "\\{{ organization }}\\Glue\\{{ module }}\\Plugin\\{{ className }}"
               withInterface:
