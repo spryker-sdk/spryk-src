@@ -1,87 +1,61 @@
 spryk: template
-description: "Adds a new Widget to the Yves application."
+description: 'Adds a new Widget to the Yves application.'
 mode: both
 level: 1
-
 arguments:
     organization:
         inherit: true
         default: SprykerShop
-
     module:
         inherit: true
-
     widget:
         inherit: true
-
     widgetClassName:
-        value: "{{ widget | removeWidgetSuffix }}Widget"
-
+        value: '{{ widget | removeWidgetSuffix }}Widget'
     templateName:
-        value: "{{ widget | removeWidgetSuffix | dasherize }}"
-
+        value: '{{ widget | removeWidgetSuffix | dasherize }}'
     application:
         value: Yves
-
     extends:
         callback: ResolveExtends
         value:
-            - "\\SprykerShop\\{{ application }}\\{{ module }}\\Widget\\{{ widget | removeWidgetSuffix }}Widget"
-            - "\\Spryker\\{{ application }}\\Kernel\\Widget\\AbstractWidget"
-
+            - '\SprykerShop\{{ application }}\{{ module }}\Widget\{{ widget | removeWidgetSuffix }}Widget'
+            - '\Spryker\{{ application }}\Kernel\Widget\AbstractWidget'
     className:
-        value: "{{ widget | removeWidgetSuffix }}Widget"
-
+        value: '{{ widget | removeWidgetSuffix }}Widget'
     annotations:
         value:
-            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\{{ module }}Config getConfig()"
-
+            - '@method \{{ organization }}\{{ application }}\{{ module }}\{{ module }}Config getConfig()'
     template:
         value: Common/Class.php.twig
-
     subDirectory:
-        value: "Widget"
-
+        value: Widget
     targetFilename:
-        value: "{{ widget | removeWidgetSuffix }}Widget.php"
-
+        value: '{{ widget | removeWidgetSuffix }}Widget.php'
     targetPath:
-        value: "src/{{ organization }}/Yves/{{ module }}/"
-
+        value: 'src/{{ organization }}/Yves/{{ module }}/'
 preSpryks:
     - AddModule
-
 postSpryks:
     - AddYvesFactory
     - AddYvesWidgetView
-    - AddMethod:
-        arguments:
-            target:
-                value: "\\{{ organization }}\\Yves\\{{ module }}\\Widget\\{{ widget | removeWidgetSuffix }}Widget"
-            withInterface:
-                value: false
-            isStatic:
-                value: true
-            output:
-                value: "string"
-            method:
-                value: "getName"
-            body:
-                value: "return '{{ widgetClassName }}';"
-
-    - AddMethod:
-        arguments:
-            templateName:
-                inherit: true
-            target:
-                value: "\\{{ organization }}\\Yves\\{{ module }}\\Widget\\{{ widget | removeWidgetSuffix }}Widget"
-            withInterface:
-                value: false
-            isStatic:
-                value: true
-            output:
-                value: "string"
-            method:
-                value: "getTemplate"
-            body:
-                value: "return '@{{ module }}/views/{{ templateName }}/{{ templateName }}.twig';"
+    -
+        AddMethod:
+            arguments:
+                target: '\{{ organization }}\Yves\{{ module }}\Widget\{{ widget | removeWidgetSuffix }}Widget'
+                withInterface: false
+                isStatic: true
+                output: string
+                method: getName
+                body: 'return ''{{ widgetClassName }}'';'
+    -
+        AddMethod:
+            arguments:
+                templateName:
+                    inherit: true
+                target: '\{{ organization }}\Yves\{{ module }}\Widget\{{ widget | removeWidgetSuffix }}Widget'
+                withInterface: false
+                isStatic: true
+                output: string
+                method: getTemplate
+                body: 'return ''@{{ module }}/views/{{ templateName }}/{{ templateName }}.twig'';'

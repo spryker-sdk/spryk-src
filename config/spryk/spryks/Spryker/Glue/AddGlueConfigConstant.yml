@@ -1,25 +1,20 @@
 spryk: constant
-description: "Adds a Resource type constant to the *module*Config."
+description: 'Adds a Resource type constant to the *module*Config.'
 mode: both
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     name: ~
     value: ~
     visibility:
-        value: "public"
-
+        value: public
     target:
-        value: "{{ organization }}\\Glue\\{{ module }}\\{{ module }}Config"
-
+        value: '{{ organization }}\Glue\{{ module }}\{{ module }}Config'
 preSpryks:
-    - AddModuleConfig:
-          arguments:
-              application:
-                  value: Glue
+    -
+        AddModuleConfig:
+            arguments:
+                application: Glue

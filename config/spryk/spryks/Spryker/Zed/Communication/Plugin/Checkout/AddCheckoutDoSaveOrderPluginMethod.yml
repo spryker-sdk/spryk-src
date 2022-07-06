@@ -1,46 +1,34 @@
 spryk: method
-description: "Adds a new *module* class method."
+description: 'Adds a new *module* class method.'
 mode: both
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: SprykerEco
-
     application:
         inherit: true
         default: Zed
-
     classNamePrefix:
         inherit: true
-
     subDirectory:
-        value: "Communication/Plugin/Checkout"
-
+        value: Communication/Plugin/Checkout
     method:
         inherit: true
-        value: "saveOrder"
-
+        value: saveOrder
     input:
         isMultiple: true
-        value: \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer,\Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
-
+        value: '\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer,\Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer'
     output:
-        value: "void"
-
+        value: void
     annotations:
         value:
-            - "{@inheritDoc}"
-            - "@api"
-
+            - '{@inheritDoc}'
+            - '@api'
     template:
         value: Common/Method.php.twig
-
     target:
-        value: "{{ organization }}\\{{ application }}\\{{ module }}\\{{ subDirectory | convertToClassNameFragment }}\\{{ classNamePrefix }}CheckoutDoSaveOrderPlugin"
-
+        value: '{{ organization }}\{{ application }}\{{ module }}\{{ subDirectory | convertToClassNameFragment }}\{{ classNamePrefix }}CheckoutDoSaveOrderPlugin'
 preSpryks:
     - AddCheckoutDoSaveOrderPlugin

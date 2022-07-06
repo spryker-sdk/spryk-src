@@ -1,42 +1,31 @@
 spryk: method
-description: "Adds a Service dependency method to the *module*DependencyProvider."
+description: 'Adds a Service dependency method to the *module*DependencyProvider.'
 mode: both
-deprecated: Use AddDependencyBridgeMethod instead.
-
+deprecated: 'Use AddDependencyBridgeMethod instead.'
 arguments:
     module:
         inherit: true
         moduleFilter:
             application: Zed
-
     dependentModule:
         inherit: true
         moduleFilter:
             application: Service
-
     organization:
         inherit: true
         default: Spryker
-
     providerMethod:
-        value: "add{{ dependentModule }}Service"
-
+        value: 'add{{ dependentModule }}Service'
     template:
         value: Zed/Dependency/Service/ZedDependencyServiceDependencyProviderMethod.php.twig
-
     target:
-        value: "{{ organization }}\\Zed\\{{ module }}\\{{ module }}DependencyProvider"
-
+        value: '{{ organization }}\Zed\{{ module }}\{{ module }}DependencyProvider'
 preSpryks:
     - AddZedDependencyProvider
-
 postSpryks:
-    - AddZedDependencyServiceDependencyProviderConstant:
-        arguments:
-            name:
-                value: "SERVICE_{{ dependentModule | underscored | upper }}"
-            value:
-                value: "SERVICE_{{ dependentModule | underscored | upper }}"
-            visibility:
-                value: "public"
-
+    -
+        AddZedDependencyServiceDependencyProviderConstant:
+            arguments:
+                name: 'SERVICE_{{ dependentModule | underscored | upper }}'
+                value: 'SERVICE_{{ dependentModule | underscored | upper }}'
+                visibility: public

@@ -1,39 +1,29 @@
 spryk: template
-description: "Adds a new *Module*ClientFactory to the Client application."
+description: 'Adds a new *Module*ClientFactory to the Client application.'
 mode: both
 level: 3
-condition: "application === 'Client'"
-
+condition: 'application === ''Client'''
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     application:
         inherit: true
-        default: "Client"
-
+        default: Client
     extends:
         callback: ResolveExtends
         value:
-            - "\\Spryker\\{{ application }}\\{{ module }}\\{{ module }}Factory"
-            - "\\Spryker\\{{ application }}\\Kernel\\AbstractFactory"
-
+            - '\Spryker\{{ application }}\{{ module }}\{{ module }}Factory'
+            - '\Spryker\{{ application }}\Kernel\AbstractFactory'
     className:
-        value: "{{ module }}Factory"
-
+        value: '{{ module }}Factory'
     template:
         value: Common/Class.php.twig
-
     targetFilename:
-        value: "{{ module }}Factory.php"
-
+        value: '{{ module }}Factory.php'
     targetPath:
-        value: "src/{{ organization }}/Client/{{ module }}/"
-
+        value: 'src/{{ organization }}/Client/{{ module }}/'
 preSpryks:
     - AddModule
-

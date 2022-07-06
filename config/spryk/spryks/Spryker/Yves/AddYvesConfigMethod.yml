@@ -1,28 +1,21 @@
 spryk: method
-description: "Adds a new method to the Yves *module*Config."
+description: 'Adds a new method to the Yves *module*Config.'
 mode: both
-
 arguments:
     organization:
         inherit: true
         default: SprykerShop
-
     module:
         inherit: true
-
     configMethod: ~
     input: ~
     output: ~
-
     template:
         value: Common/Method.php.twig
-
     target:
-        value: "{{ organization }}\\Yves\\{{ module }}\\{{ module }}Config"
-
+        value: '{{ organization }}\Yves\{{ module }}\{{ module }}Config'
 preSpryks:
-    - AddModuleConfig:
-          arguments:
-              application:
-                  value: Yves
-
+    -
+        AddModuleConfig:
+            arguments:
+                application: Yves

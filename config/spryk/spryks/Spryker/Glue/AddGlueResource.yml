@@ -1,48 +1,35 @@
 spryk: template
-description: "Adds a new Resource to the Glue application."
+description: 'Adds a new Resource to the Glue application.'
 mode: both
-
 application: Glue
-
 priority: 1
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     application:
         value: Glue
-
     extends:
         callback: ResolveExtends
         value:
-            - "\\Spryker\\{{ application }}\\{{ module }}\\{{ className | classNameShort | ensureResourceSuffix }}"
-            - "\\Spryker\\{{ application }}\\Kernel\\AbstractRestResource"
-
+            - '\Spryker\{{ application }}\{{ module }}\{{ className | classNameShort | ensureResourceSuffix }}'
+            - '\Spryker\{{ application }}\Kernel\AbstractRestResource'
     implements:
         inherit: true
-        value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\{{ className | ensureResourceSuffix }}Interface"
-
+        value: '\{{ organization }}\{{ application }}\{{ module }}\{{ className | ensureResourceSuffix }}Interface'
     className:
         inherit: true
         callback: EnsureResourceSuffix
-
     template:
         value: Common/Class.php.twig
-
     targetFilename:
         callbackOnly: true
         callback: GlueResourceTargetFilename
-
     targetPath:
-        value: "src/{{ organization }}/Glue/{{ module }}/"
-
+        value: 'src/{{ organization }}/Glue/{{ module }}/'
 preSpryks:
     - AddModule
-
 postSpryks:
     - AddGlueResourceInterface

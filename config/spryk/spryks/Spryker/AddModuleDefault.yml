@@ -1,40 +1,36 @@
 spryk: structure
-description: "Adds a new *module* structure with Zed (all layers stubs facades, factories), Client, Transfer skeletons."
+description: 'Adds a new *module* structure with Zed (all layers stubs facades, factories), Client, Transfer skeletons.'
 priority: 1
 mode: both
 level: 1
-
 arguments:
     organization:
         inherit: true
         default: Spryker
-
     application:
         inherit: true
         default: Zed
-
     module:
         inherit: true
         type: NewModuleType
-
     targetPath:
-        value: ""
-
+        value: ''
     directories:
         skipOnProjectLevel: true
         value:
-            - "src/{{ organization }}/"
-
+            - 'src/{{ organization }}/'
 postSpryks:
     - AddModule
     - AddClient
     - AddSharedTransferSchema
-    - AddModuleConfig:
-          arguments:
-              application: "Client"
-    - AddModuleConfig:
-          arguments:
-              application: "Zed"
+    -
+        AddModuleConfig:
+            arguments:
+                application: Client
+    -
+        AddModuleConfig:
+            arguments:
+                application: Zed
     - AddZedDependencyProvider
     - AddZedBusinessFacade
     - AddZedCommunicationFactory

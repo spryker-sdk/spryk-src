@@ -1,30 +1,28 @@
-description: "Used for setting some defaults for all Spryks."
+description: 'Used for setting some defaults for all Spryks.'
 arguments:
-  sprykerVendorPath:
-      value: "spryker/"
-  moduleSrcDirectory:
-      value: "Bundles/"
-  repository:
-    value: "{{ sprykerVendorPath }}{{ organization | dasherize }}"
-  moduleRoot:
-    value: "{{ module }}"
-  level:
-    value: 3
-
+    sprykerVendorPath:
+        value: spryker/
+    moduleSrcDirectory:
+        value: Bundles/
+    repository:
+        value: '{{ sprykerVendorPath }}{{ organization | dasherize }}'
+    moduleRoot:
+        value: '{{ module }}'
+    level:
+        value: 3
 core:
-  arguments:
-    mode:
-      value: "core"
-      type: "default"
-    targetPath:
-      value: "vendor/{{ repository }}/{{ moduleSrcDirectory }}"
-      type: prepend
-
+    arguments:
+        mode:
+            value: core
+            type: default
+        targetPath:
+            value: 'vendor/{{ repository }}/{{ moduleSrcDirectory }}'
+            type: prepend
 project:
-  arguments:
-    mode:
-      value: "project"
-      type: "default"
-    targetPath:
-      value: "src/{{ organization }}/{{ layer }}/"
-      type: prepend
+    arguments:
+        mode:
+            value: project
+            type: default
+        targetPath:
+            value: 'src/{{ organization }}/{{ layer }}/'
+            type: prepend

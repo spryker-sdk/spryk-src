@@ -1,41 +1,30 @@
 spryk: method
-description: "Adds a Client dependency method to the *module*DependencyProvider."
+description: 'Adds a Client dependency method to the *module*DependencyProvider.'
 mode: both
-deprecated: Use AddDependencyBridgeMethod instead.
-
+deprecated: 'Use AddDependencyBridgeMethod instead.'
 arguments:
     organization:
         inherit: true
         default: Spryker
-
     module:
         inherit: true
-
     dependentModule:
         inherit: true
         moduleFilter:
             application: Client
-
     providerMethod:
-        value: "add{{ dependentModule }}Client"
-
+        value: 'add{{ dependentModule }}Client'
     template:
         value: Client/Dependency/Client/ClientDependencyClientDependencyProviderMethod.php.twig
-
     target:
-        value: "{{ organization }}\\Client\\{{ module }}\\{{ module }}DependencyProvider"
-
+        value: '{{ organization }}\Client\{{ module }}\{{ module }}DependencyProvider'
 preSpryks:
     - AddClientDependencyProvider
-
 postSpryks:
-    - AddConstant:
-        arguments:
-            name:
-                value: "CLIENT_{{ dependentModule | underscored | upper }}"
-            value:
-                value: "CLIENT_{{ dependentModule | underscored | upper }}"
-            visibility:
-                value: "public"
-            target:
-                value: "{{ organization }}\\Client\\{{ module }}\\{{ module }}DependencyProvider"
+    -
+        AddConstant:
+            arguments:
+                name: 'CLIENT_{{ dependentModule | underscored | upper }}'
+                value: 'CLIENT_{{ dependentModule | underscored | upper }}'
+                visibility: public
+                target: '{{ organization }}\Client\{{ module }}\{{ module }}DependencyProvider'

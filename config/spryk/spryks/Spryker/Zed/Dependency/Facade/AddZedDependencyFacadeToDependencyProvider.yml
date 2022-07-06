@@ -1,30 +1,22 @@
 spryk: dependencyProvider
-description: "Adds a Facade dependency method to the Container in the *module*DependencyProvider."
+description: 'Adds a Facade dependency method to the Container in the *module*DependencyProvider.'
 mode: both
-deprecated: Use AddDependencyBridgeMethod instead.
-
+deprecated: 'Use AddDependencyBridgeMethod instead.'
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     dependentModule:
         inherit: true
-
     provideMethod: ~
-
     providerMethod:
         inherit: true
-        value: "add{{ dependentModule }}Facade"
-
+        value: 'add{{ dependentModule }}Facade'
     template:
         value: Zed/Dependency/Common/ZedDependencyDependencyProviderContainerAddMethod.php.twig
-
     target:
-        value: "{{ organization }}\\Zed\\{{ module }}\\{{ module }}DependencyProvider"
-
+        value: '{{ organization }}\Zed\{{ module }}\{{ module }}DependencyProvider'
 preSpryks:
     - AddZedDependencyFacadeDependencyProviderMethod

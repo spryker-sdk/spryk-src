@@ -1,38 +1,28 @@
 spryk: method
-description: "Adds a method to the *module*Factory."
+description: 'Adds a method to the *module*Factory.'
 mode: both
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     application:
         value: Glue
-
     subDirectory:
         inherit: true
         isOptional: true
-
     className:
         inherit: true
-
     factoryMethod:
         callbackOnly: true
         callback: GlueProcessorFactoryMethodName
-
     dependencyMethods:
         isMultiple: true
         isOptional: true
-
     template:
         value: Glue/GlueFactoryMethod.php.twig
-
     target:
-        value: "{{ organization }}\\Glue\\{{ module }}\\{{ module }}Factory"
-
+        value: '{{ organization }}\Glue\{{ module }}\{{ module }}Factory'
 preSpryks:
     - AddGlueFactory

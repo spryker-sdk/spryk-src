@@ -1,55 +1,41 @@
 spryk: method
-description: "Adds a new method to the *target* model."
+description: 'Adds a new method to the *target* model.'
 mode: both
 level: 2
 priority: 1
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     application:
         inherit: true
         default: Zed
-
     className:
         inherit: true
-
     subDirectory:
         inherit: true
-        default: "Business/{{ className }}"
-
+        default: 'Business/{{ className }}'
     modelMethod: ~
-
     input:
         isOptional: true
         isMultiple: true
-
     output:
         isOptional: true
-
     body:
-        default: ""
-
+        default: ''
     template:
         value: Common/Method.php.twig
-
     target:
-        value: "{{ className }}"
-
+        value: '{{ className }}'
     fqcnPattern:
-        value: "{{ organization }}\\Zed\\{{ module }}{% if subDirectory %}\\{{ subDirectory | convertToClassNameFragment }}{% endif %}\\{{ className }}"
-
+        value: '{{ organization }}\Zed\{{ module }}{% if subDirectory %}\{{ subDirectory | convertToClassNameFragment }}{% endif %}\{{ className }}'
 preSpryks:
-    - AddZedDomainEntity:
-        arguments:
-            implements:
-                value:
-                    - "\\{{ organization }}\\Zed\\{{ module }}{% if subDirectory %}\\{{ subDirectory | convertToClassNameFragment }}{% endif %}\\{{ className }}Interface"
-
+    -
+        AddZedDomainEntity:
+            arguments:
+                implements:
+                    - '\{{ organization }}\Zed\{{ module }}{% if subDirectory %}\{{ subDirectory | convertToClassNameFragment }}{% endif %}\{{ className }}Interface'
 postSpryks:
     - AddZedDomainEntityInterfaceMethod

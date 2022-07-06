@@ -1,43 +1,33 @@
 spryk: method
-description: "Adds a new getXDataImporter method to the *module*BusinessFactory to the Zed application."
+description: 'Adds a new getXDataImporter method to the *module*BusinessFactory to the Zed application.'
 mode: both
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     application:
         inherit: true
         default: Zed
-
     modelMethod:
-        value: "get{{ entity }}DataImport"
-
+        value: 'get{{ entity }}DataImport'
     input:
         inherit: true
-
     output:
-        value: "\\Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface"
-
+        value: \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
     entity:
         inherit: true
-
     template:
         value: Module/DataImport/Zed/Business/DataImportZedBusinessFactory.php.twig
-
     target:
-        value: "\\{{ organization }}\\Zed\\{{ module }}\\Business\\{{ module }}BusinessFactory"
-
+        value: '\{{ organization }}\Zed\{{ module }}\Business\{{ module }}BusinessFactory'
 preSpryks:
     - AddZedBusinessFactory
-
 postSpryks:
     - AddZedBusinessFacade
     - AddZedDependencyProvider
-    - AddModuleConfig:
-          arguments:
-              application: "Zed"
+    -
+        AddModuleConfig:
+            arguments:
+                application: Zed

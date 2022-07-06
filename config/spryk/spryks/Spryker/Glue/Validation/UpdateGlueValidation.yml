@@ -1,30 +1,22 @@
 spryk: updateGlueValidation
-description: "Updates a Glue validation file and creates one if it does not exist."
+description: 'Updates a Glue validation file and creates one if it does not exist.'
 mode: both
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     resource:
         inherit: true
-
     httpMethod:
-        description: "Can be one of the HTTP request methods. E.g. POST."
-
+        description: 'Can be one of the HTTP request methods. E.g. POST.'
     field:
-        description: "Name of the field for the validation."
-
+        description: 'Name of the field for the validation.'
     isRequired:
-        description: "true or false. When true the field will be marked as required, if false the field will be marked as optional."
-
+        description: 'true or false. When true the field will be marked as required, if false the field will be marked as optional.'
     targetFile:
-        description: "Path and name of the file that we want to manipulate."
-        value: "src/{{ organization }}/Glue/{{ module }}/Validation/{{ resource }}.validation.yaml"
-
+        description: 'Path and name of the file that we want to manipulate.'
+        value: 'src/{{ organization }}/Glue/{{ module }}/Validation/{{ resource }}.validation.yaml'
 preSpryks:
     - AddGlueValidation

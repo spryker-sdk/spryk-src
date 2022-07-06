@@ -1,26 +1,21 @@
 spryk: structure
-description: "Adds a new *module* structure. Creates only empty skeleton without any Yves/Zed/Glue classes. Preferable to use AddModuleDefault"
+description: 'Adds a new *module* structure. Creates only empty skeleton without any Yves/Zed/Glue classes. Preferable to use AddModuleDefault'
 priority: 1
 mode: both
 level: 2
-
 arguments:
     organization:
         inherit: true
         default: Spryker
-
     module:
         inherit: true
         type: NewModuleType
-
     targetPath:
-        value: ""
-
+        value: ''
     directories:
         skipOnProjectLevel: true
         value:
-            - "src/{{ organization }}/"
-
+            - 'src/{{ organization }}/'
 postSpryks:
     - AddModuleReadme
     - AddModuleComposerJson

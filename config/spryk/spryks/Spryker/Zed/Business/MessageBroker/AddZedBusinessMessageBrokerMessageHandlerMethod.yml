@@ -1,54 +1,38 @@
 spryk: method
-description: "Adds a new handle message method to the **module** MessageBroker MessageHandler plugin."
+description: 'Adds a new handle message method to the **module** MessageBroker MessageHandler plugin.'
 mode: both
 level: 2
-
 application: Zed
 layer: Business
-
 priority: 1
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     className:
-        value: "{{ module }}MessageHandler"
-
+        value: '{{ module }}MessageHandler'
     subDirectory:
-        value: "MessageBroker"
-
+        value: MessageBroker
     messageName: ~
-
     modelMethod:
-        value: "handle{{ messageName }}"
-
+        value: 'handle{{ messageName }}'
     input:
-        value: "\\Generated\\Shared\\Transfer\\{{ messageName }}Transfer ${{ messageName | lcfirst }}Transfer"
-
+        value: '\Generated\Shared\Transfer\{{ messageName }}Transfer ${{ messageName | lcfirst }}Transfer'
     output:
-        value: "void"
-
+        value: void
     body:
         value:
-            - "// Handle the message here"
-
+            - '// Handle the message here'
     facadeMethod:
-        value: "{{ modelMethod }}"
-
+        value: '{{ modelMethod }}'
     template:
         value: Common/Method.php.twig
-
     target:
-        value: "{{ className }}"
-
+        value: '{{ className }}'
     fqcnPattern:
-        value: "{{ organization }}\\Zed\\{{ module }}\\Business\\MessageBroker\\{{ className }}"
-
+        value: '{{ organization }}\Zed\{{ module }}\Business\MessageBroker\{{ className }}'
 preSpryks:
     - AddZedBusinessMessageBrokerMessageHandler
     - AddZedBusinessModelInterfaceMethod

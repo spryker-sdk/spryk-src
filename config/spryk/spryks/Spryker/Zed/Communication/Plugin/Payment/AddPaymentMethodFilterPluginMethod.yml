@@ -1,49 +1,36 @@
 spryk: method
-description: "Adds a new *module* class method."
+description: 'Adds a new *module* class method.'
 mode: both
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: SprykerEco
-
     application:
         inherit: true
         default: Zed
-
     classNamePrefix:
         inherit: true
-
     subDirectory:
-        value: "Communication/Plugin/Payment"
-
+        value: Communication/Plugin/Payment
     method:
         inherit: true
-        value: "filterPaymentMethods"
-
+        value: filterPaymentMethods
     input:
         isMultiple: true
-        value: \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer,\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-
+        value: '\Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer,\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer'
     output:
         value: \Generated\Shared\Transfer\PaymentMethodsTransfer
-
     annotations:
         value:
-            - "{@inheritDoc}"
-            - "@api"
-
+            - '{@inheritDoc}'
+            - '@api'
     template:
         value: Common/Method.php.twig
-
     target:
-        value: "{{ classNamePrefix }}PaymentMethodFilterPlugin"
-
+        value: '{{ classNamePrefix }}PaymentMethodFilterPlugin'
     fqcnPattern:
-        value: "{{ organization }}\\{{ application }}\\{{ module }}\\{{ subDirectory | convertToClassNameFragment }}\\{{ classNamePrefix }}PaymentMethodFilterPlugin"
-
+        value: '{{ organization }}\{{ application }}\{{ module }}\{{ subDirectory | convertToClassNameFragment }}\{{ classNamePrefix }}PaymentMethodFilterPlugin'
 preSpryks:
     - AddPaymentMethodFilterPlugin

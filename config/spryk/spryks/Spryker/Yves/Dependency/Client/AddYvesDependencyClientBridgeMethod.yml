@@ -1,26 +1,21 @@
 spryk: bridgeMethods
-description: "Adds a new method to the *module* dependency Client bridge."
+description: 'Adds a new method to the *module* dependency Client bridge.'
 priority: 1
 mode: core
 level: 2
-
 arguments:
     organization:
         inherit: true
         default: SprykerShop
-
     module:
         inherit: true
-
     dependentModule:
         inherit: true
         moduleFilter:
             application: Client
-
     dependentModuleOrganization:
         inherit: true
         default: Spryker
-
     methods:
         type: MethodNameChoice
         choiceLoader: ClientMethodChoiceLoader
@@ -28,21 +23,15 @@ arguments:
         typeOptions:
             - module
             - choiceLoader
-
     template:
         value: Yves/Dependency/YvesDependencyBridgeMethod.php.twig
-
     dependencyType:
         value: Client
-
     sourceClass:
-        value: "{{ dependentModuleOrganization }}\\Client\\{{ dependentModule }}\\{{ dependentModule }}Client"
-
+        value: '{{ dependentModuleOrganization }}\Client\{{ dependentModule }}\{{ dependentModule }}Client'
     target:
-        value: "{{ organization }}\\Yves\\{{ module }}\\Dependency\\Client\\{{ module }}To{{ dependentModule }}ClientBridge"
-
+        value: '{{ organization }}\Yves\{{ module }}\Dependency\Client\{{ module }}To{{ dependentModule }}ClientBridge'
 preSpryks:
     - AddYvesDependencyClientBridge
-
 postSpryks:
     - AddYvesDependencyClientBridgeInterfaceMethod

@@ -1,51 +1,39 @@
 spryk: structure
-description: "Adds a new Glue layer with basic structure."
+description: 'Adds a new Glue layer with basic structure.'
 mode: both
 level: 2
-
 application: Glue
-
 priority: 1
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     resourceType:
         inherit: true
-        default: "{{ module | removeRestApiSuffix | lower }}"
-
+        default: '{{ module | removeRestApiSuffix | lower }}'
     targetPath:
-        default: ""
-
+        default: ''
     directories:
         skipOnProjectLevel: true
         value:
-            - "src/{{ organization }}/"
-
+            - 'src/{{ organization }}/'
 preSpryks:
     - AddModule
-
 postSpryks:
     - AddGlueResourceRoutePlugin
-    - AddGlueResourceMapper:
-        arguments:
-            className:
-                value: "{{ resourceType | dashToCamelCase | singularize }}Mapper"
-    - AddGlueController:
-        arguments:
-            controller:
-                value: "{{ resourceType | dashToCamelCase }}ResourceController"
-    - AddGlueResourceRestResponseBuilderModel:
-        arguments:
-            className:
-                value: "{{ resourceType | dashToCamelCase | singularize }}RestResponseBuilder"
-            interfaceName:
-                value: "{{ resourceType | dashToCamelCase | singularize }}RestResponseBuilderInterface"
-            subDirectory:
-                value: "RestResponseBuilder"
-
+    -
+        AddGlueResourceMapper:
+            arguments:
+                className: '{{ resourceType | dashToCamelCase | singularize }}Mapper'
+    -
+        AddGlueController:
+            arguments:
+                controller: '{{ resourceType | dashToCamelCase }}ResourceController'
+    -
+        AddGlueResourceRestResponseBuilderModel:
+            arguments:
+                className: '{{ resourceType | dashToCamelCase | singularize }}RestResponseBuilder'
+                interfaceName: '{{ resourceType | dashToCamelCase | singularize }}RestResponseBuilderInterface'
+                subDirectory: RestResponseBuilder

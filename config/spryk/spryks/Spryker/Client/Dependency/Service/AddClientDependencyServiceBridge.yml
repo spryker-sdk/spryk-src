@@ -1,50 +1,37 @@
 spryk: template
-description: "Adds a new *module*To*dependentModule*ServiceBridge."
+description: 'Adds a new *module*To*dependentModule*ServiceBridge.'
 mode: core
-deprecated: Use AddDependencyBridgeMethod instead.
-
+deprecated: 'Use AddDependencyBridgeMethod instead.'
 arguments:
     organization:
         inherit: true
         default: Spryker
-
     application:
         value: Client
-
     module:
         inherit: true
-
     dependentModule:
         inherit: true
         moduleFilter:
             application: Service
-
     dependentModuleOrganization:
         default: Spryker
-
     template:
         value: Client/Dependency/Service/ClientDependencyServiceBridge.php.twig
-
     targetFilename:
-        value: "{{ module }}To{{ dependentModule }}ServiceBridge.php"
-
+        value: '{{ module }}To{{ dependentModule }}ServiceBridge.php'
     targetPath:
-        value: "src/{{ organization }}/Client/{{ module }}/Dependency/Service/"
-
+        value: 'src/{{ organization }}/Client/{{ module }}/Dependency/Service/'
 preSpryks:
     - AddModule
-
 postSpryks:
     - AddClientDependencyServiceInterface
     - AddClientDependencyServiceFactoryMethod
     - AddClientDependencyServiceDependencyProviderMethod
-    - AddConstant:
-        arguments:
-            name:
-                value: "SERVICE_{{ dependentModule | underscored | upper }}"
-            value:
-                value: "SERVICE_{{ dependentModule | underscored | upper }}"
-            visibility:
-                value: "public"
-            target:
-                value: "{{ organization }}\\Client\\{{ module }}\\{{ module }}DependencyProvider"
+    -
+        AddConstant:
+            arguments:
+                name: 'SERVICE_{{ dependentModule | underscored | upper }}'
+                value: 'SERVICE_{{ dependentModule | underscored | upper }}'
+                visibility: public
+                target: '{{ organization }}\Client\{{ module }}\{{ module }}DependencyProvider'

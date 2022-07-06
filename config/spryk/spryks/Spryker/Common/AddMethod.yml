@@ -1,59 +1,46 @@
 spryk: method
-description: "Adds a new method  to the target class."
+description: 'Adds a new method  to the target class.'
 mode: both
-
 arguments:
     organization:
         inherit: true
         default: Spryker
-
     module:
         inherit: true
-
     application:
         inherit: true
-
     method:
-        description: "Name of the method."
-
+        description: 'Name of the method.'
     body:
-        description: "Body of the method. Can also be a template."
+        description: 'Body of the method. Can also be a template.'
         isOptional: true
-        default: ""
-
+        default: ''
     visibility:
         inherit: true
         default: public
-
     input:
-        description: "Input (arguments) for the method. Can be an array or a list separated by comma."
+        description: 'Input (arguments) for the method. Can be an array or a list separated by comma.'
         isOptional: true
-
     output:
-        description: "Output (return) for the method."
+        description: 'Output (return) for the method.'
         default: void
-
     subDirectory:
-        description: "Only used to forward to the generated interface."
+        description: 'Only used to forward to the generated interface.'
         inherit: true
-
     template:
         value: Common/Method.php.twig
-
     target:
-        description: "Class where the method should be added to."
-
+        description: 'Class where the method should be added to.'
     annotations:
         isOptional: true
         isMultiline: true
-
     withInterface:
         inherit: true
         default: true
-
 postSpryks:
-    - AddInterfaceMethod:
-          condition: "visibility === 'public' && withInterface === true"
-          arguments:
-              className:
-                  vallue: "{{ target }}Interface"
+    -
+        AddInterfaceMethod:
+            condition: 'visibility === ''public'' && withInterface === true'
+            arguments:
+                className:
+                    vallue: '{{ target }}Interface'

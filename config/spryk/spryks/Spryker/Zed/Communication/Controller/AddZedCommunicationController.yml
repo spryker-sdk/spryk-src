@@ -1,56 +1,43 @@
 spryk: template
-description: "Adds a new Controller to the Zed application."
+description: 'Adds a new Controller to the Zed application.'
 mode: both
 level: 2
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     controller:
         inherit: true
         callback:
             - ClassNameShortCallback
             - EnsureControllerSuffixCallback
-
     application:
         value: Zed
-
     extends:
         callback: ResolveExtends
         value:
-            - "\\Spryker\\{{ application }}\\{{ module }}\\Communication\\Controller\\{{ controller | classNameShort | ensureControllerSuffix }}"
-            - "\\Spryker\\{{ application }}\\Kernel\\Communication\\Controller\\AbstractController"
-
+            - '\Spryker\{{ application }}\{{ module }}\Communication\Controller\{{ controller | classNameShort | ensureControllerSuffix }}'
+            - '\Spryker\{{ application }}\Kernel\Communication\Controller\AbstractController'
     className:
-        value: "{{ controller }}"
+        value: '{{ controller }}'
         callback:
             - ClassNameShortCallback
             - EnsureControllerSuffixCallback
-
     annotations:
         value:
-            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\Communication\\{{ module }}CommunicationFactory getFactory()"
-            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\Business\\{{ module }}FacadeInterface getFacade()"
-
+            - '@method \{{ organization }}\{{ application }}\{{ module }}\Communication\{{ module }}CommunicationFactory getFactory()'
+            - '@method \{{ organization }}\{{ application }}\{{ module }}\Business\{{ module }}FacadeInterface getFacade()'
     template:
         value: Common/Class.php.twig
-
     subDirectory:
-        value: "Communication/Controller"
-
+        value: Communication/Controller
     targetFilename:
-        value: "{{ controller | classNameShort | ensureControllerSuffix }}.php"
-
+        value: '{{ controller | classNameShort | ensureControllerSuffix }}.php'
     targetPath:
-        value: "src/{{ organization }}/Zed/{{ module }}"
-
+        value: 'src/{{ organization }}/Zed/{{ module }}'
 preSpryks:
     - AddModule
     - AddZedBusinessFacade
     - AddZedCommunicationFactory
-

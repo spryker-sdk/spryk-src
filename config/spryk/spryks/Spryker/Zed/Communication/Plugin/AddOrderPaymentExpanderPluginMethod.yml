@@ -1,46 +1,34 @@
 spryk: method
-description: "Adds a new *module* class method."
+description: 'Adds a new *module* class method.'
 mode: both
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: SprykerEco
-
     application:
         inherit: true
         default: Zed
-
     classNamePrefix:
         inherit: true
-
     subDirectory:
-        value: "Communication/Plugin"
-
+        value: Communication/Plugin
     method:
         inherit: true
-        value: "expand"
-
+        value: expand
     input:
         isMultiple: true
-        value: \Generated\Shared\Transfer\OrderTransfer $orderTransfer,\Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
-
+        value: '\Generated\Shared\Transfer\OrderTransfer $orderTransfer,\Generated\Shared\Transfer\PaymentTransfer $paymentTransfer'
     output:
         value: \Generated\Shared\Transfer\PaymentTransfer
-
     annotations:
         value:
-            - "{@inheritDoc}"
-            - "@api"
-
+            - '{@inheritDoc}'
+            - '@api'
     template:
         value: Common/Method.php.twig
-
     target:
-        value: "{{ organization }}\\{{ application }}\\{{ module }}\\{{ subDirectory | convertToClassNameFragment }}\\{{ classNamePrefix }}OrderPaymentExpanderPlugin"
-
+        value: '{{ organization }}\{{ application }}\{{ module }}\{{ subDirectory | convertToClassNameFragment }}\{{ classNamePrefix }}OrderPaymentExpanderPlugin'
 preSpryks:
     - AddOrderPaymentExpanderPlugin

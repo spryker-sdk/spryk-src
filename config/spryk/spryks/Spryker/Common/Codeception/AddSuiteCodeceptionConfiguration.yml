@@ -1,33 +1,24 @@
 spryk: template
-description: "Add an *application* *module* test suite configuration without any suite."
+description: 'Add an *application* *module* test suite configuration without any suite.'
 mode: both
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     application:
         inherit: true
-
     suite:
         inherit: true
-        description: "The name of the suite can be one of: Business, Communication, Persistence, RestApi, BackendApi, FrontendApi."
-
+        description: 'The name of the suite can be one of: Business, Communication, Persistence, RestApi, BackendApi, FrontendApi.'
     template:
         value: Common/Codeception/suite-codeception.yml.twig
-
     targetPath:
-        value: "tests/{{ organization }}Test/{{ application }}/{{ module }}/"
-
+        value: 'tests/{{ organization }}Test/{{ application }}/{{ module }}/'
     targetFilename:
         value: codeception.yml
-
 preSpryks:
     - AddRootCodeceptionConfiguration
-
 postSpryks:
     - AddSuiteIncludeToRootCodeceptionConfiguration

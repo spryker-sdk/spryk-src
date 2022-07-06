@@ -1,21 +1,16 @@
 spryk: method
-description: "Adds a new method to the *target* business model."
+description: 'Adds a new method to the *target* business model.'
 mode: both
 level: 2
-
 application: Zed
 layer: Business
-
 priority: 1
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     className:
         type: ClassNameChoice
         choiceLoader: ZedBusinessModelChoiceLoader
@@ -24,39 +19,29 @@ arguments:
             - existingModule
             - spryk
             - choiceLoader
-
     subDirectory:
         inherit: true
         isOptional: true
-
     modelMethod: ~
-
     input:
         isOptional: true
         isMultiple: true
-
     output:
         isOptional: true
-
     body:
-        default: ""
-
+        default: ''
     facadeMethod:
-        value: "{{ modelMethod }}"
-
+        value: '{{ modelMethod }}'
     template:
         value: Common/Method.php.twig
-
     target:
-        value: "{{ className }}"
-
+        value: '{{ className }}'
     fqcnPattern:
-        value: "{{ organization }}\\Zed\\{{ module }}\\Business\\{{ subDirectory | convertToClassNameFragment }}\\{{ className }}"
-
+        value: '{{ organization }}\Zed\{{ module }}\Business\{{ subDirectory | convertToClassNameFragment }}\{{ className }}'
 preSpryks:
     - AddZedBusinessModel
     - AddZedBusinessModelInterfaceMethod
-
 postSpryks:
-    - AddZedBusinessFacadeMethod:
+    -
+        AddZedBusinessFacadeMethod:
             isOptional: true

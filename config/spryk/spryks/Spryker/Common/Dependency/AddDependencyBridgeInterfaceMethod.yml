@@ -1,45 +1,32 @@
 spryk: bridgeMethods
-description: "Adds a new method to the *module* dependency bridge interface."
+description: 'Adds a new method to the *module* dependency bridge interface.'
 mode: core
 level: 2
-
 arguments:
     module:
         inherit: true
         moduleFilter:
             application: Zed
-
     organization:
         inherit: true
         default: Spryker
-
     application:
         inherit: true
-
     dependentModule:
         inherit: true
-
     methods:
         isMultiple: true
-
     template:
         value: Common/Dependency/DependencyBridgeInterfaceMethod.php.twig
-
     dependencyType:
-        description: "Can be one of: Facade, Client, Service"
+        description: 'Can be one of: Facade, Client, Service'
         inherit: true
-
     sourceClass:
-        description: "Loads method definitions from this class."
-        value: "{{ organization }}\\{% if dependencyType == 'Facade' %}Zed{% else %}{{ dependencyType }}{% endif %}\\{{ dependentModule }}{% if dependencyType == 'Facade' %}\\Business{% endif %}\\{{ dependentModule }}{{ dependencyType }}Interface"
-
+        description: 'Loads method definitions from this class.'
+        value: '{{ organization }}\{% if dependencyType == ''Facade'' %}Zed{% else %}{{ dependencyType }}{% endif %}\{{ dependentModule }}{% if dependencyType == ''Facade'' %}\Business{% endif %}\{{ dependentModule }}{{ dependencyType }}Interface'
     target:
-        value: "{{ organization }}\\{{ application }}\\{{ module }}\\Dependency\\{{ dependencyType }}\\{{ module }}To{{ dependentModule }}{{ dependencyType }}Interface"
-
+        value: '{{ organization }}\{{ application }}\{{ module }}\Dependency\{{ dependencyType }}\{{ module }}To{{ dependentModule }}{{ dependencyType }}Interface'
 preSpryks:
     - AddDependencyBridgeInterface
-
 postSpryks:
     - AddDependencyBridgeMethod
-
-

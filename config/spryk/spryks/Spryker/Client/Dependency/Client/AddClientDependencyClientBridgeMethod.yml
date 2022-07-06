@@ -1,30 +1,24 @@
 spryk: bridgeMethods
-description: "Adds a new method to the *module* dependency Client bridge."
+description: 'Adds a new method to the *module* dependency Client bridge.'
 priority: 1
 mode: core
 level: 2
-deprecated: Use AddDependencyBridgeMethod instead.
-
+deprecated: 'Use AddDependencyBridgeMethod instead.'
 arguments:
     organization:
         inherit: true
         default: Spryker
-
     application:
         value: Client
-
     module:
         inherit: true
-
     dependentModuleOrganization:
         inherit: true
         default: Spryker
-
     dependentModule:
         inherit: true
         moduleFilter:
             application: Client
-
     methods:
         type: MethodNameChoice
         choiceLoader: ClientMethodChoiceLoader
@@ -32,21 +26,15 @@ arguments:
         typeOptions:
             - module
             - choiceLoader
-
     template:
         value: Client/Dependency/ClientDependencyBridgeMethod.php.twig
-
     dependencyType:
         value: Client
-
     sourceClass:
-        value: "{{ dependentModuleOrganization }}\\Client\\{{ dependentModule }}\\{{ dependentModule }}Client"
-
+        value: '{{ dependentModuleOrganization }}\Client\{{ dependentModule }}\{{ dependentModule }}Client'
     target:
-        value: "{{ organization }}\\Client\\{{ module }}\\Dependency\\Client\\{{ module }}To{{ dependentModule }}ClientBridge"
-
+        value: '{{ organization }}\Client\{{ module }}\Dependency\Client\{{ module }}To{{ dependentModule }}ClientBridge'
 preSpryks:
     - AddClientDependencyClientBridge
-
 postSpryks:
     - AddClientDependencyClientBridgeInterfaceMethod

@@ -1,31 +1,24 @@
 spryk: constant
-description: "Adds a Client dependency constant to the *module*DependencyProvider."
+description: 'Adds a Client dependency constant to the *module*DependencyProvider.'
 mode: both
-deprecated: Use AddDependencyBridgeMethod instead.
-
+deprecated: 'Use AddDependencyBridgeMethod instead.'
 arguments:
     module:
         inherit: true
         moduleFilter:
             application: Zed
-
     dependentModule:
         inherit: true
         moduleFilter:
             application: Client
-
     organization:
         inherit: true
         default: Spryker
-
     name: ~
     value: ~
     visibility:
-        value: "public"
-
+        value: public
     target:
-        value: "{{ organization }}\\Zed\\{{ module }}\\{{ module }}DependencyProvider"
-
+        value: '{{ organization }}\Zed\{{ module }}\{{ module }}DependencyProvider'
 preSpryks:
     - AddZedDependencyProvider
-

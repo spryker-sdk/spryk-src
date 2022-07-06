@@ -1,150 +1,96 @@
 spryk: template
-description: "Adds a new Request mapper that maps GlueRequest objects to ResourceDataObject transfers."
+description: 'Adds a new Request mapper that maps GlueRequest objects to ResourceDataObject transfers.'
 mode: both
 level: 2
-
 arguments:
     module:
-        description: "Module name should be suffixed either with Api or with BackendApi depending on the choosen applicationType."
+        description: 'Module name should be suffixed either with Api or with BackendApi depending on the choosen applicationType.'
         inherit: true
-        default: "{{ resource | normalizeResourceName }}{% if applicationType == 'Frontend' %}Api{% else %}BackendApi{% endif %}"
-
+        default: '{{ resource | normalizeResourceName }}{% if applicationType == ''Frontend'' %}Api{% else %}BackendApi{% endif %}'
     organization:
         inherit: true
         default: Spryker
-
     application:
         inherit: true
         value: Glue
-
     className:
-        value: "GlueRequest{{ resourceDataObject }}Mapper"
-
+        value: 'GlueRequest{{ resourceDataObject }}Mapper'
     resource:
-        description: "Defines the resource name this controller will work with."
+        description: 'Defines the resource name this controller will work with.'
         inherit: true
-
     subDirectory:
         inherit: true
         value: Mapper
-
     applicationType:
         inherit: true
-        description: "Can be one of: Backend or Frontend"
-        default: "Backend"
-
+        description: 'Can be one of: Backend or Frontend'
+        default: Backend
     isTestClass:
         inherit: true
         isOptional: true
         default: false
-
     resourceDataObject:
-        description: "Defines the Transfer that will be used in the Methods. Do not use Transfer as suffix, it will be added automatically. Example: Customer (ok) CustomerTransfer (wrong)"
-        isOptional: true # Is not needed for all methods
-        default: "{{ resource | normalizeResourceName | singularize }}"
-
+        description: 'Defines the Transfer that will be used in the Methods. Do not use Transfer as suffix, it will be added automatically. Example: Customer (ok) CustomerTransfer (wrong)'
+        isOptional: true
+        default: '{{ resource | normalizeResourceName | singularize }}'
     template:
         value: Common/Class.php.twig
-
     zedDomainEntity:
-        description: "Defines the domainEntity used on Zed side for the CRUD Facade. It will be used to create all needed Transfer Objects."
-        default: "{{ resource | normalizeResourceName | singularize }}"
-
+        description: 'Defines the domainEntity used on Zed side for the CRUD Facade. It will be used to create all needed Transfer Objects.'
+        default: '{{ resource | normalizeResourceName | singularize }}'
     implements:
-        value: "\\{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueRequest{{ resourceDataObject }}MapperInterface"
-
+        value: '\{{ organization }}\Glue\{{ module }}\Mapper\GlueRequest{{ resourceDataObject }}MapperInterface'
     target:
-        value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueRequest{{ resourceDataObject }}Mapper"
-
+        value: '{{ organization }}\Glue\{{ module }}\Mapper\GlueRequest{{ resourceDataObject }}Mapper'
     targetFilename:
-        value: "{{ className }}.php"
-
+        value: '{{ className }}.php'
     targetPath:
-        value: "src/{{ organization }}/Glue/{{ module }}/"
-
+        value: 'src/{{ organization }}/Glue/{{ module }}/'
 preSpryks:
     - AddGlueBackendApiController
-
 postSpryks:
-    - AddMethod:
-          arguments:
-              method:
-                  value: "mapGlueRequestTransferTo{{ zedDomainEntity }}CriteriaTransfer"
-              input:
-                  value: "\\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
-              output:
-                  value: "\\Generated\\Shared\\Transfer\\{{ zedDomainEntity }}CriteriaTransfer"
-              body:
-                  value: Glue/BackendApi/RequestMapper/MapGlueRequestTransferToCriteriaTransfer.php.twig
-              target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueRequest{{ resourceDataObject }}Mapper"
-              # Overloading AddMethod Spryk
-              zedDomainEntity:
-                  inherit: true
-    - AddMethod:
-          arguments:
-              method:
-                  value: "mapGlueRequestTransferTo{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer"
-              input:
-                  value: "\\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
-              output:
-                  value: "\\Generated\\Shared\\Transfer\\{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer"
-              body:
-                  value: Glue/BackendApi/RequestMapper/MapGlueRequestTransferToCollectionDeleteCriteriaTransfer.php.twig
-              target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueRequest{{ resourceDataObject }}Mapper"
-              # Overloading AddMethod Spryk
-              zedDomainEntity:
-                  inherit: true
-    - AddMethod:
-          arguments:
-              method:
-                  value: "mapIdentifierTo{{ zedDomainEntity }}CriteriaTransfer"
-              input:
-                  value: "int $identifier, \\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
-              output:
-                  value: "\\Generated\\Shared\\Transfer\\{{ zedDomainEntity }}CriteriaTransfer"
-              body:
-                  value: Glue/BackendApi/RequestMapper/MapIdentifierToCriteriaTransfer.php.twig
-              target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueRequest{{ resourceDataObject }}Mapper"
-              # Overloading AddMethod Spryk
-              zedDomainEntity:
-                  inherit: true
-    - AddMethod:
-          arguments:
-              method:
-                  value: "mapIdentifierTo{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer"
-              input:
-                  value: "int $identifier, \\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
-              output:
-                  value: "\\Generated\\Shared\\Transfer\\{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer"
-              body:
-                  value: Glue/BackendApi/RequestMapper/MapIdentifierToCollectionDeleteCriteriaTransfer.php.twig
-              target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueRequest{{ resourceDataObject }}Mapper"
-              # Overloading AddMethod Spryk
-              zedDomainEntity:
-                  inherit: true
-    - AddMethod:
-          arguments:
-              method:
-                  value: "map{{ resourceDataObject }}TransferTo{{ zedDomainEntity }}CollectionRequestTransfer"
-              input:
-                  value: "\\Generated\\Shared\\Transfer\\{{ resourceDataObject }}Transfer ${{ resourceDataObject | lcfirst }}Transfer, \\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
-              output:
-                  value: "\\Generated\\Shared\\Transfer\\{{ zedDomainEntity }}CollectionRequestTransfer"
-              body:
-                  value: Glue/BackendApi/RequestMapper/MapIdentifierToCollectionCollectionRequestTransfer.php.twig
-              target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueRequest{{ resourceDataObject }}Mapper"
-              # Overloading AddMethod Spryk
-              zedDomainEntity:
-                  inherit: true
-    # Add factory method
-    - AddGlueFactoryMethod:
-          arguments:
-              subDirectory:
-                  value: "Mapper"
-              className:
-                  value: "GlueRequest{{ resourceDataObject }}Mapper"
+    -
+        AddMethod:
+            arguments:
+                method: 'mapGlueRequestTransferTo{{ zedDomainEntity }}CriteriaTransfer'
+                input: '\Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer'
+                output: '\Generated\Shared\Transfer\{{ zedDomainEntity }}CriteriaTransfer'
+                body: Glue/BackendApi/RequestMapper/MapGlueRequestTransferToCriteriaTransfer.php.twig
+                target: '{{ organization }}\Glue\{{ module }}\Mapper\GlueRequest{{ resourceDataObject }}Mapper'
+    -
+        AddMethod:
+            arguments:
+                method: 'mapGlueRequestTransferTo{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer'
+                input: '\Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer'
+                output: '\Generated\Shared\Transfer\{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer'
+                body: Glue/BackendApi/RequestMapper/MapGlueRequestTransferToCollectionDeleteCriteriaTransfer.php.twig
+                target: '{{ organization }}\Glue\{{ module }}\Mapper\GlueRequest{{ resourceDataObject }}Mapper'
+    -
+        AddMethod:
+            arguments:
+                method: 'mapIdentifierTo{{ zedDomainEntity }}CriteriaTransfer'
+                input: 'int $identifier, \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer'
+                output: '\Generated\Shared\Transfer\{{ zedDomainEntity }}CriteriaTransfer'
+                body: Glue/BackendApi/RequestMapper/MapIdentifierToCriteriaTransfer.php.twig
+                target: '{{ organization }}\Glue\{{ module }}\Mapper\GlueRequest{{ resourceDataObject }}Mapper'
+    -
+        AddMethod:
+            arguments:
+                method: 'mapIdentifierTo{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer'
+                input: 'int $identifier, \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer'
+                output: '\Generated\Shared\Transfer\{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer'
+                body: Glue/BackendApi/RequestMapper/MapIdentifierToCollectionDeleteCriteriaTransfer.php.twig
+                target: '{{ organization }}\Glue\{{ module }}\Mapper\GlueRequest{{ resourceDataObject }}Mapper'
+    -
+        AddMethod:
+            arguments:
+                method: 'map{{ resourceDataObject }}TransferTo{{ zedDomainEntity }}CollectionRequestTransfer'
+                input: '\Generated\Shared\Transfer\{{ resourceDataObject }}Transfer ${{ resourceDataObject | lcfirst }}Transfer, \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer'
+                output: '\Generated\Shared\Transfer\{{ zedDomainEntity }}CollectionRequestTransfer'
+                body: Glue/BackendApi/RequestMapper/MapIdentifierToCollectionCollectionRequestTransfer.php.twig
+                target: '{{ organization }}\Glue\{{ module }}\Mapper\GlueRequest{{ resourceDataObject }}Mapper'
+    -
+        AddGlueFactoryMethod:
+            arguments:
+                subDirectory: Mapper
+                className: 'GlueRequest{{ resourceDataObject }}Mapper'

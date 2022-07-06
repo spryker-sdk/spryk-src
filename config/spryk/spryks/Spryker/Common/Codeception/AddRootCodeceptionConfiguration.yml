@@ -1,27 +1,20 @@
 spryk: template
-description: "Adds a new codeception.yml to the Modules root."
+description: 'Adds a new codeception.yml to the Modules root.'
 mode: core
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     application:
         inherit: true
-
     template:
         value: Common/Codeception/root-codeception.yml.twig
-
     targetFilename:
         value: codeception.yml
-
     targetPath:
-        description: "Will add a codeception.yml into the root of a module. This is only for core modules."
-        value: ""
-
+        description: 'Will add a codeception.yml into the root of a module. This is only for core modules.'
+        value: ''
 preSpryks:
     - AddModuleTest

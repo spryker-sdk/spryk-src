@@ -1,24 +1,18 @@
 spryk: update-json
-description: "Updates a JSON file."
+description: 'Updates a JSON file.'
 mode: both
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
-
     targetFilename: ~
     targetPath:
-        default: ""
-
+        default: ''
     target:
-        description: "Path inside the JSON file to update using dot (.) notation"
-
+        description: 'Path inside the JSON file to update using dot (.) notation'
     key:
-        description: "When both key and value are given, this will be used as key. When key is not used the value will be added to the target path."
+        description: 'When both key and value are given, this will be used as key. When key is not used the value will be added to the target path.'
         isOptional: true
-
     value:
-        description: "When both key and value are given, this will be used as key. When key is not used the value will be added to the target path."
+        description: 'When both key and value are given, this will be used as key. When key is not used the value will be added to the target path.'

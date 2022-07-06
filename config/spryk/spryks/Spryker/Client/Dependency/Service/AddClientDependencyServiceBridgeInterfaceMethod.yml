@@ -1,21 +1,17 @@
 spryk: bridgeMethods
-description: "Adds a new method to the *module* dependency Service bridge interface."
+description: 'Adds a new method to the *module* dependency Service bridge interface.'
 mode: core
-deprecated: Use AddDependencyBridgeMethod instead.
-
+deprecated: 'Use AddDependencyBridgeMethod instead.'
 arguments:
     organization:
         inherit: true
         default: Spryker
-
     module:
         inherit: true
-
     dependentModule:
         inherit: true
         moduleFilter:
             application: Service
-
     methods:
         type: MethodNameChoice
         choiceLoader: ServiceMethodChoiceLoader
@@ -23,21 +19,15 @@ arguments:
         typeOptions:
             - module
             - choiceLoader
-
     template:
         value: Client/Dependency/ClientDependencyBridgeInterfaceMethod.php.twig
-
     dependencyType:
         value: Service
-
     sourceClass:
-        value: "{{ organization }}\\Service\\{{ dependentModule }}\\{{ dependentModule }}ServiceInterface"
-
+        value: '{{ organization }}\Service\{{ dependentModule }}\{{ dependentModule }}ServiceInterface'
     target:
-        value: "{{ organization }}\\Client\\{{ module }}\\Dependency\\Service\\{{ module }}To{{ dependentModule }}ServiceInterface"
-
+        value: '{{ organization }}\Client\{{ module }}\Dependency\Service\{{ module }}To{{ dependentModule }}ServiceInterface'
 preSpryks:
     - AddClientDependencyServiceInterface
-
 postSpryks:
     - AddClientDependencyServiceBridgeMethod

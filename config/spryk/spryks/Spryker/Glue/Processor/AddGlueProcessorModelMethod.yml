@@ -1,48 +1,34 @@
 spryk: method
-description: "Adds a new method to the *target* processor model."
+description: 'Adds a new method to the *target* processor model.'
 mode: both
-
 application: Glue
-
 priority: 1
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     application:
         inherit: true
         default: Glue
-
     className:
         inherit: true
-
     subDirectory:
         inherit: true
         isOptional: true
-
     method:
         inherit: true
-
     input:
         isOptional: true
         isMultiple: true
-
     output:
         isOptional: true
-
     template:
         value: Common/Method.php.twig
-
     target:
-        value: "{{ organization }}\\Glue\\{{ module }}\\Processor{% if subDirectory.value is not empty %}\\{{ subDirectory }}{% endif %}\\{{ className }}"
-
+        value: '{{ organization }}\Glue\{{ module }}\Processor{% if subDirectory.value is not empty %}\{{ subDirectory }}{% endif %}\{{ className }}'
 preSpryks:
     - AddGlueProcessorModel
-
 postSpryks:
     - AddGlueProcessorModelInterfaceMethod

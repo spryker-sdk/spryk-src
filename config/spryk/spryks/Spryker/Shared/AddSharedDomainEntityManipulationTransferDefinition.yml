@@ -1,130 +1,89 @@
 spryk: wrapper
-description: "Adds transfers for *domainEntity* to be used in common entity manipulation facade."
+description: 'Adds transfers for *domainEntity* to be used in common entity manipulation facade.'
 mode: both
 level: 2
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     application:
         inherit: true
         default: Shared
-
     domainEntity:
         inherit: true
-
     targetPath:
-        value: "src/{{ organization }}/Shared/{{ module }}/Transfer/{{ module | underscored }}.transfer.xml"
-
+        value: 'src/{{ organization }}/Shared/{{ module }}/Transfer/{{ module | underscored }}.transfer.xml'
 postSpryks:
-    - AddSharedTransferProperty:
-        arguments:
-            name:
-                value: "{{ domainEntity | ucfirst }}"
-            propertyName:
-                value: "id{{ domainEntity | ucfirst }}"
-            propertyType:
-                value: "int"
-    - AddSharedTransferProperty:
-        arguments:
-            name:
-                value: "{{ domainEntity | ucfirst }}"
-            propertyName:
-                value: "uuid"
-            propertyType:
-                value: "string"
-
-    # *domainEntity*CollectionRequest
-    -   AddSharedTransferProperty:
+    -
+        AddSharedTransferProperty:
             arguments:
-                name:
-                    value: "{{ domainEntity | ucfirst }}CollectionRequest"
-                propertyName:
-                    value: "isTransactional"
-                propertyType:
-                    value: "bool"
-    -   AddSharedTransferProperty:
+                name: '{{ domainEntity | ucfirst }}'
+                propertyName: 'id{{ domainEntity | ucfirst }}'
+                propertyType: int
+    -
+        AddSharedTransferProperty:
             arguments:
-                name:
-                    value: "{{ domainEntity | ucfirst }}CollectionRequest"
-                propertyName:
-                    value: "{{ domainEntity | lcfirst | pluralize }}"
-                propertyType:
-                    value: "{{ domainEntity | ucfirst }}[]"
-                singular:
-                    value: "{{ domainEntity | lcfirst }}"
-
-    # *domainEntity*CollectionResponse
-    -   AddSharedTransferProperty:
+                name: '{{ domainEntity | ucfirst }}'
+                propertyName: uuid
+                propertyType: string
+    -
+        AddSharedTransferProperty:
             arguments:
-                name:
-                    value: "{{ domainEntity | ucfirst }}CollectionResponse"
-                propertyName:
-                    value: "errors"
-                propertyType:
-                    value: "Error[]"
-                singular:
-                    value: "error"
-    -   AddSharedTransferProperty:
+                name: '{{ domainEntity | ucfirst }}CollectionRequest'
+                propertyName: isTransactional
+                propertyType: bool
+    -
+        AddSharedTransferProperty:
             arguments:
-                name:
-                    value: "{{ domainEntity | ucfirst }}CollectionResponse"
-                propertyName:
-                    value: "{{ domainEntity | lcfirst | pluralize }}"
-                propertyType:
-                    value: "{{ domainEntity | ucfirst }}[]"
-                singular:
-                    value: "{{ domainEntity | lcfirst }}"
-
-    # *domainEntity*CollectionDeleteCriteria
-    -   AddSharedTransferProperty:
+                name: '{{ domainEntity | ucfirst }}CollectionRequest'
+                propertyName: '{{ domainEntity | lcfirst | pluralize }}'
+                propertyType: '{{ domainEntity | ucfirst }}[]'
+                singular: '{{ domainEntity | lcfirst }}'
+    -
+        AddSharedTransferProperty:
             arguments:
-                name:
-                    value: "{{ domainEntity | ucfirst }}CollectionDeleteCriteria"
-                propertyName:
-                    value: "isTransactional"
-                propertyType:
-                    value: "bool"
-    -   AddSharedTransferProperty:
+                name: '{{ domainEntity | ucfirst }}CollectionResponse'
+                propertyName: errors
+                propertyType: 'Error[]'
+                singular: error
+    -
+        AddSharedTransferProperty:
             arguments:
-                name:
-                    value: "{{ domainEntity | ucfirst }}CollectionDeleteCriteria"
-                propertyName:
-                    value: "{{ domainEntity | lcfirst }}Ids"
-                propertyType:
-                    value: "int[]"
-                singular:
-                    value: "id{{ domainEntity | ucfirst }}"
-    -   AddSharedTransferProperty:
+                name: '{{ domainEntity | ucfirst }}CollectionResponse'
+                propertyName: '{{ domainEntity | lcfirst | pluralize }}'
+                propertyType: '{{ domainEntity | ucfirst }}[]'
+                singular: '{{ domainEntity | lcfirst }}'
+    -
+        AddSharedTransferProperty:
             arguments:
-                name:
-                    value: "{{ domainEntity | ucfirst }}CollectionDeleteCriteria"
-                propertyName:
-                    value: "uuids"
-                propertyType:
-                    value: "string[]"
-                singular:
-                    value: "uuid"
-
-    # Error
-    -   AddSharedTransferProperty:
+                name: '{{ domainEntity | ucfirst }}CollectionDeleteCriteria'
+                propertyName: isTransactional
+                propertyType: bool
+    -
+        AddSharedTransferProperty:
             arguments:
-                name:
-                    value: "Error"
-                propertyName:
-                    value: "message"
-                propertyType:
-                    value: "string"
-    -   AddSharedTransferProperty:
+                name: '{{ domainEntity | ucfirst }}CollectionDeleteCriteria'
+                propertyName: '{{ domainEntity | lcfirst }}Ids'
+                propertyType: 'int[]'
+                singular: 'id{{ domainEntity | ucfirst }}'
+    -
+        AddSharedTransferProperty:
             arguments:
-                name:
-                    value: "Error"
-                propertyName:
-                    value: "entityIdentifier"
-                propertyType:
-                    value: "string"
+                name: '{{ domainEntity | ucfirst }}CollectionDeleteCriteria'
+                propertyName: uuids
+                propertyType: 'string[]'
+                singular: uuid
+    -
+        AddSharedTransferProperty:
+            arguments:
+                name: Error
+                propertyName: message
+                propertyType: string
+    -
+        AddSharedTransferProperty:
+            arguments:
+                name: Error
+                propertyName: entityIdentifier
+                propertyType: string

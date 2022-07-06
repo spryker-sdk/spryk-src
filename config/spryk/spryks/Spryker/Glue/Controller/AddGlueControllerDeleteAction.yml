@@ -1,55 +1,41 @@
 spryk: method
-deprecated: "Use AddGlueControllerMethodDelete instead."
-description: "Adds a new delete action to the Glue controller."
+deprecated: 'Use AddGlueControllerMethodDelete instead.'
+description: 'Adds a new delete action to the Glue controller.'
 mode: both
 level: 2
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     controller:
         inherit: true
         callback:
             - ClassNameShortCallback
             - EnsureControllerSuffixCallback
-
     controllerMethod:
         inherit: true
-        default: "deleteAction"
+        default: deleteAction
         callback: EnsureActionSuffixCallback
-
     resourceType:
         inherit: true
-
     modelName:
-        value: "{{ resourceType | dashToCamelCase | singularize }}"
-
+        value: '{{ resourceType | dashToCamelCase | singularize }}'
     modelSuffix:
         inherit: true
-        default: "Deleter"
-
+        default: Deleter
     template:
         value: Glue/Controller/MethodDeleteGlueController.php.twig
-
     target:
-        value: "{{ organization }}\\Glue\\{{ module }}\\Controller\\{{ controller | classNameShort | ensureControllerSuffix }}"
-
+        value: '{{ organization }}\Glue\{{ module }}\Controller\{{ controller | classNameShort | ensureControllerSuffix }}'
 preSpryks:
     - AddGlueController
-    - AddGlueProcessorModelMethod:
-        arguments:
-            className:
-                value: "{{ modelName }}{{ modelSuffix }}"
-            input:
-                value: "\\Spryker\\Glue\\GlueApplication\\Rest\\Request\\Data\\RestRequestInterface $restRequest"
-            output:
-                value: "\\Spryker\\Glue\\GlueApplication\\Rest\\JsonApi\\RestResponseInterface"
-            method:
-                value: "delete{{ modelName }}"
-            subDirectory:
-                value: "{{ modelName }}"
+    -
+        AddGlueProcessorModelMethod:
+            arguments:
+                className: '{{ modelName }}{{ modelSuffix }}'
+                input: '\Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest'
+                output: \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+                method: 'delete{{ modelName }}'
+                subDirectory: '{{ modelName }}'

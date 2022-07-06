@@ -1,44 +1,32 @@
 spryk: template
-description: "Adds a new *module* CheckoutPreConditionPlugin class."
+description: 'Adds a new *module* CheckoutPreConditionPlugin class.'
 mode: both
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: SprykerEco
-
     application:
         inherit: true
         default: Zed
-
     classNamePrefix:
         inherit: true
-
     className:
-        value: "{{ classNamePrefix }}CheckoutPreConditionPlugin"
-
+        value: '{{ classNamePrefix }}CheckoutPreConditionPlugin'
     implements:
         inherit: true
         value: \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface
-
     extends:
         inherit: true
-        value: "Spryker/Zed/Kernel/Communication/AbstractPlugin"
-
+        value: Spryker/Zed/Kernel/Communication/AbstractPlugin
     subDirectory:
-        value: "Communication/Plugin/Checkout"
-
+        value: Communication/Plugin/Checkout
     template:
         value: Common/Class.php.twig
-
     targetFilename:
-        value: "{{ classNamePrefix }}CheckoutPreConditionPlugin.php"
-
+        value: '{{ classNamePrefix }}CheckoutPreConditionPlugin.php'
     targetPath:
-         value: "src/{{ organization }}/{{ application }}/{{ module }}/"
-
+        value: 'src/{{ organization }}/{{ application }}/{{ module }}/'
 preSpryks:
     - AddModule

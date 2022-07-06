@@ -1,50 +1,36 @@
 spryk: template
-description: "Adds a new *module*Repository to the Zed application."
+description: 'Adds a new *module*Repository to the Zed application.'
 mode: both
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     application:
         value: Zed
-
     extends:
         callback: ResolveExtends
         value:
-            - "\\Spryker\\{{ application }}\\{{ module }}\\Persistence\\{{ module }}Repository"
-            - "\\Spryker\\{{ application }}\\Kernel\\Persistence\\AbstractRepository"
-
+            - '\Spryker\{{ application }}\{{ module }}\Persistence\{{ module }}Repository'
+            - '\Spryker\{{ application }}\Kernel\Persistence\AbstractRepository'
     className:
-        value: "{{ module }}Repository"
-
+        value: '{{ module }}Repository'
     implements:
-        value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\{{ module }}RepositoryInterface"
-
+        value: '\{{ organization }}\{{ application }}\{{ module }}\Persistence\{{ module }}RepositoryInterface'
     annotations:
         value:
-            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\{{ module }}PersistenceFactory getFactory()"
-
+            - '@method \{{ organization }}\{{ application }}\{{ module }}\Persistence\{{ module }}PersistenceFactory getFactory()'
     template:
         value: Common/Class.php.twig
-
     subDirectory:
-        value: "Persistence"
-
+        value: Persistence
     targetFilename:
-        value: "{{ module }}Repository.php"
-
+        value: '{{ module }}Repository.php'
     targetPath:
-        value: "src/{{ organization }}/Zed/{{ module }}/"
-
+        value: 'src/{{ organization }}/Zed/{{ module }}/'
 preSpryks:
     - AddModule
-
 postSpryks:
     - AddZedPersistenceFactory
     - AddZedPersistenceRepositoryInterface
-

@@ -1,52 +1,39 @@
 spryk: template
-description: "Adds a new *module*Facade to the Zed application."
+description: 'Adds a new *module*Facade to the Zed application.'
 mode: both
 level: 2
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     application:
         value: Zed
-
     extends:
         callback: ResolveExtends
         value:
-            - "\\Spryker\\{{ application }}\\{{ module }}\\Business\\{{ module }}Facade"
-            - "\\Spryker\\{{ application }}\\Kernel\\Business\\AbstractFacade"
-
+            - '\Spryker\{{ application }}\{{ module }}\Business\{{ module }}Facade'
+            - '\Spryker\{{ application }}\Kernel\Business\AbstractFacade'
     className:
-        value: "{{ module }}Facade"
-
+        value: '{{ module }}Facade'
     implements:
-        value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Business\\{{ module }}FacadeInterface"
-
+        value: '\{{ organization }}\{{ application }}\{{ module }}\Business\{{ module }}FacadeInterface'
     annotations:
         value:
-            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\Business\\{{ module }}BusinessFactory getFactory()"
-            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\{{ module }}RepositoryInterface getRepository()"
-            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\{{ module }}EntityManagerInterface getEntityManager()"
-
+            - '@method \{{ organization }}\{{ application }}\{{ module }}\Business\{{ module }}BusinessFactory getFactory()'
+            - '@method \{{ organization }}\{{ application }}\{{ module }}\Persistence\{{ module }}RepositoryInterface getRepository()'
+            - '@method \{{ organization }}\{{ application }}\{{ module }}\Persistence\{{ module }}EntityManagerInterface getEntityManager()'
     template:
         value: Common/Class.php.twig
-
     subDirectory:
-        value: "Business"
-
+        value: Business
     targetFilename:
-        value: "{{ module }}Facade.php"
-
+        value: '{{ module }}Facade.php'
     targetPath:
-        value: "src/{{ organization }}/Zed/{{ module }}/"
-
+        value: 'src/{{ organization }}/Zed/{{ module }}/'
 preSpryks:
     - AddModule
-
 postSpryks:
     - AddZedBusinessFacadeInterface
     - AddZedBusinessFactory

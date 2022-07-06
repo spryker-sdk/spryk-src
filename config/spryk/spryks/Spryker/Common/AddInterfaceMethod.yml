@@ -1,47 +1,35 @@
 spryk: method
-description: "Adds a new interface method for the target class."
+description: 'Adds a new interface method for the target class.'
 mode: both
 level: 3
-
 arguments:
     organization:
         inherit: true
         default: Spryker
-
     application:
         inherit: true
-
     module:
         inherit: true
-
     method:
         inherit: true
-
     visibility:
         inherit: true
         value: public
-
     input:
         inherit: true
         isOptional: true
-
     output:
         inherit: true
         default: void
-
     template:
         value: Common/InterfaceMethod.php.twig
-
     target:
         inherit: true
         callback: EnsureInterfaceSuffix
-
     targetFilename:
         callback: GetFilenameFromTarget
-
     subDirectory:
-        description: "Only used to forward to the generated interface."
+        description: 'Only used to forward to the generated interface.'
         inherit: true
-
 preSpryks:
     - AddInterface

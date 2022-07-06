@@ -1,44 +1,35 @@
 spryk: template
-description: "Adds a new *resourceType*ResourceRoutePlugin to the Glue application."
+description: 'Adds a new *resourceType*ResourceRoutePlugin to the Glue application.'
 mode: both
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     template:
         value: Glue/Plugin/GlueApplication/GlueResourceRoutePlugin.php.twig
-
     resourceType:
         inherit: true
-
     modelName:
         inherit: true
-        value: "{{ resourceType | dashToCamelCase | singularize }}"
-
+        value: '{{ resourceType | dashToCamelCase | singularize }}'
     targetFilename:
-        value: "{{ resourceType | dashToCamelCase }}ResourceRoutePlugin.php"
-
+        value: '{{ resourceType | dashToCamelCase }}ResourceRoutePlugin.php'
     targetPath:
-        value: "src/{{ organization }}/Glue/{{ module }}/Plugin/GlueApplication/"
-
+        value: 'src/{{ organization }}/Glue/{{ module }}/Plugin/GlueApplication/'
 preSpryks:
     - AddModule
-    - AddSharedRestAttributesTransfer:
-        arguments:
-            name:
-                value: "{{ resourceType | dashToCamelCase }}"
-                callback:
-                    - EnsureRestAttributesTransferAffix
-    - AddGlueConfigConstant:
-        arguments:
-            name:
-                value: "RESOURCE_{{ resourceType | dashToUnderscore | upper }}"
-            value:
-                value: "{{ resourceType | dasherize }}"
-            visibility:
-                value: "public"
+    -
+        AddSharedRestAttributesTransfer:
+            arguments:
+                name:
+                    value: '{{ resourceType | dashToCamelCase }}'
+                    callback:
+                        - EnsureRestAttributesTransferAffix
+    -
+        AddGlueConfigConstant:
+            arguments:
+                name: 'RESOURCE_{{ resourceType | dashToUnderscore | upper }}'
+                value: '{{ resourceType | dasherize }}'
+                visibility: public

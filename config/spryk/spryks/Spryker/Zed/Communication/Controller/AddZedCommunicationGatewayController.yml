@@ -1,47 +1,34 @@
 spryk: template
-description: "Adds a new Gateway Controller to the Zed application."
+description: 'Adds a new Gateway Controller to the Zed application.'
 mode: both
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     controller:
         value: GatewayController
-
     application:
         value: Zed
-
     extends:
         callback: ResolveExtends
         value:
-            - "\\Spryker\\{{ application }}\\{{ module }}\\Communication\\Controller\\GatewayController"
-            - "\\Spryker\\{{ application }}\\Kernel\\Communication\\Controller\\AbstractController"
-
+            - '\Spryker\{{ application }}\{{ module }}\Communication\Controller\GatewayController'
+            - '\Spryker\{{ application }}\Kernel\Communication\Controller\AbstractController'
     className:
-        value: "GatewayController"
-
+        value: GatewayController
     annotations:
         value:
-            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\Communication\\{{ module }}CommunicationFactory getFactory()"
-            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\Business\\{{ module }}FacadeInterface getFacade()"
-
+            - '@method \{{ organization }}\{{ application }}\{{ module }}\Communication\{{ module }}CommunicationFactory getFactory()'
+            - '@method \{{ organization }}\{{ application }}\{{ module }}\Business\{{ module }}FacadeInterface getFacade()'
     template:
         value: Common/Class.php.twig
-
     subDirectory:
-        value: "Communication/Controller"
-
+        value: Communication/Controller
     targetFilename:
-        value: "GatewayController.php"
-
+        value: GatewayController.php
     targetPath:
-        value: "src/{{ organization }}/Zed/{{ module }}/"
-
+        value: 'src/{{ organization }}/Zed/{{ module }}/'
 preSpryks:
     - AddModule
-

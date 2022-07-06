@@ -1,48 +1,36 @@
 spryk: template
-description: "Adds a new *module*CommunicationFactory to the Zed application."
+description: 'Adds a new *module*CommunicationFactory to the Zed application.'
 mode: both
 level: 3
-condition: "application === 'Zed' && layer === 'Communication'"
-
+condition: 'application === ''Zed'' && layer === ''Communication'''
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     application:
-        value: "Zed"
-
+        value: Zed
     layer:
         inherit: false
-        default: "Communication"
-
+        default: Communication
     extends:
         callback: ResolveExtends
         value:
-            - "\\Spryker\\{{ application }}\\{{ module }}\\Communication\\{{ module }}CommunicationFactory"
-            - "\\Spryker\\{{ application }}\\Kernel\\Communication\\AbstractCommunicationFactory"
-
+            - '\Spryker\{{ application }}\{{ module }}\Communication\{{ module }}CommunicationFactory'
+            - '\Spryker\{{ application }}\Kernel\Communication\AbstractCommunicationFactory'
     className:
-        value: "{{ module }}CommunicationFactory"
-
+        value: '{{ module }}CommunicationFactory'
     annotations:
         value:
-            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\{{ module }}Config getConfig()"
-
+            - '@method \{{ organization }}\{{ application }}\{{ module }}\{{ module }}Config getConfig()'
     template:
         value: Common/Class.php.twig
-
     subDirectory:
-        value: "Communication"
-
+        value: Communication
     targetFilename:
-        value: "{{ module }}CommunicationFactory.php"
-
+        value: '{{ module }}CommunicationFactory.php'
     targetPath:
-        value: "src/{{ organization }}/Zed/{{ module }}/"
-
+        value: 'src/{{ organization }}/Zed/{{ module }}/'
 preSpryks:
     - AddModule

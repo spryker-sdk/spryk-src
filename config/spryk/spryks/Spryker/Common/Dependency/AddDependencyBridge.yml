@@ -1,37 +1,25 @@
 spryk: template
-description: "Adds a new *module*To*dependentModule**dependencyType*Bridge."
+description: 'Adds a new *module*To*dependentModule**dependencyType*Bridge.'
 mode: core
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     application:
         inherit: true
-
     dependentModule:
         inherit: true
-
     dependencyType:
-        description: "Can be one of: Facade, Client, Service"
+        description: 'Can be one of: Facade, Client, Service'
         inherit: true
-
     template:
         value: Common/Dependency/DependencyBridge.php.twig
-
     targetFilename:
-        value: "{{ module }}To{{ dependentModule }}{{ dependencyType }}Bridge.php"
-
+        value: '{{ module }}To{{ dependentModule }}{{ dependencyType }}Bridge.php'
     targetPath:
-        value: "src/Spryker/{{ application }}/{{ module }}/Dependency/{{ dependencyType }}/"
-
-#preSpryks:
-#    - AddModule
-
+        value: 'src/Spryker/{{ application }}/{{ module }}/Dependency/{{ dependencyType }}/'
 postSpryks:
     - AddDependencyBridgeInterface
     - AddDependencyTypeToDependencyProvider

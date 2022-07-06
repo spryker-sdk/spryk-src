@@ -1,51 +1,39 @@
 spryk: template
-description: "Adds a new Controller to the Glue application."
+description: 'Adds a new Controller to the Glue application.'
 mode: both
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     controller:
         inherit: true
         callback:
             - ClassNameShortCallback
             - EnsureControllerSuffixCallback
-
     application:
         value: Glue
-
     extends:
         callback: ResolveExtends
         value:
-            - "\\Spryker\\{{ application }}\\{{ module }}\\Controller\\{{controller | classNameShort | ensureControllerSuffix}}"
-            - "\\Spryker\\{{ application }}\\Kernel\\Controller\\AbstractController"
-
+            - '\Spryker\{{ application }}\{{ module }}\Controller\{{controller | classNameShort | ensureControllerSuffix}}'
+            - '\Spryker\{{ application }}\Kernel\Controller\AbstractController'
     className:
-        value: "{{ controller }}"
+        value: '{{ controller }}'
         callback:
             - ClassNameShortCallback
             - EnsureControllerSuffixCallback
-
     annotations:
         value:
-            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\{{ module }}Factory getFactory()"
-
+            - '@method \{{ organization }}\{{ application }}\{{ module }}\{{ module }}Factory getFactory()'
     template:
         value: Common/Class.php.twig
-
     subDirectory:
-        value: "Controller"
-
+        value: Controller
     targetFilename:
-        value: "{{ controller | classNameShort | ensureControllerSuffix }}.php"
-
+        value: '{{ controller | classNameShort | ensureControllerSuffix }}.php'
     targetPath:
-        value: "src/{{ organization }}/Glue/{{ module }}/"
-
+        value: 'src/{{ organization }}/Glue/{{ module }}/'
 preSpryks:
     - AddModule

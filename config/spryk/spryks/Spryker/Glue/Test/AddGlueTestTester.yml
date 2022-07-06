@@ -1,146 +1,107 @@
 spryk: template
-description: "Adds a new Api Tester."
+description: 'Adds a new Api Tester.'
 mode: both
 level: 2
-
 arguments:
     resource:
         inherit: true
-        description: "Defines the resource name this controller will work with e.g. /customers"
-
+        description: 'Defines the resource name this controller will work with e.g. /customers'
     isBulk:
         inherit: true
-        description: "Defines if this resource should work with Collections. When set to true the method will use collections when possible."
+        description: 'Defines if this resource should work with Collections. When set to true the method will use collections when possible.'
         default: false
-
     module:
-        value: "{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api"
-
+        value: '{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api'
     organization:
         inherit: true
-        description: "Defines the organization name"
+        description: 'Defines the organization name'
         default: Spryker
-
     applicationType:
         inherit: true
-        description: "Can be one of: Backend or Frontend"
+        description: 'Can be one of: Backend or Frontend'
         default: Backend
-
     application:
-        value: "Glue"
-
+        value: Glue
     zedDomainEntity:
         inherit: true
-        description: "Defines the domain entity that should be tested"
-
+        description: 'Defines the domain entity that should be tested'
     httpMethod:
         inherit: true
-        description: "The HTTP method e.g. POST"
-
+        description: 'The HTTP method e.g. POST'
     httpResponseCode:
         inherit: true
-        description: "The response code e.g. 200"
-
+        description: 'The response code e.g. 200'
     template:
         value: Glue/Test/GlueTestTester/ApiTester.php.twig
-
     className:
-        value: "{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester"
-
+        value: '{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester'
     targetFilename:
-        value: "{{ className }}.php"
-
+        value: '{{ className }}.php'
     targetPath:
-        value: "tests/{{ organization }}Test/{{ application }}/{{ module }}/_support"
-
+        value: 'tests/{{ organization }}Test/{{ application }}/{{ module }}/_support'
 postSpryks:
-    - AddMethod:
-        condition: "(httpMethod === 'patch' || httpMethod === 'get') && isBulk === false"
-        arguments:
-            httpMethod:
-                inherit: true
-            method:
-                value: "seeResponseJsonContains{{ zedDomainEntity }}IdAndUuid"
-            input:
-                value:
-                    - "int ${{ zedDomainEntity | lcfirst }}Id"
-                    - "string $uuid"
-            output:
-                value: "void"
-            body:
-                value: "$this->seeResponseJsonPathContains(['data' => ['type' => '{{ zedDomainEntity | lcfirst }}', 'id' => ${{ zedDomainEntity | lcfirst }}Id, 'attributes' => ['id{{ zedDomainEntity }}' => ${{ zedDomainEntity | lcfirst }}Id, 'uuid' => $uuid]]]);"
-            target:
-                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester"
-            withInterface:
-                value: false
-
-    -   AddMethod:
-            condition: "httpMethod === 'get' && isBulk === true"
+    -
+        AddMethod:
+            condition: '(httpMethod === ''patch'' || httpMethod === ''get'') && isBulk === false'
             arguments:
                 httpMethod:
                     inherit: true
-                method:
-                    value: "build{{ httpMethod | ucfirst }}Collection{{ zedDomainEntity }}RequestParameters"
-                output:
-                    value: "array<mixed>"
-                body:
-                    value: "return ['page' => ['offset' => 1, 'limit' => 1], 'sort' => '-id{{ zedDomainEntity }}'];"
-                target:
-                    value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester"
-                withInterface:
-                    value: false
-    -   AddMethod:
-            condition: "httpMethod === 'get' && isBulk === true"
+                method: 'seeResponseJsonContains{{ zedDomainEntity }}IdAndUuid'
+                input:
+                    - 'int ${{ zedDomainEntity | lcfirst }}Id'
+                    - 'string $uuid'
+                output: void
+                body: '$this->seeResponseJsonPathContains([''data'' => [''type'' => ''{{ zedDomainEntity | lcfirst }}'', ''id'' => ${{ zedDomainEntity | lcfirst }}Id, ''attributes'' => [''id{{ zedDomainEntity }}'' => ${{ zedDomainEntity | lcfirst }}Id, ''uuid'' => $uuid]]]);'
+                target: '\{{ organization }}Test\{{ application }}\{{ module }}\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester'
+                withInterface: false
+    -
+        AddMethod:
+            condition: 'httpMethod === ''get'' && isBulk === true'
             arguments:
                 httpMethod:
                     inherit: true
-                method:
-                    value: "seeResponseJsonContains{{ zedDomainEntity }}Collection"
-                output:
-                    value: "void"
+                method: 'build{{ httpMethod | ucfirst }}Collection{{ zedDomainEntity }}RequestParameters'
+                output: array<mixed>
+                body: 'return [''page'' => [''offset'' => 1, ''limit'' => 1], ''sort'' => ''-id{{ zedDomainEntity }}''];'
+                target: '\{{ organization }}Test\{{ application }}\{{ module }}\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester'
+                withInterface: false
+    -
+        AddMethod:
+            condition: 'httpMethod === ''get'' && isBulk === true'
+            arguments:
+                httpMethod:
+                    inherit: true
+                method: 'seeResponseJsonContains{{ zedDomainEntity }}Collection'
+                output: void
                 body:
-                    value:
-                        - "$this->seeResponseJsonPathContains(['data' => [['type' => '{{ zedDomainEntity | lcfirst }}']]]);"
-                        - "$this->seeResponseMatchesJsonType(['data' => [['id' => 'integer:>0', 'attributes' => ['id{{ zedDomainEntity }}' => 'integer:>0', 'uuid' => 'string']]]]);"
-                target:
-                    value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester"
-                withInterface:
-                    value: false
-
-    - AddMethod:
-        condition: "httpMethod === 'post' && isBulk === false"
-        arguments:
-            httpMethod:
-                inherit: true
-            method:
-                value: "seeResponseJsonContains{{ zedDomainEntity }}"
-            output:
-                value: "void"
-            body:
-                value:
-                    - "$this->seeResponseJsonPathContains(['data' => ['type' => '{{ zedDomainEntity | lcfirst }}']]);"
-                    - "$this->seeResponseMatchesJsonType(['data' => ['id' => 'integer:>0', 'attributes' => ['id{{ zedDomainEntity }}' => 'integer:>0', 'uuid' => 'string']]]);"
-            target:
-                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester"
-            withInterface:
-                value: false
-
-    - AddMethod:
-        condition: "httpMethod === 'patch' && isBulk === false"
-        arguments:
-            httpMethod:
-                inherit: true
-            method:
-                value: "build{{ zedDomainEntity }}RequestData"
-            input:
-                value:
-                    - "int ${{ zedDomainEntity | lcfirst }}Id"
-                    - "string $uuid"
-            output:
-                value: "array<mixed>"
-            body:
-                value: "return ['data' => ['type' => '{{ zedDomainEntity | lcfirst }}', 'id' => ${{ zedDomainEntity | lcfirst }}Id, 'attributes' => ['id{{ zedDomainEntity }}' => ${{ zedDomainEntity | lcfirst }}Id, 'uuid' => $uuid]]];"
-            target:
-                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester"
-            withInterface:
-                value: false
+                    - '$this->seeResponseJsonPathContains([''data'' => [[''type'' => ''{{ zedDomainEntity | lcfirst }}'']]]);'
+                    - '$this->seeResponseMatchesJsonType([''data'' => [[''id'' => ''integer:>0'', ''attributes'' => [''id{{ zedDomainEntity }}'' => ''integer:>0'', ''uuid'' => ''string'']]]]);'
+                target: '\{{ organization }}Test\{{ application }}\{{ module }}\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester'
+                withInterface: false
+    -
+        AddMethod:
+            condition: 'httpMethod === ''post'' && isBulk === false'
+            arguments:
+                httpMethod:
+                    inherit: true
+                method: 'seeResponseJsonContains{{ zedDomainEntity }}'
+                output: void
+                body:
+                    - '$this->seeResponseJsonPathContains([''data'' => [''type'' => ''{{ zedDomainEntity | lcfirst }}'']]);'
+                    - '$this->seeResponseMatchesJsonType([''data'' => [''id'' => ''integer:>0'', ''attributes'' => [''id{{ zedDomainEntity }}'' => ''integer:>0'', ''uuid'' => ''string'']]]);'
+                target: '\{{ organization }}Test\{{ application }}\{{ module }}\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester'
+                withInterface: false
+    -
+        AddMethod:
+            condition: 'httpMethod === ''patch'' && isBulk === false'
+            arguments:
+                httpMethod:
+                    inherit: true
+                method: 'build{{ zedDomainEntity }}RequestData'
+                input:
+                    - 'int ${{ zedDomainEntity | lcfirst }}Id'
+                    - 'string $uuid'
+                output: array<mixed>
+                body: 'return [''data'' => [''type'' => ''{{ zedDomainEntity | lcfirst }}'', ''id'' => ${{ zedDomainEntity | lcfirst }}Id, ''attributes'' => [''id{{ zedDomainEntity }}'' => ${{ zedDomainEntity | lcfirst }}Id, ''uuid'' => $uuid]]];'
+                target: '\{{ organization }}Test\{{ application }}\{{ module }}\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester'
+                withInterface: false

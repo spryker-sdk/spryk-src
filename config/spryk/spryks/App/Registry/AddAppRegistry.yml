@@ -1,312 +1,274 @@
 spryk: wrapper
-description: "Adds a Registry code for Apps. It builds connect and disconnect logic."
+description: 'Adds a Registry code for Apps. It builds connect and disconnect logic.'
 priority: 1
 mode: both
 level: 1
-
 arguments:
     organization:
         inherit: true
         default: Spryker
-
     application:
         inherit: true
         default: Zed
-
     module:
         inherit: true
-
 excludedSpryks:
     - AddZedPresentationTwig
     - AddZedNavigationNode
-
 preSpryks:
     - AddModule
-
 postSpryks:
-    - AddZedBusinessModelMethod:
-          arguments:
-              allowOverride: true
-              className: "{{ module }}Registry"
-              subDirectory: Registry
-              modelMethod: disconnect
-              input: "\\Generated\\Shared\\Transfer\\AppRegistryRequestTransfer $appRegistryRequestTransfer"
-              output: "\\Generated\\Shared\\Transfer\\AppRegistryResponseTransfer"
-              body:
-                  value:
-                      - "$appRegistryRequestTransfer->requireTenantIdentifier();"
-                      - ""
-                      - "return (new AppRegistryResponseTransfer())->setIsSuccessful(true);"
-
-    - AddConstant:
-          arguments:
-              name: "HEADER_TENANT_ID"
-              value: "X-Tenant-Id"
-              visibility: "public"
-              target: "\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config"
-
-    - AddConstant:
-          arguments:
-              name: "RESPONSE_CODE_INVALID_HTTP_METHOD"
-              value: "800"
-              visibility: "public"
-              target: "\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config"
-
-    - AddConstant:
-          arguments:
-              name: "RESPONSE_MESSAGE_INVALID_HTTP_METHOD"
-              value: "Incorrect HTTP method."
-              visibility: "public"
-              target: "\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config"
-
-    - AddConstant:
-          arguments:
-              name: "RESPONSE_CODE_MISSING_TENANT_IDENTIFIER"
-              value: "801"
-              visibility: "public"
-              target: "\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config"
-
-    - AddConstant:
-          arguments:
-              name: "RESPONSE_MESSAGE_MISSING_TENANT_IDENTIFIER"
-              value: "X-Tenant-Id in header is required."
-              visibility: "public"
-              target: "\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config"
-
-    - AddZedCommunicationControllerAction:
-          excludedSpryks:
-              - AddZedPresentationTwig
-              - AddZedNavigationNode
-          arguments:
-              allowOverride: true
-              input: "\\Symfony\\Component\\HttpFoundation\\Request $request"
-              output: "\\Symfony\\Component\\HttpFoundation\\JsonResponse"
-              controller: RegistryController
-              controllerMethod: disconnect
-              body:
-                  allowOverride: true
-                  value: "App/Registry/ZedControllerDisconnectMethod.php.twig"
-
-    - AddMethod:
-          arguments:
-              allowOverride: true
-              input: "\\Generated\\Shared\\Transfer\\AppRegistryResponseTransfer $appRegistryResponseTransfer"
-              output: "\\Symfony\\Component\\HttpFoundation\\JsonResponse"
-              target: "{{ organization }}\\Zed\\{{ module }}\\Communication\\Controller\\RegistryController"
-              method: buildResponse
-              visibility: protected
-              body:
-                  allowOverride: true
-                  value:
-                      - "if (!$appRegistryResponseTransfer->getIsSuccessful()) {"
-                      - "    return $this->buildErrorResponse($appRegistryResponseTransfer);"
-                      - "}"
-                      - ""
-                      - "return $this->jsonResponse([]);"
-              withInterface: false
-
-    - AddZedCommunicationTest:
-          arguments:
-              className: RegistryController
-
-    - AddConstant:
-          arguments:
-              name: "PATH_REGISTRY_DISCONNECT"
-              value: "{{ module | dasherize }}/registry/disconnect"
-              visibility: "protected"
-              target: "\\{{ organization }}Test\\Zed\\{{ module }}\\Communication\\RegistryControllerTest"
-
-    - AddMethod:
-          arguments:
-              method: "testDisconnectActionDisconnectsSuccessfullyWithValidRequestData"
-              target: "\\{{ organization }}Test\\Zed\\{{ module }}\\Communication\\RegistryControllerTest"
-              body:
-                  value:
-                      - "// Arrange"
-                      - "$request = \\Symfony\\Component\\HttpFoundation\\Request::create(static::PATH_REGISTRY_DISCONNECT, Request::METHOD_POST);"
-                      - "$request->headers->set(\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config::HEADER_TENANT_ID, \\Ramsey\\Uuid\\Uuid::uuid4()->toString());"
-                      - ""
-                      - "// Act"
-                      - "$response = (new \\{{ organization }}\\Zed\\{{ module }}\\Communication\\Controller\\RegistryController())->disconnectAction($request);"
-                      - ""
-                      - "// Assert"
-                      - "$this->assertInstanceOf(\\Symfony\\Component\\HttpFoundation\\JsonResponse::class, $response);"
-                      - "$this->assertTrue($response->isSuccessful());"
-                      - "$this->assertSame($response->getContent(), json_encode([]));"
-              withInterface: false
-
-    - AddMethod:
-          arguments:
-              method: "testDisconnectActionReturnsValidationErrorWithIncorrectMethod"
-              target: "\\{{ organization }}Test\\Zed\\{{ module }}\\Communication\\RegistryControllerTest"
-              body:
-                  value:
-                      - "// Arrange"
-                      - "$request = \\Symfony\\Component\\HttpFoundation\\Request::create(static::PATH_REGISTRY_DISCONNECT, Request::METHOD_GET);"
-                      - "$request->headers->set(\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config::HEADER_TENANT_ID, \\Ramsey\\Uuid\\Uuid::uuid4()->toString());"
-                      - ""
-                      - "// Act"
-                      - "$response = (new \\{{ organization }}\\Zed\\{{ module }}\\Communication\\Controller\\RegistryController())->disconnectAction($request);"
-                      - ""
-                      - "// Assert"
-                      - "$this->assertInstanceOf(\\Symfony\\Component\\HttpFoundation\\JsonResponse::class, $response);"
-                      - "$this->assertFalse($response->isSuccessful());"
-                      - "$this->assertThat($response->getContent(), new \\Codeception\\PHPUnit\\Constraint\\JsonContains(["
-                      - "    'errors' => [['code' => {{ module }}Config::RESPONSE_CODE_INVALID_HTTP_METHOD]],"
-                      - "]));"
-              withInterface: false
-
-    - AddMethod:
-          arguments:
-              method: "testDisconnectActionReturnsValidationErrorWithMissingTenantId"
-              target: "\\{{ organization }}Test\\Zed\\{{ module }}\\Communication\\RegistryControllerTest"
-              body:
-                  value:
-                      - "// Arrange"
-                      - "$request = \\Symfony\\Component\\HttpFoundation\\Request::create(static::PATH_REGISTRY_DISCONNECT, Request::METHOD_POST);"
-                      - ""
-                      - "// Act"
-                      - "$response = (new \\{{ organization }}\\Zed\\{{ module }}\\Communication\\Controller\\RegistryController())->disconnectAction($request);"
-                      - ""
-                      - "// Assert"
-                      - "$this->assertInstanceOf(\\Symfony\\Component\\HttpFoundation\\JsonResponse::class, $response);"
-                      - "$this->assertFalse($response->isSuccessful());"
-                      - "$this->assertThat($response->getContent(), new \\Codeception\\PHPUnit\\Constraint\\JsonContains(["
-                      - "    'errors' => [['code' => {{ module }}Config::RESPONSE_CODE_MISSING_TENANT_IDENTIFIER]],"
-                      - "]));"
-              withInterface: false
-
-    - AddMethod:
-          arguments:
-              allowOverride: true
-              input: "\\Generated\\Shared\\Transfer\\AppRegistryResponseTransfer $appRegistryResponseTransfer"
-              output: "\\Symfony\\Component\\HttpFoundation\\JsonResponse"
-              target: "{{ organization }}\\Zed\\{{ module }}\\Communication\\Controller\\RegistryController"
-              method: buildErrorResponse
-              visibility: protected
-              body:
-                  allowOverride: true
-                  value:
-                      - "$responseData = [];"
-                      - ""
-                      - "foreach ($appRegistryResponseTransfer->getErrorMessages() as $errorMessageTransfer) {"
-                      - "    $responseData['errors'][] = ["
-                      - "        'code' => $errorMessageTransfer->getCode(),"
-                      - "        'detail' => $errorMessageTransfer->getDetail(),"
-                      - "    ];"
-                      - "}"
-                      - ""
-                      - "return $this->jsonResponse($responseData, \\Symfony\\Component\\HttpFoundation\\Response::HTTP_BAD_REQUEST);"
-              withInterface: false
-
-    - AddZedBusinessFacadeMethod:
-          arguments:
-              allowOverride: true
-              facadeMethod: disconnect
-              input: "\\Generated\\Shared\\Transfer\\AppRegistryRequestTransfer $appRegistryRequestTransfer"
-              output: "\\Generated\\Shared\\Transfer\\AppRegistryResponseTransfer"
-              body:
-                  allowOverride: true
-                  value:
-                      - "return $this->getFactory()->create{{ module }}Registry()"
-                      - "    ->disconnect($appRegistryRequestTransfer);"
-
-    - AddZedBusinessFacadeMethodTest:
-          arguments:
-              allowOverride: true
-              facadeMethod: disconnect
-              output: "void"
-              body:
-                  allowOverride: true
-                  value:
-                      - "$appRegistryRequestTransfer = (new \\Generated\\Shared\\Transfer\\AppRegistryRequestTransfer())"
-                      - "     ->setTenantIdentifier(\\Ramsey\\Uuid\\Uuid::uuid4()->toString());"
-                      - ""
-                      - "$appRegistryResponseTransfer = $this->tester->getFacade()->disconnect($appRegistryRequestTransfer);"
-                      - ""
-                      - "$this->assertInstanceOf(\\Generated\\Shared\\Transfer\\AppRegistryResponseTransfer::class, $appRegistryResponseTransfer);"
-                      - "$this->assertTrue($appRegistryResponseTransfer->getIsSuccessful());"
-                      - "$this->assertCount(0, $appRegistryResponseTransfer->getErrorMessages());"
-
-    - AddZedBusinessFacadeMethodTest:
-          arguments:
-              facadeMethod: disconnectThrowsExceptionWithWithInvalidData
-              output: "void"
-              body:
-                  allowOverride: true
-                  value:
-                      - "$appRegistryRequestTransfer = new \\Generated\\Shared\\Transfer\\AppRegistryRequestTransfer();"
-                      - ""
-                      - "$this->expectException(\\Spryker\\Shared\\Kernel\\Transfer\\Exception\\RequiredTransferPropertyException::class);"
-                      - ""
-                      - "$this->tester->getFacade()->disconnect($appRegistryRequestTransfer);"
-
-    - AddZedCommunicationModelMethod:
-          arguments:
-              className: RequestValidator
-              subDirectory: RequestValidator
-              modelMethod: validateAppRegistryRequest
-              input: "\\Symfony\\Component\\HttpFoundation\\Request $request"
-              output: "?\\Generated\\Shared\\Transfer\\ErrorMessageTransfer"
-              body:
-                  value:
-                      - "if ($request->getMethod() !== Request::METHOD_POST) {"
-                      - "    return (new \\Generated\\Shared\\Transfer\\ErrorMessageTransfer())->setCode(\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config::RESPONSE_CODE_INVALID_HTTP_METHOD)"
-                      - "        ->setDetail({{ module }}Config::RESPONSE_MESSAGE_INVALID_HTTP_METHOD);"
-                      - "}"
-                      - ""
-                      - "if (!$request->headers->get({{ module }}Config::HEADER_TENANT_ID)) {"
-                      - "    return (new \\Generated\\Shared\\Transfer\\ErrorMessageTransfer())->setCode({{ module }}Config::RESPONSE_CODE_MISSING_TENANT_IDENTIFIER)"
-                      - "        ->setDetail({{ module }}Config::RESPONSE_MESSAGE_MISSING_TENANT_IDENTIFIER);"
-                      - "}"
-                      - ""
-                      - "return null;"
-
-    - AddZedCommunicationModelMethod:
-          arguments:
-              allowOverride: true
-              className: RequestMapper
-              subDirectory: RequestMapper
-              modelMethod: mapAppRegistryRequestToTransfer
-              input: "\\Symfony\\Component\\HttpFoundation\\Request $request, \\Generated\\Shared\\Transfer\\AppRegistryRequestTransfer $appRegistryRequestTransfer"
-              output: "\\Generated\\Shared\\Transfer\\AppRegistryRequestTransfer"
-              body:
-                  value:
-                      - "return $appRegistryRequestTransfer->setTenantIdentifier("
-                      - "    $request->headers->get(\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config::HEADER_TENANT_ID)"
-                      - ");"
-
-    - AddSharedTransferDefinition:
-          arguments:
-              name: "AppRegistryRequest"
-
-    - AddSharedTransferProperty:
-          arguments:
-              name: "AppRegistryRequest"
-              propertyName: "tenantIdentifier"
-              propertyType: "string"
-
-    - AddSharedTransferProperty:
-          arguments:
-              name: "AppRegistryResponse"
-              propertyName: "isSuccessful"
-              propertyType: "bool"
-
-    - AddSharedTransferProperty:
-          arguments:
-              name: "AppRegistryResponse"
-              propertyName: "errorMessages"
-              propertyType: "ErrorMessage[]"
-              singular: "errorMessage"
-
-    - AddSharedTransferProperty:
-          arguments:
-              name: "ErrorMessage"
-              propertyName: "code"
-              propertyType: "string"
-
-    - AddSharedTransferProperty:
-          arguments:
-              name: "ErrorMessage"
-              propertyName: "detail"
-              propertyType: "string"
+    -
+        AddZedBusinessModelMethod:
+            arguments:
+                allowOverride: true
+                className: '{{ module }}Registry'
+                subDirectory: Registry
+                modelMethod: disconnect
+                input: '\Generated\Shared\Transfer\AppRegistryRequestTransfer $appRegistryRequestTransfer'
+                output: \Generated\Shared\Transfer\AppRegistryResponseTransfer
+                body:
+                    - $appRegistryRequestTransfer->requireTenantIdentifier();
+                    - ''
+                    - 'return (new AppRegistryResponseTransfer())->setIsSuccessful(true);'
+    -
+        AddConstant:
+            arguments:
+                name: HEADER_TENANT_ID
+                value: X-Tenant-Id
+                visibility: public
+                target: '\{{ organization }}\Zed\{{ module }}\{{ module }}Config'
+    -
+        AddConstant:
+            arguments:
+                name: RESPONSE_CODE_INVALID_HTTP_METHOD
+                value: '800'
+                visibility: public
+                target: '\{{ organization }}\Zed\{{ module }}\{{ module }}Config'
+    -
+        AddConstant:
+            arguments:
+                name: RESPONSE_MESSAGE_INVALID_HTTP_METHOD
+                value: 'Incorrect HTTP method.'
+                visibility: public
+                target: '\{{ organization }}\Zed\{{ module }}\{{ module }}Config'
+    -
+        AddConstant:
+            arguments:
+                name: RESPONSE_CODE_MISSING_TENANT_IDENTIFIER
+                value: '801'
+                visibility: public
+                target: '\{{ organization }}\Zed\{{ module }}\{{ module }}Config'
+    -
+        AddConstant:
+            arguments:
+                name: RESPONSE_MESSAGE_MISSING_TENANT_IDENTIFIER
+                value: 'X-Tenant-Id in header is required.'
+                visibility: public
+                target: '\{{ organization }}\Zed\{{ module }}\{{ module }}Config'
+    -
+        AddZedCommunicationControllerAction:
+            excludedSpryks:
+                - AddZedPresentationTwig
+                - AddZedNavigationNode
+            arguments:
+                allowOverride: true
+                input: '\Symfony\Component\HttpFoundation\Request $request'
+                output: \Symfony\Component\HttpFoundation\JsonResponse
+                controller: RegistryController
+                controllerMethod: disconnect
+    -
+        AddMethod:
+            arguments:
+                allowOverride: true
+                input: '\Generated\Shared\Transfer\AppRegistryResponseTransfer $appRegistryResponseTransfer'
+                output: \Symfony\Component\HttpFoundation\JsonResponse
+                target: '{{ organization }}\Zed\{{ module }}\Communication\Controller\RegistryController'
+                method: buildResponse
+                visibility: protected
+                body:
+                    allowOverride: true
+                    value:
+                        - 'if (!$appRegistryResponseTransfer->getIsSuccessful()) {'
+                        - '    return $this->buildErrorResponse($appRegistryResponseTransfer);'
+                        - '}'
+                        - ''
+                        - 'return $this->jsonResponse([]);'
+                withInterface: false
+    -
+        AddZedCommunicationTest:
+            arguments:
+                className: RegistryController
+    -
+        AddConstant:
+            arguments:
+                name: PATH_REGISTRY_DISCONNECT
+                value: '{{ module | dasherize }}/registry/disconnect'
+                visibility: protected
+                target: '\{{ organization }}Test\Zed\{{ module }}\Communication\RegistryControllerTest'
+    -
+        AddMethod:
+            arguments:
+                method: testDisconnectActionDisconnectsSuccessfullyWithValidRequestData
+                target: '\{{ organization }}Test\Zed\{{ module }}\Communication\RegistryControllerTest'
+                body:
+                    - '// Arrange'
+                    - '$request = \Symfony\Component\HttpFoundation\Request::create(static::PATH_REGISTRY_DISCONNECT, Request::METHOD_POST);'
+                    - '$request->headers->set(\{{ organization }}\Zed\{{ module }}\{{ module }}Config::HEADER_TENANT_ID, \Ramsey\Uuid\Uuid::uuid4()->toString());'
+                    - ''
+                    - '// Act'
+                    - '$response = (new \{{ organization }}\Zed\{{ module }}\Communication\Controller\RegistryController())->disconnectAction($request);'
+                    - ''
+                    - '// Assert'
+                    - '$this->assertInstanceOf(\Symfony\Component\HttpFoundation\JsonResponse::class, $response);'
+                    - $this->assertTrue($response->isSuccessful());
+                    - '$this->assertSame($response->getContent(), json_encode([]));'
+                withInterface: false
+    -
+        AddMethod:
+            arguments:
+                method: testDisconnectActionReturnsValidationErrorWithIncorrectMethod
+                target: '\{{ organization }}Test\Zed\{{ module }}\Communication\RegistryControllerTest'
+                body:
+                    - '// Arrange'
+                    - '$request = \Symfony\Component\HttpFoundation\Request::create(static::PATH_REGISTRY_DISCONNECT, Request::METHOD_GET);'
+                    - '$request->headers->set(\{{ organization }}\Zed\{{ module }}\{{ module }}Config::HEADER_TENANT_ID, \Ramsey\Uuid\Uuid::uuid4()->toString());'
+                    - ''
+                    - '// Act'
+                    - '$response = (new \{{ organization }}\Zed\{{ module }}\Communication\Controller\RegistryController())->disconnectAction($request);'
+                    - ''
+                    - '// Assert'
+                    - '$this->assertInstanceOf(\Symfony\Component\HttpFoundation\JsonResponse::class, $response);'
+                    - $this->assertFalse($response->isSuccessful());
+                    - '$this->assertThat($response->getContent(), new \Codeception\PHPUnit\Constraint\JsonContains(['
+                    - '    ''errors'' => [[''code'' => {{ module }}Config::RESPONSE_CODE_INVALID_HTTP_METHOD]],'
+                    - ']));'
+                withInterface: false
+    -
+        AddMethod:
+            arguments:
+                method: testDisconnectActionReturnsValidationErrorWithMissingTenantId
+                target: '\{{ organization }}Test\Zed\{{ module }}\Communication\RegistryControllerTest'
+                body:
+                    - '// Arrange'
+                    - '$request = \Symfony\Component\HttpFoundation\Request::create(static::PATH_REGISTRY_DISCONNECT, Request::METHOD_POST);'
+                    - ''
+                    - '// Act'
+                    - '$response = (new \{{ organization }}\Zed\{{ module }}\Communication\Controller\RegistryController())->disconnectAction($request);'
+                    - ''
+                    - '// Assert'
+                    - '$this->assertInstanceOf(\Symfony\Component\HttpFoundation\JsonResponse::class, $response);'
+                    - $this->assertFalse($response->isSuccessful());
+                    - '$this->assertThat($response->getContent(), new \Codeception\PHPUnit\Constraint\JsonContains(['
+                    - '    ''errors'' => [[''code'' => {{ module }}Config::RESPONSE_CODE_MISSING_TENANT_IDENTIFIER]],'
+                    - ']));'
+                withInterface: false
+    -
+        AddMethod:
+            arguments:
+                allowOverride: true
+                input: '\Generated\Shared\Transfer\AppRegistryResponseTransfer $appRegistryResponseTransfer'
+                output: \Symfony\Component\HttpFoundation\JsonResponse
+                target: '{{ organization }}\Zed\{{ module }}\Communication\Controller\RegistryController'
+                method: buildErrorResponse
+                visibility: protected
+                body:
+                    allowOverride: true
+                    value:
+                        - '$responseData = [];'
+                        - ''
+                        - 'foreach ($appRegistryResponseTransfer->getErrorMessages() as $errorMessageTransfer) {'
+                        - '    $responseData[''errors''][] = ['
+                        - '        ''code'' => $errorMessageTransfer->getCode(),'
+                        - '        ''detail'' => $errorMessageTransfer->getDetail(),'
+                        - '    ];'
+                        - '}'
+                        - ''
+                        - 'return $this->jsonResponse($responseData, \Symfony\Component\HttpFoundation\Response::HTTP_BAD_REQUEST);'
+                withInterface: false
+    -
+        AddZedBusinessFacadeMethod:
+            arguments:
+                allowOverride: true
+                facadeMethod: disconnect
+                input: '\Generated\Shared\Transfer\AppRegistryRequestTransfer $appRegistryRequestTransfer'
+                output: \Generated\Shared\Transfer\AppRegistryResponseTransfer
+    -
+        AddZedBusinessFacadeMethodTest:
+            arguments:
+                allowOverride: true
+                facadeMethod: disconnect
+                output: void
+    -
+        AddZedBusinessFacadeMethodTest:
+            arguments:
+                facadeMethod: disconnectThrowsExceptionWithWithInvalidData
+                output: void
+    -
+        AddZedCommunicationModelMethod:
+            arguments:
+                className: RequestValidator
+                subDirectory: RequestValidator
+                modelMethod: validateAppRegistryRequest
+                input: '\Symfony\Component\HttpFoundation\Request $request'
+                output: '?\Generated\Shared\Transfer\ErrorMessageTransfer'
+                body:
+                    - 'if ($request->getMethod() !== Request::METHOD_POST) {'
+                    - '    return (new \Generated\Shared\Transfer\ErrorMessageTransfer())->setCode(\{{ organization }}\Zed\{{ module }}\{{ module }}Config::RESPONSE_CODE_INVALID_HTTP_METHOD)'
+                    - '        ->setDetail({{ module }}Config::RESPONSE_MESSAGE_INVALID_HTTP_METHOD);'
+                    - '}'
+                    - ''
+                    - 'if (!$request->headers->get({{ module }}Config::HEADER_TENANT_ID)) {'
+                    - '    return (new \Generated\Shared\Transfer\ErrorMessageTransfer())->setCode({{ module }}Config::RESPONSE_CODE_MISSING_TENANT_IDENTIFIER)'
+                    - '        ->setDetail({{ module }}Config::RESPONSE_MESSAGE_MISSING_TENANT_IDENTIFIER);'
+                    - '}'
+                    - ''
+                    - 'return null;'
+    -
+        AddZedCommunicationModelMethod:
+            arguments:
+                allowOverride: true
+                className: RequestMapper
+                subDirectory: RequestMapper
+                modelMethod: mapAppRegistryRequestToTransfer
+                input: '\Symfony\Component\HttpFoundation\Request $request, \Generated\Shared\Transfer\AppRegistryRequestTransfer $appRegistryRequestTransfer'
+                output: \Generated\Shared\Transfer\AppRegistryRequestTransfer
+                body:
+                    - 'return $appRegistryRequestTransfer->setTenantIdentifier('
+                    - '    $request->headers->get(\{{ organization }}\Zed\{{ module }}\{{ module }}Config::HEADER_TENANT_ID)'
+                    - );
+    -
+        AddSharedTransferDefinition:
+            arguments:
+                name: AppRegistryRequest
+    -
+        AddSharedTransferProperty:
+            arguments:
+                name: AppRegistryRequest
+                propertyName: tenantIdentifier
+                propertyType: string
+    -
+        AddSharedTransferProperty:
+            arguments:
+                name: AppRegistryResponse
+                propertyName: isSuccessful
+                propertyType: bool
+    -
+        AddSharedTransferProperty:
+            arguments:
+                name: AppRegistryResponse
+                propertyName: errorMessages
+                propertyType: 'ErrorMessage[]'
+                singular: errorMessage
+    -
+        AddSharedTransferProperty:
+            arguments:
+                name: ErrorMessage
+                propertyName: code
+                propertyType: string
+    -
+        AddSharedTransferProperty:
+            arguments:
+                name: ErrorMessage
+                propertyName: detail
+                propertyType: string

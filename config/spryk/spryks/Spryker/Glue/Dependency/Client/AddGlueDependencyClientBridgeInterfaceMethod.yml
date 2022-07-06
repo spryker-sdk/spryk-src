@@ -1,19 +1,15 @@
 spryk: bridgeMethods
-description: "Adds a new method to the *module* dependency Client bridge."
+description: 'Adds a new method to the *module* dependency Client bridge.'
 mode: core
-deprecated: Use AddDependencyBridgeMethod instead.
-
+deprecated: 'Use AddDependencyBridgeMethod instead.'
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     dependentModule:
         inherit: true
-
     methods:
         inherit: true
         type: MethodNameChoice
@@ -22,21 +18,15 @@ arguments:
         typeOptions:
             - module
             - choiceLoader
-
     template:
         value: Glue/Dependency/GlueDependencyBridgeInterfaceMethod.php.twig
-
     dependencyType:
         value: Client
-
     sourceClass:
-        value: "{{ organization }}\\Client\\{{ dependentModule }}\\{{ dependentModule }}ClientInterface"
-
+        value: '{{ organization }}\Client\{{ dependentModule }}\{{ dependentModule }}ClientInterface'
     target:
-        value: "{{ organization }}\\Glue\\{{ module }}\\Dependency\\Client\\{{ module }}To{{ dependentModule }}ClientInterface"
-
+        value: '{{ organization }}\Glue\{{ module }}\Dependency\Client\{{ module }}To{{ dependentModule }}ClientInterface'
 preSpryks:
     - AddGlueDependencyClientInterface
-
 postSpryks:
     - AddGlueDependencyClientBridgeMethod

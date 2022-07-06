@@ -1,16 +1,13 @@
 spryk: method
-description: "Adds a new action to the Zed controller."
+description: 'Adds a new action to the Zed controller.'
 mode: both
 level: 2
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     controller:
         inherit: true
         callback:
@@ -23,30 +20,21 @@ arguments:
             - existingModule
             - spryk
             - choiceLoader
-
     controllerMethod:
         inherit: true
         callback: EnsureActionSuffixCallback
-
     body:
-        value: ""
-
+        value: ''
     input:
-        value: ""
-
+        value: ''
     output:
         default: void
-
     template:
         value: Common/Method.php.twig
-
     target:
-        value: "{{ organization }}\\Zed\\{{ module }}\\Communication\\Controller\\{{ controller | classNameShort | ensureControllerSuffix }}"
-
+        value: '{{ organization }}\Zed\{{ module }}\Communication\Controller\{{ controller | classNameShort | ensureControllerSuffix }}'
 preSpryks:
     - AddZedCommunicationController
-
 postSpryks:
     - AddZedPresentationTwig
     - AddZedNavigationNode
-

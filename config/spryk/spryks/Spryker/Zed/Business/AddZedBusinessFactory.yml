@@ -1,57 +1,45 @@
 spryk: template
-description: "Adds a new *module*BusinessFactory to the Zed application."
+description: 'Adds a new *module*BusinessFactory to the Zed application.'
 mode: both
 level: 3
-condition: "application === 'Zed' && layer === 'Business'"
-
+condition: 'application === ''Zed'' && layer === ''Business'''
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     application:
-        value: "Zed"
-
+        value: Zed
     layer:
         inherit: false
-        default: "Business"
-
+        default: Business
     extends:
         callback: ResolveExtends
         value:
-            - "\\Spryker\\{{ application }}\\{{ module }}\\Business\\{{ module }}BusinessFactory"
-            - "\\Spryker\\{{ application }}\\Kernel\\Business\\AbstractBusinessFactory"
-
+            - '\Spryker\{{ application }}\{{ module }}\Business\{{ module }}BusinessFactory'
+            - '\Spryker\{{ application }}\Kernel\Business\AbstractBusinessFactory'
     className:
-        value: "{{ module }}BusinessFactory"
-
+        value: '{{ module }}BusinessFactory'
     annotations:
         value:
-            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\{{ module }}Config getConfig()"
-            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\{{ module }}EntityManagerInterface getEntityManager()"
-            - "@method \\{{ organization }}\\{{ application }}\\{{ module }}\\Persistence\\{{ module }}RepositoryInterface getRepository()"
-
+            - '@method \{{ organization }}\{{ application }}\{{ module }}\{{ module }}Config getConfig()'
+            - '@method \{{ organization }}\{{ application }}\{{ module }}\Persistence\{{ module }}EntityManagerInterface getEntityManager()'
+            - '@method \{{ organization }}\{{ application }}\{{ module }}\Persistence\{{ module }}RepositoryInterface getRepository()'
     template:
         value: Common/Class.php.twig
-
     subDirectory:
-        value: "Business"
-
+        value: Business
     targetFilename:
-        value: "{{ module }}BusinessFactory.php"
-
+        value: '{{ module }}BusinessFactory.php'
     targetPath:
-        value: "src/{{ organization }}/Zed/{{ module }}/"
-
+        value: 'src/{{ organization }}/Zed/{{ module }}/'
 preSpryks:
     - AddModule
-
 postSpryks:
     - AddZedBusinessFacade
     - AddZedDependencyProvider
-    - AddModuleConfig:
-          arguments:
-              application: "Zed"
+    -
+        AddModuleConfig:
+            arguments:
+                application: Zed

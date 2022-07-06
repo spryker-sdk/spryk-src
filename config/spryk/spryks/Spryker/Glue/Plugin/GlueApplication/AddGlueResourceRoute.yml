@@ -1,22 +1,16 @@
 spryk: resourceRoute
-description: "Adds a new GET Resource to the Glue application."
+description: 'Adds a new GET Resource to the Glue application.'
 mode: both
-
 application: Glue
-
 priority: 1
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     resourceType:
         inherit: true
-
     resourceRouteMethod:
         inherit: true
         values:
@@ -24,13 +18,10 @@ arguments:
             - post
             - delete
             - patch
-
     template:
         value: Glue/GlueRouteResource.php.twig
-
     target:
-        value: "{{ organization }}\\Glue\\{{ module }}\\Plugin\\GlueApplication\\{{ resourceType | dashToCamelCase }}ResourceRoutePlugin"
-
+        value: '{{ organization }}\Glue\{{ module }}\Plugin\GlueApplication\{{ resourceType | dashToCamelCase }}ResourceRoutePlugin'
 preSpryks:
     - AddModule
     - AddGlueResourceRoutePlugin

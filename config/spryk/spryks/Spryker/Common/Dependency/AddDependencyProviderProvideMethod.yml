@@ -1,32 +1,24 @@
 spryk: method
-description: "Adds a new *module*DependencyProvider::provideXDependencies to the *module*DependencyProvider."
+description: 'Adds a new *module*DependencyProvider::provideXDependencies to the *module*DependencyProvider.'
 mode: both
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     application:
         inherit: true
-
     layer:
         inherit: true
-        description: "Optional, only needed for Zed dependency provider. Can be one of: Communication, Business, Persistence."
+        description: 'Optional, only needed for Zed dependency provider. Can be one of: Communication, Business, Persistence.'
         isOptional: true
-
     provideMethod:
-        description: "The callback decides based on the application + the optional layer which method will be used."
+        description: 'The callback decides based on the application + the optional layer which method will be used.'
         callback: DependencyProviderProvideMethod
-
     template:
         value: Common/Dependency/DependencyProviderProvideMethod.php.twig
-
     target:
-        value: "{{ organization }}\\{{ application }}\\{{ module }}\\{{ module }}DependencyProvider"
-
+        value: '{{ organization }}\{{ application }}\{{ module }}\{{ module }}DependencyProvider'
 preSpryks:
     - AddDependencyProvider

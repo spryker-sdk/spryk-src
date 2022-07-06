@@ -1,40 +1,30 @@
 spryk: template
-description: "Adds a new Test Helper."
+description: 'Adds a new Test Helper.'
 mode: both
 level: 2
-
 priority: 1
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     suite:
         inherit: true
-        description: "The name of the suite can be one of: Business, Communication, Persistence, RestApi, BackendApi, FrontendApi."
-
+        description: 'The name of the suite can be one of: Business, Communication, Persistence, RestApi, BackendApi, FrontendApi.'
     application:
         inherit: true
-
     template:
         value: Common/Codeception/TestHelper.php.twig
-
     className:
-        value: "{{ module }}Helper"
-
+        value: '{{ module }}Helper'
     targetFilename:
-        value: "{{ className }}.php"
-
+        value: '{{ className }}.php'
     targetPath:
-        value: "tests/{{ organization }}Test/{{ application }}/{{ module }}/_support/Helper/"
-
+        value: 'tests/{{ organization }}Test/{{ application }}/{{ module }}/_support/Helper/'
 preSpryks:
     - AddSuiteCodeceptionConfiguration
-    - EnableTestHelper:
-        arguments:
-            helperClassName:
-                value: "{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ className }}"
+    -
+        EnableTestHelper:
+            arguments:
+                helperClassName: '{{ organization }}Test\{{ application }}\{{ module }}\Helper\{{ className }}'

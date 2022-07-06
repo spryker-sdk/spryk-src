@@ -1,45 +1,33 @@
 spryk: method
-description: "Adds a new *module* class method."
+description: 'Adds a new *module* class method.'
 mode: both
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: SprykerEco
-
     application:
         inherit: true
         default: Yves
-
     classNamePrefix:
         inherit: true
-
     method:
         inherit: true
-        value: "createSubFormDataProvider"
-
+        value: createSubFormDataProvider
     input:
-        value: ""
-
+        value: ''
     output:
         value: \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface
-
     annotations:
         value:
-            - "{@inheritDoc}"
-            - "@api"
-
+            - '{@inheritDoc}'
+            - '@api'
     subDirectory:
-        value: "Plugin"
-
+        value: Plugin
     template:
         value: Common/Method.php.twig
-
     target:
-        value: "{{ organization }}\\{{ application }}\\{{ module }}\\{{ subDirectory | convertToClassNameFragment }}\\{{ classNamePrefix }}SubFormPlugin"
-
+        value: '{{ organization }}\{{ application }}\{{ module }}\{{ subDirectory | convertToClassNameFragment }}\{{ classNamePrefix }}SubFormPlugin'
 preSpryks:
     - AddSubFormPlugin

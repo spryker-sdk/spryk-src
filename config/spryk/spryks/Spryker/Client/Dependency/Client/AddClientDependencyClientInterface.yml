@@ -1,29 +1,22 @@
 spryk: template
-description: "Adds a new *module*To*dependentModule*ClientInterface."
+description: 'Adds a new *module*To*dependentModule*ClientInterface.'
 mode: both
-deprecated: Use AddDependencyBridgeMethod instead.
-
+deprecated: 'Use AddDependencyBridgeMethod instead.'
 arguments:
     organization:
         inherit: true
         default: Spryker
-
     module:
         inherit: true
-
     dependentModule:
         inherit: true
         moduleFilter:
             application: Client
-
     template:
         value: Client/Dependency/Client/ClientDependencyClientInterface.php.twig
-
     targetFilename:
-        value: "{{ module }}To{{ dependentModule }}ClientInterface.php"
-
+        value: '{{ module }}To{{ dependentModule }}ClientInterface.php'
     targetPath:
-        value: "src/{{ organization }}/Client/{{ module }}/Dependency/Client/"
-
+        value: 'src/{{ organization }}/Client/{{ module }}/Dependency/Client/'
 preSpryks:
     - AddModule

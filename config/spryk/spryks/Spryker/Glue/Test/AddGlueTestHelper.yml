@@ -1,131 +1,95 @@
 spryk: wrapper
-description: "Adds <Resource>Helper."
+description: 'Adds <Resource>Helper.'
 mode: both
 level: 2
 application: Glue
-
 arguments:
     module:
         inherit: true
-
     dataModule:
         inherit: true
-
     organization:
         inherit: true
-        description: "Defines the organization name"
+        description: 'Defines the organization name'
         default: Spryker
-
     application:
         inherit: true
-        description: "Defines the application e.g. Glue"
+        description: 'Defines the application e.g. Glue'
         default: Glue
-
     apiType:
         inherit: true
-        description: "Can be one of: REST or JSON"
-
+        description: 'Can be one of: REST or JSON'
     applicationType:
         inherit: true
-        description: "Can be one of: Backend or Frontend"
-        default: "Backend"
-
+        description: 'Can be one of: Backend or Frontend'
+        default: Backend
     suite:
-        value: "RestApi"
-
+        value: RestApi
     isBulk:
         inherit: true
-        description: "Defines if this resource should work with Collections. When set to true the method will use collections when possible."
+        description: 'Defines if this resource should work with Collections. When set to true the method will use collections when possible.'
         default: false
-
     resource:
         inherit: true
-        description: "Defines the resource name this controller will work with e.g. /customers"
-
+        description: 'Defines the resource name this controller will work with e.g. /customers'
     httpMethod:
         inherit: true
-        description: "The HTTP method e.g. POST"
-
+        description: 'The HTTP method e.g. POST'
     httpResponseCode:
         inherit: true
-        description: "The response code e.g. 200"
-
+        description: 'The response code e.g. 200'
     controller:
-        default: "{{ resource | normalizeResourceName }}ResourceController"
-
+        default: '{{ resource | normalizeResourceName }}ResourceController'
     zedDomainEntity:
         inherit: true
-        description: "Defines the domain entity that should be tested"
-
+        description: 'Defines the domain entity that should be tested'
     resourceDataObject:
         inherit: true
-
 postSpryks:
-    - AddTestHelper:
-        arguments:
-            className:
-                value: "{{ resource | normalizeResourceName | ucfirst }}Helper"
-        excludedSpryks:
-            - EnableTestHelper
-
-    - AddMethod:
-          arguments:
-              httpMethod:
-                  inherit: true
-              isBulk:
-                  inherit: true
-              method:
-                  value: "build{{ resource | normalizeResourceName | ucfirst }}Url"
-              input:
-                  value: "?int ${{ zedDomainEntity | lcfirst }}Identifier = null"
-              output:
-                  value: string
-              body:
-                  value: "return ${{ zedDomainEntity | lcfirst }}Identifier !== null ? $this->build{{ applicationType | ucfirst }}ApiUrl('{{ resource | normalizeResourceName | lcfirst }}/{id}', ['id' => ${{ zedDomainEntity | lcfirst }}Identifier]) : $this->build{{ applicationType | ucfirst }}ApiUrl('{{ resource | normalizeResourceName | lcfirst }}');"
-              target:
-                  value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | ucfirst }}Helper"
-              withInterface:
-                  value: false
-
-    - AddMethod:
+    -
+        AddTestHelper:
+            arguments:
+                className: '{{ resource | normalizeResourceName | ucfirst }}Helper'
+            excludedSpryks:
+                - EnableTestHelper
+    -
+        AddMethod:
+            arguments:
+                httpMethod:
+                    inherit: true
+                isBulk:
+                    inherit: true
+                method: 'build{{ resource | normalizeResourceName | ucfirst }}Url'
+                input: '?int ${{ zedDomainEntity | lcfirst }}Identifier = null'
+                output: string
+                body: 'return ${{ zedDomainEntity | lcfirst }}Identifier !== null ? $this->build{{ applicationType | ucfirst }}ApiUrl(''{{ resource | normalizeResourceName | lcfirst }}/{id}'', [''id'' => ${{ zedDomainEntity | lcfirst }}Identifier]) : $this->build{{ applicationType | ucfirst }}ApiUrl(''{{ resource | normalizeResourceName | lcfirst }}'');'
+                target: '\{{ organization }}Test\{{ application }}\{{ module }}\Helper\{{ resource | normalizeResourceName | ucfirst }}Helper'
+                withInterface: false
+    -
+        AddMethod:
             arguments:
                 applicationType:
                     inherit: true
-                method:
-                    value: "build{{ applicationType }}ApiUrl"
+                method: 'build{{ applicationType }}ApiUrl'
                 input:
-                    value:
-                        - "string $url"
-                        - "array<mixed> $params = []"
-                output:
-                    value: string
-                body:
-                    value: Glue/Test/GlueTestHelper/BuildBackendApiUrlMethod.php.twig
-                target:
-                    value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | ucfirst }}Helper"
-                withInterface:
-                    value: false
-                visibility:
-                    value: protected
-
-    - AddMethod:
+                    - 'string $url'
+                    - 'array<mixed> $params = []'
+                output: string
+                body: Glue/Test/GlueTestHelper/BuildBackendApiUrlMethod.php.twig
+                target: '\{{ organization }}Test\{{ application }}\{{ module }}\Helper\{{ resource | normalizeResourceName | ucfirst }}Helper'
+                withInterface: false
+                visibility: protected
+    -
+        AddMethod:
             arguments:
                 applicationType:
                     inherit: true
-                method:
-                    value: "formatUrl"
+                method: formatUrl
                 input:
-                    value:
-                        - "string $url"
-                        - "array<mixed> $params"
-                output:
-                    value: string
-                body:
-                    value: Glue/Test/GlueTestHelper/FormatUrlMethod.php.twig
-                target:
-                    value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | ucfirst }}Helper"
-                withInterface:
-                    value: false
-                visibility:
-                    value: protected
-
+                    - 'string $url'
+                    - 'array<mixed> $params'
+                output: string
+                body: Glue/Test/GlueTestHelper/FormatUrlMethod.php.twig
+                target: '\{{ organization }}Test\{{ application }}\{{ module }}\Helper\{{ resource | normalizeResourceName | ucfirst }}Helper'
+                withInterface: false
+                visibility: protected

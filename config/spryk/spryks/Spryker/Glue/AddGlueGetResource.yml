@@ -1,80 +1,67 @@
 spryk: structure
-description: "Adds a new GET Resource to the Glue application."
+description: 'Adds a new GET Resource to the Glue application.'
 mode: both
-
 application: Glue
-
 priority: 1
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     resourceType:
         inherit: true
-        default: "{{ module | removeRestApiSuffix | lower }}"
-
+        default: '{{ module | removeRestApiSuffix | lower }}'
     clientModule:
         inherit: true
-
     clientMethod:
         inherit: true
-
     resourceRouteMethod:
-        value: "get"
-
+        value: get
     targetPath:
-        default: "src/{{ organization }}/Glue/{{ module }}/"
-
+        default: 'src/{{ organization }}/Glue/{{ module }}/'
     directories:
         skipOnProjectLevel: true
         value:
-            - ""
-
+            - ''
 preSpryks:
     - AddModule
-
 postSpryks:
-    - AddGlueResourceRoute:
-        arguments:
-            modelSuffix:
-                value: "Reader"
-    - AddGlueDependencyClientBridgeMethod:
-        arguments:
-            dependentModule:
-                value: "{{ clientModule }}"
-            methods:
-                value: [ "{{ clientMethod }}" ]
-    - AddGlueFactoryMethod:
-        arguments:
-            className:
-                value: "{{ resourceType | dashToCamelCase | singularize }}Reader"
-            subDirectory:
-                value: "{{ resourceType | dashToCamelCase | singularize }}"
-            dependencyMethods:
-                value: [ "get{{ clientModule }}Client" ]
-    - AddGlueProcessorModel:
-        arguments:
-            className:
-                value: "{{ resourceType | dashToCamelCase | singularize }}Reader"
-            subDirectory:
-                value: "{{ resourceType | dashToCamelCase | singularize }}"
-            constructorArguments:
-                value: [ "\\{{ organization }}\\Glue\\{{ module }}\\Dependency\\Client\\{{ module }}To{{ clientModule }}ClientInterface ${{ clientModule | lcfirst }}Client" ]
-    - AddGlueControllerGetAction:
-        arguments:
-            controllerMethod:
-                value: "{{ resourceRouteMethod }}"
-                callback: EnsureActionSuffixCallback
-            controller:
-                value: "{{ resourceType | dashToCamelCase }}"
-                callback: EnsureResourceSuffix
-            target:
-                value: "{{ organization }}\\Glue\\{{ module }}\\Controller\\{{ resourceType | dashToCamelCase }}"
-                callback:
-                    - EnsureResourceSuffix
-                    - EnsureControllerSuffixCallback
+    -
+        AddGlueResourceRoute:
+            arguments:
+                modelSuffix: Reader
+    -
+        AddGlueDependencyClientBridgeMethod:
+            arguments:
+                dependentModule: '{{ clientModule }}'
+                methods:
+                    - '{{ clientMethod }}'
+    -
+        AddGlueFactoryMethod:
+            arguments:
+                className: '{{ resourceType | dashToCamelCase | singularize }}Reader'
+                subDirectory: '{{ resourceType | dashToCamelCase | singularize }}'
+                dependencyMethods:
+                    - 'get{{ clientModule }}Client'
+    -
+        AddGlueProcessorModel:
+            arguments:
+                className: '{{ resourceType | dashToCamelCase | singularize }}Reader'
+                subDirectory: '{{ resourceType | dashToCamelCase | singularize }}'
+                constructorArguments:
+                    - '\{{ organization }}\Glue\{{ module }}\Dependency\Client\{{ module }}To{{ clientModule }}ClientInterface ${{ clientModule | lcfirst }}Client'
+    -
+        AddGlueControllerGetAction:
+            arguments:
+                controllerMethod:
+                    value: '{{ resourceRouteMethod }}'
+                    callback: EnsureActionSuffixCallback
+                controller:
+                    value: '{{ resourceType | dashToCamelCase }}'
+                    callback: EnsureResourceSuffix
+                target:
+                    value: '{{ organization }}\Glue\{{ module }}\Controller\{{ resourceType | dashToCamelCase }}'
+                    callback:
+                        - EnsureResourceSuffix
+                        - EnsureControllerSuffixCallback

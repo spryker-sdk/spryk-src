@@ -1,26 +1,19 @@
 spryk: update-yml
-description: "Updates the *module* test configuration and adds the suite configuration for Business tests."
+description: 'Updates the *module* test configuration and adds the suite configuration for Business tests.'
 mode: both
-
 arguments:
     module:
         inherit: true
-
     organization:
         inherit: true
         default: Spryker
-
     template:
         value: Common/Codeception/SuiteCodeceptionConfiguration.yml.twig
-
     afterElement:
         value: coverage
-
     addToElement:
         value: suites
-
     targetPath:
-        value: "tests/{{ organization }}Test/{{ application }}/{{ module }}/codeception.yml"
-
+        value: 'tests/{{ organization }}Test/{{ application }}/{{ module }}/codeception.yml'
 preSpryks:
     - AddSuiteCodeceptionConfiguration

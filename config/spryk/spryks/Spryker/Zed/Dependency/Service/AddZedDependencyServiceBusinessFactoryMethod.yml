@@ -1,41 +1,31 @@
 spryk: method
-description: "Adds a Service dependency method to the *module*BusinessFactory."
+description: 'Adds a Service dependency method to the *module*BusinessFactory.'
 mode: both
-deprecated: Use AddDependencyBridgeMethod instead.
-
+deprecated: 'Use AddDependencyBridgeMethod instead.'
 arguments:
     module:
         inherit: true
         moduleFilter:
             application: Zed
-
     dependentModule:
         inherit: true
         moduleFilter:
             application: Service
-
     organization:
         inherit: true
         default: Spryker
-
     factoryMethod:
-        value: "get{{ dependentModule }}Service"
-
+        value: 'get{{ dependentModule }}Service'
     template:
         value: Zed/Dependency/Service/ZedDependencyServiceBusinessFactoryMethod.php.twig
-
     target:
-        value: "{{ organization }}\\Zed\\{{ module }}\\Business\\{{ module }}BusinessFactory"
-
+        value: '{{ organization }}\Zed\{{ module }}\Business\{{ module }}BusinessFactory'
 preSpryks:
     - AddZedBusinessFactory
-
 postSpryks:
-    - AddZedDependencyServiceDependencyProviderConstant:
-        arguments:
-            name:
-                value: "SERVICE_{{ dependentModule | underscored | upper }}"
-            value:
-                value: "SERVICE_{{ dependentModule | underscored | upper }}"
-            visibility:
-                value: "public"
+    -
+        AddZedDependencyServiceDependencyProviderConstant:
+            arguments:
+                name: 'SERVICE_{{ dependentModule | underscored | upper }}'
+                value: 'SERVICE_{{ dependentModule | underscored | upper }}'
+                visibility: public

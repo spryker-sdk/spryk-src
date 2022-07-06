@@ -1,39 +1,28 @@
 spryk: method
-description: "Adds a Client dependency method to the *module*Factory."
+description: 'Adds a Client dependency method to the *module*Factory.'
 mode: both
-
 arguments:
     organization:
         inherit: true
         default: SprykerShop
-
     module:
         inherit: true
-
     dependentModule:
         inherit: true
         moduleFilter:
             application: Client
-
     factoryMethod:
-        value: "get{{ dependentModule }}Client"
-
+        value: 'get{{ dependentModule }}Client'
     template:
         value: Yves/Dependency/Client/YvesDependencyClientFactoryMethod.php.twig
-
     target:
-        value: "{{ organization }}\\Yves\\{{ module }}\\{{ module }}Factory"
-
+        value: '{{ organization }}\Yves\{{ module }}\{{ module }}Factory'
 preSpryks:
     - AddYvesFactory
-
 postSpryks:
-    - AddYvesDependencyClientDependencyProviderConstant:
-        arguments:
-            name:
-                value: "CLIENT_{{ dependentModule | underscored | upper }}"
-            value:
-                value: "CLIENT_{{ dependentModule | underscored | upper }}"
-            visibility:
-                value: "public"
-
+    -
+        AddYvesDependencyClientDependencyProviderConstant:
+            arguments:
+                name: 'CLIENT_{{ dependentModule | underscored | upper }}'
+                value: 'CLIENT_{{ dependentModule | underscored | upper }}'
+                visibility: public
