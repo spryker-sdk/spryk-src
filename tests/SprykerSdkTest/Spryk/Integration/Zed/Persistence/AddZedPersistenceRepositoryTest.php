@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Zed\Persistence;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\ClassName;
 
 /**
  * Auto-generated group annotations
@@ -36,11 +37,7 @@ class AddZedPersistenceRepositoryTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Persistence/FooBarRepository.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Persistence\AbstractRepository');
+        $this->tester->assertClassOrInterfaceExtends(ClassName::REPOSITORY, ClassName::ZED_ABSTRACT_REPOSITORY);
     }
 
     /**
@@ -53,11 +50,10 @@ class AddZedPersistenceRepositoryTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory() . 'Persistence/FooBarRepository.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Persistence\AbstractRepository');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_ZED_REPOSITORY,
+            ClassName::ZED_ABSTRACT_REPOSITORY,
+        );
     }
 
     /**
@@ -75,10 +71,6 @@ class AddZedPersistenceRepositoryTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Zed') . 'Persistence/FooBarRepository.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\FooBar\Persistence\FooBarRepository');
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_ZED_REPOSITORY, ClassName::ZED_REPOSITORY);
     }
 }

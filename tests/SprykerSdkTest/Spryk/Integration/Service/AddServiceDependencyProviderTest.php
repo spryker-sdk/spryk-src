@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Service;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\ClassName;
 
 /**
  * Auto-generated group annotations
@@ -35,11 +36,10 @@ class AddServiceDependencyProviderTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Service/FooBar/FooBarDependencyProvider.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Service\Kernel\AbstractBundleDependencyProvider');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::SERVICE_DEPENDENCY_PROVIDER,
+            ClassName::SERVICE_ABSTRACT_DEPENDENCY_PROVIDER,
+        );
     }
 
     /**
@@ -52,11 +52,10 @@ class AddServiceDependencyProviderTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Service') . 'FooBarDependencyProvider.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Service\Kernel\AbstractBundleDependencyProvider');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_SERVICE_DEPENDENCY_PROVIDER,
+            ClassName::SERVICE_ABSTRACT_DEPENDENCY_PROVIDER,
+        );
     }
 
     /**
@@ -74,10 +73,9 @@ class AddServiceDependencyProviderTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Service') . 'FooBarDependencyProvider.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Service\FooBar\FooBarDependencyProvider');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_SERVICE_DEPENDENCY_PROVIDER,
+            ClassName::SERVICE_DEPENDENCY_PROVIDER,
+        );
     }
 }

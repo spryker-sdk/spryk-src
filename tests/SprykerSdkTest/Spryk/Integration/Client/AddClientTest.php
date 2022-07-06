@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Client;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\ClassName;
 
 /**
  * Auto-generated group annotations
@@ -35,11 +36,7 @@ class AddClientTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Client/FooBar/FooBarClient.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Client\Kernel\AbstractClient');
+        $this->tester->assertClassOrInterfaceExtends(ClassName::CLIENT, ClassName::ABSTRACT_CLIENT);
     }
 
     /**
@@ -52,11 +49,7 @@ class AddClientTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Client') . 'FooBarClient.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Client\Kernel\AbstractClient');
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_CLIENT, ClassName::ABSTRACT_CLIENT);
     }
 
     /**
@@ -74,10 +67,6 @@ class AddClientTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Client') . 'FooBarClient.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Client\FooBar\FooBarClient');
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_CLIENT, ClassName::CLIENT);
     }
 }
