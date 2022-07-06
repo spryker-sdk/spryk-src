@@ -322,6 +322,7 @@ class ArgumentResolver implements ArgumentResolverInterface
      * Prepares argument values from different types of syntax to work correctly later.
      *
      * @param mixed $argumentDefinition
+     *
      * @return array
      */
     protected function normalizeArgumentDefinition($argumentDefinition): array
@@ -338,7 +339,7 @@ class ArgumentResolver implements ArgumentResolverInterface
                 // Remove all elements of values, so that later we can put them on the correct key
                 $argumentDefinition = array_intersect_key(
                     $argumentDefinition,
-                    array_flip(array_filter(array_keys($argumentDefinition), 'is_numeric'))
+                    array_flip(array_filter(array_keys($argumentDefinition), 'is_numeric')),
                 );
             }
 
@@ -346,9 +347,11 @@ class ArgumentResolver implements ArgumentResolverInterface
                 case (!isset($argumentDefinition['value']) && count($argumentDefinitionOnlyValue)):
                     $argumentDefinition['value'] = $argumentDefinitionOnlyValue;
                     return $argumentDefinition;
+
                 case (isset($argumentDefinition['default'])):
                 case (isset($argumentDefinition['value'])):
                     return $argumentDefinition;
+
                 default:
                     $argumentDefinition['value'] = null;
                     return $argumentDefinition;
