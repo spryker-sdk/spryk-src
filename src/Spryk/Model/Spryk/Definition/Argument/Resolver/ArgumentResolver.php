@@ -346,14 +346,15 @@ class ArgumentResolver implements ArgumentResolverInterface
             switch (true) {
                 case (!isset($argumentDefinition['value']) && count($argumentDefinitionOnlyValue)):
                     $argumentDefinition['value'] = $argumentDefinitionOnlyValue;
-                    return $argumentDefinition;
 
+                    return $argumentDefinition;
                 case (isset($argumentDefinition['default'])):
                 case (isset($argumentDefinition['value'])):
-                    return $argumentDefinition;
 
+                    return $argumentDefinition;
                 default:
                     $argumentDefinition['value'] = null;
+
                     return $argumentDefinition;
             }
         }
