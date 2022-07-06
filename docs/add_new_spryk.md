@@ -53,6 +53,31 @@ postSpryks:
                   value: "App/Registry/ZedControllerDisconnectMethod.php.twig"
 ```
 
+We also have three syntax options for overriding the definition of spryks in the `preSpryks`/`postSpryks` sections:
+- With a `value` key for use with any additional configuration.
+- Without a value key, if the argument has only a `value` without anything else.
+- Without `value`, but with keys for configuration.
+
+Example:
+
+```yaml
+postSpryks:
+    - AddZedPersistenceRepositoryMethod:
+          arguments:
+              repositoryMethod:
+                  value: "apply{{ domainEntity }}Sorting"
+              visibility: "protected"
+              input:
+                  - "\\Orm\\Zed\\{{ module }}\\Persistence\\Spy{{ domainEntity }}Query ${{ domainEntity | lcfirst }}Query"
+                  - "\\Generated\\Shared\\Transfer\\{{ domainEntity }}CriteriaTransfer ${{ domainEntity | lcfirst }}CriteriaTransfer"
+              output: "\\Orm\\Zed\\{{ module }}\\Persistence\\Spy{{ domainEntity }}Query"
+              domainEntity:
+                  inherit: true
+              body:
+                  allowOverride: true
+                  value: Zed/Persistence/Repository/DomainEntity/ApplySorting.php.twig
+```
+
 ### Conditional Spryks
 
 In some cases, you need to run a Spryk only when a specific condition is matched. For example one of the passed arguments has a specific value. For these cases, you can use the `condition` option.

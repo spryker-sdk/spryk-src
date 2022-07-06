@@ -319,13 +319,40 @@ class ArgumentResolver implements ArgumentResolverInterface
     }
 
     /**
-     * @param $argumentDefinition
+     * Prepares argument values from different types of syntax to work correctly later.
+     *
+     * @param mixed $argumentDefinition
      * @return array
      */
     protected function normalizeArgumentDefinition($argumentDefinition): array
     {
         if (is_array($argumentDefinition)) {
-            return $argumentDefinition;
+            // Collect all value elements, expecting that they will have only numeric keys
+            $argumentDefinitionOnlyValueKeys = array_filter(array_keys($argumentDefinition), 'is_int');
+            // Extract the values based on the collected list of keys
+            $argumentDefinitionOnlyValue = array_map(function ($key) use ($argumentDefinition) {
+                return $argumentDefinition[$key];
+            }, $argumentDefinitionOnlyValueKeys);
+
+            if ($argumentDefinitionOnlyValue) {
+                // Remove all elements of values, so that later we can put them on the correct key
+                $argumentDefinition = array_intersect_key(
+                    $argumentDefinition,
+                    array_flip(array_filter(array_keys($argumentDefinition), 'is_numeric'))
+                );
+            }
+
+            switch (true) {
+                case (!isset($argumentDefinition['value']) && count($argumentDefinitionOnlyValue)):
+                    $argumentDefinition['value'] = $argumentDefinitionOnlyValue;
+                    return $argumentDefinition;
+                case (isset($argumentDefinition['default'])):
+                case (isset($argumentDefinition['value'])):
+                    return $argumentDefinition;
+                default:
+                    $argumentDefinition['value'] = null;
+                    return $argumentDefinition;
+            }
         }
 
         return [
