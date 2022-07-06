@@ -38,6 +38,7 @@ class AddGlueResourceMethodResponseTest extends Unit
      * @param string|null $dataModule
      * @param string|null $zedDomainEntity
      * @param string|null $resourceDataObject
+     * @param string|null $resource
      *
      * @return void
      */
@@ -246,5 +247,44 @@ class AddGlueResourceMethodResponseTest extends Unit
     protected function getExpectedTestControllerMethodName(string $httpMethod, int $httpResponseCode, ?bool $isBulk): string
     {
         return sprintf('requestFooBar%s%sReturnsHttpResponseCode%s', ucfirst($httpMethod), ($isBulk) ? 'Collection' : '', $httpResponseCode);
+    }
+
+    /**
+     * @dataProvider resourcePathControllerProvider
+     *
+     * @param string $resource
+     * @param string $expectedControllerName
+     *
+     * @return void
+     */
+    public function testAddsControllerBasedOnResourcePath(string $resource, string $expectedControllerName): void
+    {
+        $httpMethod = 'get';
+        $httpResponseCode = 200;
+
+        $commandOptions = [
+            '--resource' => $resource,
+            '--httpMethod' => $httpMethod,
+            '--httpResponseCode' => $httpResponseCode,
+        ];
+
+        $this->tester->run($this, $commandOptions);
+
+        $indexController = GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER;
+        $bazController = str_replace('\\Controller\\Index', '\\Controller\\' . $expectedControllerName, $indexController);
+
+        $this->tester->assertClassExists($bazController);
+    }
+
+    /**
+     * @return \array<array<string>>
+     */
+    public function resourcePathControllerProvider(): array
+    {
+        return [
+            ['/foo-bars', 'Index'],
+            ['/foo-bars/foo', 'Foo'],
+            ['/foo-bars/baz', 'Baz'],
+        ];
     }
 }
