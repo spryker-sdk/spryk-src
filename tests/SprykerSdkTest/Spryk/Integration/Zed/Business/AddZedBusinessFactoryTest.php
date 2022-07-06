@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Zed\Business;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\ClassName;
 
 /**
  * Auto-generated group annotations
@@ -36,11 +37,7 @@ class AddZedBusinessFactoryTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Business/FooBarBusinessFactory.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Business\AbstractBusinessFactory');
+        $this->tester->assertClassOrInterfaceExtends(ClassName::ZED_BUSINESS_FACTORY, ClassName::ZED_ABSTRACT_FACTORY);
     }
 
     /**
@@ -53,11 +50,10 @@ class AddZedBusinessFactoryTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory() . 'Business/FooBarBusinessFactory.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Business\AbstractBusinessFactory');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_ZED_BUSINESS_FACTORY,
+            ClassName::ZED_ABSTRACT_FACTORY,
+        );
     }
 
     /**
@@ -75,10 +71,9 @@ class AddZedBusinessFactoryTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Zed') . 'Business/FooBarBusinessFactory.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\FooBar\Business\FooBarBusinessFactory');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_DATA_IMPORT_BUSINESS_FACTORY,
+            ClassName::ZED_BUSINESS_FACTORY,
+        );
     }
 }
