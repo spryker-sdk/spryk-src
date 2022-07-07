@@ -38,6 +38,7 @@ class SprykRunPreSprykWithFlexibleArgumentsKeyValueTest extends Unit
      */
     public function testExecutesPreSprykWithoutValueKeyInArgument(): void
     {
+        // Arrange
         /** @var \SprykerSdk\Spryk\Console\SprykRunConsole $command */
         $command = $this->tester->getClass(SprykRunConsole::class);
         $tester = $this->tester->getConsoleTester($command);
@@ -49,8 +50,10 @@ class SprykRunPreSprykWithFlexibleArgumentsKeyValueTest extends Unit
             '--organization' => 'Spryker',
         ];
 
+        // Act
         $tester->execute($arguments);
 
+        // Assert
         $this->assertDirectoryExists($this->tester->getVirtualDirectory() . 'vendor/spryker/spryker/Bundles/TestFooBooModule/src');
     }
 

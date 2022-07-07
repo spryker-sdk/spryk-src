@@ -18,32 +18,45 @@ class ArgumentDefinitionNormalizer implements ArgumentDefinitionNormalizerInterf
      */
     public function normalizeArgumentDefinition($argumentDefinition): array
     {
-        if (is_array($argumentDefinition)) {
-            // Collect all value elements, expecting that they will have only numeric keys
-            $argumentDefinitionOnlyValueKeys = array_filter(array_keys($argumentDefinition), 'is_int');
-            // Extract the values based on the collected list of keys
-            $argumentDefinitionOnlyValue = array_map(function ($key) use ($argumentDefinition) {
-                return $argumentDefinition[$key];
-            }, $argumentDefinitionOnlyValueKeys);
-
-            if ($argumentDefinitionOnlyValue) {
-                // Remove all elements of values, so that later we can put them on the correct key
-                foreach ($argumentDefinition as $fieldKey => $value) {
-                    if (is_int($fieldKey)) {
-                        unset($argumentDefinition[$fieldKey]);
-                    }
-                }
-            }
-
-            if (!isset($argumentDefinition['value']) && count($argumentDefinitionOnlyValue)) {
-                $argumentDefinition['value'] = $argumentDefinitionOnlyValue;
-            }
-
-            return $argumentDefinition;
+        if (!is_array($argumentDefinition)) {
+            return [
+                'value' => $argumentDefinition,
+            ];
         }
 
-        return [
-            'value' => $argumentDefinition,
-        ];
+        // Collect all value elements, expecting that they will have only numeric keys
+        $argumentDefinitionOnlyValueKeys = array_filter(array_keys($argumentDefinition), 'is_int');
+        // Extract the values based on the collected list of keys
+        $argumentDefinitionOnlyValue = array_map(function ($key) use ($argumentDefinition) {
+            return $argumentDefinition[$key];
+        }, $argumentDefinitionOnlyValueKeys);
+
+        if ($argumentDefinitionOnlyValue) {
+            $argumentDefinition = $this->getCleanedArgumentDefinition($argumentDefinition);
+        }
+
+        if (!isset($argumentDefinition['value']) && count($argumentDefinitionOnlyValue)) {
+            $argumentDefinition['value'] = $argumentDefinitionOnlyValue;
+        }
+
+        return $argumentDefinition;
+    }
+
+    /**
+     * Removes all elements of values, so that later we can put them on the correct key.
+     *
+     * @param $argumentDefinition
+     *
+     * @return array
+     */
+    protected function getCleanedArgumentDefinition($argumentDefinition): array
+    {
+        foreach ($argumentDefinition as $fieldKey => $value) {
+            if (is_int($fieldKey)) {
+                unset($argumentDefinition[$fieldKey]);
+            }
+        }
+
+        return $argumentDefinition;
     }
 }

@@ -33,121 +33,48 @@ class ArgumentDefinitionReturnTest extends Unit
     protected SprykTester $tester;
 
     /**
-     * @return void
+     * @return string[]
      */
-    public function testNormalizeArgumentDefinitionReturnsCorrectValueWithArgumentWithValueKey(): void
+    protected function getArgumentWithValueKey(): array
     {
-        // Arrange
-        $argumentDefinitionNormalizer = $this->getArgumentDefinitionNormalizer();
-        $normalizedArguments = [];
-
-        $arguments = [
-            'organization' => [
-                'value' => 'Pyz',
+        return [
+            [
+                ['value' => 'project'],
+                ['value' => 'project'],
             ],
-            'body' => [
-                'value' => [
-                    'Foo',
-                    'Bar',
-                ],
+            [
+                'project',
+                ['value' => 'project'],
             ],
-        ];
-
-        $expectedResult = [
-            'organization' => [
-                'value' => 'Pyz',
+            [
+                ['inherit' => 1],
+                ['inherit' => 1],
             ],
-            'body' => [
-                'value' => [
-                    'Foo',
-                    'Bar',
-                ],
+            [
+                ['inherit' => 1, 'value' => 'Foo'],
+                ['inherit' => 1, 'value' => 'Foo'],
+            ],
+            [
+                ['Foo', 'Bar'],
+                ['value' => ['Foo', 'Bar']],
             ],
         ];
-
-        // Act
-        foreach ($arguments as $argumentName => $argumentDefinition) {
-            $normalizedArguments[$argumentName] = $argumentDefinitionNormalizer->normalizeArgumentDefinition($argumentDefinition);
-        }
-
-        // Assert
-        $this->assertSame($expectedResult, $normalizedArguments);
     }
 
     /**
+     * @dataProvider getArgumentWithValueKey
+     *
+     * @param $argumentDefinition
+     * @param $expectedResult
      * @return void
      */
-    public function testNormalizeArgumentDefinitionReturnsCorrectValueWithArgumentWithoutValueKey(): void
+    public function testNormalizeArgumentDefinitionReturnsCorrectValueWithAllPossibleCase($argumentDefinition, $expectedResult): void
     {
         // Arrange
         $argumentDefinitionNormalizer = $this->getArgumentDefinitionNormalizer();
-        $normalizedArguments = [];
-
-        $arguments = [
-            'organization' => 'Pyz',
-            'mode' => 'project',
-            'body' => [
-                'Foo',
-                'Bar',
-            ],
-        ];
-
-        $expectedResult = [
-            'organization' => [
-                'value' => 'Pyz',
-            ],
-            'mode' => [
-                'value' => 'project',
-            ],
-            'body' => [
-                'value' => [
-                    'Foo',
-                    'Bar',
-                ],
-            ],
-        ];
 
         // Act
-        foreach ($arguments as $argumentName => $argumentDefinition) {
-            $normalizedArguments[$argumentName] = $argumentDefinitionNormalizer->normalizeArgumentDefinition($argumentDefinition);
-        }
-
-        // Assert
-        $this->assertSame($expectedResult, $normalizedArguments);
-    }
-
-    /**
-     * @return void
-     */
-    public function testNormalizeArgumentDefinitionReturnsCorrectValueWithArgumentWithValueKeyAndWithOtherConfiguration(): void
-    {
-        // Arrange
-        $argumentDefinitionNormalizer = $this->getArgumentDefinitionNormalizer();
-        $normalizedArguments = [];
-        $arguments = [
-            'organization' => [
-                'inherit' => 1,
-                'value' => 'Pyz',
-            ],
-            'mode' => [
-                'value' => 'project',
-            ],
-        ];
-
-        $expectedResult = [
-            'organization' => [
-                'inherit' => 1,
-                'value' => 'Pyz',
-            ],
-            'mode' => [
-                'value' => 'project',
-            ],
-        ];
-
-        // Act
-        foreach ($arguments as $argumentName => $argumentDefinition) {
-            $normalizedArguments[$argumentName] = $argumentDefinitionNormalizer->normalizeArgumentDefinition($argumentDefinition);
-        }
+        $normalizedArguments = $argumentDefinitionNormalizer->normalizeArgumentDefinition($argumentDefinition);
 
         // Assert
         $this->assertSame($expectedResult, $normalizedArguments);
@@ -158,6 +85,9 @@ class ArgumentDefinitionReturnTest extends Unit
      */
     protected function getArgumentDefinitionNormalizer(): ArgumentDefinitionNormalizerInterface
     {
-        return new ArgumentDefinitionNormalizer();
+        /** @var \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Normalizer\ArgumentDefinitionNormalizerInterface $argumentDefinitionNormalizer */
+        $argumentDefinitionNormalizer = $this->tester->getClass(ArgumentDefinitionNormalizerInterface::class);
+
+        return $argumentDefinitionNormalizer;
     }
 }
