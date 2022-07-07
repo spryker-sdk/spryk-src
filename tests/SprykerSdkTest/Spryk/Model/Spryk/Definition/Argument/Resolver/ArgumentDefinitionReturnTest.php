@@ -12,7 +12,6 @@ use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Normalizer\ArgumentDefiniti
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Normalizer\ArgumentDefinitionNormalizerInterface;
 use SprykerSdkTest\SprykIntegrationTester;
 
-
 /**
  * Auto-generated group annotations
  *
@@ -33,6 +32,9 @@ class ArgumentDefinitionReturnTest extends Unit
      */
     protected SprykIntegrationTester $tester;
 
+    /**
+     * @return void
+     */
     public function testNormalizeArgumentDefinitionReturnsCorrectValueWithArgumentWithValueKey(): void
     {
         // Arrange
@@ -72,6 +74,9 @@ class ArgumentDefinitionReturnTest extends Unit
         $this->assertSame($expectedResult, $normalizedArguments);
     }
 
+    /**
+     * @return void
+     */
     public function testNormalizeArgumentDefinitionReturnsCorrectValueWithArgumentWithoutValueKey(): void
     {
         // Arrange
@@ -111,6 +116,9 @@ class ArgumentDefinitionReturnTest extends Unit
         $this->assertSame($expectedResult, $normalizedArguments);
     }
 
+    /**
+     * @return void
+     */
     public function testNormalizeArgumentDefinitionReturnsCorrectValueWithArgumentWithValueKeyAndWithOtherConfiguration(): void
     {
         // Arrange
