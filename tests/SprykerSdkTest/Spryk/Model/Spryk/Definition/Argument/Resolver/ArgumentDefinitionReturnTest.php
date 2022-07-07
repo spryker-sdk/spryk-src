@@ -10,7 +10,7 @@ namespace SprykerSdkTest\Spryk\Model\Spryk\Definition\Argument\Resolver;
 use Codeception\Test\Unit;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Normalizer\ArgumentDefinitionNormalizer;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Normalizer\ArgumentDefinitionNormalizerInterface;
-use SprykerSdkTest\SprykIntegrationTester;
+use SprykerSdkTest\SprykTester;
 
 /**
  * Auto-generated group annotations
@@ -28,9 +28,9 @@ use SprykerSdkTest\SprykIntegrationTester;
 class ArgumentDefinitionReturnTest extends Unit
 {
     /**
-     * @var \SprykerSdkTest\SprykIntegrationTester
+     * @var \SprykerSdkTest\SprykTester
      */
-    protected SprykIntegrationTester $tester;
+    protected SprykTester $tester;
 
     /**
      * @return void
