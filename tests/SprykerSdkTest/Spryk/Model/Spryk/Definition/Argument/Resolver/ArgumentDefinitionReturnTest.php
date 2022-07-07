@@ -34,7 +34,7 @@ class ArgumentDefinitionReturnTest extends Unit
     /**
      * @return array<string>
      */
-    protected function getArgumentWithValueKey(): array
+    public function getArgumentDefinitions(): array
     {
         return [
             [
@@ -61,7 +61,7 @@ class ArgumentDefinitionReturnTest extends Unit
     }
 
     /**
-     * @dataProvider getArgumentWithValueKey
+     * @dataProvider getArgumentDefinitions
      *
      * @param mixed $argumentDefinition
      * @param mixed $expectedResult
