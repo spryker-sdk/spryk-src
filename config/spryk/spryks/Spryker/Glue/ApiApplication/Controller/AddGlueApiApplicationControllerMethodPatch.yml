@@ -73,8 +73,6 @@ postSpryks:
           arguments:
               method:
                   value: "patchAction"
-              input:
-                  inherit: true
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               dataModule:

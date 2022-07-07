@@ -77,8 +77,6 @@ postSpryks:
           arguments:
               method:
                   value: "getCollectionAction"
-              input:
-                  inherit: true
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               dataModule:
