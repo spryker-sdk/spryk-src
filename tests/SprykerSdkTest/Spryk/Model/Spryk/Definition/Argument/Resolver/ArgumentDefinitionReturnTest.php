@@ -8,7 +8,6 @@
 namespace SprykerSdkTest\Spryk\Model\Spryk\Definition\Argument\Resolver;
 
 use Codeception\Test\Unit;
-use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Normalizer\ArgumentDefinitionNormalizer;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Normalizer\ArgumentDefinitionNormalizerInterface;
 use SprykerSdkTest\SprykTester;
 
@@ -33,7 +32,7 @@ class ArgumentDefinitionReturnTest extends Unit
     protected SprykTester $tester;
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getArgumentWithValueKey(): array
     {
