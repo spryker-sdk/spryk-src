@@ -45,11 +45,11 @@ class ArgumentDefinitionNormalizer implements ArgumentDefinitionNormalizerInterf
     /**
      * Removes all elements of values, so that later we can put them on the correct key.
      *
-     * @param $argumentDefinition
+     * @param array $argumentDefinition
      *
      * @return array
      */
-    protected function getCleanedArgumentDefinition($argumentDefinition): array
+    protected function getCleanedArgumentDefinition(array $argumentDefinition): array
     {
         foreach ($argumentDefinition as $fieldKey => $value) {
             if (is_int($fieldKey)) {

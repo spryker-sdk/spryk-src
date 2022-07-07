@@ -63,8 +63,8 @@ class ArgumentDefinitionReturnTest extends Unit
     /**
      * @dataProvider getArgumentWithValueKey
      *
-     * @param $argumentDefinition
-     * @param $expectedResult
+     * @param mixed $argumentDefinition
+     * @param mixed $expectedResult
      * @return void
      */
     public function testNormalizeArgumentDefinitionReturnsCorrectValueWithAllPossibleCase($argumentDefinition, $expectedResult): void
