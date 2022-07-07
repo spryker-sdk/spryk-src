@@ -9,6 +9,7 @@ namespace SprykerSdkTest\Module;
 
 use Codeception\Module;
 use Codeception\Stub;
+use Codeception\Stub\Expected;
 use Codeception\Test\Unit;
 use Codeception\TestInterface;
 use org\bovigo\vfs\vfsStream;
@@ -328,5 +329,21 @@ class SprykHelper extends Module
         $symfony = $this->getModule('Symfony');
 
         return $symfony->_getContainer();
+    }
+
+    /**
+     * @param \Codeception\Test\Unit $testClass
+     * @param string $class
+     * @param int $expectedNumberOfCalls
+     *
+     * @return void
+     */
+    public function getMockWithExpectedNumberOfMethodCalls(Unit $testClass, string $class, int $expectedNumberOfCalls): void
+    {
+        $commandMock = Stub::make($class, [
+            'execute' => Expected::exactly($expectedNumberOfCalls),
+        ], $testClass);
+
+        $this->setDependency($class, $commandMock);
     }
 }

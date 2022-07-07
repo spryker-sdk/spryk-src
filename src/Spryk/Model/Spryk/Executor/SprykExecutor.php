@@ -77,6 +77,11 @@ class SprykExecutor implements SprykExecutorInterface
     protected ConditionMatcherInterface $conditionMatcher;
 
     /**
+     * @var array<string, \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface>
+     */
+    protected array $postCommandCache = [];
+
+    /**
      * @param \SprykerSdk\Spryk\SprykConfig $sprykConfig
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Builder\SprykDefinitionBuilderInterface $definitionBuilder
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Collection\SprykBuilderCollectionInterface $sprykBuilderCollection
@@ -133,6 +138,7 @@ class SprykExecutor implements SprykExecutorInterface
         $this->mainSprykDefinitionMode = $this->getSprykDefinitionMode($sprykDefinition, $style);
 
         $this->buildSpryk($sprykDefinition, $style);
+        $this->executePostCommands($style);
 
         $this->dumpFiles();
         $this->writeFiles($style);
@@ -190,7 +196,7 @@ class SprykExecutor implements SprykExecutorInterface
         $this->executeSpryks($sprykDefinition, $style);
         $this->executeSpryk($sprykDefinition, $style);
         $this->executePostSpryks($sprykDefinition, $style);
-        $this->executePostCommands($sprykDefinition, $style);
+        $this->cachePostCommands($sprykDefinition);
 
         $style->endSpryk($sprykDefinition);
     }
@@ -297,24 +303,37 @@ class SprykExecutor implements SprykExecutorInterface
     }
 
     /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
+     * For performance reasons this method must be executed after all Spryks were executed.
+     *
      * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
      *
      * @return void
      */
-    protected function executePostCommands(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): void
+    protected function executePostCommands(SprykStyleInterface $style): void
+    {
+        $style->commandsEventReport('Post commands start');
+
+        foreach ($this->postCommandCache as $postCommand => $sprykDefinition) {
+            $this->executeCommand($postCommand, $sprykDefinition, $style);
+        }
+
+        $style->commandsEventReport('Post commands end');
+    }
+
+    /**
+     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
+     *
+     * @return void
+     */
+    protected function cachePostCommands(SprykDefinitionInterface $sprykDefinition): void
     {
         if (!$sprykDefinition->getPostCommands()) {
             return;
         }
 
-        $style->commandsEventReport('Post commands start');
-
-        foreach ($sprykDefinition->getPostCommands() as $postCommandName) {
-            $this->executeCommand($postCommandName, $sprykDefinition, $style);
+        foreach ($sprykDefinition->getPostCommands() as $postCommand) {
+            $this->postCommandCache[$postCommand] = $sprykDefinition;
         }
-
-        $style->commandsEventReport('Post commands end');
     }
 
     /**
