@@ -56,6 +56,13 @@ class TemplateRenderer implements TemplateRendererInterface
      */
     public function __construct(Environment $twig, array $extensions)
     {
+        echo PHP_EOL;
+        echo PHP_EOL;
+
+        echo '<pre>' . print_r(count($extensions), true) . '</pre>';
+        echo PHP_EOL;
+        echo PHP_EOL;
+        echo PHP_EOL;
         foreach ($extensions as $extension) {
             if ($this->isExcludedExtension($extension)) {
                 continue;

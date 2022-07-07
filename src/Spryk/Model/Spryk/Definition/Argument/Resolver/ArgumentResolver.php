@@ -9,6 +9,7 @@ namespace SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Resolver;
 
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Argument;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface;
+use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Normalizer\ArgumentDefinitionNormalizerInterface;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Superseder\SupersederInterface;
 use SprykerSdk\Spryk\SprykConfig;
 use SprykerSdk\Spryk\Style\SprykStyleInterface;
@@ -34,15 +35,23 @@ class ArgumentResolver implements ArgumentResolverInterface
     protected SprykStyleInterface $style;
 
     /**
+     * @var \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Normalizer\ArgumentDefinitionNormalizerInterface
+     */
+    protected ArgumentDefinitionNormalizerInterface $argumentDefinitionNormalizer;
+
+    /**
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $argumentCollection
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Superseder\SupersederInterface $superseder
+     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Normalizer\ArgumentDefinitionNormalizerInterface $argumentDefinitionNormalizer
      */
     public function __construct(
         ArgumentCollectionInterface $argumentCollection,
-        SupersederInterface $superseder
+        SupersederInterface $superseder,
+        ArgumentDefinitionNormalizerInterface $argumentDefinitionNormalizer
     ) {
         $this->argumentCollection = $argumentCollection;
         $this->superseder = $superseder;
+        $this->argumentDefinitionNormalizer = $argumentDefinitionNormalizer;
     }
 
     /**
@@ -74,7 +83,7 @@ class ArgumentResolver implements ArgumentResolverInterface
             $argument = $this->resolveArgument(
                 $argumentName,
                 $sprykName,
-                $this->normalizeArgumentDefinition($argumentDefinition),
+                $this->argumentDefinitionNormalizer->normalizeArgumentDefinition($argumentDefinition),
                 $resolvedArgumentCollection,
             );
             $argumentCollection->addArgument($argument);
@@ -316,50 +325,5 @@ class ArgumentResolver implements ArgumentResolverInterface
         );
 
         return $this->style->askQuestion($question);
-    }
-
-    /**
-     * Prepares argument values from different types of syntax to work correctly later.
-     *
-     * @param mixed $argumentDefinition
-     *
-     * @return array
-     */
-    protected function normalizeArgumentDefinition($argumentDefinition): array
-    {
-        if (is_array($argumentDefinition)) {
-            // Collect all value elements, expecting that they will have only numeric keys
-            $argumentDefinitionOnlyValueKeys = array_filter(array_keys($argumentDefinition), 'is_int');
-            // Extract the values based on the collected list of keys
-            $argumentDefinitionOnlyValue = array_map(function ($key) use ($argumentDefinition) {
-                return $argumentDefinition[$key];
-            }, $argumentDefinitionOnlyValueKeys);
-
-            if ($argumentDefinitionOnlyValue) {
-                // Remove all elements of values, so that later we can put them on the correct key
-                $argumentDefinition = array_intersect_key(
-                    $argumentDefinition,
-                    array_flip(array_filter(array_keys($argumentDefinition), 'is_numeric')),
-                );
-            }
-
-            switch (true) {
-                case (!isset($argumentDefinition['value']) && count($argumentDefinitionOnlyValue)):
-                    $argumentDefinition['value'] = $argumentDefinitionOnlyValue;
-
-                    return $argumentDefinition;
-                case (isset($argumentDefinition['default'])):
-                case (isset($argumentDefinition['value'])):
-                    return $argumentDefinition;
-                default:
-                    $argumentDefinition['value'] = null;
-
-                    return $argumentDefinition;
-            }
-        }
-
-        return [
-            'value' => $argumentDefinition,
-        ];
     }
 }
