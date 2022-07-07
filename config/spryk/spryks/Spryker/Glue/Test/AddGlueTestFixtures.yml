@@ -10,7 +10,7 @@ arguments:
         description: "Defines the resource name this controller will work with e.g. /customers"
 
     module:
-        value: "{{ resource | normalizeResourceName | resourceNameToModuleName }}{{ applicationType }}Api"
+        value: "{{ resource | resourceNameToModuleName }}{{ applicationType }}Api"
 
     organization:
         inherit: true
@@ -45,7 +45,7 @@ arguments:
         value: Glue/Test/GlueTestFixtures/TestFixtures.php.twig
 
     className:
-        value: "{{ resource | normalizeResourceName | resourceNameToModelName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Fixtures"
+        value: "{{ resource | resourceNameToModelName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Fixtures"
 
     targetFilename:
         value: "{{ className }}.php"

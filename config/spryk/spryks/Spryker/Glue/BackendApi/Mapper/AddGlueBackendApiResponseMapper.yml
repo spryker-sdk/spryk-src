@@ -7,7 +7,7 @@ arguments:
     module:
         description: "Module name should be suffixed either with Api or with BackendApi depending on the choosen applicationType."
         inherit: true
-        default: "{{ resource | normalizeResourceName | resourceNameToModuleName }}{% if applicationType == 'Frontend' %}Api{% else %}BackendApi{% endif %}"
+        default: "{{ resource | resourceNameToModuleName }}{% if applicationType == 'Frontend' %}Api{% else %}BackendApi{% endif %}"
 
     organization:
         inherit: true
@@ -40,14 +40,14 @@ arguments:
     resourceDataObject:
         description: "Defines the Transfer that will be used in the Methods. Do not use Transfer as suffix, it will be added automatically. Example: Customer (ok) CustomerTransfer (wrong)"
         isOptional: true # Is not needed for all methods
-        value: "{{ resource | normalizeResourceName | resourceNameToModelName | singularize }}"
+        value: "{{ resource | resourceNameToModelName | singularize }}"
 
     template:
         value: Common/Class.php.twig
 
     zedDomainEntity:
         description: "Defines the domainEntity used on Zed side for the CRUD Facade. It will be used to create all needed Transfer Objects."
-        value: "{{ resource | normalizeResourceName | resourceNameToModelName | singularize }}"
+        value: "{{ resource | resourceNameToModelName | singularize }}"
 
     implements:
         value: "\\{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}MapperInterface"

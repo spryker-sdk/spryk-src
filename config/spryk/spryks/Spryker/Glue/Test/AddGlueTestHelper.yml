@@ -51,7 +51,7 @@ arguments:
         description: "The response code e.g. 200"
 
     controller:
-        default: "{{ resource | normalizeResourceName | resourceNameToControllerName }}ResourceController"
+        default: "{{ resource | resourceNameToControllerName }}ResourceController"
 
     zedDomainEntity:
         inherit: true
@@ -64,7 +64,7 @@ postSpryks:
     - AddTestHelper:
         arguments:
             className:
-                value: "{{ resource | normalizeResourceName | resourceNameToModelName }}Helper"
+                value: "{{ resource | resourceNameToModelName }}Helper"
         excludedSpryks:
             - EnableTestHelper
 
@@ -75,15 +75,15 @@ postSpryks:
               isBulk:
                   inherit: true
               method:
-                  value: "build{{ resource | normalizeResourceName | resourceNameToModelName }}Url"
+                  value: "build{{ resource | resourceNameToModelName }}Url"
               input:
                   value: "?int ${{ zedDomainEntity | lcfirst }}Identifier = null"
               output:
                   value: string
               body:
-                  value: "return ${{ zedDomainEntity | lcfirst }}Identifier !== null ? $this->build{{ applicationType | ucfirst }}ApiUrl('{{ resource | normalizeResourceName | lcfirst }}/{id}', ['id' => ${{ zedDomainEntity | lcfirst }}Identifier]) : $this->build{{ applicationType | ucfirst }}ApiUrl('{{ resource | normalizeResourceName | resourceNameToModelName }}');"
+                  value: "return ${{ zedDomainEntity | lcfirst }}Identifier !== null ? $this->build{{ applicationType | ucfirst }}ApiUrl('{{ resource | normalizeResourceName | lcfirst }}/{id}', ['id' => ${{ zedDomainEntity | lcfirst }}Identifier]) : $this->build{{ applicationType | ucfirst }}ApiUrl('{{ resource | resourceNameToModelName }}');"
               target:
-                  value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | resourceNameToModelName }}Helper"
+                  value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | resourceNameToModelName }}Helper"
               withInterface:
                   value: false
 
@@ -102,7 +102,7 @@ postSpryks:
                 body:
                     value: Glue/Test/GlueTestHelper/BuildBackendApiUrlMethod.php.twig
                 target:
-                    value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | resourceNameToModelName }}Helper"
+                    value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | resourceNameToModelName }}Helper"
                 withInterface:
                     value: false
                 visibility:
@@ -123,7 +123,7 @@ postSpryks:
                 body:
                     value: Glue/Test/GlueTestHelper/FormatUrlMethod.php.twig
                 target:
-                    value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | normalizeResourceName | resourceNameToModelName }}Helper"
+                    value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | resourceNameToModelName }}Helper"
                 withInterface:
                     value: false
                 visibility:

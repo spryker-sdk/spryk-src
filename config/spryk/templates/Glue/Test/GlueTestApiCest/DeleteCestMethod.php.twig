@@ -1,6 +1,6 @@
 // Arrange
 ${{ zedDomainEntity | lcfirst }}Id = $this->fixtures->get{{ zedDomainEntity }}Transfer()->getId{{ zedDomainEntity }}();
-$url = $I->build{{ resource | normalizeResourceName | resourceNameToModelName }}Url(${{ zedDomainEntity | lcfirst }}Id);
+$url = $I->build{{ resource | resourceNameToModelName }}Url(${{ zedDomainEntity | lcfirst }}Id);
 
 // Act
 $I->sendDelete($url, '');
