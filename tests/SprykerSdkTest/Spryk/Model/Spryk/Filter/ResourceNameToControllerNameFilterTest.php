@@ -9,9 +9,12 @@ namespace SprykerSdkTest\Spryk\Model\Spryk\Filter;
 
 use Codeception\Test\Unit;
 use SprykerSdk\Spryk\Model\Spryk\Filter\ResourceNameToControllerNameFilter;
+use SprykerSdkTest\SprykTester;
 
 class ResourceNameToControllerNameFilterTest extends Unit
 {
+    protected SprykTester $tester;
+
     /**
      * @dataProvider resourceNameProvider
      *
@@ -22,7 +25,7 @@ class ResourceNameToControllerNameFilterTest extends Unit
      */
     public function testResourceNameConversion(string $resource, string $expectedResult): void
     {
-        $filter = new ResourceNameToControllerNameFilter();
+        $filter = $this->tester->getFilter(ResourceNameToControllerNameFilter::class);
         $this->assertSame($expectedResult, $filter->filter($resource), 'Input: ' . $resource);
     }
 
@@ -42,6 +45,8 @@ class ResourceNameToControllerNameFilterTest extends Unit
             ['/foo/bar/baz', 'Bar'],
             ['foo//bar', 'Bar'],
             ['/foo//bar', 'Bar'],
+            ['/foo/foo-bars', 'FooBars'],
+            ['/foo//foo-bar-baz/fuz', 'FooBarBaz'],
         ];
     }
 }

@@ -86,7 +86,7 @@ class AddGlueResourceMethodResponseTest extends Unit
         $this->tester->run($this, $commandOptions);
 
         // Controller and method
-        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER, $expectedControllerMethodName);
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_INDEX_CONTROLLER, $expectedControllerMethodName);
 
         // Controller test class
         $this->tester->assertClassOrInterfaceExists($expectedTestController);
@@ -270,10 +270,7 @@ class AddGlueResourceMethodResponseTest extends Unit
 
         $this->tester->run($this, $commandOptions);
 
-        $indexController = GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER;
-        $bazController = str_replace('\\Controller\\Index', '\\Controller\\' . $expectedControllerName, $indexController);
-
-        $this->tester->assertClassExists($bazController);
+        $this->tester->assertClassExists($expectedControllerName);
     }
 
     /**
@@ -282,9 +279,8 @@ class AddGlueResourceMethodResponseTest extends Unit
     public function resourcePathControllerProvider(): array
     {
         return [
-            ['/foo-bars', 'Index'],
-            ['/foo-bars/foo', 'Foo'],
-            ['/foo-bars/baz', 'Baz'],
+            ['/foo-bars', GlueBackendApiClassNames::GLUE_BACKEND_API_INDEX_CONTROLLER],
+            ['/foo-bars/foo-bar', GlueBackendApiClassNames::GLUE_BACKEND_API_FOO_BAR_CONTROLLER],
         ];
     }
 }

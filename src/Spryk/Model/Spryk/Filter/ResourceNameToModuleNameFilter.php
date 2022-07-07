@@ -7,12 +7,15 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Filter;
 
+use Laminas\Filter\Word\DashToCamelCase;
+
 /**
  * Converts a resource name to the corresponding module name
  *
  * Examples:
  * $this->filter('/foo') === 'Foo';
  * $this->filter('/foo/*') === 'Foo';
+ * $this->filter('/foo-bar/*') === 'FooBar';
  */
 class ResourceNameToModuleNameFilter implements FilterInterface
 {
@@ -42,6 +45,8 @@ class ResourceNameToModuleNameFilter implements FilterInterface
             $parts = [''];
         }
 
-        return ucfirst(current($parts));
+        $filter = new DashToCamelCase();
+
+        return $filter->filter(current($parts));
     }
 }

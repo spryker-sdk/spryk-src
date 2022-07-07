@@ -7,6 +7,8 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Filter;
 
+use Laminas\Filter\Word\DashToCamelCase;
+
 /**
  * Converts a resource name to the appropriate controller name
  *
@@ -48,6 +50,8 @@ class ResourceNameToControllerNameFilter implements FilterInterface
             $name = $parts[1];
         }
 
-        return ucfirst($name);
+        $filter = new DashToCamelCase();
+
+        return $filter->filter($name);
     }
 }

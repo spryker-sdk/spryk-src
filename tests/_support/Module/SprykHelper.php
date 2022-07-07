@@ -19,6 +19,7 @@ use SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\FileDumperInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface;
 use SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcher;
 use SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface;
+use SprykerSdk\Spryk\Model\Spryk\Filter\FilterInterface;
 use SprykerSdk\Spryk\Model\Spryk\Filter\HttpResponseCodeToConstantNameFilter;
 use SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface;
 use SprykerSdk\Spryk\SprykConfig;
@@ -296,6 +297,16 @@ class SprykHelper extends Module
     public function getClass(string $classOrInterfaceName): object
     {
         return $this->getContainer()->get($classOrInterfaceName);
+    }
+
+    /**
+     * @param string $filterClassName
+     *
+     * @return \SprykerSdk\Spryk\Model\Spryk\Filter\FilterInterface
+     */
+    public function getFilter(string $filterClassName): FilterInterface
+    {
+        return $this->getContainer()->get($filterClassName);
     }
 
     /**

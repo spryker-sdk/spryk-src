@@ -16,6 +16,11 @@ use Laminas\Filter\Word\DashToCamelCase;
  *
  * Example:
  * $this->filter('/foo-bars') === `FooBars';
+ *
+ * @deprecated Use one of the ResourceNameTo* filters instead
+ * @see \SprykerSdk\Spryk\Model\Spryk\Filter\ResourceNameToModuleNameFilter
+ * @see \SprykerSdk\Spryk\Model\Spryk\Filter\ResourceNameToModelNameFilter
+ * @see \SprykerSdk\Spryk\Model\Spryk\Filter\ResourceNameToControllerNameFilter
  */
 class NormalizeResourceNameFilter implements FilterInterface
 {
