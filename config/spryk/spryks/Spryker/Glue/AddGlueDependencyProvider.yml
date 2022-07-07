@@ -18,10 +18,11 @@ arguments:
         default: Backend
 
     extends:
+        #condition: false
         callback: ResolveExtends
         value:
             - "\\Spryker\\{{ application }}\\{{ module }}\\{{ module }}DependencyProvider"
-            - "\\Spryker\\{{ application }}\\Kernel\\{{ applicationType }}\\AbstractBundleDependencyProvider"
+            - "\\Spryker\\{{ application }}\\Kernel{% if applicationType != 'Storefront' %}\\{{ applicationType }}{% endif %}\\AbstractBundleDependencyProvider"
 
     className:
         value: "{{ module }}DependencyProvider"
@@ -40,6 +41,7 @@ preSpryks:
 
 postSpryks:
     - AddMethod:
+          condition: "applicationType !== 'Storefront'"
           arguments:
               target:
                   value: "\\{{ organization }}\\Glue\\{{ module }}\\{{ module }}DependencyProvider"
@@ -54,5 +56,23 @@ postSpryks:
               body:
                   value:
                       - "$container = parent::provide{{ applicationType }}Dependencies($container);"
+                      - ""
+                      - "return $container;"
+    - AddMethod:
+          condition: "applicationType === 'Storefront'"
+          arguments:
+              target:
+                  value: "\\{{ organization }}\\Glue\\{{ module }}\\{{ module }}DependencyProvider"
+              withInterface:
+                  value: false
+              input:
+                  value: "\\Spryker\\{{ application }}\\Kernel\\Container $container"
+              output:
+                  value: "\\Spryker\\{{ application }}\\Kernel\\Container"
+              method:
+                  value: "provideDependencies"
+              body:
+                  value:
+                      - "$container = parent::provideDependencies($container);"
                       - ""
                       - "return $container;"

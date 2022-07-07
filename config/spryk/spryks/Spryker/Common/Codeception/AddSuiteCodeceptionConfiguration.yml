@@ -15,7 +15,7 @@ arguments:
 
     suite:
         inherit: true
-        description: "The name of the suite can be one of: Business, Communication, Persistence, RestApi, BackendApi, FrontendApi."
+        description: "The name of the suite can be one of: Business, Communication, Persistence, RestApi, BackendApi, StorefrontApi."
 
     template:
         value: Common/Codeception/suite-codeception.yml.twig

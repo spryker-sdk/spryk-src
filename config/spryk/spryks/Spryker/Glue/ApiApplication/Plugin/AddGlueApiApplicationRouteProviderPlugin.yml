@@ -1,0 +1,75 @@
+spryk: template
+description: "Adds a new Glue API route provider plugin."
+mode: both
+
+arguments:
+    module:
+        inherit: true
+        default: "{{ resource | normalizeResourceName }}"
+        callback: GlueResourceModuleName
+
+    organization:
+        inherit: true
+        default: Spryker
+
+    application:
+        value: Glue
+
+    applicationType:
+        inherit: true
+        default: Backend
+
+    resource:
+        description: "Defines the resource name this custom route provider plugin will work with."
+        inherit: true
+
+    className:
+        default: "{{ resource | normalizeResourceName }}{{ applicationType }}ApiRouteProviderPlugin"
+
+    extends:
+        callback: ResolveExtends
+        value:
+            - "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
+            - "\\{{ organization }}\\{{ application }}\\Glue{{ applicationType }}ApiApplication\\Plugin\\Glue{{ applicationType }}ApiApplication\\RouteProvider\\AbstractRouteProviderPlugin"
+
+    implements:
+        value: "\\{{ organization }}\\{{ application }}\\Glue{{ applicationType }}ApiApplicationExtension\\Dependency\\Plugin\\RouteProviderPluginInterface"
+
+    template:
+        value: Common/Class.php.twig
+
+    targetFilename:
+        value: "{{ className }}.php"
+
+    targetPath:
+        value: "src/{{ organization }}/{{ application }}/{{ module }}/"
+
+    subDirectory:
+        value: Plugin
+
+preSpryks:
+    - AddGlueApiApplication
+
+postSpryks:
+    - AddMethod:
+          arguments:
+              method:
+                  value: "addRoutes"
+              input:
+                  value: "\\Symfony\\Component\\Routing\\RouteCollection $routeCollection"
+              output:
+                  value: "\\Symfony\\Component\\Routing\\RouteCollection"
+              body:
+                  value:
+                      - "return $routeCollection;"
+              target:
+                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
+              withInterface:
+                  value: false
+    # Wire the plugin after it was created
+    - WirePlugin:
+          arguments:
+              plugin:
+                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
+              target:
+                  value: "\\{{ organization }}\\{{ application }}\\Glue{{ applicationType }}ApiApplication\\Glue{{ applicationType }}ApiApplicationDependencyProvider::getRouteProviderPlugins"

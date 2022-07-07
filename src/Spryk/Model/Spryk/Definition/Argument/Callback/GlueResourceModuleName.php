@@ -34,7 +34,7 @@ class GlueResourceModuleName implements CallbackInterface
             return $this->ensureBackendApiModuleName($resourceName);
         }
 
-        return $this->ensureFrontendApiModuleName($resourceName);
+        return $this->ensureStorefrontApiModuleName($resourceName);
     }
 
     /**
@@ -56,10 +56,10 @@ class GlueResourceModuleName implements CallbackInterface
      *
      * @return string
      */
-    protected function ensureFrontendApiModuleName(string $resourceName): string
+    protected function ensureStorefrontApiModuleName(string $resourceName): string
     {
-        if (!preg_match('/FrontendApi$/', $resourceName)) {
-            return $resourceName . 'FrontendApi';
+        if (!preg_match('/StorefrontApi$/', $resourceName)) {
+            return $resourceName . 'StorefrontApi';
         }
 
         return $resourceName;

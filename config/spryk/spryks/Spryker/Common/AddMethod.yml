@@ -27,7 +27,8 @@ arguments:
 
     input:
         description: "Input (arguments) for the method. Can be an array or a list separated by comma."
-        isOptional: true
+        inherit: true
+        default: ""
 
     output:
         description: "Output (return) for the method."
