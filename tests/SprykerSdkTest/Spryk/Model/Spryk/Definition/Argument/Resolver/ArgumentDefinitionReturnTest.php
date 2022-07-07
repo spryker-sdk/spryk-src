@@ -65,6 +65,7 @@ class ArgumentDefinitionReturnTest extends Unit
      *
      * @param mixed $argumentDefinition
      * @param mixed $expectedResult
+     *
      * @return void
      */
     public function testNormalizeArgumentDefinitionReturnsCorrectValueWithAllPossibleCase($argumentDefinition, $expectedResult): void
