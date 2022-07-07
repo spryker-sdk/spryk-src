@@ -20,10 +20,9 @@ excludedSpryks:
     - AddZedPresentationTwig
     - AddZedNavigationNode
 
-preSpryks:
+spryks:
     - AddModule
 
-postSpryks:
     - AddZedBusinessModelMethod:
           arguments:
               allowOverride:
