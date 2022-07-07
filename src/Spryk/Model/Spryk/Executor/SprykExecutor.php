@@ -193,6 +193,7 @@ class SprykExecutor implements SprykExecutorInterface
 
         $this->executePreCommands($sprykDefinition, $style);
         $this->executePreSpryks($sprykDefinition, $style);
+        $this->executeSpryks($sprykDefinition, $style);
         $this->executeSpryk($sprykDefinition, $style);
         $this->executePostSpryks($sprykDefinition, $style);
         $this->cachePostCommands($sprykDefinition);
@@ -229,6 +230,21 @@ class SprykExecutor implements SprykExecutorInterface
         $this->buildPreSpryks($sprykDefinition, $style);
         --$this->currentExecutionLevel;
         $style->endPreSpryks($sprykDefinition);
+    }
+
+    /**
+     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
+     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
+     *
+     * @return void
+     */
+    protected function executeSpryks(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): void
+    {
+        $style->startSpryks($sprykDefinition);
+        ++$this->currentExecutionLevel;
+        $this->buildSpryks($sprykDefinition, $style);
+        --$this->currentExecutionLevel;
+        $style->endSpryks($sprykDefinition);
     }
 
     /**
@@ -366,6 +382,32 @@ class SprykExecutor implements SprykExecutorInterface
                 continue;
             }
             $this->buildSpryk($preSprykDefinition, $style);
+        }
+    }
+
+    /**
+     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
+     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
+     *
+     * @return void
+     */
+    protected function buildSpryks(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): void
+    {
+        $spryks = $sprykDefinition->getSpryks();
+        $excludedSpryks = $sprykDefinition->getExcludedSpryks();
+
+        if (count($spryks) === 0) {
+            return;
+        }
+
+        foreach ($spryks as $sprykDefinition) {
+            if (isset($this->executedSpryks[$sprykDefinition->getSprykDefinitionKey()])) {
+                continue;
+            }
+            if (isset($excludedSpryks[$sprykDefinition->getSprykName()])) {
+                continue;
+            }
+            $this->buildSpryk($sprykDefinition, $style);
         }
     }
 
