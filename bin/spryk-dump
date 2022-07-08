@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 (function () {
     require_once __DIR__ . DIRECTORY_SEPARATOR . 'environment.php';
 
-    $kernel = new Kernel('prod', false);
+    $kernel = new Kernel(APPLICATION_ENV, APPLICATION_DEBUG);
     $application = new Application($kernel);
     $application->setDefaultCommand('spryk:dump', true);
 
