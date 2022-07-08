@@ -1,5 +1,5 @@
 // Arrange
-$url = $I->build{{ resource | normalizeResourceName | ucfirst }}Url();
+$url = $I->build{{ resource | resourceNameToModelName }}Url();
 
 // Act
 $I->sendPost($url);

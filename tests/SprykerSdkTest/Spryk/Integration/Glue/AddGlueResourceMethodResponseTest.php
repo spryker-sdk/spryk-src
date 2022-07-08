@@ -38,6 +38,7 @@ class AddGlueResourceMethodResponseTest extends Unit
      * @param string|null $dataModule
      * @param string|null $zedDomainEntity
      * @param string|null $resourceDataObject
+     * @param string|null $resource
      *
      * @return void
      */
@@ -48,13 +49,14 @@ class AddGlueResourceMethodResponseTest extends Unit
         ?string $module = null,
         ?string $dataModule = null,
         ?string $zedDomainEntity = null,
-        ?string $resourceDataObject = null
+        ?string $resourceDataObject = null,
+        ?string $resource = null
     ): void {
         $commandOptions = [
             // TODO We also need to add tests for project level
 //            '--mode' => 'project',
 //            '--organization' => 'Pyz',
-            '--resource' => '/foo-bars',
+            '--resource' => $resource ?? '/foo-bars',
             '--httpMethod' => $httpMethod,
             '--httpResponseCode' => $httpResponseCode,
         ];
@@ -84,7 +86,7 @@ class AddGlueResourceMethodResponseTest extends Unit
         $this->tester->run($this, $commandOptions);
 
         // Controller and method
-        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER, $expectedControllerMethodName);
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_INDEX_CONTROLLER, $expectedControllerMethodName);
 
         // Controller test class
         $this->tester->assertClassOrInterfaceExists($expectedTestController);
@@ -153,6 +155,7 @@ class AddGlueResourceMethodResponseTest extends Unit
             ['patch', 200],
             ['delete', 200],
             ['delete', 200, true],
+            ['get', 200, true, null, null, null, null, '/foo-bars/index'],
         ];
     }
 
@@ -244,5 +247,40 @@ class AddGlueResourceMethodResponseTest extends Unit
     protected function getExpectedTestControllerMethodName(string $httpMethod, int $httpResponseCode, ?bool $isBulk): string
     {
         return sprintf('requestFooBar%s%sReturnsHttpResponseCode%s', ucfirst($httpMethod), ($isBulk) ? 'Collection' : '', $httpResponseCode);
+    }
+
+    /**
+     * @dataProvider resourcePathControllerProvider
+     *
+     * @param string $resource
+     * @param string $expectedControllerName
+     *
+     * @return void
+     */
+    public function testAddsControllerBasedOnResourcePath(string $resource, string $expectedControllerName): void
+    {
+        $httpMethod = 'get';
+        $httpResponseCode = 200;
+
+        $commandOptions = [
+            '--resource' => $resource,
+            '--httpMethod' => $httpMethod,
+            '--httpResponseCode' => $httpResponseCode,
+        ];
+
+        $this->tester->run($this, $commandOptions);
+
+        $this->tester->assertClassExists($expectedControllerName);
+    }
+
+    /**
+     * @return \array<array<string>>
+     */
+    public function resourcePathControllerProvider(): array
+    {
+        return [
+            ['/foo-bars', GlueBackendApiClassNames::GLUE_BACKEND_API_INDEX_CONTROLLER],
+            ['/foo-bars/foo-bar', GlueBackendApiClassNames::GLUE_BACKEND_API_FOO_BAR_CONTROLLER],
+        ];
     }
 }

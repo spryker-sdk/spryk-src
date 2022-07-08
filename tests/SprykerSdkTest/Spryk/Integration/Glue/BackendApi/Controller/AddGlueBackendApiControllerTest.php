@@ -37,6 +37,6 @@ class AddGlueBackendApiControllerTest extends Unit
             '--resource' => '/foo-bars',
         ]);
 
-        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER);
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_INDEX_CONTROLLER);
     }
 }

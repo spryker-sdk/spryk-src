@@ -39,6 +39,13 @@ return function (ContainerConfigurator $configurator) {
     $services->load('SprykerSdk\\', '../src/')
         ->exclude('../src/{DependencyInjection,Tests,Kernel.php}');
 
+    $services->load('Laminas\\Filter\\', __DIR__ . '/../vendor/laminas/laminas-filter/src/')
+        ->exclude([
+            # these depend on Laminas' service managers
+            __DIR__ . '/../vendor/laminas/laminas-filter/src/{*Factory,FilterPluginManager}.php',
+            __DIR__ . '/../vendor/laminas/laminas-filter/src/**/*Factory.php',
+        ]);
+
     $services->set(ExpressionLanguage::class)
         ->args([null, []]);
 

@@ -1,9 +1,9 @@
 {{ suite }}:
-    class_name: {{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester
+    class_name: {{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester
     modules:
         enabled:
             - Asserts
-            - \{{ organization }}Test\{{ application }}\{{ module }}\Helper\{{ resource | normalizeResourceName | ucfirst }}Helper
+            - \{{ organization }}Test\{{ application }}\{{ module }}\Helper\{{ resource | resourceNameToModelName }}Helper
             - \PyzTest\Shared\Testify\Helper\Environment
             -
                 \SprykerTest\Shared\Testify\Helper\LocatorHelper:
