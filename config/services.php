@@ -41,11 +41,14 @@ return function (ContainerConfigurator $configurator) {
 
     $services->load('Laminas\\Filter\\', __DIR__ . '/../vendor/laminas/laminas-filter/src/')
         ->exclude([
-            # these depend on Laminas' service managers
+            // these depend on Laminas' service managers
             __DIR__ . '/../vendor/laminas/laminas-filter/src/{*Factory,FilterPluginManager}.php',
             __DIR__ . '/../vendor/laminas/laminas-filter/src/**/*Factory.php',
         ]);
 
+    // To prevent Symfony from injecting a filesystem cache we pass `null` and an empty array to let the `ExpressionLanguage`
+    // use the `ArrayAdapter`. Without overriding this, the `ExpressionLanguage` tries to write into the filesystem during
+    // runtime which is not possible with PHAR archives.
     $services->set(ExpressionLanguage::class)
         ->args([null, []]);
 
