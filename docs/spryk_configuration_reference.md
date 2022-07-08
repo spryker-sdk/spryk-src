@@ -60,7 +60,7 @@ The Spryk argument list. These arguments are used in the Spryk builder. See belo
 The Spryks that should be executed before the current Spryk.
 
 ### spryks
-The Spryks to be executed from a Wrapper Spryk. Use this argument when you build a Wrapper Spryk (spryk: wrapper). Wrapper Spryks are not executing something on its own but only delegate work to other Spryks.
+List of Spryks to be executed from a Wrapper Spryk. Use this argument when you build a Wrapper Spryk (spryk: wrapper). Wrapper Spryks do not execute anything on its own but only delegate work to other Spryks.
 
 ### postSpryks
 The Spryks that should be executed after the current Spryk.
