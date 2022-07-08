@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Service;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\ClassName;
 
 /**
  * Auto-generated group annotations
@@ -35,11 +36,7 @@ class AddServiceTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Service/FooBar/FooBarService.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Service\Kernel\AbstractService');
+        $this->tester->assertClassOrInterfaceExtends(ClassName::SERVICE, ClassName::ABSTRACT_SERVICE);
     }
 
     /**
@@ -52,11 +49,7 @@ class AddServiceTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Service') . 'FooBarService.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Service\Kernel\AbstractService');
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_SERVICE, ClassName::ABSTRACT_SERVICE);
     }
 
     /**
@@ -74,10 +67,6 @@ class AddServiceTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Service') . 'FooBarService.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Service\FooBar\FooBarService');
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_SERVICE, ClassName::SERVICE);
     }
 }

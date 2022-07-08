@@ -39,11 +39,7 @@ class AddZedCommunicationControllerTest extends Unit
             '--controller' => 'Index',
         ]);
 
-        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/Communication/Controller/IndexController.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Communication\Controller\AbstractController');
+        $this->tester->assertClassOrInterfaceExtends(ClassName::CONTROLLER_ZED, ClassName::ZED_ABSTRACT_CONTROLLER);
     }
 
     /**
@@ -63,11 +59,7 @@ class AddZedCommunicationControllerTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory() . 'Communication/Controller/IndexController.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\FooBar\Communication\Controller\IndexController');
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_ZED_CONTROLLER, ClassName::CONTROLLER_ZED);
     }
 
     /**
@@ -94,11 +86,10 @@ class AddZedCommunicationControllerTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory() . 'Communication/Controller/IndexController.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\Communication\Controller\AbstractController');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_ZED_CONTROLLER,
+            ClassName::ZED_ABSTRACT_CONTROLLER,
+        );
     }
 
     /**

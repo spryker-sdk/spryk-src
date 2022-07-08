@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Zed;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\ClassName;
 
 /**
  * Auto-generated group annotations
@@ -35,11 +36,10 @@ class AddZedDependencyProviderTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Zed/FooBar/FooBarDependencyProvider.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\AbstractBundleDependencyProvider');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::ZED_DEPENDENCY_PROVIDER,
+            ClassName::ZED_ABSTRACT_DEPENDENCY_PROVIDER,
+        );
     }
 
     /**
@@ -52,11 +52,10 @@ class AddZedDependencyProviderTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory() . 'FooBarDependencyProvider.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\Kernel\AbstractBundleDependencyProvider');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_ZED_DEPENDENCY_PROVIDER,
+            ClassName::ZED_ABSTRACT_DEPENDENCY_PROVIDER,
+        );
     }
 
     /**
@@ -74,10 +73,9 @@ class AddZedDependencyProviderTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Zed') . 'FooBarDependencyProvider.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Zed\FooBar\FooBarDependencyProvider');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_ZED_DEPENDENCY_PROVIDER,
+            ClassName::ZED_DEPENDENCY_PROVIDER,
+        );
     }
 }

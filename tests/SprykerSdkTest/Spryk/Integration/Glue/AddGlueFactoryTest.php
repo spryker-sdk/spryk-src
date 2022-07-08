@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Glue;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\ClassName;
 
 /**
  * Auto-generated group annotations
@@ -35,11 +36,10 @@ class AddGlueFactoryTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Glue/FooBar/FooBarFactory.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\Kernel\Backend\AbstractFactory');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::GLUE_BUSINESS_FACTORY,
+            ClassName::GLUE_ABSTRACT_FACTORY,
+        );
     }
 
     /**
@@ -52,11 +52,10 @@ class AddGlueFactoryTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'FooBarFactory.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\Kernel\Backend\AbstractFactory');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_GLUE_BUSINESS_FACTORY,
+            ClassName::GLUE_ABSTRACT_FACTORY,
+        );
     }
 
     /**
@@ -74,10 +73,9 @@ class AddGlueFactoryTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Glue') . 'FooBarFactory.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Glue\FooBar\FooBarFactory');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_GLUE_BUSINESS_FACTORY,
+            ClassName::GLUE_BUSINESS_FACTORY,
+        );
     }
 }

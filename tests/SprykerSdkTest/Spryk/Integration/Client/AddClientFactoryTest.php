@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Client;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\ClassName;
 
 /**
  * Auto-generated group annotations
@@ -40,11 +41,7 @@ class AddClientFactoryTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $targetClassFilePath = $this->tester->getSprykerModuleDirectory() . 'src/Spryker/Client/FooBar/FooBarFactory.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Client\Kernel\AbstractFactory');
+        $this->tester->assertClassOrInterfaceExtends(ClassName::CLIENT_FACTORY, ClassName::CLIENT_ABSTRACT_FACTORY);
     }
 
     /**
@@ -57,11 +54,10 @@ class AddClientFactoryTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Client') . 'FooBarFactory.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Client\Kernel\AbstractFactory');
+        $this->tester->assertClassOrInterfaceExtends(
+            ClassName::PROJECT_CLIENT_FACTORY,
+            ClassName::CLIENT_ABSTRACT_FACTORY,
+        );
     }
 
     /**
@@ -79,10 +75,6 @@ class AddClientFactoryTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Client') . 'FooBarFactory.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Client\FooBar\FooBarFactory');
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_CLIENT_FACTORY, ClassName::CLIENT_FACTORY);
     }
 }

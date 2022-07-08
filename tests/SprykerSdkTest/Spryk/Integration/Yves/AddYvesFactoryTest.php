@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Yves;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\Module\ClassName;
 
 /**
  * Auto-generated group annotations
@@ -35,11 +36,7 @@ class AddYvesFactoryTest extends Unit
             '--module' => 'FooBar',
         ]);
 
-        $targetClassFilePath = $this->tester->getSprykerShopModuleDirectory() . 'src/SprykerShop/Yves/FooBar/FooBarFactory.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Yves\Kernel\AbstractFactory');
+        $this->tester->assertClassOrInterfaceExtends(ClassName::YVES_FACTORY, ClassName::YVES_ABSTRACT_FACTORY);
     }
 
     /**
@@ -52,11 +49,7 @@ class AddYvesFactoryTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFilePath = $this->tester->getProjectModuleDirectory('FooBar', 'Yves') . 'FooBarFactory.php';
-
-        $this->assertFileExists($targetClassFilePath);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFilePath, 'Spryker\Yves\Kernel\AbstractFactory');
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_YVES_FACTORY, ClassName::YVES_ABSTRACT_FACTORY);
     }
 
     /**
@@ -74,10 +67,6 @@ class AddYvesFactoryTest extends Unit
             '--mode' => 'project',
         ]);
 
-        $targetClassFile = $this->tester->getProjectModuleDirectory('FooBar', 'Yves') . 'FooBarFactory.php';
-
-        $this->assertFileExists($targetClassFile);
-
-        $this->tester->assertClassOrInterfaceExtends($targetClassFile, 'SprykerShop\Yves\FooBar\FooBarFactory');
+        $this->tester->assertClassOrInterfaceExtends(ClassName::PROJECT_YVES_FACTORY, ClassName::YVES_FACTORY);
     }
 }
