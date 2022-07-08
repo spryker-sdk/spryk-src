@@ -28,6 +28,19 @@ class ResourceNameToControllerNameFilter implements FilterInterface
     protected const FILTER_NAME = 'resourceNameToControllerName';
 
     /**
+     * @var \Laminas\Filter\Word\DashToCamelCase
+     */
+    private DashToCamelCase $dashToCamelCase;
+
+    /**
+     * @param \Laminas\Filter\Word\DashToCamelCase $dashToCamelCase
+     */
+    public function __construct(DashToCamelCase $dashToCamelCase)
+    {
+        $this->dashToCamelCase = $dashToCamelCase;
+    }
+
+    /**
      * @return string
      */
     public function getName(): string
@@ -50,8 +63,6 @@ class ResourceNameToControllerNameFilter implements FilterInterface
             $name = $parts[1];
         }
 
-        $filter = new DashToCamelCase();
-
-        return $filter->filter($name);
+        return $this->dashToCamelCase->filter($name);
     }
 }

@@ -25,6 +25,19 @@ class ResourceNameToModuleNameFilter implements FilterInterface
     protected const FILTER_NAME = 'resourceNameToModuleName';
 
     /**
+     * @var \Laminas\Filter\Word\DashToCamelCase
+     */
+    private DashToCamelCase $dashToCamelCase;
+
+    /**
+     * @param \Laminas\Filter\Word\DashToCamelCase $dashToCamelCase
+     */
+    public function __construct(DashToCamelCase $dashToCamelCase)
+    {
+        $this->dashToCamelCase = $dashToCamelCase;
+    }
+
+    /**
      * @return string
      */
     public function getName(): string
@@ -45,8 +58,6 @@ class ResourceNameToModuleNameFilter implements FilterInterface
             $parts = [''];
         }
 
-        $filter = new DashToCamelCase();
-
-        return $filter->filter(current($parts));
+        return $this->dashToCamelCase->filter(current($parts));
     }
 }
