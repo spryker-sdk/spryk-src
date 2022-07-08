@@ -25,18 +25,12 @@ spryks:
 
     - AddZedBusinessModelMethod:
           arguments:
-              allowOverride:
-                  value: true
-              className:
-                  value: "{{ module }}Registry"
-              subDirectory:
-                  value: Registry
-              modelMethod:
-                  value: disconnect
-              input:
-                  value: "\\Generated\\Shared\\Transfer\\AppRegistryRequestTransfer $appRegistryRequestTransfer"
-              output:
-                  value: "\\Generated\\Shared\\Transfer\\AppRegistryResponseTransfer"
+              allowOverride: true
+              className: "{{ module }}Registry"
+              subDirectory: Registry
+              modelMethod: disconnect
+              input: "\\Generated\\Shared\\Transfer\\AppRegistryRequestTransfer $appRegistryRequestTransfer"
+              output: "\\Generated\\Shared\\Transfer\\AppRegistryResponseTransfer"
               body:
                   value:
                       - "$appRegistryRequestTransfer->requireTenantIdentifier();"
@@ -45,92 +39,61 @@ spryks:
 
     - AddConstant:
           arguments:
-              name:
-                  value: "HEADER_TENANT_ID"
-              value:
-                  value: "X-Tenant-Id"
-              visibility:
-                  value: "public"
-              target:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config"
+              name: "HEADER_TENANT_ID"
+              value: "X-Tenant-Id"
+              visibility: "public"
+              target: "\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config"
 
     - AddConstant:
           arguments:
-              name:
-                  value: "RESPONSE_CODE_INVALID_HTTP_METHOD"
-              value:
-                  value: "800"
-              visibility:
-                  value: "public"
-              target:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config"
+              name: "RESPONSE_CODE_INVALID_HTTP_METHOD"
+              value: "800"
+              visibility: "public"
+              target: "\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config"
 
     - AddConstant:
           arguments:
-              name:
-                  value: "RESPONSE_MESSAGE_INVALID_HTTP_METHOD"
-              value:
-                  value: "Incorrect HTTP method."
-              visibility:
-                  value: "public"
-              target:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config"
+              name: "RESPONSE_MESSAGE_INVALID_HTTP_METHOD"
+              value: "Incorrect HTTP method."
+              visibility: "public"
+              target: "\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config"
 
     - AddConstant:
           arguments:
-              name:
-                  value: "RESPONSE_CODE_MISSING_TENANT_IDENTIFIER"
-              value:
-                  value: "801"
-              visibility:
-                  value: "public"
-              target:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config"
+              name: "RESPONSE_CODE_MISSING_TENANT_IDENTIFIER"
+              value: "801"
+              visibility: "public"
+              target: "\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config"
 
     - AddConstant:
           arguments:
-              name:
-                  value: "RESPONSE_MESSAGE_MISSING_TENANT_IDENTIFIER"
-              value:
-                  value: "X-Tenant-Id in header is required."
-              visibility:
-                  value: "public"
-              target:
-                  value: "\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config"
+              name: "RESPONSE_MESSAGE_MISSING_TENANT_IDENTIFIER"
+              value: "X-Tenant-Id in header is required."
+              visibility: "public"
+              target: "\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config"
 
     - AddZedCommunicationControllerAction:
           excludedSpryks:
               - AddZedPresentationTwig
               - AddZedNavigationNode
           arguments:
-              allowOverride:
-                  value: true
-              input:
-                  value: "\\Symfony\\Component\\HttpFoundation\\Request $request"
-              output:
-                  value: "\\Symfony\\Component\\HttpFoundation\\JsonResponse"
-              controller:
-                  value: RegistryController
-              controllerMethod:
-                  value: disconnect
+              allowOverride: true
+              input: "\\Symfony\\Component\\HttpFoundation\\Request $request"
+              output: "\\Symfony\\Component\\HttpFoundation\\JsonResponse"
+              controller: RegistryController
+              controllerMethod: disconnect
               body:
                   allowOverride: true
                   value: "App/Registry/ZedControllerDisconnectMethod.php.twig"
 
     - AddMethod:
           arguments:
-              allowOverride:
-                  value: true
-              input:
-                  value: "\\Generated\\Shared\\Transfer\\AppRegistryResponseTransfer $appRegistryResponseTransfer"
-              output:
-                  value: "\\Symfony\\Component\\HttpFoundation\\JsonResponse"
-              target:
-                  value: "{{ organization }}\\Zed\\{{ module }}\\Communication\\Controller\\RegistryController"
-              method:
-                  value: buildResponse
-              visibility:
-                  value: protected
+              allowOverride: true
+              input: "\\Generated\\Shared\\Transfer\\AppRegistryResponseTransfer $appRegistryResponseTransfer"
+              output: "\\Symfony\\Component\\HttpFoundation\\JsonResponse"
+              target: "{{ organization }}\\Zed\\{{ module }}\\Communication\\Controller\\RegistryController"
+              method: buildResponse
+              visibility: protected
               body:
                   allowOverride: true
                   value:
@@ -139,31 +102,23 @@ spryks:
                       - "}"
                       - ""
                       - "return $this->jsonResponse([]);"
-              withInterface:
-                  value: false
+              withInterface: false
 
     - AddZedCommunicationTest:
           arguments:
-              className:
-                  value: RegistryController
+              className: RegistryController
 
     - AddConstant:
           arguments:
-              name:
-                  value: "PATH_REGISTRY_DISCONNECT"
-              value:
-                  value: "{{ module | dasherize }}/registry/disconnect"
-              visibility:
-                  value: "protected"
-              target:
-                  value: "\\{{ organization }}Test\\Zed\\{{ module }}\\Communication\\RegistryControllerTest"
+              name: "PATH_REGISTRY_DISCONNECT"
+              value: "{{ module | dasherize }}/registry/disconnect"
+              visibility: "protected"
+              target: "\\{{ organization }}Test\\Zed\\{{ module }}\\Communication\\RegistryControllerTest"
 
     - AddMethod:
           arguments:
-              method:
-                  value: "testDisconnectActionDisconnectsSuccessfullyWithValidRequestData"
-              target:
-                  value: "\\{{ organization }}Test\\Zed\\{{ module }}\\Communication\\RegistryControllerTest"
+              method: "testDisconnectActionDisconnectsSuccessfullyWithValidRequestData"
+              target: "\\{{ organization }}Test\\Zed\\{{ module }}\\Communication\\RegistryControllerTest"
               body:
                   value:
                       - "// Arrange"
@@ -177,15 +132,12 @@ spryks:
                       - "$this->assertInstanceOf(\\Symfony\\Component\\HttpFoundation\\JsonResponse::class, $response);"
                       - "$this->assertTrue($response->isSuccessful());"
                       - "$this->assertSame($response->getContent(), json_encode([]));"
-              withInterface:
-                  value: false
+              withInterface: false
 
     - AddMethod:
           arguments:
-              method:
-                  value: "testDisconnectActionReturnsValidationErrorWithIncorrectMethod"
-              target:
-                  value: "\\{{ organization }}Test\\Zed\\{{ module }}\\Communication\\RegistryControllerTest"
+              method: "testDisconnectActionReturnsValidationErrorWithIncorrectMethod"
+              target: "\\{{ organization }}Test\\Zed\\{{ module }}\\Communication\\RegistryControllerTest"
               body:
                   value:
                       - "// Arrange"
@@ -201,15 +153,12 @@ spryks:
                       - "$this->assertThat($response->getContent(), new \\Codeception\\PHPUnit\\Constraint\\JsonContains(["
                       - "    'errors' => [['code' => {{ module }}Config::RESPONSE_CODE_INVALID_HTTP_METHOD]],"
                       - "]));"
-              withInterface:
-                  value: false
+              withInterface: false
 
     - AddMethod:
           arguments:
-              method:
-                  value: "testDisconnectActionReturnsValidationErrorWithMissingTenantId"
-              target:
-                  value: "\\{{ organization }}Test\\Zed\\{{ module }}\\Communication\\RegistryControllerTest"
+              method: "testDisconnectActionReturnsValidationErrorWithMissingTenantId"
+              target: "\\{{ organization }}Test\\Zed\\{{ module }}\\Communication\\RegistryControllerTest"
               body:
                   value:
                       - "// Arrange"
@@ -224,23 +173,16 @@ spryks:
                       - "$this->assertThat($response->getContent(), new \\Codeception\\PHPUnit\\Constraint\\JsonContains(["
                       - "    'errors' => [['code' => {{ module }}Config::RESPONSE_CODE_MISSING_TENANT_IDENTIFIER]],"
                       - "]));"
-              withInterface:
-                  value: false
+              withInterface: false
 
     - AddMethod:
           arguments:
-              allowOverride:
-                  value: true
-              input:
-                  value: "\\Generated\\Shared\\Transfer\\AppRegistryResponseTransfer $appRegistryResponseTransfer"
-              output:
-                  value: "\\Symfony\\Component\\HttpFoundation\\JsonResponse"
-              target:
-                  value: "{{ organization }}\\Zed\\{{ module }}\\Communication\\Controller\\RegistryController"
-              method:
-                  value: buildErrorResponse
-              visibility:
-                  value: protected
+              allowOverride: true
+              input: "\\Generated\\Shared\\Transfer\\AppRegistryResponseTransfer $appRegistryResponseTransfer"
+              output: "\\Symfony\\Component\\HttpFoundation\\JsonResponse"
+              target: "{{ organization }}\\Zed\\{{ module }}\\Communication\\Controller\\RegistryController"
+              method: buildErrorResponse
+              visibility: protected
               body:
                   allowOverride: true
                   value:
@@ -254,19 +196,14 @@ spryks:
                       - "}"
                       - ""
                       - "return $this->jsonResponse($responseData, \\Symfony\\Component\\HttpFoundation\\Response::HTTP_BAD_REQUEST);"
-              withInterface:
-                  value: false
+              withInterface: false
 
     - AddZedBusinessFacadeMethod:
           arguments:
-              allowOverride:
-                  value: true
-              facadeMethod:
-                  value: disconnect
-              input:
-                  value: "\\Generated\\Shared\\Transfer\\AppRegistryRequestTransfer $appRegistryRequestTransfer"
-              output:
-                  value: "\\Generated\\Shared\\Transfer\\AppRegistryResponseTransfer"
+              allowOverride: true
+              facadeMethod: disconnect
+              input: "\\Generated\\Shared\\Transfer\\AppRegistryRequestTransfer $appRegistryRequestTransfer"
+              output: "\\Generated\\Shared\\Transfer\\AppRegistryResponseTransfer"
               body:
                   allowOverride: true
                   value:
@@ -275,12 +212,9 @@ spryks:
 
     - AddZedBusinessFacadeMethodTest:
           arguments:
-              allowOverride:
-                  value: true
-              facadeMethod:
-                  value: disconnect
-              output:
-                  value: "void"
+              allowOverride: true
+              facadeMethod: disconnect
+              output: "void"
               body:
                   allowOverride: true
                   value:
@@ -295,10 +229,8 @@ spryks:
 
     - AddZedBusinessFacadeMethodTest:
           arguments:
-              facadeMethod:
-                  value: disconnectThrowsExceptionWithWithInvalidData
-              output:
-                  value: "void"
+              facadeMethod: disconnectThrowsExceptionWithWithInvalidData
+              output: "void"
               body:
                   allowOverride: true
                   value:
@@ -310,16 +242,11 @@ spryks:
 
     - AddZedCommunicationModelMethod:
           arguments:
-              className:
-                  value: RequestValidator
-              subDirectory:
-                  value: RequestValidator
-              modelMethod:
-                  value: validateAppRegistryRequest
-              input:
-                  value: "\\Symfony\\Component\\HttpFoundation\\Request $request"
-              output:
-                  value: "?\\Generated\\Shared\\Transfer\\ErrorMessageTransfer"
+              className: RequestValidator
+              subDirectory: RequestValidator
+              modelMethod: validateAppRegistryRequest
+              input: "\\Symfony\\Component\\HttpFoundation\\Request $request"
+              output: "?\\Generated\\Shared\\Transfer\\ErrorMessageTransfer"
               body:
                   value:
                       - "if ($request->getMethod() !== Request::METHOD_POST) {"
@@ -336,18 +263,12 @@ spryks:
 
     - AddZedCommunicationModelMethod:
           arguments:
-              allowOverride:
-                  value: true
-              className:
-                  value: RequestMapper
-              subDirectory:
-                  value: RequestMapper
-              modelMethod:
-                  value: mapAppRegistryRequestToTransfer
-              input:
-                  value: "\\Symfony\\Component\\HttpFoundation\\Request $request, \\Generated\\Shared\\Transfer\\AppRegistryRequestTransfer $appRegistryRequestTransfer"
-              output:
-                  value: "\\Generated\\Shared\\Transfer\\AppRegistryRequestTransfer"
+              allowOverride: true
+              className: RequestMapper
+              subDirectory: RequestMapper
+              modelMethod: mapAppRegistryRequestToTransfer
+              input: "\\Symfony\\Component\\HttpFoundation\\Request $request, \\Generated\\Shared\\Transfer\\AppRegistryRequestTransfer $appRegistryRequestTransfer"
+              output: "\\Generated\\Shared\\Transfer\\AppRegistryRequestTransfer"
               body:
                   value:
                       - "return $appRegistryRequestTransfer->setTenantIdentifier("
@@ -356,52 +277,35 @@ spryks:
 
     - AddSharedTransferDefinition:
           arguments:
-              name:
-                  value: "AppRegistryRequest"
+              name: "AppRegistryRequest"
 
     - AddSharedTransferProperty:
           arguments:
-              name:
-                  value: "AppRegistryRequest"
-              propertyName:
-                  value: "tenantIdentifier"
-              propertyType:
-                  value: "string"
+              name: "AppRegistryRequest"
+              propertyName: "tenantIdentifier"
+              propertyType: "string"
 
     - AddSharedTransferProperty:
           arguments:
-              name:
-                  value: "AppRegistryResponse"
-              propertyName:
-                  value: "isSuccessful"
-              propertyType:
-                  value: "bool"
+              name: "AppRegistryResponse"
+              propertyName: "isSuccessful"
+              propertyType: "bool"
 
     - AddSharedTransferProperty:
           arguments:
-              name:
-                  value: "AppRegistryResponse"
-              propertyName:
-                  value: "errorMessages"
-              propertyType:
-                  value: "ErrorMessage[]"
-              singular:
-                  value: "errorMessage"
+              name: "AppRegistryResponse"
+              propertyName: "errorMessages"
+              propertyType: "ErrorMessage[]"
+              singular: "errorMessage"
 
     - AddSharedTransferProperty:
           arguments:
-              name:
-                  value: "ErrorMessage"
-              propertyName:
-                  value: "code"
-              propertyType:
-                  value: "string"
+              name: "ErrorMessage"
+              propertyName: "code"
+              propertyType: "string"
 
     - AddSharedTransferProperty:
           arguments:
-              name:
-                  value: "ErrorMessage"
-              propertyName:
-                  value: "detail"
-              propertyType:
-                  value: "string"
+              name: "ErrorMessage"
+              propertyName: "detail"
+              propertyType: "string"
