@@ -1,0 +1,22 @@
+spryk: structure
+description: "Unit Test configuration"
+mode: both
+arguments:
+    organization:
+        value: Spryker
+
+    module:
+        value: FooBaz
+
+    directories:
+        value:
+            - src/
+
+    targetPath:
+        value: ""
+
+preSpryks:
+    - SprykWithPostCommand
+
+postCommands:
+    - ComposerReplaceGenerate

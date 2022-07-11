@@ -3,7 +3,7 @@
 {{ include('Partials/license.twig') }}
 namespace {{ organization }}Test\{{ application }}\{{ module }}\{{ suite }}\Fixtures;
 
-use {{ organization }}Test\{{ application }}\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester;
+use {{ organization }}Test\{{ application }}\{{ resource | resourceNameToModelName }}{{ applicationType }}Api\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester;
 use Generated\Shared\Transfer\{{ zedDomainEntity }}Transfer;
 use Ramsey\Uuid\Uuid;
 use SprykerTest\Shared\Testify\Fixtures\FixturesBuilderInterface;
@@ -28,11 +28,11 @@ class {{ className }} implements FixturesBuilderInterface, FixturesContainerInte
     protected ${{ zedDomainEntity | lcfirst }}Transfer;
 {% endif %}
     /**
-     * @param {{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I
+     * @param {{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester $I
      *
      * @return \SprykerTest\Shared\Testify\Fixtures\FixturesContainerInterface
      */
-    public function buildFixtures({{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I): FixturesContainerInterface
+    public function buildFixtures({{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester $I): FixturesContainerInterface
     {
 {% if isBulk.value %}
         $this->{{ zedDomainEntity | lcfirst }}TransferOne = $this->build{{ zedDomainEntity }}TransferFixture($I);
@@ -46,11 +46,11 @@ class {{ className }} implements FixturesBuilderInterface, FixturesContainerInte
     }
 
     /**
-    * @param {{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I
+    * @param {{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester $I
     *
     * @return \Generated\Shared\Transfer\{{ zedDomainEntity }}Transfer
     */
-    protected function build{{ zedDomainEntity }}TransferFixture({{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I): {{ zedDomainEntity }}Transfer
+    protected function build{{ zedDomainEntity }}TransferFixture({{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester $I): {{ zedDomainEntity }}Transfer
     {
         $seed = ['uuid' => (Uuid::uuid4())->toString()];
         ${{ zedDomainEntity | lcfirst }}Transfer = $I->have{{ zedDomainEntity }}TransferPersisted($seed);

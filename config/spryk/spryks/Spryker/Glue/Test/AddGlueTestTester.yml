@@ -14,7 +14,7 @@ arguments:
         default: false
 
     module:
-        value: "{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api"
+        value: "{{ resource | resourceNameToModuleName }}{{ applicationType }}Api"
 
     organization:
         inherit: true
@@ -45,7 +45,7 @@ arguments:
         value: Glue/Test/GlueTestTester/ApiTester.php.twig
 
     className:
-        value: "{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester"
+        value: "{{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester"
 
     targetFilename:
         value: "{{ className }}.php"
@@ -70,7 +70,7 @@ postSpryks:
             body:
                 value: "$this->seeResponseJsonPathContains(['data' => ['type' => '{{ zedDomainEntity | lcfirst }}', 'id' => ${{ zedDomainEntity | lcfirst }}Id, 'attributes' => ['id{{ zedDomainEntity }}' => ${{ zedDomainEntity | lcfirst }}Id, 'uuid' => $uuid]]]);"
             target:
-                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester"
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester"
             withInterface:
                 value: false
 
@@ -86,7 +86,7 @@ postSpryks:
                 body:
                     value: "return ['page' => ['offset' => 1, 'limit' => 1], 'sort' => '-id{{ zedDomainEntity }}'];"
                 target:
-                    value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester"
+                    value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester"
                 withInterface:
                     value: false
     -   AddMethod:
@@ -103,7 +103,7 @@ postSpryks:
                         - "$this->seeResponseJsonPathContains(['data' => [['type' => '{{ zedDomainEntity | lcfirst }}']]]);"
                         - "$this->seeResponseMatchesJsonType(['data' => [['id' => 'integer:>0', 'attributes' => ['id{{ zedDomainEntity }}' => 'integer:>0', 'uuid' => 'string']]]]);"
                 target:
-                    value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester"
+                    value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester"
                 withInterface:
                     value: false
 
@@ -121,7 +121,7 @@ postSpryks:
                     - "$this->seeResponseJsonPathContains(['data' => ['type' => '{{ zedDomainEntity | lcfirst }}']]);"
                     - "$this->seeResponseMatchesJsonType(['data' => ['id' => 'integer:>0', 'attributes' => ['id{{ zedDomainEntity }}' => 'integer:>0', 'uuid' => 'string']]]);"
             target:
-                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester"
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester"
             withInterface:
                 value: false
 
@@ -141,6 +141,6 @@ postSpryks:
             body:
                 value: "return ['data' => ['type' => '{{ zedDomainEntity | lcfirst }}', 'id' => ${{ zedDomainEntity | lcfirst }}Id, 'attributes' => ['id{{ zedDomainEntity }}' => ${{ zedDomainEntity | lcfirst }}Id, 'uuid' => $uuid]]];"
             target:
-                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester"
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester"
             withInterface:
                 value: false

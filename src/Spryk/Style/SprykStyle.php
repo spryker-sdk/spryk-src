@@ -138,6 +138,35 @@ class SprykStyle implements SprykStyleInterface
      *
      * @return void
      */
+    public function startSpryks(SprykDefinitionInterface $sprykDefinition): void
+    {
+        if (!$this->output->isVerbose()) {
+            return;
+        }
+
+        $message = sprintf('<fg=green>%s</> has spryks', $sprykDefinition->getSprykName());
+
+        $hasSpryks = (count($sprykDefinition->getSpryks()) > 0);
+        if (!$hasSpryks) {
+            $message = sprintf('<fg=green>%s</> has no spryks', $sprykDefinition->getSprykName());
+        }
+        $this->writeln($message);
+    }
+
+    /**
+     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
+     *
+     * @return void
+     */
+    public function endSpryks(SprykDefinitionInterface $sprykDefinition): void
+    {
+    }
+
+    /**
+     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
+     *
+     * @return void
+     */
     public function startPostSpryks(SprykDefinitionInterface $sprykDefinition): void
     {
         if (!$this->output->isVerbose()) {
