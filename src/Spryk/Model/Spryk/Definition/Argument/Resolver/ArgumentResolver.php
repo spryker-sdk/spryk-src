@@ -9,6 +9,7 @@ namespace SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Resolver;
 
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Argument;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface;
+use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Normalizer\ArgumentDefinitionNormalizerInterface;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Superseder\SupersederInterface;
 use SprykerSdk\Spryk\SprykConfig;
 use SprykerSdk\Spryk\Style\SprykStyleInterface;
@@ -34,15 +35,23 @@ class ArgumentResolver implements ArgumentResolverInterface
     protected SprykStyleInterface $style;
 
     /**
+     * @var \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Normalizer\ArgumentDefinitionNormalizerInterface
+     */
+    protected ArgumentDefinitionNormalizerInterface $argumentDefinitionNormalizer;
+
+    /**
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $argumentCollection
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Superseder\SupersederInterface $superseder
+     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Normalizer\ArgumentDefinitionNormalizerInterface $argumentDefinitionNormalizer
      */
     public function __construct(
         ArgumentCollectionInterface $argumentCollection,
-        SupersederInterface $superseder
+        SupersederInterface $superseder,
+        ArgumentDefinitionNormalizerInterface $argumentDefinitionNormalizer
     ) {
         $this->argumentCollection = $argumentCollection;
         $this->superseder = $superseder;
+        $this->argumentDefinitionNormalizer = $argumentDefinitionNormalizer;
     }
 
     /**
@@ -74,7 +83,7 @@ class ArgumentResolver implements ArgumentResolverInterface
             $argument = $this->resolveArgument(
                 $argumentName,
                 $sprykName,
-                (array)$argumentDefinition,
+                $this->argumentDefinitionNormalizer->normalizeArgumentDefinition($argumentDefinition),
                 $resolvedArgumentCollection,
             );
             $argumentCollection->addArgument($argument);
