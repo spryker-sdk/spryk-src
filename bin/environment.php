@@ -4,10 +4,6 @@ gc_disable(); // performance boost
 
 define('__SPRYK_RUNNING__', true);
 
-const ENV_PROD = 'prod';
-const ENV_DEV = 'dev';
-const ENV_TEST = 'test';
-
 $devOrPharLoader = require_once __DIR__ . '/../vendor/autoload.php';
 $devOrPharLoader->unregister();
 
@@ -55,11 +51,11 @@ define('SPRYK_ROOT_DIR', __DIR__ . '/../');
 
 $applicationEnv = getenv('APPLICATION_ENV');
 $allowedApplicationEnvs = [
-    ENV_PROD,
-    ENV_DEV,
-    ENV_TEST
+    'prod',
+    'dev',
+    'test'
 ];
 
 defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', getcwd());
-define('APPLICATION_ENV', $applicationEnv !== false && in_array($applicationEnv, $allowedApplicationEnvs, true) ? $applicationEnv : ENV_PROD);
-define('APPLICATION_DEBUG', getenv('APPLICATION_DEBUG') !== false ? (bool)getenv('APPLICATION_DEBUG') :  APPLICATION_ENV !== ENV_PROD);
+define('APPLICATION_ENV', $applicationEnv !== false && in_array($applicationEnv, $allowedApplicationEnvs, true) ? $applicationEnv : 'prod');
+define('APPLICATION_DEBUG', getenv('APPLICATION_DEBUG') !== false ? (bool)getenv('APPLICATION_DEBUG') :  APPLICATION_ENV !== 'prod');
