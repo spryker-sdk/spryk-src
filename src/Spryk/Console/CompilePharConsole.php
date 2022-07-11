@@ -35,9 +35,12 @@ class CompilePharConsole extends AbstractSprykConsole
 
         $output->writeln('Clean the cache...');
         $this->executeProcess(['php', 'bin/console', 'cache:clear', '-e', 'prod', '--no-debug']);
+        $this->executeProcess(['php', 'bin/console', 'cache:clear', '-e', 'prod'], null, ['APP_DEBUG' => 1]);
 
         $output->writeln('Warm up the cache...');
         $this->executeProcess(['php', 'bin/console', 'cache:warmup', '-e', 'prod', '--no-debug']);
+        // For running tests with the generated spryk.phar we need to have an additional cache for prod debug mode.
+        $this->executeProcess(['php', 'bin/console', 'cache:warmup', '-e', 'prod'], null, ['APP_DEBUG' => 1]);
 
         $output->writeln('Build the PHAR...');
         $this->executeProcess(['php', 'box.phar', 'compile', '--no-parallel'], getcwd() . '/compiler/build');
@@ -50,10 +53,11 @@ class CompilePharConsole extends AbstractSprykConsole
      *
      * @param array $processDefinition
      * @param string|null $cwd
+     * @param array|null $env
      *
      * @return void
      */
-    protected function executeProcess(array $processDefinition, ?string $cwd = null): void
+    protected function executeProcess(array $processDefinition, ?string $cwd = null, ?array $env = []): void
     {
         $process = new Process($processDefinition, $cwd);
         $process->start();
