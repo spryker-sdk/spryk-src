@@ -7,6 +7,7 @@
 
 namespace SprykerSdk\Spryk\Twig;
 
+use Phar;
 use Twig\Cache\FilesystemCache;
 
 /**
@@ -31,7 +32,8 @@ class PharAwareFilesystemCache extends FilesystemCache
      */
     public function write(string $key, string $content): void
     {
-        if (!is_writable(__DIR__)) {
+        // Only when running this code within a PHAR archive we need to ensure that we don't try to write to the cache.
+        if (Phar::running()) {
             return;
         }
 

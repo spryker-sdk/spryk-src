@@ -38,7 +38,7 @@ class CompilePharConsoleTest extends Unit
         $consoleStub = Stub::construct(CompilePharConsole::class, [
             new SprykFacade(),
         ], [
-            'executeProcess' => Expected::exactly(6),
+            'executeProcess' => Expected::exactly(4),
         ]);
 
         $tester = $this->tester->getConsoleTester($consoleStub);
