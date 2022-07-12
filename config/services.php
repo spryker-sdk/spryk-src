@@ -49,8 +49,10 @@ return function (ContainerConfigurator $configurator) {
     // To prevent Symfony from injecting a filesystem cache we pass `null` and an empty array to let the `ExpressionLanguage`
     // use the `ArrayAdapter`. Without overriding this, the `ExpressionLanguage` tries to write into the filesystem during
     // runtime which is not possible with PHAR archives.
-    $services->set(ExpressionLanguage::class)
-        ->args([null, []]);
+//    $services->set(ExpressionLanguage::class)
+//        ->args([null, []]);
+    $services->set(ExpressionLanguage::class);
+
 
     // Make SprykFactory public for instantiating the SprykFacade from external packages like `spryker-sdk/spryk-gui`
     $services->get(SprykFactory::class)->public();
