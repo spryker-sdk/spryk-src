@@ -25,6 +25,11 @@ class PharAwareFilesystemCache extends FilesystemCache
     }
 
     /**
+     * This class ensures that when running in a PHAR archive (not writable) we don't try to write to the caches.
+     * The Twig cache is created during compile time and MUST not be written at any other time.
+     *
+     * @codeCoverageIgnore We need to ignore this for test coverage as we can't mock the PHP PHAR extension.
+     *
      * @param string $key
      * @param string $content
      *
@@ -32,7 +37,6 @@ class PharAwareFilesystemCache extends FilesystemCache
      */
     public function write(string $key, string $content): void
     {
-        // Only when running this code within a PHAR archive we need to ensure that we don't try to write to the cache.
         if (Phar::running()) {
             return;
         }
