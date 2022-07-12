@@ -1,7 +1,5 @@
 <?php declare (strict_types=1);
 
-use Symfony\Component\ErrorHandler\ErrorHandler;
-
 gc_disable(); // performance boost
 
 define('__SPRYK_RUNNING__', true);
@@ -61,7 +59,3 @@ $allowedApplicationEnvs = [
 defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', getcwd());
 define('APPLICATION_ENV', $applicationEnv !== false && in_array($applicationEnv, $allowedApplicationEnvs, true) ? $applicationEnv : 'prod');
 define('APPLICATION_DEBUG', getenv('APPLICATION_DEBUG') !== false ? (bool)getenv('APPLICATION_DEBUG') : APPLICATION_ENV !== 'prod');
-
-if (getenv('CI_RUN') !== false) {
-    ErrorHandler::register();
-}
