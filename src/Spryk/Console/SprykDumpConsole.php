@@ -105,7 +105,7 @@ class SprykDumpConsole extends AbstractSprykConsole
         $sprykDefinitions = $this->formatSpryks($sprykDefinitions);
 
         $output->writeln('List of Spryk definitions:');
-        $this->printTable($output, ['Spryk name', 'Description'], $sprykDefinitions);
+        $this->printTable($output, ['Spryk name', 'Description', 'Arguments'], $sprykDefinitions);
     }
 
     /**
@@ -173,7 +173,11 @@ class SprykDumpConsole extends AbstractSprykConsole
             if (!isset($sprykDefinition['description'])) {
                 throw new Exception(sprintf('The Spryk "%s" doesn\'t have a description.', $sprykName));
             }
-            $formatted[$sprykName] = [$sprykName, $sprykDefinition['description']];
+            $formatted[$sprykName] = [
+                $sprykName,
+                $sprykDefinition['description'],
+                $this->formatArguments($sprykDefinition),
+            ];
         }
         sort($formatted);
 
@@ -198,6 +202,16 @@ class SprykDumpConsole extends AbstractSprykConsole
         sort($formatted);
 
         return $formatted;
+    }
+
+    /**
+     * @param array $sprykDefinition
+     *
+     * @return string
+     */
+    protected function formatArguments(array $sprykDefinition): string
+    {
+        return implode(', ', array_keys($sprykDefinition['arguments']));
     }
 
     /**
