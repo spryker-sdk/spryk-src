@@ -117,13 +117,10 @@ class SprykDumpConsole extends AbstractSprykConsole
     protected function dumpSpryk(OutputInterface $output, string $sprykName): void
     {
         $sprykDefinition = $this->getFacade()->getSprykDefinition($sprykName);
-        $options = $this->formatOptions($sprykDefinition[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS]);
-        $description = $this->formatSprykDescription($sprykDefinition[SprykConfig::SPRYK_DEFINITION_KEY_DESCRIPTION]);
+        $sprykArguments = $this->formatSingleSprykArguments($sprykDefinition[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS]);
+        $sprykDescription = $this->formatSingleSprykDescription($sprykDefinition[SprykConfig::SPRYK_DEFINITION_KEY_DESCRIPTION]);
 
-        $this->printTable($output, ['Description:'], [[$description]]);
-
-        $this->printTitleBlock($output, sprintf('List of all "%s" options:', $sprykName));
-        $this->printTable($output, ['Option'], $options);
+        $this->printTable($output, [$sprykName, $sprykDescription], $sprykArguments);
 
         $optionalSpryks = $this->getFormattedOptionalSpryks($sprykDefinition);
         if ($optionalSpryks !== []) {
@@ -189,19 +186,22 @@ class SprykDumpConsole extends AbstractSprykConsole
     }
 
     /**
-     * @param array $sprykDefinitions
+     * @param array $sprykDefinition
      *
      * @return array
      */
-    protected function formatOptions(array $sprykDefinitions): array
+    protected function formatSingleSprykArguments(array $sprykDefinition): array
     {
         $formatted = ['mode' => ['mode']];
-        foreach ($sprykDefinitions as $option => $optionDefinition) {
-            if (isset($optionDefinition[SprykConfig::NAME_ARGUMENT_KEY_VALUE])) {
+        foreach ($sprykDefinition as $argument => $argumentDefinition) {
+            if (isset($argumentDefinition[SprykConfig::NAME_ARGUMENT_KEY_VALUE])) {
                 continue;
             }
 
-            $formatted[$option] = [$option];
+            $formatted[$argument] = [
+                $argument,
+                $argumentDefinition[SprykConfig::NAME_ARGUMENT_KEY_DESCRIPTION] ?? '',
+            ];
         }
         sort($formatted);
 
@@ -213,7 +213,7 @@ class SprykDumpConsole extends AbstractSprykConsole
      *
      * @return string
      */
-    protected function formatSprykDescription(string $sprykDescription): string
+    protected function formatSingleSprykDescription(string $sprykDescription): string
     {
         return trim($sprykDescription);
     }

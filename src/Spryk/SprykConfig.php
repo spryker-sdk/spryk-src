@@ -70,6 +70,11 @@ class SprykConfig
     /**
      * @var string
      */
+    public const NAME_ARGUMENT_KEY_DESCRIPTION = 'description';
+
+    /**
+     * @var string
+     */
     public const NAME_ARGUMENT_KEY_VALUES = 'values';
 
     /**
