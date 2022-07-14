@@ -71,7 +71,7 @@ class SprykDumpConsole extends AbstractSprykConsole
 
         $sprykName = current((array)$input->getArgument(static::ARGUMENT_SPRYK));
         if ($sprykName !== false) {
-            $this->dumpSprykOptions($output, $sprykName);
+            $this->dumpSpryk($output, $sprykName);
 
             return static::CODE_SUCCESS;
         }
@@ -114,12 +114,16 @@ class SprykDumpConsole extends AbstractSprykConsole
      *
      * @return void
      */
-    protected function dumpSprykOptions(OutputInterface $output, string $sprykName): void
+    protected function dumpSpryk(OutputInterface $output, string $sprykName): void
     {
         $sprykDefinition = $this->getFacade()->getSprykDefinition($sprykName);
-        $tableRows = $this->formatOptions($sprykDefinition[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS]);
+        $options = $this->formatOptions($sprykDefinition[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS]);
+        $description = $this->formatSprykDescription($sprykDefinition[SprykConfig::SPRYK_DEFINITION_KEY_DESCRIPTION]);
+
+        $this->printTable($output, ['Description:'], [[$description]]);
+
         $this->printTitleBlock($output, sprintf('List of all "%s" options:', $sprykName));
-        $this->printTable($output, ['Option'], $tableRows);
+        $this->printTable($output, ['Option'], $options);
 
         $optionalSpryks = $this->getFormattedOptionalSpryks($sprykDefinition);
         if ($optionalSpryks !== []) {
@@ -205,13 +209,23 @@ class SprykDumpConsole extends AbstractSprykConsole
     }
 
     /**
+     * @param string $sprykDescription
+     *
+     * @return string
+     */
+    protected function formatSprykDescription(string $sprykDescription): string
+    {
+        return trim($sprykDescription);
+    }
+
+    /**
      * @param array $sprykDefinition
      *
      * @return string
      */
     protected function formatArguments(array $sprykDefinition): string
     {
-        return implode(', ', array_keys($sprykDefinition['arguments']));
+        return implode(', ', array_keys($sprykDefinition[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS]));
     }
 
     /**
