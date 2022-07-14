@@ -120,6 +120,8 @@ class SprykDumpConsole extends AbstractSprykConsole
         $sprykArguments = $this->formatSingleSprykArguments($sprykDefinition[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS]);
         $sprykDescription = $this->formatSingleSprykDescription($sprykDefinition[SprykConfig::SPRYK_DEFINITION_KEY_DESCRIPTION]);
 
+        $this->printTitleBlock($output, sprintf('Description of the "%s" Spryk:', $sprykName));
+
         $this->printTable($output, [$sprykName, $sprykDescription], $sprykArguments);
 
         $optionalSpryks = $this->getFormattedOptionalSpryks($sprykDefinition);
