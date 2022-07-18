@@ -14,9 +14,15 @@ use PhpParser\ParserFactory;
 use PhpParser\PrettyPrinter\Standard;
 use SprykerSdk\Spryk\Model\Spryk\ArgumentList\Generator\ArgumentListGeneratorInterface;
 use SprykerSdk\Spryk\Model\Spryk\ArgumentList\Reader\ArgumentListReaderInterface;
+use SprykerSdk\Spryk\Model\Spryk\Checker\SprykDefinitionChecker;
+use SprykerSdk\Spryk\Model\Spryk\Checker\SprykDefinitionCheckerInterface;
 use SprykerSdk\Spryk\Model\Spryk\Configuration\Loader\SprykConfigurationLoaderInterface;
+use SprykerSdk\Spryk\Model\Spryk\Dumper\Finder\SprykDefinitionFinder;
+use SprykerSdk\Spryk\Model\Spryk\Dumper\Finder\SprykDefinitionFinderInterface;
 use SprykerSdk\Spryk\Model\Spryk\Dumper\SprykDefinitionDumperInterface;
 use SprykerSdk\Spryk\Model\Spryk\Executor\SprykExecutorInterface;
+use SprykerSdk\Spryk\Model\Spryk\Fixer\SprykDefinitionFixer;
+use SprykerSdk\Spryk\Model\Spryk\Fixer\SprykDefinitionFixerInterface;
 
 class SprykFactory
 {
@@ -56,12 +62,30 @@ class SprykFactory
     protected ?Lexer $lexer = null;
 
     /**
+     * @var \SprykerSdk\Spryk\Model\Spryk\Dumper\Finder\SprykDefinitionFinderInterface
+     */
+    protected SprykDefinitionFinderInterface $sprykDefinitionFinder;
+
+    /**
+     * @var \SprykerSdk\Spryk\Model\Spryk\Checker\SprykDefinitionCheckerInterface
+     */
+    protected SprykDefinitionCheckerInterface $sprykDefinitionChecker;
+
+    /**
+     * @var \SprykerSdk\Spryk\Model\Spryk\Fixer\SprykDefinitionFixerInterface
+     */
+    protected SprykDefinitionFixerInterface $sprykDefinitionFixer;
+
+    /**
      * @param \SprykerSdk\Spryk\SprykConfig $config
      * @param \SprykerSdk\Spryk\Model\Spryk\Executor\SprykExecutorInterface $executor
      * @param \SprykerSdk\Spryk\Model\Spryk\Dumper\SprykDefinitionDumperInterface $definitionDumper
      * @param \SprykerSdk\Spryk\Model\Spryk\ArgumentList\Generator\ArgumentListGeneratorInterface $argumentListGenerator
      * @param \SprykerSdk\Spryk\Model\Spryk\ArgumentList\Reader\ArgumentListReaderInterface $argumentListReader
      * @param \SprykerSdk\Spryk\Model\Spryk\Configuration\Loader\SprykConfigurationLoaderInterface $configurationLoader
+     * @param \SprykerSdk\Spryk\Model\Spryk\Dumper\Finder\SprykDefinitionFinderInterface $sprykDefinitionFinder
+     * @param \SprykerSdk\Spryk\Model\Spryk\Checker\SprykDefinitionCheckerInterface $sprykDefinitionChecker
+     * @param \SprykerSdk\Spryk\Model\Spryk\Fixer\SprykDefinitionFixerInterface $sprykDefinitionFixer
      */
     public function __construct(
         SprykConfig $config,
@@ -69,7 +93,10 @@ class SprykFactory
         SprykDefinitionDumperInterface $definitionDumper,
         ArgumentListGeneratorInterface $argumentListGenerator,
         ArgumentListReaderInterface $argumentListReader,
-        SprykConfigurationLoaderInterface $configurationLoader
+        SprykConfigurationLoaderInterface $configurationLoader,
+        SprykDefinitionFinderInterface $sprykDefinitionFinder,
+        SprykDefinitionCheckerInterface $sprykDefinitionChecker,
+        SprykDefinitionFixerInterface $sprykDefinitionFixer
     ) {
         $this->config = $config;
         $this->executor = $executor;
@@ -77,6 +104,9 @@ class SprykFactory
         $this->argumentListGenerator = $argumentListGenerator;
         $this->argumentListReader = $argumentListReader;
         $this->configurationLoader = $configurationLoader;
+        $this->sprykDefinitionFinder = $sprykDefinitionFinder;
+        $this->sprykDefinitionChecker = $sprykDefinitionChecker;
+        $this->sprykDefinitionFixer = $sprykDefinitionFixer;
     }
 
     /**
@@ -152,4 +182,29 @@ class SprykFactory
 
         return $this->lexer;
     }
+
+    /**
+     * @return \SprykerSdk\Spryk\Model\Spryk\Dumper\Finder\SprykDefinitionFinderInterface
+     */
+    public function createSprykDefinitionFinder(): SprykDefinitionFinderInterface
+    {
+        return $this->sprykDefinitionFinder;
+    }
+
+    /**
+     * @return \SprykerSdk\Spryk\Model\Spryk\Checker\SprykDefinitionCheckerInterface
+     */
+    public function createSprykDefinitionChecker(): SprykDefinitionCheckerInterface
+    {
+        return $this->sprykDefinitionChecker;
+    }
+
+    /**
+     * @return \SprykerSdk\Spryk\Model\Spryk\Fixer\SprykDefinitionFixerInterface
+     */
+    public function createSprykDefinitionFixer(): SprykDefinitionFixerInterface
+    {
+        return $this->sprykDefinitionFixer;
+    }
+
 }

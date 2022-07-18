@@ -108,4 +108,14 @@ class SprykFacade implements SprykFacadeInterface
     {
         return $this->getSprykFactory()->getConfigurationLoader()->loadSpryk($sprykName, $sprykMode);
     }
+
+    public function fixSprykDefinitions(?string $sprykName): array
+    {
+        return $this->getSprykFactory()->createSprykDefinitionFixer()->fix($sprykName);
+    }
+
+    public function checkSprykDefinitions(?string $sprykName): array
+    {
+        return $this->getSprykFactory()->createSprykDefinitionChecker()->check($sprykName);
+    }
 }
