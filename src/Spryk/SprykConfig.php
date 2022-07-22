@@ -25,6 +25,11 @@ class SprykConfig
     /**
      * @var string
      */
+    public const SPRYK_DEFINITION_KEY_DESCRIPTION = 'description';
+
+    /**
+     * @var string
+     */
     public const NAME_DEVELOPMENT_LAYER_CORE = 'core';
 
     /**
@@ -61,6 +66,11 @@ class SprykConfig
      * @var string
      */
     public const NAME_ARGUMENT_KEY_VALUE = 'value';
+
+    /**
+     * @var string
+     */
+    public const NAME_ARGUMENT_KEY_DESCRIPTION = 'description';
 
     /**
      * @var string
