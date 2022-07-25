@@ -57,5 +57,5 @@ $allowedApplicationEnvs = [
 ];
 
 defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', getcwd());
-define('APPLICATION_ENV_SPRYK_USAGE', $applicationEnv !== false && in_array($applicationEnv, $allowedApplicationEnvs, true) ? $applicationEnv : 'prod');
-define('APPLICATION_DEBUG', getenv('APPLICATION_DEBUG') !== false ? (bool)getenv('APPLICATION_DEBUG') : APPLICATION_ENV_SPRYK_USAGE !== 'prod');
+define('APPLICATION_ENV_SPRYK', $applicationEnv !== false && in_array($applicationEnv, $allowedApplicationEnvs, true) ? $applicationEnv : 'prod');
+define('APPLICATION_DEBUG', getenv('APPLICATION_DEBUG') !== false ? (bool)getenv('APPLICATION_DEBUG') : APPLICATION_ENV_SPRYK !== 'prod');

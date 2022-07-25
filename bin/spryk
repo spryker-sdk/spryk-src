@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 (function () {
     require_once __DIR__ . DIRECTORY_SEPARATOR . 'environment.php';
 
-    $kernel = new Kernel(APPLICATION_ENV_SPRYK_USAGE, APPLICATION_DEBUG);
+    $kernel = new Kernel(APPLICATION_ENV_SPRYK, APPLICATION_DEBUG);
     $application = new Application($kernel);
     $application->setDefaultCommand('spryk:run', true);
 
