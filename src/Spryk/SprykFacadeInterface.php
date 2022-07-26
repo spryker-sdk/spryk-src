@@ -51,16 +51,12 @@ interface SprykFacadeInterface
     public function getSprykDefinition(string $sprykName, ?string $sprykMode = null): array;
 
     /**
-     * @param string|null $sprykName
-     *
      * @return array
      */
-    public function fixSprykDefinitions(?string $sprykName): array;
+    public function fixSprykDefinitions(): array;
 
     /**
-     * @param string|null $sprykName
-     *
      * @return array
      */
-    public function checkSprykDefinitions(?string $sprykName): array;
+    public function checkSprykDefinitions(): array;
 }

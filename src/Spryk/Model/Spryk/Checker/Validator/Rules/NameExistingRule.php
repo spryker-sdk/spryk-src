@@ -21,9 +21,14 @@ class NameExistingRule extends AbstractCheckerValidatorRule
         }
     }
 
+    /**
+     * @param array $sprykDefinition
+     *
+     * @return bool
+     */
     protected function isNamePropertyExists(array $sprykDefinition): bool
     {
-        return isset($sprykDefinition['name']) && strlen($sprykDefinition['name']);
+        return isset($sprykDefinition['name']);
     }
 
     /**

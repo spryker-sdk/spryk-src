@@ -3,6 +3,7 @@
 namespace SprykerSdk\Spryk\Model\Spryk\Checker;
 
 use SprykerSdk\Spryk\Model\Spryk\Checker\Validator\CheckerSprykDefinitionValidatorInterface;
+use SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\CheckerValidatorRuleInterface;
 use SprykerSdk\Spryk\Model\Spryk\Configuration\Loader\SprykConfigurationLoaderInterface;
 use SprykerSdk\Spryk\Model\Spryk\Dumper\Finder\SprykDefinitionFinderInterface;
 use SprykerSdk\Spryk\SprykConfig;
@@ -28,56 +29,72 @@ class SprykDefinitionChecker implements SprykDefinitionCheckerInterface
      */
     protected SprykConfig $sprykConfig;
 
+
+    public array $tmp = [];
+
+    /**
+     * @param \SprykerSdk\Spryk\Model\Spryk\Dumper\Finder\SprykDefinitionFinderInterface $sprykDefinitionFinder
+     * @param \SprykerSdk\Spryk\Model\Spryk\Configuration\Loader\SprykConfigurationLoaderInterface $configurationLoader
+     * @param \SprykerSdk\Spryk\Model\Spryk\Checker\Validator\CheckerSprykDefinitionValidatorInterface $checkerSprykDefinitionValidator
+     * @param \SprykerSdk\Spryk\SprykConfig $sprykConfig
+     */
     public function __construct(
-        SprykDefinitionFinderInterface $sprykDefinitionFinder,
-        SprykConfigurationLoaderInterface $configurationLoader,
+        SprykDefinitionFinderInterface           $sprykDefinitionFinder,
+        SprykConfigurationLoaderInterface        $configurationLoader,
         CheckerSprykDefinitionValidatorInterface $checkerSprykDefinitionValidator,
-        SprykConfig $sprykConfig
-    ) {
+        SprykConfig                              $sprykConfig
+    )
+    {
         $this->sprykDefinitionFinder = $sprykDefinitionFinder;
         $this->configurationLoader = $configurationLoader;
         $this->checkerSprykDefinitionValidator = $checkerSprykDefinitionValidator;
         $this->sprykConfig = $sprykConfig;
     }
 
-    public function check(?string $sprykName): array
+    /**
+     *
+     * @return array
+     */
+    public function check(): array
     {
-        $validatedSprykDefinitions = [];
-        $i = 0;
-        $sprykFolder = $this->sprykConfig->getSprykRootDirectory() . 'config/spryk/' ;
+        $sprykDetails = [];
+        $sprykFolder = $this->sprykConfig->getSprykRootDirectory() . 'config/spryk/';
+
 
         foreach ($this->sprykDefinitionFinder->find() as $fileInfo) {
-
-            if ($i) {
-                break;
-            }
-
-
             $sprykName = str_replace('.' . $fileInfo->getExtension(), '', $fileInfo->getFilename());
             $sprykDefinition = $this->configurationLoader->loadSpryk($sprykName);
 
-            $spryk = [
+
+            $sprykDetails['definitions'][$sprykName] = [
                 'path' => $sprykFolder . $fileInfo->getRelativePathname(),
                 'definition' => $sprykDefinition,
+                CheckerValidatorRuleInterface::ERRORS_KEY => [],
             ];
 
-            $invalidRules = $this->validateSprykDefinition($spryk);
-            $validatedSprykDefinitions['definitions'][$sprykName]['definition'] = $sprykDefinition;
+            $invalidRules = $this->validateSprykDefinition($sprykDetails['definitions'][$sprykName]);
 
-            if($invalidRules) {
-                $validatedSprykDefinitions['have_errors'] = true;
-                $validatedSprykDefinitions['definitions'][$sprykName]['errors'] = $invalidRules;
+            if ($invalidRules) {
+                $sprykDetails['have_errors'] = true;
+                $sprykDetails['definitions'][$sprykName][CheckerValidatorRuleInterface::ERRORS_KEY] = $invalidRules;
             }
-
-            $i++;
-
         }
-
-        return $validatedSprykDefinitions;
+        return $this->checkerSprykDefinitionValidator->postValidation($sprykDetails);
     }
 
-    protected function validateSprykDefinition(array $sprykDefinition): array
+    /**
+     * @param array $spryk
+     *
+     * @return array
+     */
+    protected function validateSprykDefinition(array $spryk): array
     {
-        return $this->checkerSprykDefinitionValidator->validate($sprykDefinition);
+
+        return $this->checkerSprykDefinitionValidator->validate($spryk);
+    }
+
+    protected function handleSprykDefinitionValidation()
+    {
+
     }
 }

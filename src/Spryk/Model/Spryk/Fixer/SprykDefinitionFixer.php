@@ -29,13 +29,10 @@ class SprykDefinitionFixer implements SprykDefinitionFixerInterface
         $this->sprykDefinitionChecker = $sprykDefinitionChecker;
     }
 
-    public function fix(?string $sprykName): array
+    public function fix(): array
     {
-        if($sprykName) {
 
-        }
-
-        $checkedSpryks = $this->sprykDefinitionChecker->check($sprykName);
+        $checkedSpryks = $this->sprykDefinitionChecker->check();
 
         foreach ($checkedSpryks as $checkedSpryk) {
 

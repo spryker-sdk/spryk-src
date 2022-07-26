@@ -4,5 +4,8 @@ namespace SprykerSdk\Spryk\Model\Spryk\Checker;
 
 interface SprykDefinitionCheckerInterface
 {
-    public function check(?string $sprykName): array;
+    /**
+     * @return array
+     */
+    public function check(): array;
 }

@@ -2,9 +2,6 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Checker\Validator;
 
-
-use SprykerSdk\Spryk\Model\Spryk\Dumper\Finder\SprykDefinitionFinderInterface;
-
 class CheckerSprykDefinitionValidator implements CheckerSprykDefinitionValidatorInterface
 {
     /**
@@ -13,11 +10,18 @@ class CheckerSprykDefinitionValidator implements CheckerSprykDefinitionValidator
     protected array $rules;
 
     /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\CheckerValidatorRuleInterface[] $rules
+     * @var \SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\PostValidation\PostValidationInterface[]
      */
-    public function __construct(array $rules)
+    protected array $postValidations;
+
+    /**
+     * @param \SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\CheckerValidatorRuleInterface[] $rules
+     * @param \SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\PostValidation\PostValidationInterface[] $postValidations
+     */
+    public function __construct(array $rules, array $postValidations)
     {
         $this->rules = $rules;
+        $this->postValidations = $postValidations;
     }
 
     /**
@@ -30,12 +34,37 @@ class CheckerSprykDefinitionValidator implements CheckerSprykDefinitionValidator
         $invalidRules = [];
 
         foreach ($this->rules as $rule) {
-            if (!$rule->validate($spryk)) {
-                $invalidRules[] = $rule;
+            $rule->validate($spryk);
+
+            if ($rule->getErrorMessages()) {
+                foreach ($rule->getErrorMessages() as $errorMessage) {
+                    $invalidRules[get_class($rule)][] = $errorMessage;
+                }
             }
         }
 
         return $invalidRules;
+    }
+
+    /**
+     * @param array $validatedSprykDefinitions
+     * @return array
+     */
+    public function postValidation(array $validatedSprykDefinitions): array
+    {
+        foreach ($this->getPostValidations() as $postValidation) {
+            $validatedSprykDefinitions = $postValidation->validate($validatedSprykDefinitions);
+        }
+
+        return $validatedSprykDefinitions;
+    }
+
+    /**
+     * @return array|\SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\PostValidation\PostValidationInterface[]
+     */
+    protected function getPostValidations(): array
+    {
+        return $this->postValidations;
     }
 }
 

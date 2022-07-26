@@ -14,7 +14,7 @@ abstract class AbstractCheckerValidatorRule implements CheckerValidatorRuleInter
     /**
      * @var bool
      */
-    public const AUTOFIXABLE = false;
+    public const AUTO_FIXABLE = false;
 
     /**
      * @return array
@@ -27,19 +27,21 @@ abstract class AbstractCheckerValidatorRule implements CheckerValidatorRuleInter
     /**
      * @param array $spryk
      *
-     * @return bool
+     * @return CheckerValidatorRuleInterface
      */
-    public function validate(array $spryk): bool
+    public function validate(array $spryk): CheckerValidatorRuleInterface
     {
+        $this->errorMessages = [];
         $this->innerValidate($spryk);
 
-        if ($this->getErrorMessages()) {
-            return false;
-        }
-
-        return true;
+        return $this;
     }
 
+    /**
+     * @param array $spryk
+     *
+     * @return void
+     */
     abstract protected function innerValidate(array $spryk): void;
 
     /**
@@ -47,11 +49,12 @@ abstract class AbstractCheckerValidatorRule implements CheckerValidatorRuleInter
      */
     public function isRuleAutofixable(): bool
     {
-        return static::AUTOFIXABLE;
+        return static::AUTO_FIXABLE;
     }
 
     /**
      * @param string $errorMessage
+     *
      * @return void
      */
     protected function addErrorMessage(string $errorMessage)
@@ -59,8 +62,25 @@ abstract class AbstractCheckerValidatorRule implements CheckerValidatorRuleInter
         $this->errorMessages[] = $errorMessage;
     }
 
-     public function fixPossibleIssue(): array
-     {
-         return [];
-     }
+    /**
+     * @param $sprykName
+     * @param $argumentName
+     * @param string $warningMessage
+     *
+     * @return void
+     */
+    protected function addWarningMessage($sprykName, $argumentName, string $warningMessage)
+    {
+        $this->warningMessages[$sprykName][$argumentName] = $warningMessage;
+    }
+
+    public function getRuleName(): string
+    {
+        return get_class($this);
+    }
+
+    public function fixPossibleIssue(): array
+    {
+        return [];
+    }
 }

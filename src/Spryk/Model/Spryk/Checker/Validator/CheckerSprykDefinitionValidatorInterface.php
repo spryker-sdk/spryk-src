@@ -4,5 +4,10 @@ namespace SprykerSdk\Spryk\Model\Spryk\Checker\Validator;
 
 interface CheckerSprykDefinitionValidatorInterface
 {
-    public function validate(array $sprykDefinition): array;
+    /**
+     * @param array $spryk
+     *
+     * @return array
+     */
+    public function validate(array $spryk): array;
 }

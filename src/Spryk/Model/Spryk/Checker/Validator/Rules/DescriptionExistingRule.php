@@ -13,10 +13,15 @@ class DescriptionExistingRule extends AbstractCheckerValidatorRule
     protected function innerValidate(array $spryk): void
     {
         if (!$this->isSprykDescriptionExists($spryk['definition'])) {
-            $this->addErrorMessage('isSprykDescriptionExists');
+            $this->addErrorMessage('Missing Spryk description.');
         }
     }
 
+    /**
+     * @param array $sprykDefinition
+     *
+     * @return bool
+     */
     protected function isSprykDescriptionExists(array $sprykDefinition): bool
     {
         return isset($sprykDefinition['description']) && strlen($sprykDefinition['description']);

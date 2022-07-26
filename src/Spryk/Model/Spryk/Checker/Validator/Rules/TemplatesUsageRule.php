@@ -12,7 +12,7 @@ class TemplatesUsageRule extends AbstractCheckerValidatorRule
      */
     protected function innerValidate(array $spryk): void
     {
-
+//        $this->addErrorMessage('asdasdas');
     }
 
 }
