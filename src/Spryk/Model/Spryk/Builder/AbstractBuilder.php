@@ -256,7 +256,7 @@ abstract class AbstractBuilder implements SprykBuilderInterface
     /**
      * @param string $argumentName
      *
-     * @return array|string|int
+     * @return mixed
      */
     protected function getArgumentByName(string $argumentName)
     {

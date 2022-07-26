@@ -280,7 +280,7 @@ class ArgumentResolver implements ArgumentResolverInterface
     /**
      * @param string $argument
      * @param string $sprykName
-     * @param string|int|null $default
+     * @param mixed $default
      * @param bool $allowEmpty
      *
      * @return mixed
@@ -312,7 +312,7 @@ class ArgumentResolver implements ArgumentResolverInterface
      * @param string $argument
      * @param string $sprykName
      * @param array<string>|array<int>|array<null> $values
-     * @param string|int|null $default
+     * @param mixed $default
      *
      * @return mixed
      */

@@ -36,7 +36,7 @@ class ReplaceMethodBodyNodeVisitor extends NodeVisitorAbstract
     /**
      * @param \PhpParser\Node $node
      *
-     * @return \PhpParser\Node\Stmt\ClassMethod|void
+     * @return mixed
      */
     public function leaveNode(Node $node)
     {
