@@ -59,7 +59,7 @@ class NameExistingRule extends AbstractCheckerValidatorRule
         $filePath = explode('/', $filePath);
         $dotPosition = strpos(end($filePath), '.');
 
-        return substr(end($filePath), 0, $dotPosition !== false ? $dotPosition : null);
+        return $dotPosition ? substr(end($filePath), 0, $dotPosition) : '';
     }
 
     /**
