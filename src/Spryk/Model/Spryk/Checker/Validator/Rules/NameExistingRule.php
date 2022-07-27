@@ -1,17 +1,21 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules;
 
 use Symfony\Component\Yaml\Yaml;
 
 class NameExistingRule extends AbstractCheckerValidatorRule
 {
-
-    /**
-     * @param array $spryk
-     *
-     * @return void
-     */
+ /**
+  * @param array $spryk
+  *
+  * @return void
+  */
     protected function innerValidate(array $spryk): void
     {
         if (!$this->isNamePropertyExists($spryk['definition'])) {
@@ -34,7 +38,9 @@ class NameExistingRule extends AbstractCheckerValidatorRule
     }
 
     /**
-     * @return void
+     * @param array $spryk
+     *
+     * @return bool
      */
     protected function isSprykNameEqualsFileName(array $spryk): bool
     {
@@ -43,14 +49,21 @@ class NameExistingRule extends AbstractCheckerValidatorRule
         return isset($spryk['definition']['name']) && $fileName === $spryk['definition']['name'];
     }
 
+    /**
+     * @param string $filePath
+     *
+     * @return string|false
+     */
     protected function extractFileNameByPath(string $filePath)
     {
         $filePath = explode('/', $filePath);
-        return substr(end($filePath), 0, strpos(end($filePath), "."));
+
+        return substr(end($filePath), 0, strpos(end($filePath), '.'));
     }
 
     /**
      * @param array $checkedSpryk
+     *
      * @return void
      */
     public function fixPossibleIssue(array $checkedSpryk): void
@@ -62,7 +75,7 @@ class NameExistingRule extends AbstractCheckerValidatorRule
             ['name' => $this->extractFileNameByPath($sprykPath)] + $spryk,
             1000000,
             4,
-            Yaml::DUMP_NULL_AS_TILDE
+            Yaml::DUMP_NULL_AS_TILDE,
         );
 
         file_put_contents($sprykPath, $normalizedYml);

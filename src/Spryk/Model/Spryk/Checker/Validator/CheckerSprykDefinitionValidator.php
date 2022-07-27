@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerSdk\Spryk\Model\Spryk\Checker\Validator;
 
 use SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\DescriptionExistingRule;
@@ -8,12 +13,12 @@ use SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\NameExistingRule;
 class CheckerSprykDefinitionValidator implements CheckerSprykDefinitionValidatorInterface
 {
     /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\PostValidation\PostValidationInterface[]
+     * @var array<\SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\PostValidation\PostValidationInterface>
      */
     protected array $postValidations;
 
     /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\PostValidation\PostValidationInterface[] $postValidations
+     * @param array<\SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\PostValidation\PostValidationInterface> $postValidations
      */
     public function __construct(array $postValidations)
     {
@@ -23,7 +28,7 @@ class CheckerSprykDefinitionValidator implements CheckerSprykDefinitionValidator
     /**
      * @param array $spryk
      *
-     * @return \SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\CheckerValidatorRuleInterface[]
+     * @return array<\SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\CheckerValidatorRuleInterface>
      */
     public function validate(array $spryk): array
     {
@@ -41,7 +46,8 @@ class CheckerSprykDefinitionValidator implements CheckerSprykDefinitionValidator
     }
 
     /**
-     * @param array $validatedSprykDefinitions
+     * @param array $sprykDetails
+     *
      * @return array
      */
     public function postValidation(array $sprykDetails): array
@@ -54,7 +60,7 @@ class CheckerSprykDefinitionValidator implements CheckerSprykDefinitionValidator
     }
 
     /**
-     * @return array|\SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\PostValidation\PostValidationInterface[]
+     * @return array<\SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\PostValidation\PostValidationInterface>
      */
     protected function getPostValidations(): array
     {
@@ -72,4 +78,3 @@ class CheckerSprykDefinitionValidator implements CheckerSprykDefinitionValidator
         ];
     }
 }
-

@@ -1,8 +1,11 @@
 <?php
 
-namespace SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
-use Symfony\Component\Yaml\Yaml;
+namespace SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules;
 
 abstract class AbstractCheckerValidatorRule implements CheckerValidatorRuleInterface
 {
@@ -29,7 +32,7 @@ abstract class AbstractCheckerValidatorRule implements CheckerValidatorRuleInter
     /**
      * @param array $spryk
      *
-     * @return CheckerValidatorRuleInterface
+     * @return \SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\CheckerValidatorRuleInterface
      */
     public function validate(array $spryk): CheckerValidatorRuleInterface
     {
@@ -59,18 +62,24 @@ abstract class AbstractCheckerValidatorRule implements CheckerValidatorRuleInter
      *
      * @return void
      */
-    protected function addErrorMessage(string $errorMessage)
+    protected function addErrorMessage(string $errorMessage): void
     {
         $this->errorMessages[] = $errorMessage;
     }
 
-
+    /**
+     * @return string
+     */
     public function getRuleName(): string
     {
-        return get_class($this);
-
+        return static::class;
     }
 
+    /**
+     * @param array $checkedSpryk
+     *
+     * @return void
+     */
     public function fixPossibleIssue(array $checkedSpryk): void
     {
     }

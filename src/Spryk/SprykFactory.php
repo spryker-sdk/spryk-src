@@ -14,14 +14,11 @@ use PhpParser\ParserFactory;
 use PhpParser\PrettyPrinter\Standard;
 use SprykerSdk\Spryk\Model\Spryk\ArgumentList\Generator\ArgumentListGeneratorInterface;
 use SprykerSdk\Spryk\Model\Spryk\ArgumentList\Reader\ArgumentListReaderInterface;
-use SprykerSdk\Spryk\Model\Spryk\Checker\SprykDefinitionChecker;
 use SprykerSdk\Spryk\Model\Spryk\Checker\SprykDefinitionCheckerInterface;
 use SprykerSdk\Spryk\Model\Spryk\Configuration\Loader\SprykConfigurationLoaderInterface;
-use SprykerSdk\Spryk\Model\Spryk\Dumper\Finder\SprykDefinitionFinder;
 use SprykerSdk\Spryk\Model\Spryk\Dumper\Finder\SprykDefinitionFinderInterface;
 use SprykerSdk\Spryk\Model\Spryk\Dumper\SprykDefinitionDumperInterface;
 use SprykerSdk\Spryk\Model\Spryk\Executor\SprykExecutorInterface;
-use SprykerSdk\Spryk\Model\Spryk\Fixer\SprykDefinitionFixer;
 use SprykerSdk\Spryk\Model\Spryk\Fixer\SprykDefinitionFixerInterface;
 
 class SprykFactory
@@ -206,5 +203,4 @@ class SprykFactory
     {
         return $this->sprykDefinitionFixer;
     }
-
 }

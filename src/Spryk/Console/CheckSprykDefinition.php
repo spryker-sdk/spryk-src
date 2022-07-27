@@ -11,6 +11,7 @@ use SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\CheckerValidatorRuleInt
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Throwable;
 
 class CheckSprykDefinition extends AbstractSprykConsole
 {
@@ -56,7 +57,7 @@ class CheckSprykDefinition extends AbstractSprykConsole
                 static::OPTION_FIX_SHORT,
                 InputOption::VALUE_OPTIONAL,
                 'Spryk fix mode.',
-                false
+                false,
             );
     }
 
@@ -68,7 +69,7 @@ class CheckSprykDefinition extends AbstractSprykConsole
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $isFix = is_null($input->getOption(static::OPTION_FIX));
+        $isFix = $input->getOption(static::OPTION_FIX) === null;
 
         try {
             if ($isFix) {
@@ -82,7 +83,7 @@ class CheckSprykDefinition extends AbstractSprykConsole
 
                 return isset($validationResult['have_errors']) ? static::ERROR_CODE : static::WARNING_CODE;
             }
-        } catch (\Throwable $exception) {
+        } catch (Throwable $exception) {
             $this->printErrorMessage($output, $exception->getMessage());
 
             return static::ERROR_CODE;
@@ -96,9 +97,10 @@ class CheckSprykDefinition extends AbstractSprykConsole
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param array $validationResult
+     *
      * @return void
      */
-    protected function printSprykDefinitionsErrorsAndWarnings(OutputInterface $output, array $validationResult)
+    protected function printSprykDefinitionsErrorsAndWarnings(OutputInterface $output, array $validationResult): void
     {
         [$errors, $warnings] = $this->prepareSprykDefinitionsErrors($validationResult);
 
@@ -123,13 +125,13 @@ class CheckSprykDefinition extends AbstractSprykConsole
 
     /**
      * @param array $validationResult
+     *
      * @return array
      */
     protected function prepareSprykDefinitionsErrors(array $validationResult): array
     {
         $errors = [];
         $warnings = [];
-
 
         foreach ($validationResult['definitions'] as $sprykName => $checkedSprykDefinition) {
             foreach ($checkedSprykDefinition[CheckerValidatorRuleInterface::ERRORS_KEY] as $ruleKey => $rule) {
@@ -145,14 +147,13 @@ class CheckSprykDefinition extends AbstractSprykConsole
             }
         }
 
-
         return [$errors, $warnings];
     }
 
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
      *
-     * @return false|mixed
+     * @return mixed|false
      */
     protected function extractSprykName(InputInterface $input)
     {
@@ -184,6 +185,7 @@ class CheckSprykDefinition extends AbstractSprykConsole
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param string $message
+     *
      * @return void
      */
     protected function printInfoMessage(OutputInterface $output, string $message): void
@@ -193,9 +195,10 @@ class CheckSprykDefinition extends AbstractSprykConsole
 
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
      * @return void
      */
-    protected function printSuccessfulMessage(OutputInterface $output)
+    protected function printSuccessfulMessage(OutputInterface $output): void
     {
         $output->writeln('<info>No validation errors found</info>');
     }

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerSdk\Spryk\Model\Spryk\Checker;
 
 use SprykerSdk\Spryk\Model\Spryk\Checker\Validator\CheckerSprykDefinitionValidatorInterface;
@@ -24,11 +29,11 @@ class SprykDefinitionChecker implements SprykDefinitionCheckerInterface
      * @var \SprykerSdk\Spryk\Model\Spryk\Checker\Validator\CheckerSprykDefinitionValidatorInterface
      */
     protected CheckerSprykDefinitionValidatorInterface $checkerSprykDefinitionValidator;
+
     /**
      * @var \SprykerSdk\Spryk\SprykConfig
      */
     protected SprykConfig $sprykConfig;
-
 
     public array $tmp = [];
 
@@ -39,12 +44,11 @@ class SprykDefinitionChecker implements SprykDefinitionCheckerInterface
      * @param \SprykerSdk\Spryk\SprykConfig $sprykConfig
      */
     public function __construct(
-        SprykDefinitionFinderInterface           $sprykDefinitionFinder,
-        SprykConfigurationLoaderInterface        $configurationLoader,
+        SprykDefinitionFinderInterface $sprykDefinitionFinder,
+        SprykConfigurationLoaderInterface $configurationLoader,
         CheckerSprykDefinitionValidatorInterface $checkerSprykDefinitionValidator,
-        SprykConfig                              $sprykConfig
-    )
-    {
+        SprykConfig $sprykConfig
+    ) {
         $this->sprykDefinitionFinder = $sprykDefinitionFinder;
         $this->configurationLoader = $configurationLoader;
         $this->checkerSprykDefinitionValidator = $checkerSprykDefinitionValidator;
@@ -52,7 +56,6 @@ class SprykDefinitionChecker implements SprykDefinitionCheckerInterface
     }
 
     /**
-     *
      * @return array
      */
     public function check(): array
@@ -61,7 +64,6 @@ class SprykDefinitionChecker implements SprykDefinitionCheckerInterface
         $sprykDetails = [];
         $sprykFolder = $HOMEPath . '/config/spryk/spryks/';
         $i = 0;
-
 
         foreach ($this->sprykDefinitionFinder->find() as $fileInfo) {
             $sprykName = str_replace('.' . $fileInfo->getExtension(), '', $fileInfo->getFilename());
@@ -84,6 +86,7 @@ class SprykDefinitionChecker implements SprykDefinitionCheckerInterface
 //                break;
 //            }
         }
+
         return $this->checkerSprykDefinitionValidator->postValidation($sprykDetails);
     }
 

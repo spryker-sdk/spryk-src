@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\PostValidation;
 
 use SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\CheckerValidatorRuleInterface;
@@ -8,6 +13,7 @@ class ArgumentDescriptionValidation implements PostValidationInterface
 {
     /**
      * @param array $sprykDefinitions
+     *
      * @return array
      */
     public function validate(array $sprykDefinitions): array
@@ -18,6 +24,7 @@ class ArgumentDescriptionValidation implements PostValidationInterface
             foreach ($sprykArgumentsDescriptions as $argumentName => $argumentsDescription) {
                 if (!isset($argumentDescriptionCompareBuffer[$argumentName])) {
                     $argumentDescriptionCompareBuffer[$argumentName] = $argumentsDescription;
+
                     continue;
                 }
 
@@ -33,6 +40,7 @@ class ArgumentDescriptionValidation implements PostValidationInterface
 
     /**
      * @param array $sprykDefinitions
+     *
      * @return array
      */
     protected function extractArgumentDescription(array $sprykDefinitions): array
@@ -54,14 +62,15 @@ class ArgumentDescriptionValidation implements PostValidationInterface
     /**
      * @param string $sprykName
      * @param string $argumentName
+     *
      * @return string
      */
-    protected function getWarningForArgument(string $sprykName, string $argumentName):  string
+    protected function getWarningForArgument(string $sprykName, string $argumentName): string
     {
         return sprintf(
             'The argument %s in the Spryk %s has a different value as found in other Spryks.',
             $argumentName,
-            $sprykName
+            $sprykName,
         );
     }
 }
