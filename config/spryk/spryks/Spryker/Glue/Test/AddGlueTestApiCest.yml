@@ -15,7 +15,7 @@ arguments:
         default: false
 
     module:
-        value: "{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api"
+        value: "{{ resource | resourceNameToModuleName }}{{ applicationType }}Api"
 
     organization:
         inherit: true
@@ -51,7 +51,7 @@ arguments:
 
     className:
         inherit: true
-        default: "{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Cest"
+        default: "{{ resource | resourceNameToModelName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Cest"
 
     targetFilename:
         value: "{{ className }}.php"
@@ -60,7 +60,7 @@ arguments:
         value: "tests/{{ organization }}Test/{{ application }}/{{ module }}/{{suite | ucfirst}}"
 
     fixtureClass:
-        value: "{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Fixtures"
+        value: "{{ resource | resourceNameToModelName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Fixtures"
 
 preSpryks:
     - AddGlueTestHelper
@@ -82,15 +82,15 @@ postSpryks:
               httpMethod:
                   inherit: true
               method:
-                  value: "request{{ resource | normalizeResourceName | singularize | ucfirst }}{{ httpMethod | ucfirst }}ReturnsHttpResponseCode{{ httpResponseCode }}"
+                  value: "request{{ resource | resourceNameToModelName | singularize }}{{ httpMethod | ucfirst }}ReturnsHttpResponseCode{{ httpResponseCode }}"
               input:
-                  value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I"
+                  value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | resourceNameToModelName }}{{ applicationType }}Api\\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester $I"
               output:
                  value: "void"
               body:
                   value: Glue/Test/GlueTestApiCest/GetCestMethod.php.twig
               target:
-                  value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{suite | ucfirst}}\\{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Cest"
+                  value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{suite | ucfirst}}\\{{ resource | resourceNameToModelName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Cest"
               withInterface:
                   value: false
 
@@ -108,15 +108,15 @@ postSpryks:
             httpMethod:
                 inherit: true
             method:
-                value: "request{{ resource | normalizeResourceName | singularize | ucfirst }}{{ httpMethod | ucfirst }}CollectionReturnsHttpResponseCode{{ httpResponseCode }}"
+                value: "request{{ resource | resourceNameToModelName | singularize }}{{ httpMethod | ucfirst }}CollectionReturnsHttpResponseCode{{ httpResponseCode }}"
             input:
-                value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I"
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | resourceNameToModelName }}{{ applicationType }}Api\\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester $I"
             output:
                 value: "void"
             body:
                 value: Glue/Test/GlueTestApiCest/GetCollectionCestMethod.php.twig
             target:
-                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{suite | ucfirst}}\\{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Cest"
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{suite | ucfirst}}\\{{ resource | resourceNameToModelName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Cest"
             withInterface:
                 value: false
 
@@ -134,15 +134,15 @@ postSpryks:
             httpMethod:
                 inherit: true
             method:
-                value: "request{{ resource | normalizeResourceName | singularize | ucfirst }}{{ httpMethod | ucfirst }}CollectionReturnsHttpResponseCode{{ httpResponseCode }}"
+                value: "request{{ resource | resourceNameToModelName | singularize | ucfirst }}{{ httpMethod | ucfirst }}CollectionReturnsHttpResponseCode{{ httpResponseCode }}"
             input:
-                value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I"
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | resourceNameToModelName }}{{ applicationType }}Api\\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester $I"
             output:
                 value: "void"
             body:
                 value: Glue/Test/GlueTestApiCest/DeleteCollectionCestMethod.php.twig
             target:
-                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{suite | ucfirst}}\\{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Cest"
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{suite | ucfirst}}\\{{ resource | resourceNameToModelName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Cest"
             withInterface:
                 value: false
 
@@ -160,15 +160,15 @@ postSpryks:
             httpMethod:
                 inherit: true
             method:
-                value: "request{{ resource | normalizeResourceName | singularize | ucfirst }}{{ httpMethod | ucfirst }}ReturnsHttpResponseCode{{ httpResponseCode }}"
+                value: "request{{ resource | resourceNameToModelName | singularize }}{{ httpMethod | ucfirst }}ReturnsHttpResponseCode{{ httpResponseCode }}"
             input:
-                value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I"
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | resourceNameToModelName }}{{ applicationType }}Api\\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester $I"
             output:
                 value: "void"
             body:
                 value: Glue/Test/GlueTestApiCest/PostCestMethod.php.twig
             target:
-                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{suite | ucfirst}}\\{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Cest"
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{suite | ucfirst}}\\{{ resource | resourceNameToModelName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Cest"
             withInterface:
                 value: false
 
@@ -186,15 +186,15 @@ postSpryks:
             httpMethod:
                 inherit: true
             method:
-                value: "request{{ resource | normalizeResourceName | singularize | ucfirst }}{{ httpMethod | ucfirst }}ReturnsHttpResponseCode{{ httpResponseCode }}"
+                value: "request{{ resource | resourceNameToModelName | singularize }}{{ httpMethod | ucfirst }}ReturnsHttpResponseCode{{ httpResponseCode }}"
             input:
-                value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I"
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | resourceNameToModelName }}{{ applicationType }}Api\\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester $I"
             output:
                 value: "void"
             body:
                 value: Glue/Test/GlueTestApiCest/DeleteCestMethod.php.twig
             target:
-                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{suite | ucfirst}}\\{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Cest"
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{suite | ucfirst}}\\{{ resource | resourceNameToModelName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Cest"
             withInterface:
                 value: false
 
@@ -212,14 +212,14 @@ postSpryks:
             httpMethod:
                 inherit: true
             method:
-                value: "request{{ resource | normalizeResourceName | singularize | ucfirst }}{{ httpMethod | ucfirst }}ReturnsHttpResponseCode{{ httpResponseCode }}"
+                value: "request{{ resource | resourceNameToModelName | singularize }}{{ httpMethod | ucfirst }}ReturnsHttpResponseCode{{ httpResponseCode }}"
             input:
-                value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api\\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I"
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | resourceNameToModelName }}{{ applicationType }}Api\\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester $I"
             output:
                 value: "void"
             body:
                 value: Glue/Test/GlueTestApiCest/PatchCestMethod.php.twig
             target:
-                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{suite | ucfirst}}\\{{ resource | normalizeResourceName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Cest"
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{suite | ucfirst}}\\{{ resource | resourceNameToModelName }}{{ httpMethod | ucfirst }}{% if isBulk.value == true %}Collection{% endif %}{{ suite }}Cest"
             withInterface:
                 value: false

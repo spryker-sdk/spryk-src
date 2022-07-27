@@ -39,7 +39,7 @@ class RemoveApiSuffixFilter implements FilterInterface
     public function filter(string $value): string
     {
         $value = (string)preg_replace('/BackendApi$/', '', $value);
-        $value = (string)preg_replace('/FrontendApi$/', '', $value);
+        $value = (string)preg_replace('/StorefrontApi$/', '', $value);
 
         return (string)preg_replace('/Api$/', '', $value);
     }

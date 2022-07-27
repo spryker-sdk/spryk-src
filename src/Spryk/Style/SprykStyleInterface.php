@@ -86,6 +86,20 @@ interface SprykStyleInterface
      *
      * @return void
      */
+    public function startSpryks(SprykDefinitionInterface $sprykDefinition): void;
+
+    /**
+     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
+     *
+     * @return void
+     */
+    public function endSpryks(SprykDefinitionInterface $sprykDefinition): void;
+
+    /**
+     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
+     *
+     * @return void
+     */
     public function startPostSpryks(SprykDefinitionInterface $sprykDefinition): void;
 
     /**

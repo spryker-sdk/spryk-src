@@ -50,10 +50,11 @@ class CompilePharConsole extends AbstractSprykConsole
      *
      * @param array $processDefinition
      * @param string|null $cwd
+     * @param array|null $env
      *
      * @return void
      */
-    protected function executeProcess(array $processDefinition, ?string $cwd = null): void
+    protected function executeProcess(array $processDefinition, ?string $cwd = null, ?array $env = []): void
     {
         $process = new Process($processDefinition, $cwd);
         $process->start();

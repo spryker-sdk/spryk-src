@@ -20,6 +20,9 @@ use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\JsonParser;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\ParserInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\XmlParser;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\YmlParser;
+use SprykerSdk\Spryk\Model\Spryk\Command\ComposerDumpAutoloadSprykCommand;
+use SprykerSdk\Spryk\Model\Spryk\Command\ComposerReplaceGenerateSprykCommand;
+use SprykerSdk\Spryk\Model\Spryk\Builder\Structure\StructureSpryk;
 use SprykerSdk\Spryk\Model\Spryk\Configuration\Loader\SprykConfigurationLoader;
 use SprykerSdk\Spryk\Model\Spryk\Dumper\SprykDefinitionDumper;
 use SprykerSdk\Spryk\Model\Spryk\Executor\SprykExecutor;
@@ -36,6 +39,16 @@ return function (ContainerConfigurator $configurator) {
     $services->load('SprykerSdk\\', '../src/')
         ->exclude('../src/{DependencyInjection,Tests,Kernel.php}');
 
+    $services->load('Laminas\\Filter\\', __DIR__ . '/../vendor/laminas/laminas-filter/src/')
+        ->exclude([
+            // these depend on Laminas' service managers
+            __DIR__ . '/../vendor/laminas/laminas-filter/src/{*Factory,FilterPluginManager}.php',
+            __DIR__ . '/../vendor/laminas/laminas-filter/src/**/*Factory.php',
+        ]);
+
+    // To prevent Symfony from injecting a filesystem cache we pass `null` and an empty array to let the `ExpressionLanguage`
+    // use the `ArrayAdapter`. Without overriding this, the `ExpressionLanguage` tries to write into the filesystem during
+    // runtime which is not possible with PHAR archives.
     $services->set(ExpressionLanguage::class)
         ->args([null, []]);
 
@@ -77,4 +90,10 @@ return function (ContainerConfigurator $configurator) {
     $services->set(Lexer::class)
         ->factory([service(SprykFactory::class), 'createLexer'])
         ->args([service(SprykConfig::class)]);
+
+    if ($configurator->env() === 'test') {
+        $services->get(StructureSpryk::class)->public();
+        $services->get(ComposerDumpAutoloadSprykCommand::class)->public();
+        $services->get(ComposerReplaceGenerateSprykCommand::class)->public();
+    }
 };

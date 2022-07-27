@@ -5,7 +5,7 @@ mode: both
 arguments:
     module:
         inherit: true
-        default: "{{ resource | normalizeResourceName }}"
+        default: "{{ resource | resourceNameToModuleName }}"
         callback: GlueResourceModuleName
 
     organization:
@@ -37,7 +37,7 @@ arguments:
 
     className:
         inherit: true
-        default: "{{ resource | normalizeResourceName }}{{ applicationType }}ApiResource"
+        default: "{{ resource | resourceNameToModelName }}{{ applicationType }}ApiResource"
 
     target:
         value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"

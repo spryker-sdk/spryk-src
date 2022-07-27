@@ -12,8 +12,8 @@ use {{ organization }}Test\{{ application }}\{{ module }}\{{ suite }}\Fixtures\{
  *
  * @group {{ organization }}Test
  * @group {{ application }}
- * @group {{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api
- * @group {{ resource | normalizeResourceName | ucfirst }}{{ httpMethod | ucfirst }}{{ suite }}Cest
+ * @group {{ resource | resourceNameToModelName }}{{ applicationType }}Api
+ * @group {{ resource | resourceNameToModelName }}{{ httpMethod | ucfirst }}{{ suite }}Cest
  */
 class {{ className }}
 {
@@ -24,11 +24,11 @@ class {{ className }}
     protected \{{ organization }}Test\{{ application }}\{{ module }}\{{ suite }}\Fixtures\{{ fixtureClass }} $fixtures;
 
     /**
-     * @param \{{ organization }}Test\{{ application }}\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I
+     * @param \{{ organization }}Test\{{ application }}\{{ resource | resourceNameToModelName }}{{ applicationType }}Api\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I
      *
      * @return void
      */
-    public function loadFixtures(\{{ organization }}Test\{{ application }}\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}Api\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I): void
+    public function loadFixtures(\{{ organization }}Test\{{ application }}\{{ resource | resourceNameToModelName }}{{ applicationType }}Api\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester $I): void
     {
         /** @var \{{ organization }}Test\{{ application }}\{{ module }}\{{ suite }}\Fixtures\{{ fixtureClass }} $fixtures */
         $fixtures = $I->loadFixtures({{ fixtureClass }}::class);

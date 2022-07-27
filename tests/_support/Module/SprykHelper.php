@@ -9,6 +9,7 @@ namespace SprykerSdkTest\Module;
 
 use Codeception\Module;
 use Codeception\Stub;
+use Codeception\Stub\Expected;
 use Codeception\Test\Unit;
 use Codeception\TestInterface;
 use org\bovigo\vfs\vfsStream;
@@ -18,6 +19,7 @@ use SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\FileDumperInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface;
 use SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcher;
 use SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface;
+use SprykerSdk\Spryk\Model\Spryk\Filter\FilterInterface;
 use SprykerSdk\Spryk\Model\Spryk\Filter\HttpResponseCodeToConstantNameFilter;
 use SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface;
 use SprykerSdk\Spryk\SprykConfig;
@@ -298,6 +300,16 @@ class SprykHelper extends Module
     }
 
     /**
+     * @param string $filterClassName
+     *
+     * @return \SprykerSdk\Spryk\Model\Spryk\Filter\FilterInterface
+     */
+    public function getFilter(string $filterClassName): FilterInterface
+    {
+        return $this->getContainer()->get($filterClassName);
+    }
+
+    /**
      * @return \SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface
      */
     public function getConditionMatcher(): ConditionMatcherInterface
@@ -328,5 +340,21 @@ class SprykHelper extends Module
         $symfony = $this->getModule('Symfony');
 
         return $symfony->_getContainer();
+    }
+
+    /**
+     * @param \Codeception\Test\Unit $testClass
+     * @param string $class
+     * @param int $expectedNumberOfCalls
+     *
+     * @return void
+     */
+    public function getMockWithExpectedNumberOfMethodCalls(Unit $testClass, string $class, int $expectedNumberOfCalls): void
+    {
+        $commandMock = Stub::make($class, [
+            'execute' => Expected::exactly($expectedNumberOfCalls),
+        ], $testClass);
+
+        $this->setDependency($class, $commandMock);
     }
 }
