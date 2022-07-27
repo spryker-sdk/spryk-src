@@ -2,6 +2,8 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules;
 
+use Symfony\Component\Yaml\Yaml;
+
 abstract class AbstractCheckerValidatorRule implements CheckerValidatorRuleInterface
 {
     /**
@@ -62,25 +64,14 @@ abstract class AbstractCheckerValidatorRule implements CheckerValidatorRuleInter
         $this->errorMessages[] = $errorMessage;
     }
 
-    /**
-     * @param $sprykName
-     * @param $argumentName
-     * @param string $warningMessage
-     *
-     * @return void
-     */
-    protected function addWarningMessage($sprykName, $argumentName, string $warningMessage)
-    {
-        $this->warningMessages[$sprykName][$argumentName] = $warningMessage;
-    }
 
     public function getRuleName(): string
     {
         return get_class($this);
+
     }
 
-    public function fixPossibleIssue(): array
+    public function fixPossibleIssue(array $checkedSpryk): void
     {
-        return [];
     }
 }

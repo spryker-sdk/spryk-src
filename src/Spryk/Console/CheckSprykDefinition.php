@@ -74,7 +74,6 @@ class CheckSprykDefinition extends AbstractSprykConsole
             if ($isFix) {
                 $validationResult = $this->getFacade()->fixSprykDefinitions();
             } else {
-
                 $validationResult = $this->getFacade()->checkSprykDefinitions();
             }
 
@@ -106,8 +105,8 @@ class CheckSprykDefinition extends AbstractSprykConsole
         foreach (array_keys($validationResult['definitions']) as $sprykName) {
             if (isset($errors[$sprykName])) {
                 $this->printInfoMessage($output, sprintf('List of the %s Spryk errors.', $sprykName));
-                foreach ($errors[$sprykName] as $errorsList) {
-                    foreach ($errorsList as $error) {
+                foreach ($errors[$sprykName] as $rule) {
+                    foreach ($rule->getErrorMessages() as $error) {
                         $this->printErrorMessage($output, $error);
                     }
                 }
@@ -134,9 +133,7 @@ class CheckSprykDefinition extends AbstractSprykConsole
 
         foreach ($validationResult['definitions'] as $sprykName => $checkedSprykDefinition) {
             foreach ($checkedSprykDefinition[CheckerValidatorRuleInterface::ERRORS_KEY] as $ruleKey => $rule) {
-                foreach ($rule as $errorMessage) {
-                    $errors[$sprykName][$ruleKey][] = $errorMessage;
-                }
+                    $errors[$sprykName][$ruleKey] = $rule;
             }
 
             if (!isset($checkedSprykDefinition[CheckerValidatorRuleInterface::WARNINGS_RULE_KEY])) {

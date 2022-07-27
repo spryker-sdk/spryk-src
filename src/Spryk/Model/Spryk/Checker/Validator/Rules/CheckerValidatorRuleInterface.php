@@ -27,4 +27,6 @@ interface CheckerValidatorRuleInterface
     public function isRuleAutofixable(): bool;
 
     public function getRuleName(): string;
+
+    public function fixPossibleIssue(array $checkedSpryk): void;
 }

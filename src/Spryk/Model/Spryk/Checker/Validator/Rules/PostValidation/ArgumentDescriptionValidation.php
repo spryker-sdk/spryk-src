@@ -38,14 +38,7 @@ class ArgumentDescriptionValidation implements PostValidationInterface
     protected function extractArgumentDescription(array $sprykDefinitions): array
     {
         $argumentsDescriptions = [];
-$arDebug = [
-    'DATE' => '2022-07-26, вт, 9:14',
-    'PATH' => 'src/Spryk/Model/Spryk/Checker/Validator/Rules/PostValidation/ArgumentDescriptionValidation.php:43',
-    'DATA' => $sprykDefinitions['definitions'],
 
-];
-$debugInfo = "\n" . print_r($arDebug['DATE'], true) .  "\n" . print_r($arDebug['PATH'], true) . "\n" . print_r($arDebug['DATA'], true) . "\n";
-    file_put_contents('/home/alexander/Projects/spryker/spryk-src/..log__definitions.txt', $debugInfo, FILE_APPEND);
         foreach ($sprykDefinitions['definitions'] as $sprykName => $sprykDetails) {
             foreach ($sprykDetails['definition']['arguments'] as $argumentName => $argumentDefinition) {
                 if (!isset($argumentDefinition['description'])) {

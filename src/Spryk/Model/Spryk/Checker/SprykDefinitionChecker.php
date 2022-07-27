@@ -57,14 +57,15 @@ class SprykDefinitionChecker implements SprykDefinitionCheckerInterface
      */
     public function check(): array
     {
+        $HOMEPath = '/home/alexander/Projects/spryker/spryk-src';
         $sprykDetails = [];
-        $sprykFolder = $this->sprykConfig->getSprykRootDirectory() . 'config/spryk/';
+        $sprykFolder = $HOMEPath . '/config/spryk/spryks/';
+        $i = 0;
 
 
         foreach ($this->sprykDefinitionFinder->find() as $fileInfo) {
             $sprykName = str_replace('.' . $fileInfo->getExtension(), '', $fileInfo->getFilename());
             $sprykDefinition = $this->configurationLoader->loadSpryk($sprykName);
-
 
             $sprykDetails['definitions'][$sprykName] = [
                 'path' => $sprykFolder . $fileInfo->getRelativePathname(),
@@ -78,6 +79,10 @@ class SprykDefinitionChecker implements SprykDefinitionCheckerInterface
                 $sprykDetails['have_errors'] = true;
                 $sprykDetails['definitions'][$sprykName][CheckerValidatorRuleInterface::ERRORS_KEY] = $invalidRules;
             }
+
+//            if ($i++ > 0) {
+//                break;
+//            }
         }
         return $this->checkerSprykDefinitionValidator->postValidation($sprykDetails);
     }
@@ -89,12 +94,6 @@ class SprykDefinitionChecker implements SprykDefinitionCheckerInterface
      */
     protected function validateSprykDefinition(array $spryk): array
     {
-
         return $this->checkerSprykDefinitionValidator->validate($spryk);
-    }
-
-    protected function handleSprykDefinitionValidation()
-    {
-
     }
 }

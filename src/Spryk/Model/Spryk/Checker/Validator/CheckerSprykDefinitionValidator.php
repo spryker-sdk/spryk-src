@@ -2,25 +2,21 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Checker\Validator;
 
+use SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\DescriptionExistingRule;
+use SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\NameExistingRule;
+
 class CheckerSprykDefinitionValidator implements CheckerSprykDefinitionValidatorInterface
 {
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\CheckerValidatorRuleInterface[]
-     */
-    protected array $rules;
-
     /**
      * @var \SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\PostValidation\PostValidationInterface[]
      */
     protected array $postValidations;
 
     /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\CheckerValidatorRuleInterface[] $rules
      * @param \SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\PostValidation\PostValidationInterface[] $postValidations
      */
-    public function __construct(array $rules, array $postValidations)
+    public function __construct(array $postValidations)
     {
-        $this->rules = $rules;
         $this->postValidations = $postValidations;
     }
 
@@ -33,13 +29,11 @@ class CheckerSprykDefinitionValidator implements CheckerSprykDefinitionValidator
     {
         $invalidRules = [];
 
-        foreach ($this->rules as $rule) {
+        foreach ($this->getRules() as $rule) {
             $rule->validate($spryk);
 
             if ($rule->getErrorMessages()) {
-                foreach ($rule->getErrorMessages() as $errorMessage) {
-                    $invalidRules[get_class($rule)][] = $errorMessage;
-                }
+                $invalidRules[$rule->getRuleName()] = $rule;
             }
         }
 
@@ -50,13 +44,13 @@ class CheckerSprykDefinitionValidator implements CheckerSprykDefinitionValidator
      * @param array $validatedSprykDefinitions
      * @return array
      */
-    public function postValidation(array $validatedSprykDefinitions): array
+    public function postValidation(array $sprykDetails): array
     {
         foreach ($this->getPostValidations() as $postValidation) {
-            $validatedSprykDefinitions = $postValidation->validate($validatedSprykDefinitions);
+            $sprykDetails = $postValidation->validate($sprykDetails);
         }
 
-        return $validatedSprykDefinitions;
+        return $sprykDetails;
     }
 
     /**
@@ -65,6 +59,17 @@ class CheckerSprykDefinitionValidator implements CheckerSprykDefinitionValidator
     protected function getPostValidations(): array
     {
         return $this->postValidations;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getRules(): array
+    {
+        return [
+            new NameExistingRule(),
+            new DescriptionExistingRule(),
+        ];
     }
 }
 
