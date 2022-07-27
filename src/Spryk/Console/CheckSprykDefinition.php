@@ -73,15 +73,14 @@ class CheckSprykDefinition extends AbstractSprykConsole
 
         try {
             if ($isFix) {
-                $validationResult = $this->getFacade()->fixSprykDefinitions();
+                $this->getFacade()->fixSprykDefinitions();
             } else {
                 $validationResult = $this->getFacade()->checkSprykDefinitions();
-            }
+                if (isset($validationResult['have_errors']) || isset($validationResult['have_warnings'])) {
+                    $this->printSprykDefinitionsErrorsAndWarnings($output, $validationResult);
 
-            if (isset($validationResult['have_errors']) || isset($validationResult['have_warnings'])) {
-                $this->printSprykDefinitionsErrorsAndWarnings($output, $validationResult);
-
-                return isset($validationResult['have_errors']) ? static::ERROR_CODE : static::WARNING_CODE;
+                    return isset($validationResult['have_errors']) ? static::ERROR_CODE : static::WARNING_CODE;
+                }
             }
         } catch (Throwable $exception) {
             $this->printErrorMessage($output, $exception->getMessage());

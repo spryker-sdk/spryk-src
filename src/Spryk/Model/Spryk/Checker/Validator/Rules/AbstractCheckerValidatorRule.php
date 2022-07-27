@@ -14,6 +14,9 @@ abstract class AbstractCheckerValidatorRule implements CheckerValidatorRuleInter
      */
     public array $errorMessages = [];
 
+    /**
+     * @var bool
+     */
     protected static bool $isValid = true;
 
     /**

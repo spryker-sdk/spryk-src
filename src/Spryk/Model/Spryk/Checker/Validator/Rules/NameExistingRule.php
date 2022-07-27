@@ -57,8 +57,9 @@ class NameExistingRule extends AbstractCheckerValidatorRule
     protected function extractFileNameByPath(string $filePath)
     {
         $filePath = explode('/', $filePath);
+        $dotPosition = strpos(end($filePath), '.');
 
-        return substr(end($filePath), 0, strpos(end($filePath), '.'));
+        return substr(end($filePath), 0, $dotPosition !== false ? $dotPosition : null);
     }
 
     /**

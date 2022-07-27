@@ -15,4 +15,11 @@ interface CheckerSprykDefinitionValidatorInterface
      * @return array
      */
     public function validate(array $spryk): array;
+
+    /**
+     * @param array $sprykDetails
+     *
+     * @return array
+     */
+    public function postValidation(array $sprykDetails): array;
 }

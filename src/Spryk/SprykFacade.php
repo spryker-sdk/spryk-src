@@ -110,11 +110,11 @@ class SprykFacade implements SprykFacadeInterface
     }
 
     /**
-     * @return array
+     * @return void
      */
-    public function fixSprykDefinitions(): array
+    public function fixSprykDefinitions(): void
     {
-        return $this->getSprykFactory()->createSprykDefinitionFixer()->fix();
+        $this->getSprykFactory()->createSprykDefinitionFixer()->fix();
     }
 
     /**
