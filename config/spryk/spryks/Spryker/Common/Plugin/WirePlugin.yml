@@ -20,6 +20,6 @@ arguments:
         isOptional: true
 
     target:
-        description: "Format FQCN::method"
+        description: "Target place where it should be added to."
 
     plugin: ~

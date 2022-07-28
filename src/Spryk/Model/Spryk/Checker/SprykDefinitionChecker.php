@@ -70,11 +70,13 @@ class SprykDefinitionChecker implements SprykDefinitionCheckerInterface
                 CheckerValidatorRuleInterface::ERRORS_KEY => [],
             ];
 
-            $invalidRules = $this->validateSprykDefinition($sprykDetails['definitions'][$sprykName]);
+            $rules = $this->validateSprykDefinition($sprykDetails['definitions'][$sprykName]);
 
-            if ($invalidRules) {
-                $sprykDetails['have_errors'] = true;
-                $sprykDetails['definitions'][$sprykName][CheckerValidatorRuleInterface::ERRORS_KEY] = $invalidRules;
+            foreach ($rules as $rule) {
+                if ($rule->isValid() === false) {
+                    $sprykDetails[CheckerValidatorRuleInterface::HAVE_ERRORS] = true;
+                    $sprykDetails['definitions'][$sprykName][CheckerValidatorRuleInterface::ERRORS_KEY][] = $rule;
+                }
             }
         }
 

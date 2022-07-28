@@ -32,17 +32,14 @@ class CheckerSprykDefinitionValidator implements CheckerSprykDefinitionValidator
      */
     public function validate(array $spryk): array
     {
-        $invalidRules = [];
+        $rules = [];
 
         foreach ($this->getRules() as $rule) {
             $rule->validate($spryk);
-
-            if ($rule->getErrorMessages()) {
-                $invalidRules[$rule->getRuleName()] = $rule;
-            }
+            $rules[$rule->getRuleName()] = $rule;
         }
 
-        return $invalidRules;
+        return $rules;
     }
 
     /**

@@ -12,15 +12,15 @@ use SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\CheckerValidatorRuleInt
 class ArgumentDescriptionValidation implements PostValidationInterface
 {
     /**
-     * @param array $sprykDefinitions
+     * @param array $sprykDetails
      *
      * @return array
      */
-    public function validate(array $sprykDefinitions): array
+    public function validate(array $sprykDetails): array
     {
         $argumentDescriptionCompareBuffer = [];
 
-        foreach ($this->extractArgumentDescription($sprykDefinitions) as $sprykName => $sprykArgumentsDescriptions) {
+        foreach ($this->extractArgumentDescription($sprykDetails) as $sprykName => $sprykArgumentsDescriptions) {
             foreach ($sprykArgumentsDescriptions as $argumentName => $argumentsDescription) {
                 if (!isset($argumentDescriptionCompareBuffer[$argumentName])) {
                     $argumentDescriptionCompareBuffer[$argumentName] = $argumentsDescription;
@@ -29,13 +29,14 @@ class ArgumentDescriptionValidation implements PostValidationInterface
                 }
 
                 if ($argumentDescriptionCompareBuffer[$argumentName] !== $argumentsDescription) {
-                    $sprykDefinitions['definitions'][$sprykName][CheckerValidatorRuleInterface::WARNINGS_RULE_KEY][]
-                        = $this->getWarningForArgument($sprykName, $argumentName);
+                    $sprykDetails[CheckerValidatorRuleInterface::HAVE_WARNINGS] = true;
+                    $sprykDetails['definitions'][$sprykName][CheckerValidatorRuleInterface::WARNINGS_RULE_KEY][]
+                        = $this->prepareWarningMessage($sprykName, $argumentName);
                 }
             }
         }
 
-        return $sprykDefinitions;
+        return $sprykDetails;
     }
 
     /**
@@ -65,10 +66,10 @@ class ArgumentDescriptionValidation implements PostValidationInterface
      *
      * @return string
      */
-    protected function getWarningForArgument(string $sprykName, string $argumentName): string
+    protected function prepareWarningMessage(string $sprykName, string $argumentName): string
     {
         return sprintf(
-            'The argument %s in the Spryk %s has a different value as found in other Spryks.',
+            'The argument %s in the Spryk %s has a different description as found in other Spryks.',
             $argumentName,
             $sprykName,
         );

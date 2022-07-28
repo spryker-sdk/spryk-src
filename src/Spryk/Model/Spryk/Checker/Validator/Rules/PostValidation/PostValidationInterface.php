@@ -10,9 +10,9 @@ namespace SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\PostValidation;
 interface PostValidationInterface
 {
  /**
-  * @param array $sprykDefinitions
+  * @param array $sprykDetails
   *
   * @return array
   */
-    public function validate(array $sprykDefinitions): array;
+    public function validate(array $sprykDetails): array;
 }

@@ -17,7 +17,7 @@ abstract class AbstractCheckerValidatorRule implements CheckerValidatorRuleInter
     /**
      * @var bool
      */
-    protected static bool $isValid = true;
+    protected bool $isValid = true;
 
     /**
      * @var bool
@@ -42,6 +42,10 @@ abstract class AbstractCheckerValidatorRule implements CheckerValidatorRuleInter
         $this->errorMessages = [];
         $this->innerValidate($spryk);
 
+        if ($this->getErrorMessages()) {
+            $this->setIsValid(false);
+        }
+
         return $this;
     }
 
@@ -58,6 +62,22 @@ abstract class AbstractCheckerValidatorRule implements CheckerValidatorRuleInter
     public function isRuleAutofixable(): bool
     {
         return static::AUTO_FIXABLE;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValid(): bool
+    {
+        return $this->isValid;
+    }
+
+    /**
+     * @param bool $isValid
+     */
+    public function setIsValid(bool $isValid): void
+    {
+        $this->isValid = $isValid;
     }
 
     /**

@@ -41,7 +41,7 @@ arguments:
         value: Common/Method.php.twig
 
     target:
-        description: "Class where the method should be added to."
+        description: "Target place where it should be added to."
 
     annotations:
         isOptional: true

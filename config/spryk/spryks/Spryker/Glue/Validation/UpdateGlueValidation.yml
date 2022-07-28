@@ -14,7 +14,7 @@ arguments:
         inherit: true
 
     httpMethod:
-        description: "Can be one of the HTTP request methods. E.g. POST."
+        description: "The HTTP method e.g. POST"
 
     field:
         description: "Name of the field for the validation."

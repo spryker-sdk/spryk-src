@@ -32,7 +32,7 @@ arguments:
 
     resource:
         inherit: true
-        description: "Defines the resource name this controller will work with e.g. /customers"
+        description: "Defines the resource name this resource plugin will work with."
 
     subDirectory:
         inherit: true

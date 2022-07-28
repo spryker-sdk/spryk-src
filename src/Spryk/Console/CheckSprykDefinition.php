@@ -76,10 +76,13 @@ class CheckSprykDefinition extends AbstractSprykConsole
                 $this->getFacade()->fixSprykDefinitions();
             } else {
                 $validationResult = $this->getFacade()->checkSprykDefinitions();
-                if (isset($validationResult['have_errors']) || isset($validationResult['have_warnings'])) {
+                if (
+                    isset($validationResult[CheckerValidatorRuleInterface::HAVE_ERRORS])
+                    || isset($validationResult[CheckerValidatorRuleInterface::HAVE_WARNINGS])
+                ) {
                     $this->printSprykDefinitionsErrorsAndWarnings($output, $validationResult);
 
-                    return isset($validationResult['have_errors']) ? static::ERROR_CODE : static::WARNING_CODE;
+                    return isset($validationResult[CheckerValidatorRuleInterface::HAVE_ERRORS]) ? static::ERROR_CODE : static::WARNING_CODE;
                 }
             }
         } catch (Throwable $exception) {
@@ -101,7 +104,7 @@ class CheckSprykDefinition extends AbstractSprykConsole
      */
     protected function printSprykDefinitionsErrorsAndWarnings(OutputInterface $output, array $validationResult): void
     {
-        [$errors, $warnings] = $this->prepareSprykDefinitionsErrors($validationResult);
+        [$errors, $warnings] = $this->prepareSprykDefinitionsErrorsAndWarnings($validationResult);
 
         foreach (array_keys($validationResult['definitions']) as $sprykName) {
             if (isset($errors[$sprykName])) {
@@ -111,14 +114,24 @@ class CheckSprykDefinition extends AbstractSprykConsole
                         $this->printErrorMessage($output, $error);
                     }
                 }
+            }
 
-                if (isset($warnings[$sprykName])) {
-                    $this->printInfoMessage($output, sprintf('List of the %s Spryk warnings.', $sprykName));
-                    foreach ($warnings[$sprykName] as $warning) {
-                        $this->printWarningMessage($output, $warning);
-                    }
+            if (isset($warnings[$sprykName])) {
+                $this->printInfoMessage($output, sprintf('List of the %s Spryk warnings.', $sprykName));
+                foreach ($warnings[$sprykName] as $warning) {
+                    $this->printWarningMessage($output, $warning);
                 }
             }
+        }
+
+        if(!isset($warnings[CheckerValidatorRuleInterface::GENERAL_WARNINGS])) {
+            return;
+        }
+
+        $this->printInfoMessage($output, 'List of the general Spryk warnings:');
+
+        foreach ($warnings[CheckerValidatorRuleInterface::GENERAL_WARNINGS] as $generalWarning) {
+            $this->printWarningMessage($output, $generalWarning);
         }
     }
 
@@ -127,7 +140,7 @@ class CheckSprykDefinition extends AbstractSprykConsole
      *
      * @return array
      */
-    protected function prepareSprykDefinitionsErrors(array $validationResult): array
+    protected function prepareSprykDefinitionsErrorsAndWarnings(array $validationResult): array
     {
         $errors = [];
         $warnings = [];
@@ -142,8 +155,14 @@ class CheckSprykDefinition extends AbstractSprykConsole
             }
 
             foreach ($checkedSprykDefinition[CheckerValidatorRuleInterface::WARNINGS_RULE_KEY] as $warningMessage) {
+
                 $warnings[$sprykName][] = $warningMessage;
             }
+        }
+
+        if (isset($validationResult[CheckerValidatorRuleInterface::GENERAL_WARNINGS])) {
+            $warnings[CheckerValidatorRuleInterface::GENERAL_WARNINGS]
+                = $validationResult[CheckerValidatorRuleInterface::GENERAL_WARNINGS];
         }
 
         return [$errors, $warnings];

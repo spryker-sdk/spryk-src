@@ -40,7 +40,7 @@ arguments:
 
     resource:
         inherit: true
-        description: "Defines the resource name this controller will work with e.g. /customers"
+        description: "Defines the resource name this resource plugin will work with."
 
     httpMethod:
         inherit: true
@@ -48,14 +48,14 @@ arguments:
 
     httpResponseCode:
         inherit: true
-        description: "The response code e.g. 200"
+        description: "The HTTP response code e.g. 200 (OK)"
 
     controller:
         default: "{{ resource | resourceNameToControllerName }}ResourceController"
 
     zedDomainEntity:
         inherit: true
-        description: "Defines the domain entity that should be tested"
+        description: "Defines the domainEntity used on Zed side for the CRUD Facade. It will be used to create all needed Transfer Objects."
 
     resourceDataObject:
         inherit: true

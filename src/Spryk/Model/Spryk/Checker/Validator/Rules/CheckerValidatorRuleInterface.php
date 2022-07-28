@@ -20,6 +20,22 @@ interface CheckerValidatorRuleInterface
     public const WARNINGS_RULE_KEY = 'warnings';
 
     /**
+     * @var string
+     */
+    public const GENERAL_WARNINGS = 'general_warnings';
+
+    /**
+     * @var string
+     */
+    public const HAVE_WARNINGS = 'have_warnings';
+
+    /**
+     * @var string
+     */
+    public const HAVE_ERRORS = 'have_errors';
+
+
+    /**
      * @return array
      */
     public function getErrorMessages(): array;

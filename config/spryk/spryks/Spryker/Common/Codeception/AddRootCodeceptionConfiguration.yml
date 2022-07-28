@@ -20,7 +20,7 @@ arguments:
         value: codeception.yml
 
     targetPath:
-        description: "Will add a codeception.yml into the root of a module. This is only for core modules."
+        description: "Target path will be extended with the subDirectory inside the TemplateSpryk when set."
         value: ""
 
 preSpryks:

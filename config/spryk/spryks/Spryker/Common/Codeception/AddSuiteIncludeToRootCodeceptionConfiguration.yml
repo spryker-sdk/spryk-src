@@ -24,7 +24,7 @@ arguments:
         value: include
 
     content:
-        description: "This will be added to the include section of the codeception.yml."
+        description: "The content of the element."
         value: "tests/{{ organization }}Test/{{ application }}/{{ module }}"
 
     targetPath:
