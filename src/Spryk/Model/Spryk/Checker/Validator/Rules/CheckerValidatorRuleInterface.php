@@ -34,7 +34,6 @@ interface CheckerValidatorRuleInterface
      */
     public const HAVE_ERRORS = 'have_errors';
 
-
     /**
      * @return array
      */

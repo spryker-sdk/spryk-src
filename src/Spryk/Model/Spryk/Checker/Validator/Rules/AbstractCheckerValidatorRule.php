@@ -74,6 +74,8 @@ abstract class AbstractCheckerValidatorRule implements CheckerValidatorRuleInter
 
     /**
      * @param bool $isValid
+     *
+     * @return void
      */
     public function setIsValid(bool $isValid): void
     {

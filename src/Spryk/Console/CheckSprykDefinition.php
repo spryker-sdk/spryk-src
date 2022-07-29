@@ -124,7 +124,7 @@ class CheckSprykDefinition extends AbstractSprykConsole
             }
         }
 
-        if(!isset($warnings[CheckerValidatorRuleInterface::GENERAL_WARNINGS])) {
+        if (!isset($warnings[CheckerValidatorRuleInterface::GENERAL_WARNINGS])) {
             return;
         }
 
@@ -155,7 +155,6 @@ class CheckSprykDefinition extends AbstractSprykConsole
             }
 
             foreach ($checkedSprykDefinition[CheckerValidatorRuleInterface::WARNINGS_RULE_KEY] as $warningMessage) {
-
                 $warnings[$sprykName][] = $warningMessage;
             }
         }

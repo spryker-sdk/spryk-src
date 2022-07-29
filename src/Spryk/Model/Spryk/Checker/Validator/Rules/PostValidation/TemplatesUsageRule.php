@@ -1,17 +1,22 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\PostValidation;
 
 use SprykerSdk\Spryk\Model\Spryk\Checker\Finder\SprykTemplateFinderInterface;
 use SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\CheckerValidatorRuleInterface;
 use SprykerSdk\Spryk\SprykConfig;
+use Throwable;
 
 class TemplatesUsageRule implements PostValidationInterface
 {
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Checker\Finder\SprykTemplateFinderInterface
-     */
+ /**
+  * @var \SprykerSdk\Spryk\Model\Spryk\Checker\Finder\SprykTemplateFinderInterface
+  */
     protected SprykTemplateFinderInterface $sprykTemplateFinder;
 
     /**
@@ -42,18 +47,17 @@ class TemplatesUsageRule implements PostValidationInterface
             $sprykDetails[CheckerValidatorRuleInterface::HAVE_WARNINGS] = true;
             $sprykDetails[CheckerValidatorRuleInterface::GENERAL_WARNINGS][]
                 = $this->prepareWarningMessage($unusedTemplate->getRealPath());
-        };
+        }
 
         return $sprykDetails;
     }
-
 
     /**
      * @param array $sprykDetails
      *
      * @return void
      */
-    public function fix(array $sprykDetails)
+    public function fix(array $sprykDetails): void
     {
         $usedTemplates = $this->extractUsedTemplates($sprykDetails);
 
@@ -65,7 +69,7 @@ class TemplatesUsageRule implements PostValidationInterface
     /**
      * Returns a list of Spryk properties where we will look for template usage.
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getPropertiesWithSpryks(): array
     {
@@ -75,6 +79,7 @@ class TemplatesUsageRule implements PostValidationInterface
             'postSpryks',
         ];
     }
+
     /**
      * @param array $sprykDetails
      *
@@ -107,16 +112,18 @@ class TemplatesUsageRule implements PostValidationInterface
         foreach ($usedTemplates as $template) {
             foreach ($this->config->getTemplateDirectories() as $directory) {
                 try {
-                    if (preg_match_all(
-                        '/\'((\S*)\.twig)\'/',
-                        file_get_contents($directory . $template),
-                        $outputArray
-                    )) {
+                    $fileContent = file_get_contents($directory . $template);
+                    if (!$fileContent) {
+                        continue;
+                    }
+
+                    if (preg_match_all('/\'((\S*)\.twig)\'/', $fileContent, $outputArray)) {
                         foreach ($outputArray[1] as $foundTemplate) {
                             $usedTemplates[] = $foundTemplate;
                         }
                     }
-                } catch (\Throwable $exception) {}
+                } catch (Throwable $exception) {
+                }
             }
         }
 
@@ -129,7 +136,7 @@ class TemplatesUsageRule implements PostValidationInterface
      *
      * @return void
      */
-    protected function checkTemplateArgumentExisting(array &$usedTemplates, array $spryk)
+    protected function checkTemplateArgumentExisting(array &$usedTemplates, array $spryk): void
     {
         foreach ($this->getArgumentListWhichTemplateCanBeUsed() as $argumentName) {
             if (isset($spryk['arguments'][$argumentName])) {
@@ -140,7 +147,7 @@ class TemplatesUsageRule implements PostValidationInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getArgumentListWhichTemplateCanBeUsed(): array
     {
@@ -152,11 +159,11 @@ class TemplatesUsageRule implements PostValidationInterface
 
     /**
      * @param array $usedTemplates
-     * @param $argument
+     * @param array $argument
      *
      * @return void
      */
-    protected function checkTemplateInArgument(array &$usedTemplates, $argument)
+    protected function checkTemplateInArgument(array &$usedTemplates, array $argument): void
     {
         if (is_array($argument)) {
             if (isset($argument['value'])) {
@@ -175,17 +182,16 @@ class TemplatesUsageRule implements PostValidationInterface
 
         if (isset($argument['value'])) {
             $this->writeUnusedTemplate($usedTemplates, $argument['value']);
-
         }
     }
 
     /**
-     * @param $usedTemplates
-     * @param $argument
+     * @param array $usedTemplates
+     * @param string $argument
      *
      * @return void
      */
-    protected function writeUnusedTemplate(&$usedTemplates, $argument)
+    protected function writeUnusedTemplate(array &$usedTemplates, string $argument): void
     {
         if (!$this->isTwigTemplateExtension($argument)) {
             return;
@@ -195,22 +201,23 @@ class TemplatesUsageRule implements PostValidationInterface
     }
 
     /**
-     * @param $argumentValue
+     * @param string $argumentValue
      *
      * @return bool
      */
-    protected function isTwigTemplateExtension($argumentValue): bool
+    protected function isTwigTemplateExtension(string $argumentValue): bool
     {
         return strpos($argumentValue, '.twig') !== false;
     }
 
     /**
      * @param string $template
+     *
      * @return string
      */
     protected function getFileName(string $template): string
     {
-        return array_reverse(explode("/", $template))[0];
+        return array_reverse(explode('/', $template))[0];
     }
 
     /**

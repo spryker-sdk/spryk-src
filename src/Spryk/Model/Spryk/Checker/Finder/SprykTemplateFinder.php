@@ -9,7 +9,6 @@ namespace SprykerSdk\Spryk\Model\Spryk\Checker\Finder;
 
 use SprykerSdk\Spryk\SprykConfig;
 use Symfony\Component\Finder\Finder;
-use SprykerSdk\Spryk\Model\Spryk\Checker\Finder\SprykTemplateFinderInterface;
 
 class SprykTemplateFinder implements SprykTemplateFinderInterface
 {
