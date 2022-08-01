@@ -1,3 +1,4 @@
+name: AddServiceInterface
 spryk: template
 description: "Adds a new *Module*ServiceInterface to the Service application."
 mode: both

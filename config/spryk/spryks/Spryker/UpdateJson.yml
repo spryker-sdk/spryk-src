@@ -1,3 +1,4 @@
+name: UpdateJson
 spryk: update-json
 description: "Updates a JSON file."
 mode: both

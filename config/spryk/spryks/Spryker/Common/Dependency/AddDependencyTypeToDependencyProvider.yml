@@ -1,3 +1,4 @@
+name: AddDependencyTypeToDependencyProvider
 spryk: method
 description: "Adds a dependency type (Facade, Client, Service) to the *module*DependencyProvider."
 mode: both

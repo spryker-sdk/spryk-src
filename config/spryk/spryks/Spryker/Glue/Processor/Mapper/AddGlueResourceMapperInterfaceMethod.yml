@@ -1,3 +1,4 @@
+name: AddGlueResourceMapperInterfaceMethod
 spryk: method
 description: "Adds a new method to the Resource Mapper Interface."
 mode: both

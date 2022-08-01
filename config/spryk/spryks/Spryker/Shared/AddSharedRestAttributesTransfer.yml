@@ -1,3 +1,4 @@
+name: AddSharedRestAttributesTransfer
 spryk: transfer
 description: "Adds a new Rest*resourceType*AttributesTransfer definition to the Shared application."
 mode: both

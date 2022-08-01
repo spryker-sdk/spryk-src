@@ -1,3 +1,4 @@
+name: AddClientInterfaceMethod
 spryk: method
 description: "Adds a new Interface method to the *Module*ClientInterface."
 mode: both

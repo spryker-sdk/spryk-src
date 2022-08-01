@@ -1,3 +1,4 @@
+name: AddImplements
 spryk: addImplements
 description: "Add implements interface notation to the target class."
 mode: both

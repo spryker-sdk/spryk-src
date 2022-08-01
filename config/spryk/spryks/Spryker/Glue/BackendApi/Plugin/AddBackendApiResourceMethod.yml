@@ -1,3 +1,4 @@
+name: AddBackendApiResourceMethod
 spryk: addBackendApiRestResourceMethod
 description: "Adds a new method call to the GlueResourceMethodCollectionTransfer in GlueBackendApi Resource Plugin."
 mode: both

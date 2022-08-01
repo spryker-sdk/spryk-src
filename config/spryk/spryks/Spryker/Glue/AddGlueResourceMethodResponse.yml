@@ -1,3 +1,4 @@
+name: AddGlueResourceMethodResponse
 spryk: wrapper
 description: "Adds code to be able to receive a Glue request for a resource with a given HTTP method and to return a defined response."
 mode: both

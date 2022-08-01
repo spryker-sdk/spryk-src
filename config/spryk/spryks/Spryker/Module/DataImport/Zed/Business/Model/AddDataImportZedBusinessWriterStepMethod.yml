@@ -1,3 +1,4 @@
+name: AddDataImportZedBusinessWriterStepMethod
 spryk: method
 description: "Adds a new method to the *target* business model in Data import ."
 mode: both

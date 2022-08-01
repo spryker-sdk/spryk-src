@@ -1,3 +1,4 @@
+name: AddModuleCodeceptionConfiguration
 spryk: template
 description: "Adds a new codeception.yml to the Modules root."
 mode: core

@@ -11,11 +11,21 @@ use Symfony\Component\Yaml\Yaml;
 
 class NameExistingRule extends AbstractCheckerValidatorRule
 {
- /**
-  * @param array $spryk
-  *
-  * @return void
-  */
+    /**
+     * @var string
+     */
+    protected const NAME_PARAMETER_REGEX = "/name: \w+\n/";
+
+    /**
+     * @var string
+     */
+    protected const NAME_PARAMETER_TEMPLATE = "name: %s\n";
+
+    /**
+     * @param array $spryk
+     *
+     * @return void
+     */
     protected function innerValidate(array $spryk): void
     {
         if (!$this->isNamePropertyExists($spryk['definition'])) {
@@ -70,15 +80,37 @@ class NameExistingRule extends AbstractCheckerValidatorRule
     public function fixPossibleIssue(array $checkedSpryk): void
     {
         $sprykPath = $checkedSpryk['path'];
-        $spryk = Yaml::parseFile($sprykPath);
+        $sprykContents = file_get_contents($sprykPath);
 
-        $normalizedYml = Yaml::dump(
-            ['name' => $this->extractFileNameByPath($sprykPath)] + $spryk,
-            1000000,
-            4,
-            Yaml::DUMP_NULL_AS_TILDE,
-        );
+        $nameParameterLine = $this->getNameParameterLine($sprykContents);
+        $validNameParameterLine = sprintf(static::NAME_PARAMETER_TEMPLATE, $this->extractFileNameByPath($sprykPath));
 
-        file_put_contents($sprykPath, $normalizedYml);
+        $isContentModified = false;
+
+        if (!$nameParameterLine) {
+            $sprykContents = $validNameParameterLine.$sprykContents;
+            $isContentModified = true;
+        }
+
+        if ($nameParameterLine !== $validNameParameterLine) {
+            $sprykContents = str_replace($nameParameterLine, $validNameParameterLine, $sprykContents);
+            $isContentModified = true;
+        }
+
+        if ($isContentModified) {
+            file_put_contents($sprykPath, $sprykContents);
+        }
+    }
+
+    /**
+     * @param string $sprykContents
+     * @return string|null
+     */
+    protected function getNameParameterLine(string $sprykContents): ?string
+    {
+        $matches = [];
+        preg_match(static::NAME_PARAMETER_REGEX, $sprykContents, $matches);
+
+        return (!empty($matches)) ? $matches[0] : null;
     }
 }

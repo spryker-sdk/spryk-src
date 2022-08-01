@@ -1,3 +1,4 @@
+name: AddSuiteIncludeToRootCodeceptionConfiguration
 spryk: update-yml
 description: "Adds the include for the *application* test suite to the codeception.yml."
 mode: core

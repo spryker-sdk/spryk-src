@@ -1,3 +1,4 @@
+name: AddGlueTestApiCest
 spryk: template
 condition: "httpMethod === 'get' || httpMethod === 'delete' || ((httpMethod === 'patch' || httpMethod === 'post') && isBulk === false)"
 description: "Adds a new ApiCest class."

@@ -1,3 +1,4 @@
+name: AddZedDomainEntityDeleter
 spryk: template
 description: "Adds a new Business DomainEntity deleter to the Zed application."
 mode: both

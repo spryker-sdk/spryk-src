@@ -1,3 +1,4 @@
+name: AddZedBusinessFactoryGetProvidedDependencyMethod
 spryk: method
 description: "Adds a get provided dependency method to the *module*BusinessFactory."
 mode: both

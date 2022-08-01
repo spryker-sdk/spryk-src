@@ -1,3 +1,4 @@
+name: AddDependencyProviderProvideMethod
 spryk: method
 description: "Adds a new *module*DependencyProvider::provideXDependencies to the *module*DependencyProvider."
 mode: both

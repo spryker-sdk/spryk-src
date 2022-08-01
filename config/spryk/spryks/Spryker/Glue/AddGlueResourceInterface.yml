@@ -1,3 +1,4 @@
+name: AddGlueResourceInterface
 spryk: template
 description: "Adds a new Resource interface to the Glue application."
 mode: both

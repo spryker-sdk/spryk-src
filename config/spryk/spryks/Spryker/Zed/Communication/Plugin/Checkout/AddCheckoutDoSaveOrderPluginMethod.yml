@@ -1,3 +1,4 @@
+name: AddCheckoutDoSaveOrderPluginMethod
 spryk: method
 description: "Adds a new *module* class method."
 mode: both

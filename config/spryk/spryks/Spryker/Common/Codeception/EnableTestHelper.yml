@@ -1,3 +1,4 @@
+name: EnableTestHelper
 spryk: update-yml
 description: "Updates the *module* test configuration and adds a test helper."
 mode: both

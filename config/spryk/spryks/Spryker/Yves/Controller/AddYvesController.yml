@@ -1,3 +1,4 @@
+name: AddYvesController
 spryk: template
 description: "Adds a new Controller to the Yves application."
 mode: both

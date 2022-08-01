@@ -1,3 +1,4 @@
+name: AddZedBusinessFactory
 spryk: template
 description: "Adds a new *module*BusinessFactory to the Zed application."
 mode: both

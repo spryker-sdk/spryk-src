@@ -1,3 +1,4 @@
+name: AddGlueControllerGetAction
 spryk: method
 deprecated: "Use AddGlueControllerMethodGet instead."
 description: "Adds a new action to the Glue controller."

@@ -1,3 +1,4 @@
+name: AddZedCommunicationControllerAction
 spryk: method
 description: "Adds a new action to the Zed controller."
 mode: both

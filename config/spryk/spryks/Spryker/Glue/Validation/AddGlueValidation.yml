@@ -1,3 +1,4 @@
+name: AddGlueValidation
 spryk: template
 description: "Adds a new *resourceType* Validation to the Glue application."
 mode: both

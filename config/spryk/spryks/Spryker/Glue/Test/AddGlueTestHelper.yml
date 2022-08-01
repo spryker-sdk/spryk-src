@@ -1,3 +1,4 @@
+name: AddGlueTestHelper
 spryk: wrapper
 description: "Adds <Resource>Helper."
 mode: both

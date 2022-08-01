@@ -1,3 +1,4 @@
+name: AddGlueResourceRoutePlugin
 spryk: template
 description: "Adds a new *resourceType*ResourceRoutePlugin to the Glue application."
 mode: both

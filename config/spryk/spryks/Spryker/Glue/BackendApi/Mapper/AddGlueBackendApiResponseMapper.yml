@@ -1,3 +1,4 @@
+name: AddGlueBackendApiResponseMapper
 spryk: template
 description: "Adds a new Response ResponseMapper that maps {{ zedDomainEntity }} transfers to a GlueResponseTransfer."
 mode: both

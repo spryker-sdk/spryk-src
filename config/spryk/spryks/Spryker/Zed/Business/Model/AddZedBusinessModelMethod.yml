@@ -1,3 +1,4 @@
+name: AddZedBusinessModelMethod
 spryk: method
 description: "Adds a new method to the *target* business model."
 mode: both

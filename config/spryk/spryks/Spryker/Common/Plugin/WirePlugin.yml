@@ -1,3 +1,4 @@
+name: WirePlugin
 spryk: wirePlugin
 description: "Wire plugin to target class method."
 mode: both

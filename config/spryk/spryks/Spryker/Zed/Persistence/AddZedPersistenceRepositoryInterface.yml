@@ -1,3 +1,4 @@
+name: AddZedPersistenceRepositoryInterface
 spryk: template
 description: "Adds a new *module*RepositoryInterface to the Zed application."
 mode: both

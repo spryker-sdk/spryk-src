@@ -1,3 +1,4 @@
+name: AddSharedDomainEntityManipulationTransferDefinition
 spryk: wrapper
 description: "Adds transfers for *domainEntity* to be used in common entity manipulation facade."
 mode: both

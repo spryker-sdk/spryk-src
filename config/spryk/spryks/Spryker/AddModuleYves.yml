@@ -1,3 +1,4 @@
+name: AddModuleYves
 spryk: structure
 description: "Adds a new *module* with Yves classes structure. Preferable to use AddYvesPage, AddYvesWidget"
 priority: 1

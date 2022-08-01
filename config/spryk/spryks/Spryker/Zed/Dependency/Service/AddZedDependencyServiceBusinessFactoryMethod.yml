@@ -1,3 +1,4 @@
+name: AddZedDependencyServiceBusinessFactoryMethod
 spryk: method
 description: "Adds a Service dependency method to the *module*BusinessFactory."
 mode: both

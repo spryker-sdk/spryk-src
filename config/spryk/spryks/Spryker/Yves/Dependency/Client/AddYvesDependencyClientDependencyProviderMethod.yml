@@ -1,3 +1,4 @@
+name: AddYvesDependencyClientDependencyProviderMethod
 spryk: method
 description: "Adds a Client dependency method to the *module*DependencyProvider."
 mode: both

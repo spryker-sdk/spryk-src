@@ -1,3 +1,4 @@
+name: AddGlueFormatResponseHeadersPlugin
 spryk: template
 description: "Adds a new *modelName*FormatResponseHeadersPlugin to the Glue application."
 mode: both

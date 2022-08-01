@@ -1,3 +1,4 @@
+name: AddGlueTestFixtures
 spryk: template
 condition: "httpMethod === 'get' || httpMethod === 'delete' || (httpMethod === 'patch' && isBulk === false)"
 description: "Adds a new Test Fixtures class."

@@ -1,3 +1,4 @@
+name: AddAppRegistry
 spryk: wrapper
 description: "Adds a Registry code for Apps. It builds connect and disconnect logic."
 priority: 1
