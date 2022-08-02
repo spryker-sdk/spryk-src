@@ -71,24 +71,18 @@ class CheckSprykDefinition extends AbstractSprykConsole
     {
         $isFix = $input->getOption(static::OPTION_FIX) === null;
 
-        try {
-            if ($isFix) {
-                $this->getFacade()->fixSprykDefinitions();
-            } else {
-                $validationResult = $this->getFacade()->checkSprykDefinitions();
-                if (
-                    isset($validationResult[CheckerValidatorRuleInterface::HAVE_ERRORS])
-                    || isset($validationResult[CheckerValidatorRuleInterface::HAVE_WARNINGS])
-                ) {
-                    $this->printSprykDefinitionsErrorsAndWarnings($output, $validationResult);
+        if ($isFix) {
+            $this->getFacade()->fixSprykDefinitions();
+        } else {
+            $validationResult = $this->getFacade()->checkSprykDefinitions();
+            if (
+                isset($validationResult[CheckerValidatorRuleInterface::HAVE_ERRORS])
+                || isset($validationResult[CheckerValidatorRuleInterface::HAVE_WARNINGS])
+            ) {
+                $this->printSprykDefinitionsErrorsAndWarnings($output, $validationResult);
 
-                    return isset($validationResult[CheckerValidatorRuleInterface::HAVE_ERRORS]) ? static::ERROR_CODE : static::WARNING_CODE;
-                }
+                return isset($validationResult[CheckerValidatorRuleInterface::HAVE_ERRORS]) ? static::ERROR_CODE : static::WARNING_CODE;
             }
-        } catch (Throwable $exception) {
-            $this->printErrorMessage($output, $exception->getMessage());
-
-            return static::ERROR_CODE;
         }
 
         $this->printSuccessfulMessage($output);
@@ -165,16 +159,6 @@ class CheckSprykDefinition extends AbstractSprykConsole
         }
 
         return [$errors, $warnings];
-    }
-
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     *
-     * @return mixed|false
-     */
-    protected function extractSprykName(InputInterface $input)
-    {
-        return current((array)$input->getArgument(static::ARGUMENT_SPRYK)) ?? null;
     }
 
     /**
