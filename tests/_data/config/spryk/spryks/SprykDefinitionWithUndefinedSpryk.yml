@@ -1,3 +1,4 @@
+name: SprykDefinitionWithUndefinedSpryk
 spryk: undefinedSpryk
 description: "Unit Test configuration"
 mode: both

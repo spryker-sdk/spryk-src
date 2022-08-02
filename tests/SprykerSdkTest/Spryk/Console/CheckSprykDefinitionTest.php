@@ -57,15 +57,15 @@ class CheckSprykDefinitionTest extends Unit
         return [
             'check only' => [
                 'arguments' => [],
-                'expected return' => '/Spryk name does not equal file name./'
+                'expected return' => '/Spryk name does not equal file name./',
             ],
             'check only single spryk' => [
                 'arguments' => ['spryk' => 'SprykWrapperWithSpryks'],
-                'expected return' => '/Spryk name does not equal file name./'
+                'expected return' => '/Spryk name does not equal file name./',
             ],
             'check and fix' => [
                 'arguments' => ['-f' => null],
-                'expected return' => '/No validation errors found/'
+                'expected return' => '/No validation errors found/',
             ],
         ];
     }
