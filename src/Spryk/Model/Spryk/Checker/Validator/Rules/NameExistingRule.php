@@ -66,8 +66,9 @@ class NameExistingRule extends AbstractCheckerValidatorRule
     {
         $filePath = explode('/', $filePath);
         $dotPosition = strpos(end($filePath), '.');
+        $fileName = $dotPosition ? substr(end($filePath), 0, $dotPosition) : null;
 
-        return $dotPosition ? substr(end($filePath), 0, $dotPosition) : null;
+        return $fileName ?: null;
     }
 
     /**
@@ -79,6 +80,10 @@ class NameExistingRule extends AbstractCheckerValidatorRule
     {
         $sprykPath = $checkedSpryk['path'];
         $sprykContents = file_get_contents($sprykPath);
+
+        if (!$sprykContents) {
+            return;
+        }
 
         $nameParameterLine = $this->getNameParameterLine($sprykContents);
         $validNameParameterLine = sprintf(static::NAME_PARAMETER_TEMPLATE, $this->extractFileNameByPath($sprykPath));
@@ -103,13 +108,13 @@ class NameExistingRule extends AbstractCheckerValidatorRule
     /**
      * @param string $sprykContents
      *
-     * @return string|null
+     * @return string
      */
-    protected function getNameParameterLine(string $sprykContents): ?string
+    protected function getNameParameterLine(string $sprykContents): string
     {
         $matches = [];
         preg_match(static::NAME_PARAMETER_REGEX, $sprykContents, $matches);
 
-        return count($matches) ? $matches[0] : null;
+        return count($matches) ? $matches[0] : '';
     }
 }
