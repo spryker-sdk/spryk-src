@@ -7,8 +7,6 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules;
 
-use Symfony\Component\Yaml\Yaml;
-
 class NameExistingRule extends AbstractCheckerValidatorRule
 {
     /**
@@ -62,14 +60,14 @@ class NameExistingRule extends AbstractCheckerValidatorRule
     /**
      * @param string $filePath
      *
-     * @return string|false
+     * @return string|null
      */
-    protected function extractFileNameByPath(string $filePath)
+    protected function extractFileNameByPath(string $filePath): ?string
     {
         $filePath = explode('/', $filePath);
         $dotPosition = strpos(end($filePath), '.');
 
-        return $dotPosition ? substr(end($filePath), 0, $dotPosition) : '';
+        return $dotPosition ? substr(end($filePath), 0, $dotPosition) : null;
     }
 
     /**
@@ -88,7 +86,7 @@ class NameExistingRule extends AbstractCheckerValidatorRule
         $isContentModified = false;
 
         if (!$nameParameterLine) {
-            $sprykContents = $validNameParameterLine.$sprykContents;
+            $sprykContents = $validNameParameterLine . $sprykContents;
             $isContentModified = true;
         }
 
@@ -104,6 +102,7 @@ class NameExistingRule extends AbstractCheckerValidatorRule
 
     /**
      * @param string $sprykContents
+     *
      * @return string|null
      */
     protected function getNameParameterLine(string $sprykContents): ?string
@@ -111,6 +110,6 @@ class NameExistingRule extends AbstractCheckerValidatorRule
         $matches = [];
         preg_match(static::NAME_PARAMETER_REGEX, $sprykContents, $matches);
 
-        return (!empty($matches)) ? $matches[0] : null;
+        return count($matches) ? $matches[0] : null;
     }
 }
