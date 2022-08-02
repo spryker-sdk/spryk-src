@@ -280,10 +280,10 @@ class ArgumentResolver implements ArgumentResolverInterface
     /**
      * @param string $argument
      * @param string $sprykName
-     * @param string|int|null $default
+     * @param mixed $default
      * @param bool $allowEmpty
      *
-     * @return string|int|null
+     * @return mixed
      */
     protected function askForArgumentValue(string $argument, string $sprykName, $default, bool $allowEmpty = false)
     {
@@ -312,9 +312,9 @@ class ArgumentResolver implements ArgumentResolverInterface
      * @param string $argument
      * @param string $sprykName
      * @param array<string>|array<int>|array<null> $values
-     * @param string|int|null $default
+     * @param mixed $default
      *
-     * @return string|int|null
+     * @return mixed
      */
     protected function choseArgumentValue(string $argument, string $sprykName, array $values, $default)
     {

@@ -192,7 +192,7 @@ class SprykStyle implements SprykStyleInterface
     }
 
     /**
-     * @param array<string>|string $messages
+     * @param mixed $messages
      * @param int $options
      *
      * @return void
@@ -261,7 +261,7 @@ class SprykStyle implements SprykStyleInterface
     }
 
     /**
-     * @param array<string>|string $messages
+     * @param mixed $messages
      * @param int $options
      *
      * @return void

@@ -40,7 +40,7 @@ class AddExpressionToMethodBeforeReturnVisitor extends NodeVisitorAbstract
     /**
      * @param \PhpParser\Node $node
      *
-     * @return \PhpParser\Node|array|int|null
+     * @return mixed
      */
     public function enterNode(Node $node)
     {
