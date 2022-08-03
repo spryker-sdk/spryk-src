@@ -1,3 +1,4 @@
+name: AddZedCommunicationModelInterfaceMethod
 spryk: method
 description: "Adds a new method to the *target* communication model interface."
 mode: both

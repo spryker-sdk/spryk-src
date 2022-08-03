@@ -1,3 +1,4 @@
+name: AddDomainEntityExtensionInterfaceMethod
 spryk: method
 description: "Adds a new method to the *target* extension model interface."
 mode: both

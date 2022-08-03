@@ -1,3 +1,4 @@
+name: AddInterfaceMethod
 spryk: method
 description: "Adds a new interface method for the target class."
 mode: both

@@ -1,3 +1,4 @@
+name: AddGlueResourceRestResponseBuilderFactoryMethod
 spryk: method
 description: "Adds a create resource builder method to the *module*Factory."
 mode: both

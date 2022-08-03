@@ -68,6 +68,9 @@ jobs:
         with:
             file: ./tests/_output/coverage.xml
 
+      - name: Check Spryks Definitions
+        run: bin/console spryk:check-definition
+
   prefer-lowest:
     runs-on: ubuntu-18.04
     strategy:

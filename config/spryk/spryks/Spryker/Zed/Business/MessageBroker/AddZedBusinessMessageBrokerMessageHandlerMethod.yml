@@ -1,3 +1,4 @@
+name: AddZedBusinessMessageBrokerMessageHandlerMethod
 spryk: method
 description: "Adds a new handle message method to the **module** MessageBroker MessageHandler plugin."
 mode: both

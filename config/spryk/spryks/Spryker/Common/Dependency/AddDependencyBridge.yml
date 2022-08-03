@@ -1,3 +1,4 @@
+name: AddDependencyBridge
 spryk: template
 description: "Adds a new *module*To*dependentModule**dependencyType*Bridge."
 mode: core

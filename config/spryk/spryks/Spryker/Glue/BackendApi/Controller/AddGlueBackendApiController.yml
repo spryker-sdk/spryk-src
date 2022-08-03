@@ -1,3 +1,4 @@
+name: AddGlueBackendApiController
 spryk: wrapper
 description: "Adds a new Glue BackendApi Controller to the Glue application."
 mode: both
@@ -32,7 +33,7 @@ arguments:
 
     resource:
         inherit: true
-        description: "Defines the resource name this controller will work with e.g. /customers"
+        description: "Defines the resource name this resource plugin will work with."
 
     subDirectory:
         inherit: true

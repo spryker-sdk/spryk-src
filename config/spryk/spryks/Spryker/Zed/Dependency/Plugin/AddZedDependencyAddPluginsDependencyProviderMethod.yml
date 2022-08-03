@@ -1,3 +1,4 @@
+name: AddZedDependencyAddPluginsDependencyProviderMethod
 spryk: method
 description: "Adds a add*Plugins dependency method to the *module*DependencyProvider."
 mode: both

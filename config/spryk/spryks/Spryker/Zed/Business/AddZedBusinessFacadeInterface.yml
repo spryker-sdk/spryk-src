@@ -1,3 +1,4 @@
+name: AddZedBusinessFacadeInterface
 spryk: template
 description: "Adds a new *module*FacadeInterface to the Zed application."
 mode: both

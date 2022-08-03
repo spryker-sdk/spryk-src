@@ -1,3 +1,4 @@
+name: AddGlueRestRequestValidatorPlugin
 spryk: template
 description: "Adds a new *modelName*RestRequestValidatorPlugin to the Glue application."
 mode: both

@@ -1,3 +1,4 @@
+name: AddSharedDomainEntityFetchingTransferDefinition
 spryk: wrapper
 description: "Adds transfers for *domainEntity* to be used in common entity fetching facade."
 mode: both

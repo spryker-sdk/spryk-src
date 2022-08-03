@@ -1,3 +1,4 @@
+name: AddOrderPaymentExpanderPluginMethod
 spryk: method
 description: "Adds a new *module* class method."
 mode: both

@@ -1,3 +1,4 @@
+name: SprykWithRecursion
 spryk: template
 description: "Unit Test configuration"
 mode: both

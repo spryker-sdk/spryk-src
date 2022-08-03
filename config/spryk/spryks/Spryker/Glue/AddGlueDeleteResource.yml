@@ -1,3 +1,4 @@
+name: AddGlueDeleteResource
 spryk: structure
 description: "Adds a new DELETE Resource to the Glue application."
 mode: both

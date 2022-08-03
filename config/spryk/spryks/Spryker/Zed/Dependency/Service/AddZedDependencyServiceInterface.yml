@@ -1,3 +1,4 @@
+name: AddZedDependencyServiceInterface
 spryk: template
 description: "Adds a new *module*To*dependentModule*ServiceInterface."
 mode: both

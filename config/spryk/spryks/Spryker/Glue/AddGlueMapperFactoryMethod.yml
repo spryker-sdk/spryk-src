@@ -1,3 +1,4 @@
+name: AddGlueMapperFactoryMethod
 spryk: method
 description: "Adds a create mapper method to the *module*Factory."
 mode: both

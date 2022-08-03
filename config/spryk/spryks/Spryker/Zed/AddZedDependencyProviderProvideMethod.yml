@@ -1,3 +1,4 @@
+name: AddZedDependencyProviderProvideMethod
 spryk: method
 description: "Adds a new *module*DependencyProvider::provideXLayerDependencies to the DependencyProvider."
 mode: both

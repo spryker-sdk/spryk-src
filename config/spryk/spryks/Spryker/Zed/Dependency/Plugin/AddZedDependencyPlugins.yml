@@ -1,3 +1,4 @@
+name: AddZedDependencyPlugins
 spryk: wrapper
 description: "Adds new add*Plugins and get*Plugins methods and a PLUGINS_* constant to the *module*DependencyProvider."
 mode: both

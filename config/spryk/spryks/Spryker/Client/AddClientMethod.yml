@@ -1,3 +1,4 @@
+name: AddClientMethod
 spryk: method
 description: "Adds a new method to the *Module*Client."
 priority: 1

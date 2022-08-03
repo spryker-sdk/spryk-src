@@ -1,3 +1,4 @@
+name: AddConstant
 spryk: constant
 description: "Adds a constant to the target class."
 mode: both

@@ -38,6 +38,6 @@ class SprykBuildConsole extends AbstractSprykConsole
         $this->getFacade()->generateArgumentList($sprykDefinitions);
         $output->writeln('Argument list has been generated.');
 
-        return static::CODE_SUCCESS;
+        return static::SUCCESS_CODE;
     }
 }

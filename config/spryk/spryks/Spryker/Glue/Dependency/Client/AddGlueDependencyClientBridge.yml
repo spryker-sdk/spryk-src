@@ -1,3 +1,4 @@
+name: AddGlueDependencyClientBridge
 spryk: template
 description: "Adds a new *module*To*dependentModule*ClientBridge."
 mode: core

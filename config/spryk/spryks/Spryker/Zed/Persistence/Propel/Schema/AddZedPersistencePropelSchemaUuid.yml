@@ -1,3 +1,4 @@
+name: AddZedPersistencePropelSchemaUuid
 spryk: wrapper
 description: "Adds a Persistence schema to *module*.schema.xml in the Zed application."
 mode: both

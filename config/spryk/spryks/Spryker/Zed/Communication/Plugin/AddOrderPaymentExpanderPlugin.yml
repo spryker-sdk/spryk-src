@@ -1,3 +1,4 @@
+name: AddOrderPaymentExpanderPlugin
 spryk: template
 description: "Adds a new *module* OrderPaymentExpanderPlugin class."
 mode: both

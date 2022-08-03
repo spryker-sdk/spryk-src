@@ -1,3 +1,4 @@
+name: AddCheckoutPreConditionPlugin
 spryk: template
 description: "Adds a new *module* CheckoutPreConditionPlugin class."
 mode: both

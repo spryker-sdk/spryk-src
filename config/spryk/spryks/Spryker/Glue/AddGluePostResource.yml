@@ -1,3 +1,4 @@
+name: AddGluePostResource
 spryk: structure
 description: "Adds a new POST Resource to the Glue application."
 mode: both
