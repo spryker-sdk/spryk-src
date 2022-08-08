@@ -81,7 +81,7 @@ jobs:
               run: mv spryk.phar spryk-target/spryk.phar
 
             - name: CHMOD spryk.phar
-              run: chmod 0777 spryk-target/spryk.phar
+              run: chmod 0755 spryk-target/spryk.phar
 
             - name: Create Pull Request
               id: cpr
