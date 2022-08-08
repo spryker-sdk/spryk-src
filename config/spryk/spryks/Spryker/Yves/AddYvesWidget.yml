@@ -1,3 +1,4 @@
+name: AddYvesWidget
 spryk: template
 description: "Adds a new Widget to the Yves application."
 mode: both

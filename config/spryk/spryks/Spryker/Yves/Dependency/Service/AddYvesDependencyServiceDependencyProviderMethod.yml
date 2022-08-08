@@ -1,3 +1,4 @@
+name: AddYvesDependencyServiceDependencyProviderMethod
 spryk: method
 description: "Adds a Service dependency method to the *module*DependencyProvider."
 mode: both

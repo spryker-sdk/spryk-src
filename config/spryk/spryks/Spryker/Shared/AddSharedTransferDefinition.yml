@@ -1,3 +1,4 @@
+name: AddSharedTransferDefinition
 spryk: transfer
 description: "Adds a new *module*.transfer.xml to the Shared application."
 mode: both

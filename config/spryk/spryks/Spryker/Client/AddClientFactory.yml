@@ -1,3 +1,4 @@
+name: AddClientFactory
 spryk: template
 description: "Adds a new *Module*ClientFactory to the Client application."
 mode: both

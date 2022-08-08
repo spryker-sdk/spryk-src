@@ -1,3 +1,4 @@
+name: AddGlueControllerAfterActionPlugin
 spryk: template
 description: "Adds a new *modelName*ControllerAfterActionPlugin to the Glue application."
 mode: both

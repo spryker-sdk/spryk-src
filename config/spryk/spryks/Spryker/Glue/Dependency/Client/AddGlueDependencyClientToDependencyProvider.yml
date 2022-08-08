@@ -1,3 +1,4 @@
+name: AddGlueDependencyClientToDependencyProvider
 spryk: dependencyProvider
 description: "Adds a Client dependency method to Container in *module*DependencyProvider."
 mode: both

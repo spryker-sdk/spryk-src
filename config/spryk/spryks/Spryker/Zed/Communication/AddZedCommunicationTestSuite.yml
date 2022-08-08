@@ -1,3 +1,4 @@
+name: AddZedCommunicationTestSuite
 spryk: structure
 description: "Adds a new *module* Communication test suite directory."
 mode: both

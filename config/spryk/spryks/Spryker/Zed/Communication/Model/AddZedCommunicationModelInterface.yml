@@ -1,3 +1,4 @@
+name: AddZedCommunicationModelInterface
 spryk: template
 description: "Adds a new Communication model interface to the Zed application."
 mode: both

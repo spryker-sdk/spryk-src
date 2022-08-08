@@ -1,3 +1,4 @@
+name: CopyModule
 spryk: copyModule
 description: "Copies a *module*."
 priority: 3

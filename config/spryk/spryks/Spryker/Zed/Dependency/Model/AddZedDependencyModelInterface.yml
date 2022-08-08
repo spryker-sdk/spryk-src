@@ -1,3 +1,4 @@
+name: AddZedDependencyModelInterface
 spryk: template
 description: "Adds a new Dependency Expander model interface to the Zed application."
 mode: both

@@ -1,3 +1,4 @@
+name: AddZedDependencyFacadeDependencyProviderMethod
 spryk: method
 description: "Adds a facade dependency method to the *module*DependencyProvider."
 mode: both

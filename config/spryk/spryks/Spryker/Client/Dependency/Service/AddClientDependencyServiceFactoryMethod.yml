@@ -1,3 +1,4 @@
+name: AddClientDependencyServiceFactoryMethod
 spryk: method
 description: "Adds a Service dependency method to the *module*Factory."
 mode: both

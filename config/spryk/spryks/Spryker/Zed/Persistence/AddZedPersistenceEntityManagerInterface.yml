@@ -1,3 +1,4 @@
+name: AddZedPersistenceEntityManagerInterface
 spryk: template
 description: "Adds a new *module*EntityManagerInterface to the Zed application."
 mode: both

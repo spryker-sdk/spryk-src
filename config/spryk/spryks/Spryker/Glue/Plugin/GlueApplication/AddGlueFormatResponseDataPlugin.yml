@@ -1,3 +1,4 @@
+name: AddGlueFormatResponseDataPlugin
 spryk: template
 description: "Adds a new *modelName*FormatResponseDataPlugin to the Glue application."
 mode: both

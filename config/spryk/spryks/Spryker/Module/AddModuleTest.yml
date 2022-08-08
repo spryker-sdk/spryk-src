@@ -1,3 +1,4 @@
+name: AddModuleTest
 spryk: structure
 description: "Adds a new *module* tests structure."
 priority: 1

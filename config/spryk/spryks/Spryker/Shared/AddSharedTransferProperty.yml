@@ -1,3 +1,4 @@
+name: AddSharedTransferProperty
 spryk: transferProperty
 description: "Adds a new property to *module*.transfer.xml in the Shared application."
 mode: both

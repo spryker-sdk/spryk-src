@@ -1,3 +1,4 @@
+name: AddModule
 spryk: structure
 description: "Adds a new *module* structure. Creates only empty skeleton without any Yves/Zed/Glue classes. Preferable to use AddModuleDefault"
 priority: 1

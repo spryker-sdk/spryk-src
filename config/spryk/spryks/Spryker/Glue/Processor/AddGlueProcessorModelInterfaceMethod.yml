@@ -1,3 +1,4 @@
+name: AddGlueProcessorModelInterfaceMethod
 spryk: method
 description: "Adds a new method to the *target* processor model interface."
 mode: both

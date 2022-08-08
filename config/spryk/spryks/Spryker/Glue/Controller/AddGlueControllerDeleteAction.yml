@@ -1,3 +1,4 @@
+name: AddGlueControllerDeleteAction
 spryk: method
 deprecated: "Use AddGlueControllerMethodDelete instead."
 description: "Adds a new delete action to the Glue controller."

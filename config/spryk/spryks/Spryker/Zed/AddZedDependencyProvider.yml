@@ -1,3 +1,4 @@
+name: AddZedDependencyProvider
 spryk: template
 description: "Adds a new *module*DependencyProvider to the Zed application."
 mode: both

@@ -1,3 +1,4 @@
+name: AddGlueControllerPostAction
 spryk: method
 deprecated: "Use AddGlueControllerMethodPost instead."
 description: "Adds a new action to the Glue controller."

@@ -1,3 +1,4 @@
+name: AddGlueResourceRoute
 spryk: resourceRoute
 description: "Adds a new GET Resource to the Glue application."
 mode: both

@@ -1,3 +1,4 @@
+name: AddZedNavigationSchema
 spryk: template
 description: "Adds a new navigation.xml to the Zed application."
 mode: both

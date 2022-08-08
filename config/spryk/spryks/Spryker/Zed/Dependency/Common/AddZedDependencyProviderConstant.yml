@@ -1,3 +1,4 @@
+name: AddZedDependencyProviderConstant
 spryk: constant
 description: "Adds a dependency constant to the *module*DependencyProvider."
 mode: both

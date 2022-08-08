@@ -23,6 +23,11 @@ abstract class AbstractSprykConsole extends Command
     protected const CODE_ERROR = 1;
 
     /**
+     * @var int
+     */
+    protected const CODE_WARNING = 2;
+
+    /**
      * @var \SprykerSdk\Spryk\SprykFacadeInterface
      */
     protected SprykFacadeInterface $facade;
