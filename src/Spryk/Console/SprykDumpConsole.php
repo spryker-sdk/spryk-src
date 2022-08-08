@@ -73,12 +73,12 @@ class SprykDumpConsole extends AbstractSprykConsole
         if ($sprykName !== false) {
             $this->dumpSpryk($output, $sprykName);
 
-            return static::SUCCESS_CODE;
+            return static::CODE_SUCCESS;
         }
 
         $this->dumpAllSpryks($output, $level);
 
-        return static::SUCCESS_CODE;
+        return static::CODE_SUCCESS;
     }
 
     /**

@@ -137,7 +137,7 @@ class SprykRunConsole extends AbstractSprykConsole
             new SprykStyle($input, $output),
         );
 
-        return static::SUCCESS_CODE;
+        return static::CODE_SUCCESS;
     }
 
     /**

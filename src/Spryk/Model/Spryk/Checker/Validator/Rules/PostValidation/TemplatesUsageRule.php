@@ -14,9 +14,9 @@ use Throwable;
 
 class TemplatesUsageRule implements PostValidationInterface
 {
- /**
-  * @var \SprykerSdk\Spryk\Model\Spryk\Checker\Finder\SprykTemplateFinderInterface
-  */
+    /**
+     * @var \SprykerSdk\Spryk\Model\Spryk\Checker\Finder\SprykTemplateFinderInterface
+     */
     protected SprykTemplateFinderInterface $sprykTemplateFinder;
 
     /**

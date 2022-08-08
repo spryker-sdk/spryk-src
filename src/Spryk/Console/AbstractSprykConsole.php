@@ -15,17 +15,17 @@ abstract class AbstractSprykConsole extends Command
     /**
      * @var int
      */
-    protected const SUCCESS_CODE = 0;
+    protected const CODE_SUCCESS = 0;
 
     /**
      * @var int
      */
-    protected const ERROR_CODE = 1;
+    protected const CODE_ERROR = 1;
 
     /**
      * @var int
      */
-    protected const WARNING_CODE = 2;
+    protected const CODE_WARNING = 2;
 
     /**
      * @var \SprykerSdk\Spryk\SprykFacadeInterface

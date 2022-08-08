@@ -80,13 +80,13 @@ class CheckSprykDefinition extends AbstractSprykConsole
             ) {
                 $this->printSprykDefinitionsErrorsAndWarnings($output, $validationResult);
 
-                return isset($validationResult[CheckerValidatorRuleInterface::HAVE_ERRORS]) ? static::ERROR_CODE : static::WARNING_CODE;
+                return isset($validationResult[CheckerValidatorRuleInterface::HAVE_ERRORS]) ? static::CODE_ERROR : static::CODE_WARNING;
             }
         }
 
         $this->printSuccessfulMessage($output);
 
-        return static::SUCCESS_CODE;
+        return static::CODE_SUCCESS;
     }
 
     /**
