@@ -1,3 +1,4 @@
+name: AddGlueValidateHttpRequestPlugin
 spryk: template
 description: "Adds a new *modelName*ValidateHttpRequestPlugin to the Glue application."
 mode: both

@@ -99,11 +99,11 @@ class Superseder implements SupersederInterface
     }
 
     /**
-     * @param string|int|bool $argumentValue
+     * @param mixed $argumentValue
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $sprykArguments
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $resolvedArguments
      *
-     * @return string|int|bool
+     * @return mixed
      */
     protected function replacePlaceholderInValue(
         $argumentValue,

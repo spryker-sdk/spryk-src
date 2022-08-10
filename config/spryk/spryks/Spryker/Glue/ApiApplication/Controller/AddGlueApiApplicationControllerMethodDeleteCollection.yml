@@ -1,3 +1,4 @@
+name: AddGlueBackendApiControllerMethodDeleteCollection
 spryk: wrapper
 description: "Adds a new method to the Glue controller."
 mode: both
@@ -43,7 +44,7 @@ arguments:
 
     resource:
         inherit: true
-        description: "Defines the resource name this controller will work with e.g. /customers"
+        description: "Defines the resource name this resource plugin will work with."
 
     controller:
         inherit: true
@@ -55,7 +56,7 @@ arguments:
         value: "{{ resource | resourceNameToModelName | singularize }}"
 
     resourceDataObject:
-        description: "Defines the Transfer that will be used in the Controller. Do not use Transfer as suffix, it will be added automatically. Example: Customer (ok) CustomerTransfer (wrong)."
+        description: "Defines the Transfer that will be used in the Methods. Do not use Transfer as suffix, it will be added automatically. Example: Customer (ok) CustomerTransfer (wrong)"
         value: "{{ resource | resourceNameToModelName }}"
 
     target:

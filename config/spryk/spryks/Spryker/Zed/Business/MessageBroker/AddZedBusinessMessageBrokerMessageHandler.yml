@@ -1,3 +1,4 @@
+name: AddZedBusinessMessageBrokerMessageHandler
 # Adds a MessageHandler class
 # Adds a MessageHandler interface
 # Adds the Factory method to get the MessageHandler

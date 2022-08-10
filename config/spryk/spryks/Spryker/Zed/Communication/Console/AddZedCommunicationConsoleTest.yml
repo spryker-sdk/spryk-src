@@ -1,3 +1,4 @@
+name: AddZedCommunicationConsoleTest
 spryk: template
 description: "Adds a new ConsoleTest to the Zed application."
 mode: both

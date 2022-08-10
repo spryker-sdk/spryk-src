@@ -187,7 +187,7 @@ class SprykHelper extends Module
     /**
      * @return \SprykerSdk\Spryk\SprykConfig|object
      */
-    protected function getSprykConfigMock()
+    protected function getSprykConfigMock(): SprykConfig
     {
         $sprykConfig = Stub::make(SprykConfig::class, [
             'getProjectRootDirectory' => function () {

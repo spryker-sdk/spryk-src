@@ -518,7 +518,7 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
     }
 
     /**
-     * @param array|string $sprykInfo
+     * @param mixed $sprykInfo
      * @param string $parentSprykDefinitionKey
      *
      * @return \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface|null

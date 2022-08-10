@@ -1,3 +1,4 @@
+name: AddSuiteCodeceptionConfiguration
 spryk: template
 description: "Add an *application* *module* test suite configuration without any suite."
 mode: both

@@ -1,3 +1,4 @@
+name: AddZedBusinessFacadeInterfaceMethod
 spryk: method
 description: "Adds a new method to the *module*FacadeInterface."
 mode: both

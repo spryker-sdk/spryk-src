@@ -1,3 +1,4 @@
+name: AddGlueCommonDependencyProvider
 spryk: template
 description: "Adds a new *module*DependencyProvider to the Glue application."
 mode: both

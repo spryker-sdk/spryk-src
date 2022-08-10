@@ -1,3 +1,4 @@
+name: AddDomainEntityValidatorInterface
 spryk: template
 description: "Adds a new Business model validator interface to the Zed application."
 mode: both

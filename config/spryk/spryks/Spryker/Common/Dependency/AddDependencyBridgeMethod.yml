@@ -1,3 +1,4 @@
+name: AddDependencyBridgeMethod
 spryk: bridgeMethods
 description: "Adds a bridge on core level for a dependency defined methods to the *module* dependency bridge."
 priority: 1

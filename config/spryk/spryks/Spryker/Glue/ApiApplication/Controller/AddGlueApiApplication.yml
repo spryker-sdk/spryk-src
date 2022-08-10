@@ -1,3 +1,4 @@
+name: AddGlueBackendApiApplication
 spryk: wrapper
 description: "Adds a new Glue API Application."
 mode: both

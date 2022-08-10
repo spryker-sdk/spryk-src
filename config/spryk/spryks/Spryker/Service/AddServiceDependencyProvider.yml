@@ -1,3 +1,4 @@
+name: AddServiceDependencyProvider
 spryk: template
 description: "Adds a new *Module*ServiceDependencyProvider to the Service application."
 mode: both

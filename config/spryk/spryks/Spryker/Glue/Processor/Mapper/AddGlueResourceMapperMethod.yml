@@ -1,3 +1,4 @@
+name: AddGlueResourceMapperMethod
 spryk: method
 description: "Adds a new resource mapper method to the Glue application."
 mode: both

@@ -45,7 +45,7 @@ class AddUseVisitor extends NodeVisitorAbstract
     /**
      * @param \PhpParser\Node $node
      *
-     * @return \PhpParser\Node|array<\PhpParser\Node>|int|null
+     * @return mixed
      */
     public function enterNode(Node $node)
     {

@@ -1,3 +1,4 @@
+name: AddZedCommunicationTestSuiteConfiguration
 spryk: update-yml
 description: "Updates the *module* test configuration and adds the suite configuration for Communication tests."
 mode: both

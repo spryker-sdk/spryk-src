@@ -1,3 +1,4 @@
+name: AddGlueApiApplicationController
 spryk: wrapper
 description: "Adds a new Glue Controller to the Glue Application."
 mode: both

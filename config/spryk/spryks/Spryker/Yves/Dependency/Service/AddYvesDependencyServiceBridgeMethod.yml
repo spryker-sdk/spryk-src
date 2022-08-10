@@ -1,3 +1,4 @@
+name: AddYvesDependencyServiceBridgeMethod
 spryk: bridgeMethods
 description: "Adds a new method to the *module* dependency Service bridge."
 priority: 1

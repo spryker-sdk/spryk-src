@@ -1,3 +1,4 @@
+name: AddZedDomainEntityInterfaceMethod
 spryk: method
 description: "Adds a new method to the *target* interface."
 mode: both

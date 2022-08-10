@@ -1,3 +1,4 @@
+name: AddZedDomainEntityPersistenceFactoryMethod
 spryk: method
 description: "Adds a *domainEntity* method to the *module*PersistenceFactory."
 mode: both

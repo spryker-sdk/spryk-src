@@ -1,3 +1,4 @@
+name: SprykWrapperWithSpryks
 spryk: wrapper
 description: "Unit Test configuration"
 mode: both

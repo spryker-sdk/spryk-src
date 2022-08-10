@@ -1,3 +1,4 @@
+name: AddGlueBasicStructure
 spryk: structure
 description: "Adds a new Glue layer with basic structure."
 mode: both

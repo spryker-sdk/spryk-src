@@ -1,3 +1,4 @@
+name: AddDependencyTypeToDependencyProvider
 spryk: method
 description: "Adds a dependency type (Facade, Client, Service) to the *module*DependencyProvider."
 mode: both
@@ -30,7 +31,7 @@ arguments:
         isOptional: true
 
     provideMethod:
-        description: "The callback decides based on the application + the optional layer which provide* method will be used."
+        description: "The callback decides based on the application + the optional layer which method will be used."
         callback: DependencyProviderProvideMethod
 
     methods:
@@ -45,7 +46,7 @@ arguments:
         value: "\\Spryker\\{{ application }}\\Kernel\\{% if application.value == 'Glue' %}{{ applicationType }}\\{% endif %}Container"
 
     method:
-        description: "Adds one of addFooBarFacade, addFooBarClient, addFooBarService."
+        description: "Name of the method."
         value: "add{{ dependentModule | ucfirst }}{{ dependencyType | ucfirst }}"
 
     visibility:

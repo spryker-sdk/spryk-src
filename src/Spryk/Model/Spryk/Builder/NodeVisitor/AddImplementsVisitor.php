@@ -32,7 +32,7 @@ class AddImplementsVisitor extends NodeVisitorAbstract
     /**
      * @param \PhpParser\Node $node
      *
-     * @return \PhpParser\Node|int|null
+     * @return mixed
      */
     public function enterNode(Node $node)
     {

@@ -1,3 +1,4 @@
+name: AddFileFromTemplate
 spryk: template
 description: "Adds a new file."
 mode: both

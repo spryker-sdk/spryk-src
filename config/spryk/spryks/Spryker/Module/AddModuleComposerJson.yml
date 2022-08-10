@@ -1,3 +1,4 @@
+name: AddModuleComposerJson
 spryk: template
 description: "Adds a new composer.json to the Modules root."
 mode: core

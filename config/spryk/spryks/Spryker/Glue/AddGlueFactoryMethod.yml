@@ -1,3 +1,4 @@
+name: AddGlueFactoryMethod
 spryk: method
 description: "Adds a method to the *module*Factory."
 mode: both

@@ -1,3 +1,4 @@
+name: AddGlueBackendApiRequestMapper
 spryk: template
 description: "Adds a new Request mapper that maps GlueRequest objects to ResourceDataObject transfers."
 mode: both
@@ -5,7 +6,7 @@ level: 2
 
 arguments:
     module:
-        description: "Module name should be suffixed either depending on the chosen applicationType."
+        description: "Based on the applicationType the module name will be suffixed either with StorefrontApi or with BackendApi by the ResourceModuleName callback."
         inherit: true
         default: "{{ resource | resourceNameToModuleName }}{{ applicationType}}Api"
 
@@ -21,7 +22,7 @@ arguments:
         value: "GlueRequest{{ resourceDataObject }}Mapper"
 
     resource:
-        description: "Defines the resource name this controller will work with."
+        description: "Defines the resource name this resource plugin will work with."
         inherit: true
 
     subDirectory:

@@ -1,3 +1,4 @@
+name: AddCheckoutPostSavePlugin
 spryk: template
 description: "Adds a new *module* CheckoutPostSave class."
 mode: both

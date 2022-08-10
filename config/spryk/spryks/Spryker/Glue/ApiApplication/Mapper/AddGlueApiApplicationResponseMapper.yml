@@ -1,3 +1,4 @@
+name: AddGlueBackendApiResponseMapper
 spryk: template
 description: "Adds a new Response ResponseMapper that maps {{ zedDomainEntity }} transfers to a GlueResponseTransfer."
 mode: both
@@ -5,7 +6,7 @@ level: 2
 
 arguments:
     module:
-        description: "Module name should be suffixed either with StorefrontApi or with BackendApi depending on the chosen applicationType."
+        description: "Based on the applicationType the module name will be suffixed either with StorefrontApi or with BackendApi by the ResourceModuleName callback."
         inherit: true
         default: "{{ resource | resourceNameToModuleName }}{{ applicationType }}Api"
 
@@ -17,7 +18,7 @@ arguments:
         value: "GlueResponse{{ resourceDataObject }}Mapper"
 
     resource:
-        description: "Defines the resource name this controller will work with."
+        description: "Defines the resource name this resource plugin will work with."
 
     subDirectory:
         inherit: true

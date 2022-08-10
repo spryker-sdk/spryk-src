@@ -1,3 +1,4 @@
+name: StructureArgumentWithPlaceholderInValue
 spryk: structure
 description: "Unit Test configuration"
 mode: both

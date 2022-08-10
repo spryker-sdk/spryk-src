@@ -110,7 +110,7 @@ interface SprykStyleInterface
     public function endPostSpryks(SprykDefinitionInterface $sprykDefinition): void;
 
     /**
-     * @param array<string>|string $messages
+     * @param mixed $messages
      * @param int $options
      *
      * @return void
@@ -118,7 +118,7 @@ interface SprykStyleInterface
     public function write($messages, int $options = 0): void;
 
     /**
-     * @param array<string>|string $messages
+     * @param mixed $messages
      * @param int $options
      *
      * @return void
@@ -128,7 +128,7 @@ interface SprykStyleInterface
     /**
      * @param \Symfony\Component\Console\Question\Question $question
      *
-     * @return string|int|null
+     * @return mixed
      */
     public function askQuestion(Question $question);
 

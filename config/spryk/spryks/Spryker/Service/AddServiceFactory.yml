@@ -1,3 +1,4 @@
+name: AddServiceFactory
 spryk: template
 description: "Adds a new *Module*ServiceFactory to the Service application."
 mode: both

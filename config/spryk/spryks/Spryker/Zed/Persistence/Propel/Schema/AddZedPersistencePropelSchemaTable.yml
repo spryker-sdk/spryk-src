@@ -1,3 +1,4 @@
+name: AddZedPersistencePropelSchemaTable
 spryk: schema
 description: "Adds a new table to the spy_*targetModule*.schema.xml."
 mode: both

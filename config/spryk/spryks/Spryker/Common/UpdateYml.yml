@@ -1,3 +1,4 @@
+name: UpdateYml
 spryk: update-yml
 description: "Updates the *module* test configuration and adds a test helper."
 mode: both
@@ -17,11 +18,11 @@ arguments:
         isOptional: true
 
     addToElement:
-        descrption: "Path to where the content should be added to."
+        description: "Path to where the content should be added to."
 
     targetPath:
-        descrption: "The file path that should be updated."
+        description: "Target path will be extended with the subDirectory inside the TemplateSpryk when set."
 
     content:
-        descrption: "The content of the element."
+        description: "The content of the element."
 

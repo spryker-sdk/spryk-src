@@ -1,3 +1,4 @@
+name: AddCrudFacade
 spryk: wrapper
 description: "Adds CRUD code for a Domain Entity."
 priority: 1

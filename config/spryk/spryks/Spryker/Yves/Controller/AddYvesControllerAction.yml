@@ -1,3 +1,4 @@
+name: AddYvesControllerAction
 spryk: method
 description: "Adds a new action to the Yves controller."
 mode: both

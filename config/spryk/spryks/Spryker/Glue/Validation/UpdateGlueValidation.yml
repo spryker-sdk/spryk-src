@@ -1,3 +1,4 @@
+name: UpdateGlueValidation
 spryk: updateGlueValidation
 description: "Updates a Glue validation file and creates one if it does not exist."
 mode: both
@@ -14,7 +15,7 @@ arguments:
         inherit: true
 
     httpMethod:
-        description: "Can be one of the HTTP request methods. E.g. POST."
+        description: "The HTTP method e.g. POST"
 
     field:
         description: "Name of the field for the validation."

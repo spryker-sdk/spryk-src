@@ -1,3 +1,4 @@
+name: AddGlueConfigConstant
 spryk: constant
 description: "Adds a Resource type constant to the *module*Config."
 mode: both

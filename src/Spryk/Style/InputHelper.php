@@ -25,7 +25,7 @@ trait InputHelper
     /**
      * @param \Symfony\Component\Console\Question\Question $question
      *
-     * @return string|int|null
+     * @return mixed
      */
     public function askQuestion(Question $question)
     {

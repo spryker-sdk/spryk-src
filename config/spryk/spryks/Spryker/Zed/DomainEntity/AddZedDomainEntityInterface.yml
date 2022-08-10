@@ -1,3 +1,4 @@
+name: AddZedDomainEntityInterface
 spryk: template
 description: "Adds a new DomainEntity related interface to the Zed application."
 mode: both

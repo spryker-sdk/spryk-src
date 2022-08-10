@@ -1,3 +1,4 @@
+name: AddGlueTestFixtures
 spryk: template
 condition: "httpMethod === 'get' || httpMethod === 'delete' || (httpMethod === 'patch' && isBulk === false)"
 description: "Adds a new Test Fixtures class."
@@ -7,7 +8,7 @@ level: 2
 arguments:
     resource:
         inherit: true
-        description: "Defines the resource name this controller will work with e.g. /customers"
+        description: "Defines the resource name this resource plugin will work with."
 
     module:
         value: "{{ resource | resourceNameToModuleName }}{{ applicationType }}Api"
@@ -30,7 +31,7 @@ arguments:
 
     zedDomainEntity:
         inherit: true
-        description: "Defines the domain entity that should be tested"
+        description: "Defines the domainEntity used on Zed side for the CRUD Facade. It will be used to create all needed Transfer Objects."
 
     isBulk:
         inherit: true

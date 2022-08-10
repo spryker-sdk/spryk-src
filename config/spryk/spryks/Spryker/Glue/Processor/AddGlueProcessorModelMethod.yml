@@ -1,3 +1,4 @@
+name: AddGlueProcessorModelMethod
 spryk: method
 description: "Adds a new method to the *target* processor model."
 mode: both

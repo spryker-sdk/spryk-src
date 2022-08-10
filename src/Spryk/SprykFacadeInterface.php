@@ -49,4 +49,14 @@ interface SprykFacadeInterface
      * @return array
      */
     public function getSprykDefinition(string $sprykName, ?string $sprykMode = null): array;
+
+    /**
+     * @return void
+     */
+    public function fixSprykDefinitions(): void;
+
+    /**
+     * @return array
+     */
+    public function checkSprykDefinitions(): array;
 }

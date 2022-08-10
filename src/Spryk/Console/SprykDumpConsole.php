@@ -71,7 +71,7 @@ class SprykDumpConsole extends AbstractSprykConsole
 
         $sprykName = current((array)$input->getArgument(static::ARGUMENT_SPRYK));
         if ($sprykName !== false) {
-            $this->dumpSprykOptions($output, $sprykName);
+            $this->dumpSpryk($output, $sprykName);
 
             return static::CODE_SUCCESS;
         }
@@ -105,7 +105,7 @@ class SprykDumpConsole extends AbstractSprykConsole
         $sprykDefinitions = $this->formatSpryks($sprykDefinitions);
 
         $output->writeln('List of Spryk definitions:');
-        $this->printTable($output, ['Spryk name', 'Description'], $sprykDefinitions);
+        $this->printTable($output, ['Spryk name', 'Description', 'Arguments'], $sprykDefinitions);
     }
 
     /**
@@ -114,12 +114,15 @@ class SprykDumpConsole extends AbstractSprykConsole
      *
      * @return void
      */
-    protected function dumpSprykOptions(OutputInterface $output, string $sprykName): void
+    protected function dumpSpryk(OutputInterface $output, string $sprykName): void
     {
         $sprykDefinition = $this->getFacade()->getSprykDefinition($sprykName);
-        $tableRows = $this->formatOptions($sprykDefinition[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS]);
-        $this->printTitleBlock($output, sprintf('List of all "%s" options:', $sprykName));
-        $this->printTable($output, ['Option'], $tableRows);
+        $sprykArguments = $this->formatSingleSprykArguments($sprykDefinition[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS]);
+        $sprykDescription = $this->formatSingleSprykDescription($sprykDefinition[SprykConfig::SPRYK_DEFINITION_KEY_DESCRIPTION]);
+
+        $this->printTitleBlock($output, sprintf('Description of the "%s" Spryk:', $sprykName));
+
+        $this->printTable($output, [$sprykName, $sprykDescription], $sprykArguments);
 
         $optionalSpryks = $this->getFormattedOptionalSpryks($sprykDefinition);
         if ($optionalSpryks !== []) {
@@ -173,7 +176,11 @@ class SprykDumpConsole extends AbstractSprykConsole
             if (!isset($sprykDefinition['description'])) {
                 throw new Exception(sprintf('The Spryk "%s" doesn\'t have a description.', $sprykName));
             }
-            $formatted[$sprykName] = [$sprykName, $sprykDefinition['description']];
+            $formatted[$sprykName] = [
+                $sprykName,
+                $sprykDefinition['description'],
+                $this->formatArguments($sprykDefinition),
+            ];
         }
         sort($formatted);
 
@@ -181,23 +188,46 @@ class SprykDumpConsole extends AbstractSprykConsole
     }
 
     /**
-     * @param array $sprykDefinitions
+     * @param array $sprykDefinition
      *
      * @return array
      */
-    protected function formatOptions(array $sprykDefinitions): array
+    protected function formatSingleSprykArguments(array $sprykDefinition): array
     {
         $formatted = ['mode' => ['mode']];
-        foreach ($sprykDefinitions as $option => $optionDefinition) {
-            if (isset($optionDefinition[SprykConfig::NAME_ARGUMENT_KEY_VALUE])) {
+        foreach ($sprykDefinition as $argument => $argumentDefinition) {
+            if (isset($argumentDefinition[SprykConfig::NAME_ARGUMENT_KEY_VALUE])) {
                 continue;
             }
 
-            $formatted[$option] = [$option];
+            $formatted[$argument] = [
+                $argument,
+                $argumentDefinition[SprykConfig::NAME_ARGUMENT_KEY_DESCRIPTION] ?? '',
+            ];
         }
         sort($formatted);
 
         return $formatted;
+    }
+
+    /**
+     * @param string $sprykDescription
+     *
+     * @return string
+     */
+    protected function formatSingleSprykDescription(string $sprykDescription): string
+    {
+        return trim($sprykDescription);
+    }
+
+    /**
+     * @param array $sprykDefinition
+     *
+     * @return string
+     */
+    protected function formatArguments(array $sprykDefinition): string
+    {
+        return implode(', ', array_keys($sprykDefinition[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS]));
     }
 
     /**

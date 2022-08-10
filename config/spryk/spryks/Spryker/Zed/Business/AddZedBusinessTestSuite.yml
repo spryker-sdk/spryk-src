@@ -1,3 +1,4 @@
+name: AddZedBusinessTestSuite
 spryk: structure
 description: "Adds a new *module* Business test suite directory."
 mode: both
