@@ -1,4 +1,4 @@
-name: AddGlueBackendApiControllerMethodPatch
+name: AddGlueApiApplicationControllerMethodPatch
 spryk: wrapper
 description: "Adds a new method to the Glue controller."
 mode: both
@@ -83,7 +83,7 @@ postSpryks:
               resourceDataObject:
                   inherit: true
               body:
-                  value: Glue/BackendApi/Controller/PatchMethod.php.twig
+                  value: Glue/ApiApplication/Controller/PatchMethod.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Controller\\{{ resource | resourceNameToControllerName }}ResourceController"
               withInterface:

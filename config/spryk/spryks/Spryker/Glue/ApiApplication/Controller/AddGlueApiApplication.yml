@@ -96,7 +96,7 @@ preSpryks:
                   value: public/BackendApi/
 
               template:
-                  value: Spryker/Glue/BackendApi/index.php.twig
+                  value: Spryker/Glue/ApiApplication/index.php.twig
 
     # Add AddGlueApiApplicationBootstrap
     - AddFileFromTemplate:

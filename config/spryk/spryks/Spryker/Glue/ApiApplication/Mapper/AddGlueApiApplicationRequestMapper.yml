@@ -76,7 +76,7 @@ postSpryks:
               output:
                   value: "\\Generated\\Shared\\Transfer\\{{ zedDomainEntity }}CriteriaTransfer"
               body:
-                  value: Glue/BackendApi/RequestMapper/MapGlueRequestTransferToCriteriaTransfer.php.twig
+                  value: Glue/ApiApplication/RequestMapper/MapGlueRequestTransferToCriteriaTransfer.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueRequest{{ resourceDataObject }}Mapper"
               # Overloading AddMethod Spryk
@@ -91,7 +91,7 @@ postSpryks:
               output:
                   value: "\\Generated\\Shared\\Transfer\\{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer"
               body:
-                  value: Glue/BackendApi/RequestMapper/MapGlueRequestTransferToCollectionDeleteCriteriaTransfer.php.twig
+                  value: Glue/ApiApplication/RequestMapper/MapGlueRequestTransferToCollectionDeleteCriteriaTransfer.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueRequest{{ resourceDataObject }}Mapper"
               # Overloading AddMethod Spryk
@@ -106,7 +106,7 @@ postSpryks:
               output:
                   value: "\\Generated\\Shared\\Transfer\\{{ zedDomainEntity }}CriteriaTransfer"
               body:
-                  value: Glue/BackendApi/RequestMapper/MapIdentifierToCriteriaTransfer.php.twig
+                  value: Glue/ApiApplication/RequestMapper/MapIdentifierToCriteriaTransfer.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueRequest{{ resourceDataObject }}Mapper"
               # Overloading AddMethod Spryk
@@ -121,7 +121,7 @@ postSpryks:
               output:
                   value: "\\Generated\\Shared\\Transfer\\{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer"
               body:
-                  value: Glue/BackendApi/RequestMapper/MapIdentifierToCollectionDeleteCriteriaTransfer.php.twig
+                  value: Glue/ApiApplication/RequestMapper/MapIdentifierToCollectionDeleteCriteriaTransfer.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueRequest{{ resourceDataObject }}Mapper"
               # Overloading AddMethod Spryk
@@ -136,7 +136,7 @@ postSpryks:
               output:
                   value: "\\Generated\\Shared\\Transfer\\{{ zedDomainEntity }}CollectionRequestTransfer"
               body:
-                  value: Glue/BackendApi/RequestMapper/MapIdentifierToCollectionCollectionRequestTransfer.php.twig
+                  value: Glue/ApiApplication/RequestMapper/MapIdentifierToCollectionCollectionRequestTransfer.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueRequest{{ resourceDataObject }}Mapper"
               # Overloading AddMethod Spryk

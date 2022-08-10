@@ -87,7 +87,7 @@ postSpryks:
               resourceDataObject:
                   inherit: true
               body:
-                  value: Glue/BackendApi/Controller/GetMethod.php.twig
+                  value: Glue/ApiApplication/Controller/GetMethod.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Controller\\{{ resource | resourceNameToControllerName }}ResourceController"
               withInterface:

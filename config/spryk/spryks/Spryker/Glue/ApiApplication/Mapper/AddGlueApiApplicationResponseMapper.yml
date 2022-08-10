@@ -75,7 +75,7 @@ postSpryks:
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               body:
-                  value: Glue/BackendApi/ResponseMapper/MapCollectionTransferToGlueResponseTransfer.php.twig
+                  value: Glue/ApiApplication/ResponseMapper/MapCollectionTransferToGlueResponseTransfer.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}Mapper"
               # Overloading AddMethod Spryk
@@ -90,7 +90,7 @@ postSpryks:
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               body:
-                  value: Glue/BackendApi/ResponseMapper/MapCollectionTransferToSingleResourceGlueResponseTransfer.php.twig
+                  value: Glue/ApiApplication/ResponseMapper/MapCollectionTransferToSingleResourceGlueResponseTransfer.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}Mapper"
               # Overloading AddMethod Spryk
@@ -105,7 +105,7 @@ postSpryks:
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               body:
-                  value: Glue/BackendApi/ResponseMapper/MapCollectionResponseTransferToGlueResponseTransfer.php.twig
+                  value: Glue/ApiApplication/ResponseMapper/MapCollectionResponseTransferToGlueResponseTransfer.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}Mapper"
               # Overloading AddMethod Spryk
@@ -120,7 +120,7 @@ postSpryks:
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               body:
-                  value: Glue/BackendApi/ResponseMapper/MapCollectionResponseTransferToSingleResourceGlueResponseTransfer.php.twig
+                  value: Glue/ApiApplication/ResponseMapper/MapCollectionResponseTransferToSingleResourceGlueResponseTransfer.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}Mapper"
               # Overloading AddMethod Spryk
@@ -137,7 +137,7 @@ postSpryks:
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               body:
-                  value: Glue/BackendApi/ResponseMapper/AddNotFoundError.php.twig
+                  value: Glue/ApiApplication/ResponseMapper/AddNotFoundError.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}Mapper"
               # Overloading AddMethod Spryk
@@ -158,7 +158,7 @@ postSpryks:
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               body:
-                  value: Glue/BackendApi/ResponseMapper/AddResourceToGlueResponse.php.twig
+                  value: Glue/ApiApplication/ResponseMapper/AddResourceToGlueResponse.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}Mapper"
               # Overloading AddMethod Spryk

@@ -87,7 +87,7 @@ postSpryks:
               resourceDataObject:
                   inherit: true
               body:
-                  value: Glue/BackendApi/Controller/DeleteCollectionMethod.php.twig
+                  value: Glue/ApiApplication/Controller/DeleteCollectionMethod.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Controller\\{{ resource | resourceNameToControllerName }}ResourceController"
               withInterface:
