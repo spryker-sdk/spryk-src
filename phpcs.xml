@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<ruleset name="SprykerProject">
+    <description>
+        Spryker Coding Standard for Project.
+
+        Extends main Spryker Coding Standard.
+        All sniffs in ./Sniffs will be auto loaded
+    </description>
+
+    <config name="php_version" value="70400"/>
+
+    <file>src/</file>
+    <file>config/</file>
+    <file>tests/</file>
+
+    <exclude-pattern>*/tests/_support/_generated/*</exclude-pattern>
+    <exclude-pattern>*/tests/_helpers/*</exclude-pattern>
+    <exclude-pattern>*/tests/_output/*</exclude-pattern>
+    <exclude-pattern>*/tests/_data/*</exclude-pattern>
+    <exclude-pattern>*/tests/_support/Fixtures/*</exclude-pattern>
+
+    <rule ref="vendor/spryker/code-sniffer/Spryker/ruleset.xml"/>
+
+    <rule ref="vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml">
+        <exclude name="SprykerStrict.TypeHints.ParameterTypeHint"/>
+        <exclude name="SprykerStrict.TypeHints.PropertyTypeHint"/>
+    </rule>
+
+    <!-- Define your own sniffs here -->
+
+    <rule ref="Spryker.Internal.SprykerDisallowFunctions">
+        <properties>
+            <!-- We want to prevent 8.0+ functions to break 7.4 compatibility -->
+            <property name="phpVersion" value="7.4"/>
+        </properties>
+    </rule>
+
+</ruleset>

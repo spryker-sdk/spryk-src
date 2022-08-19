@@ -20,9 +20,9 @@ use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\JsonParser;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\ParserInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\XmlParser;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\YmlParser;
+use SprykerSdk\Spryk\Model\Spryk\Builder\Structure\StructureSpryk;
 use SprykerSdk\Spryk\Model\Spryk\Command\ComposerDumpAutoloadSprykCommand;
 use SprykerSdk\Spryk\Model\Spryk\Command\ComposerReplaceGenerateSprykCommand;
-use SprykerSdk\Spryk\Model\Spryk\Builder\Structure\StructureSpryk;
 use SprykerSdk\Spryk\Model\Spryk\Configuration\Loader\SprykConfigurationLoader;
 use SprykerSdk\Spryk\Model\Spryk\Dumper\SprykDefinitionDumper;
 use SprykerSdk\Spryk\Model\Spryk\Executor\SprykExecutor;
@@ -30,7 +30,7 @@ use SprykerSdk\Spryk\SprykConfig;
 use SprykerSdk\Spryk\SprykFactory;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
-return function (ContainerConfigurator $configurator) {
+return function (ContainerConfigurator $configurator): void {
     $services = $configurator->services()
         ->defaults()
             ->autowire()
@@ -51,7 +51,6 @@ return function (ContainerConfigurator $configurator) {
     // runtime which is not possible with PHAR archives.
     $services->set(ExpressionLanguage::class)
         ->args([null, []]);
-
 
     // Make SprykFactory public for instantiating the SprykFacade from external packages like `spryker-sdk/spryk-gui`
     $services->get(SprykFactory::class)->public();
