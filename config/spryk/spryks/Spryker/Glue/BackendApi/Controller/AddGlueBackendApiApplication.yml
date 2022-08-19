@@ -50,7 +50,7 @@ preSpryks:
               key:
                   value: "spryker/glue-http"
               value:
-                  value: "^0.2.0"
+                  value: "^0.3.0"
               targetFilename:
                   value: composer.json
     - UpdateJson:
