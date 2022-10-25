@@ -64,8 +64,8 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml --ignore=/Fixtures/,/tests/_data/ src/ tests/",
-        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml --ignore=/Fixtures/,/tests/_data/ src/ tests/",
+        "cs-check": "phpcs -p",
+        "cs-fix": "phpcbf -p",
         "stan": "phpstan analyse",
         "stan-baseline": "phpstan analyze --generate-baseline",
         "psalm": "psalm.phar --show-info=false",

@@ -20,9 +20,9 @@ use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\JsonParser;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\ParserInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\XmlParser;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\YmlParser;
+use SprykerSdk\Spryk\Model\Spryk\Builder\Structure\StructureSpryk;
 use SprykerSdk\Spryk\Model\Spryk\Command\ComposerDumpAutoloadSprykCommand;
 use SprykerSdk\Spryk\Model\Spryk\Command\ComposerReplaceGenerateSprykCommand;
-use SprykerSdk\Spryk\Model\Spryk\Builder\Structure\StructureSpryk;
 use SprykerSdk\Spryk\Model\Spryk\Configuration\Loader\SprykConfigurationLoader;
 use SprykerSdk\Spryk\Model\Spryk\Dumper\SprykDefinitionDumper;
 use SprykerSdk\Spryk\Model\Spryk\Executor\SprykExecutor;
@@ -30,7 +30,7 @@ use SprykerSdk\Spryk\SprykConfig;
 use SprykerSdk\Spryk\SprykFactory;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
-return function (ContainerConfigurator $configurator) {
+return function (ContainerConfigurator $configurator): void {
     $services = $configurator->services()
         ->defaults()
             ->autowire()
