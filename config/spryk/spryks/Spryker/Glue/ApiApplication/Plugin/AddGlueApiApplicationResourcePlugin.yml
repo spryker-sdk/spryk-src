@@ -94,13 +94,6 @@ postSpryks:
               withInterface:
                   value: false
     - AddImplements:
-          condition: "apiType === 'REST'"
-          arguments:
-              interface:
-                  value: "Spryker\\Glue\\GlueRestApiConventionExtension\\Dependency\\Plugin\\RestResourceInterface"
-              target:
-                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
-    - AddImplements:
           condition: "apiType === 'JSON'"
           arguments:
               interface:

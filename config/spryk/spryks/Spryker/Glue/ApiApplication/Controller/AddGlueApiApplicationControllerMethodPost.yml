@@ -30,7 +30,7 @@ arguments:
 
     apiType:
         inherit: true
-        description: "Can be one of: REST or JSON"
+        description: "Can be JSON only as for now."
         default: "JSON"
 
     applicationType:
