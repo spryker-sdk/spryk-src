@@ -1,4 +1,4 @@
-name: AddGlueBackendApiControllerMethodDeleteCollection
+name: AddGlueApiApplicationControllerMethodDeleteCollection
 spryk: wrapper
 description: "Adds a new method to the Glue controller."
 mode: both

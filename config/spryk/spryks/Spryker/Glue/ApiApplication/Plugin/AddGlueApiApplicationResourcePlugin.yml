@@ -1,4 +1,4 @@
-name: AddGlueBackendApiResourcePlugin
+name: AddGlueApiApplicationResourcePlugin
 spryk: template
 description: "Adds a new Glue Application Resource Plugin."
 mode: both

@@ -1,4 +1,4 @@
-name: AddGlueBackendApiRequestMapper
+name: AddGlueApiApplicationRequestMapper
 spryk: template
 description: "Adds a new Request mapper that maps GlueRequest objects to ResourceDataObject transfers."
 mode: both

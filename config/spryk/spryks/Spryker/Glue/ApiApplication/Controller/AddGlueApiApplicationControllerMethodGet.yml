@@ -1,4 +1,4 @@
-name: AddGlueBackendApiControllerMethodGet
+name: AddGlueApiApplicationControllerMethodGet
 spryk: wrapper
 description: "Adds a new method to the Glue controller."
 mode: both
