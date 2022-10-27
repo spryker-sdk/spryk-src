@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerSdk\Spryk\Model\Spryk\Builder\Glue\BackendApi\Resource;
+namespace SprykerSdk\Spryk\Model\Spryk\Builder\Glue\ApiApplication\Resource;
 
 use PhpParser\Lexer;
 use PhpParser\NodeTraverser;
@@ -18,7 +18,7 @@ use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterfac
 use SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface;
 use SprykerSdk\Spryk\SprykConfig;
 
-class AddBackendApiResourceMethodSpryk extends AbstractBuilder
+class AddApiApplicationResourceMethodSpryk extends AbstractBuilder
 {
     /**
      * @var string
@@ -91,7 +91,7 @@ class AddBackendApiResourceMethodSpryk extends AbstractBuilder
      */
     public function getName(): string
     {
-        return 'addBackendApiRestResourceMethod';
+        return 'addApiApplicationRestResourceMethod';
     }
 
     /**

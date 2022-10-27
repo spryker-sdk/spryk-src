@@ -1,5 +1,5 @@
-name: AddApiApplicationResourceMethod
-spryk: template
+name: AddGlueApiApplicationResourceMethod
+spryk: addApiApplicationRestResourceMethod
 description: "Adds a new method call to the GlueResourceMethodCollectionTransfer in Glue Application Resource Plugin."
 mode: both
 
