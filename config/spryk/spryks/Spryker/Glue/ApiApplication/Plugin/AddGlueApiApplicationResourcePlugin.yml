@@ -18,6 +18,7 @@ arguments:
 
     applicationType:
         inherit: true
+        description: "Can be one of: Backend or Storefront"
         default: Backend
 
     apiType:

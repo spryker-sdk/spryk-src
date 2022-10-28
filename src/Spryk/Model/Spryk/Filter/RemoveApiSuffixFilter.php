@@ -13,7 +13,7 @@ namespace SprykerSdk\Spryk\Model\Spryk\Filter;
  *
  * Example:
  * $this->filter('FooBarsBackendApi') === `FooBars';
- * $this->filter('FooBarsFrontendApi') === `FooBars';
+ * $this->filter('FooBarsStorefrontApi') === `FooBars';
  * $this->filter('FooBarsApi') === `FooBars';
  */
 class RemoveApiSuffixFilter implements FilterInterface

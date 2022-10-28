@@ -6,7 +6,7 @@ level: 2
 
 arguments:
     module:
-        description: "Based on the applicationType the module name will be suffixed either with StorefrontApi or with BackendApi by the ResourceModuleName callback."
+        description: "Based on the applicationType the module name will be suffixed with BackendApi or StorefrontApi by the ResourceModuleName callback."
         inherit: true
         default: "{{ resource | resourceNameToModuleName }}{{ applicationType}}Api"
 

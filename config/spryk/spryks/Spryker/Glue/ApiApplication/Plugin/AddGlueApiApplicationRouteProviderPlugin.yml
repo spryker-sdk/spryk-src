@@ -18,10 +18,11 @@ arguments:
 
     applicationType:
         inherit: true
+        description: "Can be one of: Backend or Storefront"
         default: Backend
 
     resource:
-        description: "Defines the resource name this custom route provider plugin will work with."
+        description: "Defines the resource name this resource plugin will work with."
         inherit: true
 
     className:
