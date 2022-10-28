@@ -68,18 +68,31 @@ preSpryks:
                   value: composer.json
     # Add index.php
     - AddFileFromTemplate:
+          condition: "applicationType === 'Backend'"
           arguments:
               targetFilename:
                   value: index.php
 
               targetPath:
-                  value: "public/Glue{{ applicationType }}/"
+                  value: "public/GlueBackend/"
 
               template:
-                  value: "Spryker/Glue/{{ applicationType }}Api/index.php.twig"
+                  value: "Spryker/Glue/BackendApi/index.php.twig"
+    -   AddFileFromTemplate:
+            condition: "applicationType === 'Storefront'"
+            arguments:
+                targetFilename:
+                    value: index.php
+
+                targetPath:
+                    value: "public/GlueStorefront/"
+
+                template:
+                    value: "Spryker/Glue/StorefrontApi/index.php.twig"
 
     # Add AddGlueApiApplicationBootstrap
     - AddFileFromTemplate:
+          condition: "applicationType === 'Backend'"
           arguments:
               targetFilename:
                   value: "Glue{{ applicationType }}ApiBootstrap.php"
@@ -88,7 +101,18 @@ preSpryks:
                   value: "src/{{ organization }}/Glue/GlueApplication/Bootstrap"
 
               template:
-                  value: "Spryker/Glue/{{ applicationType }}Api/Glue{{ applicationType }}ApiBootstrap.php.twig"
+                  value: "Spryker/Glue/BackendApi/GlueBackendApiBootstrap.php.twig"
+    -   AddFileFromTemplate:
+            condition: "applicationType === 'Storefront'"
+            arguments:
+                targetFilename:
+                    value: "GlueStorefrontApiBootstrap.php"
+
+                targetPath:
+                    value: "src/{{ organization }}/Glue/GlueApplication/Bootstrap"
+
+                template:
+                    value: "Spryker/Glue/StorefrontApi/GlueStorefrontApiBootstrap.php.twig"
 
     # Add GlueApplicationDependencyProvider
     -   AddGlueCommonDependencyProvider:
