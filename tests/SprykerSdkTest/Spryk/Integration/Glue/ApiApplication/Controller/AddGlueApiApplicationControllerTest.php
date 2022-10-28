@@ -40,7 +40,7 @@ class AddGlueApiApplicationControllerTest extends Unit
             '--applicationType' => 'Backend',
         ]);
 
-        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER);
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_INDEX_CONTROLLER);
     }
 
     /**
@@ -53,7 +53,7 @@ class AddGlueApiApplicationControllerTest extends Unit
             '--applicationType' => 'Storefront',
         ]);
 
-        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_CONTROLLER);
+        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_INDEX_CONTROLLER);
     }
 
     /**
@@ -68,7 +68,23 @@ class AddGlueApiApplicationControllerTest extends Unit
         ]);
 
         // Controller test class
-        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER_TEST);
-        $this->tester->assertClassOrInterfaceExtends(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER_TEST, Unit::class);
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_INDEX_CONTROLLER_TEST);
+        $this->tester->assertClassOrInterfaceExtends(GlueBackendApiClassNames::GLUE_BACKEND_API_INDEX_CONTROLLER_TEST, Unit::class);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddsGlueStorefrontApiTestController(): void
+    {
+        $this->tester->run($this, [
+            '--resource' => '/foo-bars',
+            '--applicationType' => 'Storefront',
+            '--isTestClass' => 'true',
+        ]);
+
+        // Controller test class
+        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_INDEX_CONTROLLER_TEST);
+        $this->tester->assertClassOrInterfaceExtends(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_INDEX_CONTROLLER_TEST, Unit::class);
     }
 }

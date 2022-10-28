@@ -57,6 +57,16 @@ interface GlueStorefrontApiClassNames
     /**
      * @var string
      */
+    public const GLUE_STOREFRONT_API_INDEX_CONTROLLER = 'Spryker\Glue\FooBarsStorefrontApi\Controller\IndexResourceController';
+
+    /**
+     * @var string
+     */
+    public const GLUE_STOREFRONT_API_INDEX_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsStorefrontApi\Controller\IndexResourceControllerTest';
+
+    /**
+     * @var string
+     */
     public const GLUE_STOREFRONT_API_CONTROLLER = 'Spryker\Glue\FooBarsStorefrontApi\Controller\FooBarsResourceController';
 
     /**

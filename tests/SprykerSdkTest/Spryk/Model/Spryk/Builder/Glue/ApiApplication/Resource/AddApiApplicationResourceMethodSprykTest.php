@@ -9,7 +9,7 @@ namespace SprykerTest\Spryk\Model\Spryk\Builder\Method;
 
 use Codeception\Test\Unit;
 use PhpParser\Node\Expr\MethodCall;
-use SprykerSdk\Spryk\Model\Spryk\Builder\Glue\BackendApi\Resource\AddBackendApiResourceMethodSpryk;
+use SprykerSdk\Spryk\Model\Spryk\Builder\Glue\ApiApplication\Resource\AddApiApplicationResourceMethodSpryk;
 
 /**
  * Auto-generated group annotations
@@ -21,10 +21,10 @@ use SprykerSdk\Spryk\Model\Spryk\Builder\Glue\BackendApi\Resource\AddBackendApiR
  * @group Glue
  * @group BackendApi
  * @group Resource
- * @group AddBackendApiResourceMethodSprykTest
+ * @group AddApiApplicationResourceMethodSprykTest
  * Add your own group annotations below this line
  */
-class AddBackendApiResourceMethodSprykTest extends Unit
+class AddApiApplicationResourceMethodSprykTest extends Unit
 {
     /**
      * @var \SprykerSdkTest\SprykTester
@@ -39,18 +39,18 @@ class AddBackendApiResourceMethodSprykTest extends Unit
         require_once codecept_data_dir('../_support/Fixtures/Glue/BackendApi/Resource/GlueBackendApiResource.php');
 
         $sprykDefinition = $this->tester->getSprykDefinition([
-            AddBackendApiResourceMethodSpryk::ARGUMENT_TARGET => '\SprykerTest\GlueBackendApiResource',
-            AddBackendApiResourceMethodSpryk::ARGUMENT_ORGANIZATION => 'Spryker',
-            AddBackendApiResourceMethodSpryk::ARGUMENT_MODULE => 'FooBar',
-            AddBackendApiResourceMethodSpryk::ARGUMENT_RESOURCE => 'ZipZap',
-            AddBackendApiResourceMethodSpryk::ARGUMENT_RESOURCE_DATA_OBJECT => '\Generated\Shared\Transfer\ZipZapTransfer',
-            AddBackendApiResourceMethodSpryk::ARGUMENT_METHOD => 'Post', // Should add a `setPost` method call
-            AddBackendApiResourceMethodSpryk::ARGUMENT_IS_BULK => false,
+            AddApiApplicationResourceMethodSpryk::ARGUMENT_TARGET => '\SprykerTest\GlueBackendApiResource',
+            AddApiApplicationResourceMethodSpryk::ARGUMENT_ORGANIZATION => 'Spryker',
+            AddApiApplicationResourceMethodSpryk::ARGUMENT_MODULE => 'FooBar',
+            AddApiApplicationResourceMethodSpryk::ARGUMENT_RESOURCE => 'ZipZap',
+            AddApiApplicationResourceMethodSpryk::ARGUMENT_RESOURCE_DATA_OBJECT => '\Generated\Shared\Transfer\ZipZapTransfer',
+            AddApiApplicationResourceMethodSpryk::ARGUMENT_METHOD => 'Post', // Should add a `setPost` method call
+            AddApiApplicationResourceMethodSpryk::ARGUMENT_IS_BULK => false,
         ]);
 
-        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Glue\BackendApi\Resource\AddBackendApiResourceMethodSpryk $addBackendApiResourceMethodSpryk */
-        $addBackendApiResourceMethodSpryk = $this->tester->grabService(AddBackendApiResourceMethodSpryk::class);
-        $addBackendApiResourceMethodSpryk->runSpryk($sprykDefinition);
+        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Glue\BackendApi\Resource\AddApiApplicationResourceMethodSpryk $addApiApplicationResourceMethodSpryk */
+        $addApiApplicationResourceMethodSpryk = $this->tester->grabService(AddApiApplicationResourceMethodSpryk::class);
+        $addApiApplicationResourceMethodSpryk->runSpryk($sprykDefinition);
 
         $fileResolver = $this->tester->getFileResolver();
 

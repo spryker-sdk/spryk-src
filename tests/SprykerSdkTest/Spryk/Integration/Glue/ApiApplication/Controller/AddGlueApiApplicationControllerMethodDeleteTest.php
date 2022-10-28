@@ -33,7 +33,7 @@ class AddGlueApiApplicationControllerMethodDeleteTest extends Unit
     /**
      * @return void
      */
-    public function testAddsGlueBackendApiControllerMethodPost(): void
+    public function testAddsGlueBackendApiControllerMethodDelete(): void
     {
         $this->tester->run($this, [
             '--resource' => '/foo-bars',
@@ -41,15 +41,15 @@ class AddGlueApiApplicationControllerMethodDeleteTest extends Unit
             '--applicationType' => 'Backend',
         ]);
 
-        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER);
-        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER_TEST);
-        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_CONTROLLER, 'deleteAction');
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_INDEX_CONTROLLER);
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_INDEX_CONTROLLER_TEST);
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_INDEX_CONTROLLER, 'deleteAction');
     }
 
     /**
      * @return void
      */
-    public function testAddsGlueStorefrontApiControllerMethodPost(): void
+    public function testAddsGlueStorefrontApiControllerMethodDelete(): void
     {
         $this->tester->run($this, [
             '--resource' => '/foo-bars',
@@ -57,8 +57,8 @@ class AddGlueApiApplicationControllerMethodDeleteTest extends Unit
             '--applicationType' => 'Storefront',
         ]);
 
-        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_CONTROLLER);
-        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_BACKEND_API_CONTROLLER_TEST);
-        $this->tester->assertClassOrInterfaceHasMethod(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_CONTROLLER, 'deleteAction');
+        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_INDEX_CONTROLLER);
+        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_INDEX_CONTROLLER_TEST);
+        $this->tester->assertClassOrInterfaceHasMethod(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_INDEX_CONTROLLER, 'deleteAction');
     }
 }

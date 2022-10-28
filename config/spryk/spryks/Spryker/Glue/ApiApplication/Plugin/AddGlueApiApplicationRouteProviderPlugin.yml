@@ -1,3 +1,4 @@
+name: AddGlueApiApplicationRouteProviderPlugin
 spryk: template
 description: "Adds a new Glue API route provider plugin."
 mode: both
