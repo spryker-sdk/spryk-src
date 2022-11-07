@@ -21,6 +21,11 @@ class AddGlueResourceMethodVisitor extends NodeVisitorAbstract
     /**
      * @var string
      */
+    protected const CONFIGURATION_TRANSFER_FQCN = '\Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer';
+
+    /**
+     * @var string
+     */
     protected string $methodName;
 
     /**
@@ -136,7 +141,7 @@ class AddGlueResourceMethodVisitor extends NodeVisitorAbstract
             // Add method call with (new GlueResourceMethodConfigurationTransfer())->setAttributes(DomainEntityTransfer::class)
             return $builderFactory->args([
                 $builderFactory->methodCall(
-                    $builderFactory->new('\Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer'),
+                    $builderFactory->new(static::CONFIGURATION_TRANSFER_FQCN),
                     'setAttributes',
                     $builderFactory->args([
                         $builderFactory->classConstFetch($this->resourceDataObjectName, 'class'),
@@ -146,7 +151,7 @@ class AddGlueResourceMethodVisitor extends NodeVisitorAbstract
         }
 
         return $builderFactory->args([
-            $builderFactory->new('\Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer'),
+            $builderFactory->new(static::CONFIGURATION_TRANSFER_FQCN),
         ]);
     }
 }

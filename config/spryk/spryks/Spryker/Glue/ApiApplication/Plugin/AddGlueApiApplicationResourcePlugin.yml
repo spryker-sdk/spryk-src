@@ -49,8 +49,6 @@ arguments:
     subDirectory:
         value: Plugin
 
-preSpryks:
-    - AddGlueApiApplication
 postSpryks:
     - AddMethod:
           arguments:

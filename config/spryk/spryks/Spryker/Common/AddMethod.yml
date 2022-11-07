@@ -28,7 +28,6 @@ arguments:
 
     input:
         description: "Input (arguments) for the method. Can be an array or a list separated by comma."
-        inherit: true
         default: ""
 
     output:
