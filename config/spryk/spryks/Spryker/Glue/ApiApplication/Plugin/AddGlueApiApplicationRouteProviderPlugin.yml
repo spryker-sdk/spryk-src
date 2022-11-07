@@ -32,10 +32,10 @@ arguments:
         callback: ResolveExtends
         value:
             - "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
-            - "\\{{ organization }}\\{{ application }}\\Glue{{ applicationType }}ApiApplication\\Plugin\\Glue{{ applicationType }}ApiApplication\\RouteProvider\\AbstractRouteProviderPlugin"
+            - "\\{{ organization }}\\{{ application }}\\Kernel{% if applicationType == 'Backend' %}\\Backend{% endif %}\\AbstractPlugin"
 
     implements:
-        value: "\\{{ organization }}\\{{ application }}\\Glue{{ applicationType }}ApiApplicationExtension\\Dependency\\Plugin\\RouteProviderPluginInterface"
+        value: "\\{{ organization }}\\{{ application }}\\GlueApplicationExtension\\Dependency\\Plugin\\RouteProviderPluginInterface"
 
     template:
         value: Common/Class.php.twig
