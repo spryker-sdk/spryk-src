@@ -79,7 +79,7 @@ preSpryks:
               template:
                   value: "Spryker/Glue/BackendApi/index.php.twig"
     -   AddFileFromTemplate:
-            condition: "applicationType === 'Storefront'"
+            condition: "applicationType === 'Storefront' && mode === 'project'"
             arguments:
                 targetFilename:
                     value: index.php
@@ -92,7 +92,7 @@ preSpryks:
 
     # Add AddGlueApiApplicationBootstrap
     - AddFileFromTemplate:
-          condition: "applicationType === 'Backend'"
+          condition: "applicationType === 'Backend' && mode === 'project'"
           arguments:
               targetFilename:
                   value: "Glue{{ applicationType }}ApiBootstrap.php"
@@ -103,7 +103,7 @@ preSpryks:
               template:
                   value: "Spryker/Glue/BackendApi/GlueBackendApiBootstrap.php.twig"
     -   AddFileFromTemplate:
-            condition: "applicationType === 'Storefront'"
+            condition: "applicationType === 'Storefront' && mode === 'project'"
             arguments:
                 targetFilename:
                     value: "GlueStorefrontApiBootstrap.php"
