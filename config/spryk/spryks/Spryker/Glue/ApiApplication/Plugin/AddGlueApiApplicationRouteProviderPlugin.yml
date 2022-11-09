@@ -32,10 +32,10 @@ arguments:
         callback: ResolveExtends
         value:
             - "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
-            - "\\{{ organization }}\\{{ application }}\\Kernel{% if applicationType == 'Backend' %}\\Backend{% endif %}\\AbstractPlugin"
+            - "\\Spryker\\{{ application }}\\Kernel{% if applicationType == 'Backend' %}\\Backend{% endif %}\\AbstractPlugin"
 
     implements:
-        value: "\\{{ organization }}\\{{ application }}\\GlueApplicationExtension\\Dependency\\Plugin\\RouteProviderPluginInterface"
+        value: "\\Spryker\\{{ application }}\\GlueApplicationExtension\\Dependency\\Plugin\\RouteProviderPluginInterface"
 
     template:
         value: Common/Class.php.twig
@@ -48,6 +48,25 @@ arguments:
 
     subDirectory:
         value: Plugin
+
+preSpryks:
+    # Add Glue{{ applicationType }}ApiApplication
+    - AddGlueDependencyProvider:
+          arguments:
+              module:
+                  value: "Glue{{ applicationType }}ApiApplication"
+    - AddMethod:
+          arguments:
+              target:
+                  value: "\\{{ organization }}\\Glue\\Glue{{ applicationType }}ApiApplication\\Glue{{ applicationType }}ApiApplicationDependencyProvider"
+              method:
+                  value: "getRouteProviderPlugins"
+              body:
+                  value: "return [];"
+              output:
+                  value: "array<\\Spryker\\Glue\\Glue{{ applicationType }}ApiApplicationExtension\\Dependency\\Plugin\\RouteProviderPluginInterface>"
+              withInterface:
+                  value: false
 
 postSpryks:
     - AddMethod:

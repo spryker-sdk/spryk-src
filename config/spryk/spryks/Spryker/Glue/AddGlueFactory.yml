@@ -25,7 +25,7 @@ arguments:
         callback: ResolveExtends
         value:
             - "\\Spryker\\{{ application }}\\{{ module }}\\{{ module }}Factory"
-            - "\\Spryker\\{{ application }}\\Kernel\\{{applicationType}}\\AbstractFactory"
+            - "\\Spryker\\{{ application }}\\Kernel{% if applicationType == 'Backend' %}\\Backend{% endif %}\\AbstractFactory"
 
     className:
         value: "{{ module }}Factory"

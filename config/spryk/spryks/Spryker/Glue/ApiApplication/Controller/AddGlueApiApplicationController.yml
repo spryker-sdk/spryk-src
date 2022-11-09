@@ -41,6 +41,13 @@ arguments:
         inherit: true
         default: "{{ resource | resourceNameToControllerName }}ResourceController"
 
+preSpryks:
+    # Add Glue{{ applicationType }}ApiApplication
+    - AddGlueDependencyProvider:
+          arguments:
+              module:
+                  value: "Glue{{ applicationType }}ApiApplication"
+
 postSpryks:
     - AddGlueFactory
     - AddClass:

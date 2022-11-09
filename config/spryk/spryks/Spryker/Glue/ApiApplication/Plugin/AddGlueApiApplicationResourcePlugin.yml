@@ -49,6 +49,25 @@ arguments:
     subDirectory:
         value: Plugin
 
+preSpryks:
+    # Add Glue{{ applicationType }}ApiApplication
+    - AddGlueDependencyProvider:
+          arguments:
+              module:
+                  value: "Glue{{ applicationType }}ApiApplication"
+    - AddMethod:
+          arguments:
+              target:
+                  value: "\\{{ organization }}\\Glue\\Glue{{ applicationType }}ApiApplication\\Glue{{ applicationType }}ApiApplicationDependencyProvider"
+              method:
+                  value: "getResourcePlugins"
+              body:
+                  value: "return [];"
+              output:
+                  value: "array<\\Spryker\\Glue\\GlueApplicationExtension\\Dependency\\Plugin\\ResourceInterface>"
+              withInterface:
+                  value: false
+
 postSpryks:
     - AddMethod:
           arguments:

@@ -68,7 +68,7 @@ preSpryks:
                   value: composer.json
     # Add index.php
     - AddFileFromTemplate:
-          condition: "applicationType === 'Backend'"
+          condition: "applicationType === 'Backend' && organization !== 'Spryker'"
           arguments:
               targetFilename:
                   value: index.php
@@ -79,7 +79,7 @@ preSpryks:
               template:
                   value: "Spryker/Glue/BackendApi/index.php.twig"
     -   AddFileFromTemplate:
-            condition: "applicationType === 'Storefront' && mode === 'project'"
+            condition: "applicationType === 'Storefront' && organization !== 'Spryker'"
             arguments:
                 targetFilename:
                     value: index.php
@@ -92,7 +92,7 @@ preSpryks:
 
     # Add AddGlueApiApplicationBootstrap
     - AddFileFromTemplate:
-          condition: "applicationType === 'Backend' && mode === 'project'"
+          condition: "applicationType === 'Backend'"
           arguments:
               targetFilename:
                   value: "Glue{{ applicationType }}ApiBootstrap.php"
@@ -102,17 +102,17 @@ preSpryks:
 
               template:
                   value: "Spryker/Glue/BackendApi/GlueBackendApiBootstrap.php.twig"
-    -   AddFileFromTemplate:
-            condition: "applicationType === 'Storefront' && mode === 'project'"
-            arguments:
-                targetFilename:
-                    value: "GlueStorefrontApiBootstrap.php"
+    - AddFileFromTemplate:
+          condition: "applicationType === 'Storefront'"
+          arguments:
+              targetFilename:
+                value: "GlueStorefrontApiBootstrap.php"
 
-                targetPath:
-                    value: "src/{{ organization }}/Glue/GlueApplication/Bootstrap"
+              targetPath:
+                value: "src/{{ organization }}/Glue/GlueApplication/Bootstrap"
 
-                template:
-                    value: "Spryker/Glue/StorefrontApi/GlueStorefrontApiBootstrap.php.twig"
+              template:
+                value: "Spryker/Glue/StorefrontApi/GlueStorefrontApiBootstrap.php.twig"
 
     # Add GlueApplicationDependencyProvider
     -   AddGlueCommonDependencyProvider:
@@ -182,6 +182,10 @@ preSpryks:
                   value: false
 
     # Add Glue{{ applicationType }}Factory
+    - AddGlueFactory:
+          arguments:
+              module:
+                  value: "Glue{{ applicationType }}ApiApplication"
 
     # Add Glue{{ applicationType }}ApiApplication
     - AddGlueDependencyProvider:
