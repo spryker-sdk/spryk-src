@@ -73,7 +73,7 @@ preSpryks:
 
 postSpryks:
     - AddGlueApiApplicationResourceMethod
-    - AddGlueFactory
+    - AddGlueApiApplicationFactory
     # Add controller deleteCollectionAction
     - AddMethod:
           arguments:

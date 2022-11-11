@@ -42,7 +42,7 @@ arguments:
         default: "{{ resource | resourceNameToControllerName }}ResourceController"
 
 postSpryks:
-    - AddGlueFactory
+    - AddGlueApiApplicationFactory
     - AddClass:
           condition: "isTestClass === false && applicationType !== 'Storefront'"
           arguments:

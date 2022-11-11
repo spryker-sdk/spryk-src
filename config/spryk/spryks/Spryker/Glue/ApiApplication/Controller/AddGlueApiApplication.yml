@@ -181,12 +181,6 @@ preSpryks:
               withInterface:
                   value: false
 
-    # Add Glue{{ applicationType }}Factory
-    - AddGlueFactory:
-          arguments:
-              module:
-                  value: "Glue{{ applicationType }}ApiApplication"
-
     # Add Glue{{ applicationType }}ApiApplication
     - AddGlueDependencyProvider:
           arguments:
