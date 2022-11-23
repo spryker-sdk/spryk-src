@@ -67,7 +67,6 @@ arguments:
         default: "{{ resource | resourceNameToModelName | singularize }}"
 
 postSpryks:
-    - AddGlueApiApplication
     - AddGlueApiApplicationRequestMapper
     - AddGlueApiApplicationResponseMapper
     - AddGlueApiApplicationResourcePlugin
