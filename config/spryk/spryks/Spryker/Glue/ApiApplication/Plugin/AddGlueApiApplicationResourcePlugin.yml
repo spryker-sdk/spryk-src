@@ -53,12 +53,14 @@ preSpryks:
     # Add Glue{{ applicationType }}ApiApplication
     - AddGlueDependencyProvider:
           arguments:
+              organization:
+                  value: "Pyz"
               module:
                   value: "Glue{{ applicationType }}ApiApplication"
     - AddMethod:
           arguments:
               target:
-                  value: "\\{{ organization }}\\Glue\\Glue{{ applicationType }}ApiApplication\\Glue{{ applicationType }}ApiApplicationDependencyProvider"
+                  value: "\\Pyz\\Glue\\Glue{{ applicationType }}ApiApplication\\Glue{{ applicationType }}ApiApplicationDependencyProvider"
               method:
                   value: "getResourcePlugins"
               body:
@@ -124,5 +126,5 @@ postSpryks:
               plugin:
                   value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
               target:
-                  value: "\\{{ organization }}\\Glue\\Glue{{ applicationType }}ApiApplication\\Glue{{ applicationType }}ApiApplicationDependencyProvider::getResourcePlugins"
+                  value: "\\Pyz\\Glue\\Glue{{ applicationType }}ApiApplication\\Glue{{ applicationType }}ApiApplicationDependencyProvider::getResourcePlugins"
 

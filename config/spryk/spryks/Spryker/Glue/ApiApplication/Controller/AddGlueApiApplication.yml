@@ -78,17 +78,17 @@ preSpryks:
 
               template:
                   value: "Spryker/Glue/BackendApi/index.php.twig"
-    -   AddFileFromTemplate:
-            condition: "applicationType === 'Storefront' && organization !== 'Spryker'"
-            arguments:
-                targetFilename:
-                    value: index.php
+    - AddFileFromTemplate:
+          condition: "applicationType === 'Storefront' && organization !== 'Spryker'"
+          arguments:
+              targetFilename:
+                  value: index.php
 
-                targetPath:
-                    value: "public/GlueStorefront/"
+              targetPath:
+                  value: "public/GlueStorefront/"
 
-                template:
-                    value: "Spryker/Glue/StorefrontApi/index.php.twig"
+              template:
+                  value: "Spryker/Glue/StorefrontApi/index.php.twig"
 
     # Add AddGlueApiApplicationBootstrap
     - AddFileFromTemplate:
@@ -186,6 +186,7 @@ preSpryks:
           arguments:
               module:
                   value: "Glue{{ applicationType }}ApiApplication"
+
     # Methods for the GlueApiApplicationDependencyProvider
     - AddMethod:
           arguments:
@@ -273,7 +274,7 @@ preSpryks:
           arguments:
               plugin:
                   value:
-                      - "\\Spryker\\Glue\\GlueJsonApiConvention\\Plugin\\GlueApplication\\JsonApiApiConventionPlugin"
+                      - "\\Spryker\\Glue\\GlueJsonApiConvention\\Plugin\\GlueApplication\\JsonApiConventionPlugin"
               target:
                   value: "\\{{ organization }}\\Glue\\GlueApplication\\GlueApplicationDependencyProvider::getConventionPlugins"
 
@@ -285,9 +286,3 @@ preSpryks:
                   value: "\\Spryker\\Zed\\Propel\\Communication\\Plugin\\Application\\PropelApplicationPlugin"
               target:
                   value: "\\{{ organization }}\\Glue\\Glue{{ applicationType }}ApiApplication\\Glue{{ applicationType }}ApiApplicationDependencyProvider::getApplicationPlugins"
-    - WirePlugin:
-          arguments:
-              plugin:
-                  value: "\\Spryker\\Glue\\Glue{{ applicationType }}ApiApplication\\Plugin\\GlueApiApplication\\SecurityHeaderResponseFormatterPlugin"
-              target:
-                  value: "\\{{ organization }}\\Glue\\Glue{{ applicationType }}ApiApplication\\Glue{{ applicationType }}ApiApplicationDependencyProvider::getResponseFormatterPlugins"

@@ -21,13 +21,3 @@ arguments:
         skipOnProjectLevel: true
         value:
             - "src/{{ organization }}/"
-
-postSpryks:
-    - AddModuleReadme
-    - AddModuleComposerJson
-    - AddModuleLicense
-    - AddModuleCi
-    - AddModuleGitattributes
-    - AddModuleGitignore
-    - AddModulePhpStanNeon
-    - AddModuleEditorconfig
