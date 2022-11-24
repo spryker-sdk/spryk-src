@@ -43,7 +43,6 @@ preSpryks:
     - AddGlueApiApplicationModule
 
 postSpryks:
-    - AddGlueApiApplicationDependencyProvider
     - AddModuleConfig:
           arguments:
               application:
