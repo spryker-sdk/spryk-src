@@ -120,7 +120,7 @@ postSpryks:
                   value: "Spryker\\Glue\\GlueJsonApiConventionExtension\\Dependency\\Plugin\\JsonApiResourceInterface"
               target:
                   value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
-    # Wir the plugin after it was created
+    # Wire the plugin after it was created
     - WirePlugin:
           arguments:
               plugin:
