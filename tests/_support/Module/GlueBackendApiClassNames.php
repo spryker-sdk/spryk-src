@@ -72,11 +72,6 @@ interface GlueBackendApiClassNames
     /**
      * @var string
      */
-    public const GLUE_BACKEND_API_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\Controller\FooBarsResourceControllerTest';
-
-    /**
-     * @var string
-     */
     public const GLUE_BACKEND_API_GET_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\RestApi\FooBarsGetRestApiCest';
 
     /**
@@ -138,9 +133,4 @@ interface GlueBackendApiClassNames
      * @var string
      */
     public const GLUE_BACKEND_API_RESPONSE_MAPPER_INTERFACE = '\Spryker\Glue\FooBarsBackendApi\Mapper\GlueResponseFooBarMapperInterface';
-
-    /**
-     * @var string
-     */
-    public const GLUE_TEST_HELPER = 'SprykerTest\Glue\FooBarsBackendApi\Helper\FooBarsHelper';
 }
