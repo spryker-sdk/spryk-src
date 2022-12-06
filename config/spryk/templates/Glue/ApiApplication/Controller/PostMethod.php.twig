@@ -3,7 +3,7 @@
             ->map{{ zedDomainEntity }}TransferTo{{ zedDomainEntity }}CollectionRequestTransfer({{ input | removeParametersTypeFilter }});
 
         ${{ zedDomainEntity | lcfirst }}CollectionResponseTransfer = $this->getFactory()
-            ->get{{ dataModule }}Facade()
+            ->get{{ dataModule }}{% if applicationType == 'Backend' %}Facade{% else %}Client{% endif %}()
             ->create{{ zedDomainEntity }}Collection(${{ zedDomainEntity | lcfirst }}CollectionRequestTransfer);
 
         return $this->getFactory()

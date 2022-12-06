@@ -1,9 +1,9 @@
         ${{ zedDomainEntity | lcfirst }}CriteriaTransfer = $this->getFactory()
             ->createGlueRequest{{ zedDomainEntity }}Mapper()
-            ->mapIdentifierTo{{ zedDomainEntity }}CriteriaTransfer(input | removeParametersTypeFilter);
+            ->mapIdentifierTo{{ zedDomainEntity }}CriteriaTransfer({{ input | removeParametersTypeFilter }});
 
         ${{ zedDomainEntity | lcfirst }}CollectionTransfer = $this->getFactory()
-            ->get{{ dataModule }}Facade()
+            ->get{{ dataModule }}{% if applicationType == 'Backend' %}Facade{% else %}Client{% endif %}()
             ->get{{ zedDomainEntity }}Collection(${{ zedDomainEntity | lcfirst }}CriteriaTransfer);
 
         return $this->getFactory()

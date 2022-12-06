@@ -80,7 +80,8 @@ postSpryks:
               method:
                   value: "getAction"
               input:
-                  inherit: true
+                  - "string $id"
+                  - "\\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               dataModule:

@@ -76,7 +76,8 @@ postSpryks:
               method:
                   value: "patchAction"
               input:
-                  inherit: true
+                  - "\\Generated\\Shared\\Transfer\\{{ zedDomainEntity | pluralize }}AttributesTransfer ${{ zedDomainEntity | pluralize | lcfirst }}AttributesTransfer"
+                  - "\\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               dataModule:

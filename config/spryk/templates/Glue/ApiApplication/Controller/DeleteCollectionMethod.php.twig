@@ -3,7 +3,7 @@
             ->mapGlueRequestTransferTo{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer({{ input | removeParametersTypeFilter }});
 
         ${{ zedDomainEntity | lcfirst }}CollectionResponseTransfer = $this->getFactory()
-            ->get{{ dataModule }}Facade()
+            ->get{{ dataModule }}{% if applicationType == 'Backend' %}Facade{% else %}Client{% endif %}()
             ->delete{{ zedDomainEntity }}Collection(${{ zedDomainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
 
         return $this->getFactory()
