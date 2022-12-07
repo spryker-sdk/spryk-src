@@ -1,3 +1,4 @@
+        // @todo refactor the method according to your needs
         ${{ zedDomainEntity | lcfirst }}CollectionDeleteCriteriaTransfer = $this->getFactory()
             ->createGlueRequest{{ zedDomainEntity }}Mapper()
             ->mapGlueRequestTransferTo{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer({{ input | removeParametersTypeFilter }});
