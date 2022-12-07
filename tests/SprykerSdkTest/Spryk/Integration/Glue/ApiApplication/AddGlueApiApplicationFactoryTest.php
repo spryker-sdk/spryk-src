@@ -63,4 +63,40 @@ class AddGlueApiApplicationFactoryTest extends Unit
             GlueStorefrontApiClassNames::GLUE_STOREFRONT_ABSTRACT_FACTORY,
         );
     }
+
+    /**
+     * @return void
+     */
+    public function testAddsGlueBackendFactoryOnProjectLayer(): void
+    {
+        $this->tester->run($this, [
+            '--module' => 'FooBars',
+            '--applicationType' => 'Backend',
+            '--mode' => 'project',
+        ]);
+
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::PROJECT_GLUE_BACKEND_API_FACTORY);
+        $this->tester->assertClassOrInterfaceExtends(
+            GlueBackendApiClassNames::PROJECT_GLUE_BACKEND_API_FACTORY,
+            GlueBackendApiClassNames::GLUE_ABSTRACT_FACTORY,
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddsGlueStorefrontFactoryOnProjectLayer(): void
+    {
+        $this->tester->run($this, [
+            '--module' => 'FooBars',
+            '--applicationType' => 'Storefront',
+            '--mode' => 'project',
+        ]);
+
+        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::PROJECT_GLUE_STOREFRONT_API_BUSINESS_FACTORY);
+        $this->tester->assertClassOrInterfaceExtends(
+            GlueStorefrontApiClassNames::PROJECT_GLUE_STOREFRONT_API_BUSINESS_FACTORY,
+            GlueStorefrontApiClassNames::GLUE_STOREFRONT_ABSTRACT_FACTORY,
+        );
+    }
 }

@@ -27,6 +27,11 @@ interface GlueStorefrontApiClassNames
     /**
      * @var string
      */
+    public const PROJECT_GLUE_STOREFRONT_API_BUSINESS_FACTORY = 'Pyz\Glue\FooBarsStorefrontApi\FooBarsStorefrontApiFactory';
+
+    /**
+     * @var string
+     */
     public const GLUE_STOREFRONT_API_DEPENDENCY_PROVIDER = 'Spryker\Glue\FooBarsStorefrontApi\FooBarsStorefrontApiDependencyProvider';
 
     /**
