@@ -36,7 +36,7 @@ class AddGlueApiApplicationDependencyProviderTest extends Unit
     public function testAddsGlueBackendDependencyProvider(): void
     {
         $this->tester->run($this, [
-            '--module' => 'FooBars',
+            '--module' => 'FooBarsBackendApi',
             '--applicationType' => 'Backend',
         ]);
 
@@ -49,7 +49,7 @@ class AddGlueApiApplicationDependencyProviderTest extends Unit
     public function testAddsGlueStorefrontDependencyProvider(): void
     {
         $this->tester->run($this, [
-            '--module' => 'FooBars',
+            '--module' => 'FooBarsStorefrontApi',
             '--applicationType' => 'Storefront',
         ]);
 
