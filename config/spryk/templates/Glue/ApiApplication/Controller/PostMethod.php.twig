@@ -1,3 +1,4 @@
+        // @todo refactor the method according to your needs
         ${{ zedDomainEntity | lcfirst }}CollectionRequestTransfer = $this->getFactory()
             ->createGlueRequest{{ zedDomainEntity }}Mapper()
             ->map{{ zedDomainEntity }}TransferTo{{ zedDomainEntity }}CollectionRequestTransfer({{ input | removeParametersTypeFilter }});
