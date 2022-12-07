@@ -17,6 +17,21 @@ interface GlueStorefrontApiClassNames
     /**
      * @var string
      */
+    public const GLUE_STOREFRONT_ABSTRACT_FACTORY = 'Spryker\Glue\Kernel\AbstractFactory';
+
+    /**
+     * @var string
+     */
+    public const GLUE_STOREFRONT_API_BUSINESS_FACTORY = 'Spryker\Glue\FooBarsStorefrontApi\FooBarsStorefrontApiFactory';
+
+    /**
+     * @var string
+     */
+    public const GLUE_STOREFRONT_API_DEPENDENCY_PROVIDER = 'Spryker\Glue\FooBarsStorefrontApi\FooBarsStorefrontApiDependencyProvider';
+
+    /**
+     * @var string
+     */
     public const GLUE_STOREFRONT_API_INDEX_CONTROLLER = 'Spryker\Glue\FooBarsStorefrontApi\Controller\IndexResourceController';
 
     /**

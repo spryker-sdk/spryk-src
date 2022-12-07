@@ -8,6 +8,8 @@ condition: "application === 'Glue'"
 arguments:
     module:
         inherit: true
+        default: "{{ resource | resourceNameToModuleName }}"
+        callback: GlueResourceModuleName
 
     organization:
         inherit: true

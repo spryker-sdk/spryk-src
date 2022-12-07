@@ -47,6 +47,11 @@ interface GlueBackendApiClassNames
     /**
      * @var string
      */
+    public const GLUE_ABSTRACT_FACTORY = 'Spryker\Glue\Kernel\Backend\AbstractFactory';
+
+    /**
+     * @var string
+     */
     public const GLUE_BACKEND_API_FACTORY = 'Spryker\Glue\FooBarsBackendApi\FooBarsBackendApiFactory';
 
     /**

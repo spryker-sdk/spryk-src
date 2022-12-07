@@ -13,6 +13,16 @@ arguments:
     module:
         inherit: true
         type: NewModuleType
+        default: "{{ resource | resourceNameToModuleName }}"
+        callback: GlueResourceModuleName
+
+    application:
+        inherit: true
+        default: Glue
+
+    applicationType:
+        inherit: true
+        default: Backend
 
     targetPath:
         value: ""
