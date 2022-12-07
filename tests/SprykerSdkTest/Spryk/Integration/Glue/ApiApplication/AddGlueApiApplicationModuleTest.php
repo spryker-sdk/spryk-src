@@ -8,7 +8,6 @@
 namespace SprykerSdkTest\Spryk\Integration\Glue\ApiApplication;
 
 use Codeception\Test\Unit;
-use SprykerSdk\Spryk\Exception\SprykWrongDevelopmentLayerException;
 
 /**
  * Auto-generated group annotations
