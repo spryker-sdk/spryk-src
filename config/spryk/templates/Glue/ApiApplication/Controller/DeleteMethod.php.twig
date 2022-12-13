@@ -1,0 +1,12 @@
+        // @todo refactor the method according to your needs
+        ${{ zedDomainEntity | lcfirst }}CollectionDeleteCriteriaTransfer = $this->getFactory()
+            ->createGlueRequest{{ zedDomainEntity }}Mapper()
+            ->mapIdentifierTo{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer({{ input | removeParametersTypeFilter }});
+
+        ${{ zedDomainEntity | lcfirst }}CollectionResponseTransfer = $this->getFactory()
+            ->get{{ dataModule }}{% if applicationType == 'Backend' %}Facade{% else %}Client{% endif %}()
+            ->delete{{ zedDomainEntity }}Collection(${{ zedDomainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
+
+        return $this->getFactory()
+            ->createGlueResponse{{ zedDomainEntity }}Mapper()
+            ->map{{ zedDomainEntity }}CollectionResponseTransferToSingleResourceGlueResponseTransfer(${{ zedDomainEntity | lcfirst }}CollectionResponseTransfer);

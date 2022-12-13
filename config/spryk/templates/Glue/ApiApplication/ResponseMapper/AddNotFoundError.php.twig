@@ -1,0 +1,6 @@
+    // @todo refactor the method according to your needs
+    $glueResponseTransfer
+        ->setHttpStatus(\Symfony\Component\HttpFoundation\Response::HTTP_NOT_FOUND)
+        ->addError((new \Generated\Shared\Transfer\GlueErrorTransfer())->setMessage(\Symfony\Component\HttpFoundation\Response::$statusTexts[\Symfony\Component\HttpFoundation\Response::HTTP_NOT_FOUND]));
+
+    return $glueResponseTransfer;

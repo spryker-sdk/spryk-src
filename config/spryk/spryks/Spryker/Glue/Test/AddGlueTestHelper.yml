@@ -24,11 +24,11 @@ arguments:
 
     apiType:
         inherit: true
-        description: "Can be one of: REST or JSON"
+        description: "Can be JSON only as for now."
 
     applicationType:
         inherit: true
-        description: "Can be one of: Backend or Frontend"
+        description: "Can be one of: Backend or Storefront"
         default: "Backend"
 
     suite:

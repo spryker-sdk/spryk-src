@@ -1,7 +1,0 @@
-    $glueResponseTransfer = new GlueResponseTransfer();
-
-    if (${{ zedDomainEntity | lcfirst }}CollectionTransfer->get{{ zedDomainEntity | pluralize }}()->count() > 0) {
-        return $this->add{{ zedDomainEntity }}TransferToGlueResponse(${{ zedDomainEntity | lcfirst }}CollectionTransfer->get{{ zedDomainEntity | pluralize }}()->offsetGet(0), $glueResponseTransfer);
-    }
-
-    return $this->addNotFoundError($glueResponseTransfer);

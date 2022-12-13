@@ -1,0 +1,20 @@
+    // @todo refactor the method according to your needs
+    $glueResponseTransfer = new GlueResponseTransfer();
+
+    if (${{ zedDomainEntity | lcfirst }}CollectionResponseTransfer->getErrors()->count() !== 0) {
+        foreach (${{ zedDomainEntity | lcfirst }}CollectionResponseTransfer->getErrors() as $error) {
+            $glueResponseTransfer->addError((new GlueErrorTransfer())->setMessage($error->getMessage()));
+        }
+
+        return $glueResponseTransfer;
+    }
+
+    if (${{ zedDomainEntity | lcfirst }}CollectionResponseTransfer->get{{ zedDomainEntity | pluralize }}()->count() === 0) {
+        return $this->addNotFoundError($glueResponseTransfer);
+    }
+
+    foreach (${{ zedDomainEntity | lcfirst }}CollectionResponseTransfer->get{{ zedDomainEntity | pluralize }}() as ${{ zedDomainEntity | lcfirst }}Transfer) {
+        $glueResponseTransfer = $this->add{{ zedDomainEntity }}TransferToGlueResponse(${{ zedDomainEntity | lcfirst }}Transfer, $glueResponseTransfer);
+    }
+
+    return $glueResponseTransfer;

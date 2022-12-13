@@ -12,31 +12,6 @@ interface GlueBackendApiClassNames
     /**
      * @var string
      */
-    public const PROJECT_GLUE_BACKEND_API_BOOTSTRAP = 'Pyz\Glue\GlueApplication\Bootstrap\GlueBackendApiBootstrap';
-
-    /**
-     * @var string
-     */
-    public const GLUE_BACKEND_API_BOOTSTRAP = 'Spryker\Glue\GlueApplication\Bootstrap\GlueBackendApiBootstrap';
-
-    /**
-     * @var string
-     */
-    public const GLUE_APPLICATION_DEPENDENCY_PROVIDER = 'Spryker\Glue\GlueApplication\GlueApplicationDependencyProvider';
-
-    /**
-     * @var string
-     */
-    public const PROJECT_GLUE_APPLICATION_DEPENDENCY_PROVIDER = 'Pyz\Glue\GlueApplication\GlueApplicationDependencyProvider';
-
-    /**
-     * @var string
-     */
-    public const GLUE_REST_API_CONVENTION_DEPENDENCY_PROVIDER = 'Spryker\Glue\GlueRestApiConvention\GlueRestApiConventionDependencyProvider';
-
-    /**
-     * @var string
-     */
     public const GLUE_BACKEND_API_APPLICATION_DEPENDENCY_PROVIDER = 'Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationDependencyProvider';
 
     /**
@@ -47,7 +22,17 @@ interface GlueBackendApiClassNames
     /**
      * @var string
      */
+    public const GLUE_ABSTRACT_FACTORY = 'Spryker\Glue\Kernel\Backend\AbstractFactory';
+
+    /**
+     * @var string
+     */
     public const GLUE_BACKEND_API_FACTORY = 'Spryker\Glue\FooBarsBackendApi\FooBarsBackendApiFactory';
+
+    /**
+     * @var string
+     */
+    public const PROJECT_GLUE_BACKEND_API_FACTORY = 'Pyz\Glue\FooBarsBackendApi\FooBarsBackendApiFactory';
 
     /**
      * @var string
@@ -58,6 +43,11 @@ interface GlueBackendApiClassNames
      * @var string
      */
     public const GLUE_BACKEND_API_INDEX_CONTROLLER = 'Spryker\Glue\FooBarsBackendApi\Controller\IndexResourceController';
+
+    /**
+     * @var string
+     */
+    public const GLUE_BACKEND_API_INDEX_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsBackendApi\Controller\IndexResourceControllerTest';
 
     /**
      * @var string
@@ -128,9 +118,4 @@ interface GlueBackendApiClassNames
      * @var string
      */
     public const GLUE_BACKEND_API_RESPONSE_MAPPER_INTERFACE = '\Spryker\Glue\FooBarsBackendApi\Mapper\GlueResponseFooBarMapperInterface';
-
-    /**
-     * @var string
-     */
-    public const GLUE_TEST_HELPER = 'SprykerTest\Glue\FooBarsBackendApi\Helper\FooBarsHelper';
 }

@@ -270,7 +270,7 @@ class AddGlueResourceMethodResponseTest extends Unit
 
         $this->tester->run($this, $commandOptions);
 
-        $this->tester->assertClassExists($expectedControllerName);
+        $this->tester->assertClassOrInterfaceExists($expectedControllerName);
     }
 
     /**

@@ -9,7 +9,7 @@ priority: 1
 
 arguments:
     module:
-        description: "Based on the applicationType the module name will be suffixed with BackendApi or FrontendApi by the ResourceModuleName callback."
+        description: "Based on the applicationType the module name will be suffixed with BackendApi or StorefrontApi by the ResourceModuleName callback."
         inherit: true
         default: "{{ resource | resourceNameToModuleName }}"
         callback: GlueResourceModuleName
@@ -29,12 +29,12 @@ arguments:
 
     apiType:
         inherit: true
-        description: "Can be one of: REST or JSON"
+        description: "Can be JSON only as for now."
         default: "JSON"
 
     applicationType:
         inherit: true
-        description: "Can be one of: Backend or Frontend"
+        description: "Can be one of: Backend or Storefront"
         default: "Backend"
 
     suite:
@@ -67,30 +67,27 @@ arguments:
         default: "{{ resource | resourceNameToModelName | singularize }}"
 
 postSpryks:
-    - AddGlueBackendApiApplication
-    - AddGlueBackendApiRequestMapper
-    - AddGlueBackendApiResponseMapper
-    - AddGlueBackendApiResourcePlugin
+    - AddGlueApiApplicationRequestMapper
+    - AddGlueApiApplicationResponseMapper
+    - AddGlueApiApplicationResourcePlugin
     # Add CrudFacade code
     - AddCrudFacade:
-          condition: "applicationType === 'Backend'"
           arguments:
               module:
                   value: "{{ dataModule }}"
               domainEntity:
                   value: "{{ zedDomainEntity | ucfirst }}"
-    # Add the dependency provider for the Facade when used as BackendApi
+    # Add the dependency provider for the Facade
     - AddDependencyTypeToDependencyProvider:
-          condition: "applicationType === 'Backend'"
           arguments:
               dependentModule:
                   value: "{{ dataModule }}"
               dependencyType:
                   value: "Facade"
 
-    # Add bridge method to get an entity collection for the used facade when used as BackendApi
+    # Add bridge method to get an entity collection for the used facade
     - AddDependencyBridgeMethod:
-          condition: "applicationType === 'Backend' && httpMethod === 'get'"
+          condition: "httpMethod === 'get'"
           arguments:
               dependentModule:
                   value: "{{ dataModule }}"
@@ -100,9 +97,9 @@ postSpryks:
                   value:
                       - "get{{ zedDomainEntity }}Collection"
 
-    # Add bridge method to get an entity collection for the used facade when used as BackendApi
+    # Add bridge method to get an entity collection for the used facade
     - AddDependencyBridgeMethod:
-          condition: "applicationType === 'Backend' && httpMethod === 'post'"
+          condition: "httpMethod === 'post'"
           arguments:
               dependentModule:
                   value: "{{ dataModule }}"
@@ -112,9 +109,9 @@ postSpryks:
                   value:
                       - "create{{ zedDomainEntity }}Collection"
 
-    # Add bridge method to get an entity collection for the used facade when used as BackendApi
+    # Add bridge method to get an entity collection for the used facade
     - AddDependencyBridgeMethod:
-          condition: "applicationType === 'Backend' && httpMethod === 'patch'"
+          condition: "httpMethod === 'patch'"
           arguments:
               dependentModule:
                   value: "{{ dataModule }}"
@@ -124,9 +121,9 @@ postSpryks:
                   value:
                       - "update{{ zedDomainEntity }}Collection"
 
-    # Add bridge method to get an entity collection for the used facade when used as BackendApi
+    # Add bridge method to get an entity collection for the used facade
     - AddDependencyBridgeMethod:
-          condition: "applicationType === 'Backend' && httpMethod === 'delete'"
+          condition: "httpMethod === 'delete'"
           arguments:
               dependentModule:
                   value: "{{ dataModule }}"
@@ -137,7 +134,7 @@ postSpryks:
                       - "delete{{ zedDomainEntity }}Collection"
 
     - AddDependencyTypeToDependencyProvider:
-          condition: "applicationType === 'Frontend'"
+          condition: "applicationType === 'Storefront'"
           arguments:
               dependentModule:
                   value: "{{ dataModule }}"
@@ -147,18 +144,18 @@ postSpryks:
     # What are the client methods we would need to bridge??
 
     # Add the controller method to handle the request
-    - AddGlueBackendApiControllerMethodGet:
-          condition: "applicationType === 'Backend' && httpMethod === 'get' && isBulk === false"
-    - AddGlueBackendApiControllerMethodGetCollection:
-          condition: "applicationType === 'Backend' && httpMethod === 'get' && isBulk === true"
-    - AddGlueBackendApiControllerMethodPost:
-          condition: "applicationType === 'Backend' && httpMethod === 'post'"
-    - AddGlueBackendApiControllerMethodPatch:
-          condition: "applicationType === 'Backend' && httpMethod === 'patch'"
-    - AddGlueBackendApiControllerMethodDelete:
-          condition: "applicationType === 'Backend' && httpMethod === 'delete' && isBulk === false"
-    - AddGlueBackendApiControllerMethodDeleteCollection:
-          condition: "applicationType === 'Backend' && httpMethod === 'delete' && isBulk === true"
+    - AddGlueApiApplicationControllerMethodGet:
+          condition: "httpMethod === 'get' && isBulk === false"
+    - AddGlueApiApplicationControllerMethodGetCollection:
+          condition: "httpMethod === 'get' && isBulk === true"
+    - AddGlueApiApplicationControllerMethodPost:
+          condition: "httpMethod === 'post'"
+    - AddGlueApiApplicationControllerMethodPatch:
+          condition: "httpMethod === 'patch'"
+    - AddGlueApiApplicationControllerMethodDelete:
+          condition: "httpMethod === 'delete' && isBulk === false"
+    - AddGlueApiApplicationControllerMethodDeleteCollection:
+          condition: "httpMethod === 'delete' && isBulk === true"
 
     # Test
     - AddGlueTestCodeceptionConfiguration

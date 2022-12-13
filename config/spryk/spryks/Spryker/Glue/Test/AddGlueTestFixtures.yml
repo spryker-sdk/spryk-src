@@ -20,7 +20,7 @@ arguments:
 
     applicationType:
         inherit: true
-        description: "Can be one of: Backend or Frontend"
+        description: "Can be one of: Backend or Storefront"
         default: Backend
 
     suite:

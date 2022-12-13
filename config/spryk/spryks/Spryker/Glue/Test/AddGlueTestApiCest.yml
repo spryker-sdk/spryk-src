@@ -25,7 +25,7 @@ arguments:
 
     applicationType:
         inherit: true
-        description: "Can be one of: Backend or Frontend"
+        description: "Can be one of: Backend or Storefront"
         default: Backend
 
     suite:
@@ -45,6 +45,7 @@ arguments:
     httpResponseCode:
         inherit: true
         description: "The HTTP response code e.g. 200 (OK)"
+        default: '200'
 
     template:
         value: Glue/Test/GlueTestApiCest/ApiCest.php.twig

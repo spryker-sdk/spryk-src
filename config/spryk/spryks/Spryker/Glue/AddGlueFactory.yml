@@ -18,13 +18,14 @@ arguments:
 
     applicationType:
         inherit: true
+        description: "Can be one of: Backend or Storefront"
         default: Backend
 
     extends:
         callback: ResolveExtends
         value:
             - "\\Spryker\\{{ application }}\\{{ module }}\\{{ module }}Factory"
-            - "\\Spryker\\{{ application }}\\Kernel\\{{applicationType}}\\AbstractFactory"
+            - "\\Spryker\\{{ application }}\\Kernel{% if applicationType == 'Backend' %}\\Backend{% endif %}\\AbstractFactory"
 
     className:
         value: "{{ module }}Factory"
