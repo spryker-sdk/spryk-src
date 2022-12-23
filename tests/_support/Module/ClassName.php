@@ -327,6 +327,31 @@ interface ClassName
     /**
      * @var string
      */
+    public const ZED_PLUGIN_MESSAGE_BROKER_MESSAGE_HANDLER_PLUGIN = 'Spryker\Zed\FooBar\Communication\Plugin\MessageBroker\FooBarBazBatMessageHandlerPlugin';
+
+    /**
+     * @var string
+     */
+    public const ZED_BUSINESS_MESSAGE_BROKER_MESSAGE_HANDLER = 'Spryker\Zed\FooBar\Business\MessageBroker\FooBarMessageHandler';
+
+    /**
+     * @var string
+     */
+    public const ZED_FOO_BAR_MESSAGE_BROKER_FACADE_BRIDGE = 'Spryker\Zed\FooBar\Dependency\Facade\FooBarToMessageBrokerFacadeBridge';
+
+    /**
+     * @var string
+     */
+    public const ZED_FOO_BAR_MESSAGE_BROKER_FACADE_INTERFACE = 'Spryker\Zed\FooBar\Dependency\Facade\FooBarToMessageBrokerFacadeInterface';
+
+    /**
+     * @var string
+     */
+    public const ZED_MESSAGE_BROKER_MESSAGE_HANDLER_PLUGIN_INTERFACE = 'Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageHandlerPluginInterface';
+
+    /**
+     * @var string
+     */
     public const YVES_PLUGIN_SUB_FORM_PLUGIN = 'SprykerShop\Yves\FooBar\Plugin\TestPaymentSubFormPlugin';
 
     /**
@@ -678,6 +703,11 @@ interface ClassName
      * @var string
      */
     public const ZED_ABSTRACT_REPOSITORY = 'Spryker\Zed\Kernel\Persistence\AbstractRepository';
+
+    /**
+     * @var string
+     */
+    public const ZED_ABSTRACT_PLUGIN = 'Spryker\Zed\Kernel\Communication\AbstractPlugin';
 
     /**
      * @var string

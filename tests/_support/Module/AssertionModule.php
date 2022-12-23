@@ -393,6 +393,28 @@ class AssertionModule extends Module
     }
 
     /**
+     * @param string $className
+     * @param string $implement
+     *
+     * @return void
+     */
+    public function assertClassExtends(string $className, string $extended): void
+    {
+        $resolved = $this->getResolvedByClassName($className);
+        $extendsNode = $this->getNodeFinder()->findExtends($resolved->getClassTokenTree(), $extended);
+
+        $this->assertInstanceOf(
+            Name::class,
+            $extendsNode,
+            sprintf(
+                'Expected that class "%s" extends "%s" but node not found.',
+                $className,
+                $extended,
+            ),
+        );
+    }
+
+    /**
      * Assert that a method inside of a class has method call.
      *
      * @example
