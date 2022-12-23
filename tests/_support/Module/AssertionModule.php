@@ -394,7 +394,7 @@ class AssertionModule extends Module
 
     /**
      * @param string $className
-     * @param string $implement
+     * @param string $extended
      *
      * @return void
      */
