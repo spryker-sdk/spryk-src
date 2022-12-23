@@ -1,0 +1,25 @@
+name: AddDataBuilderSchema
+spryk: template
+description: "Adds a new *module*.databuilder.xml to the _data directory of the test suite."
+mode: both
+
+arguments:
+    module:
+        inherit: true
+
+    organization:
+        inherit: true
+        default: Spryker
+
+    application:
+        inherit: true
+        default: Shared
+
+    template:
+        value: Tests/DataBuilder/databuilder.xml.twig
+
+    targetFilename:
+        value: "{{ module | underscored }}.databuilder.xml"
+
+    targetPath:
+        value: "tests/{{ organization }}Test/Zed/{{ module }}/_data/"

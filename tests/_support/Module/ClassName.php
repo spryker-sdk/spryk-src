@@ -267,6 +267,11 @@ interface ClassName
     /**
      * @var string
      */
+    public const ZED_TEST_HELPER = 'SprykerTest\Zed\FooBar\Helper\FooBarHelper';
+
+    /**
+     * @var string
+     */
     public const ZED_REPOSITORY = 'Spryker\Zed\FooBar\Persistence\FooBarRepository';
 
     /**
@@ -527,6 +532,11 @@ interface ClassName
     /**
      * @var string
      */
+    public const PROJECT_ZED_TEST_HELPER = 'PyzTest\Zed\FooBar\Helper\FooBarHelper';
+
+    /**
+     * @var string
+     */
     public const PROJECT_ZED_REPOSITORY = 'Pyz\Zed\FooBar\Persistence\FooBarRepository';
 
     /**
@@ -573,6 +583,21 @@ interface ClassName
      * @var string
      */
     public const PROJECT_ZED_PLUGIN_OMS_COMMAND_BY_ORDER_PLUGIN = 'Pyz\Zed\FooBar\Communication\Plugin\Oms\Command\TestPaymentCommandByOrder';
+
+    /**
+     * @var string
+     */
+    public const PROJECT_PROJECT_ZED_PLUGIN_OMS_COMMAND_BY_ORDER_PLUGIN = 'Pyz\Zed\FooBar\Communication\Plugin\Oms\Command\TestPaymentCommandByOrder';
+
+    /**
+     * @var string
+     */
+    public const PROJECT_ZED_PLUGIN_MESSAGE_BROKER_MESSAGE_HANDLER_PLUGIN = 'Pyz\Zed\FooBar\Communication\Plugin\MessageBroker\FooBarBazBatMessageHandlerPlugin';
+
+    /**
+     * @var string
+     */
+    public const PROJECT_ZED_BUSINESS_MESSAGE_BROKER_MESSAGE_HANDLER = 'Pyz\Zed\FooBar\Business\MessageBroker\FooBarMessageHandler';
 
     /**
      * @var string

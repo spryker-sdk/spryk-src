@@ -1,0 +1,26 @@
+name: AddDataBuilderDefinition
+spryk: transfer
+description: "Adds a new *module*.databuilder.xml."
+mode: both
+level: 2
+
+arguments:
+    module:
+        inherit: true
+
+    organization:
+        inherit: true
+        default: Spryker
+
+    application:
+        inherit: true
+        default: Shared
+
+    name:
+        inherit: true
+
+    targetPath:
+        value: "tests/{{ organization }}Test/Zed/{{ module }}/_data/{{ module | underscored }}.databuilder.xml"
+
+preSpryks:
+    - AddDataBuilderSchema

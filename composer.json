@@ -97,5 +97,8 @@
     },
     "bin": [
         "bin/spryk"
-    ]
+    ],
+    "replace": {
+        "spryker-sdk/spryk": "*"
+    }
 }
