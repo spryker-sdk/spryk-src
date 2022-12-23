@@ -222,7 +222,7 @@ class SprykHelper extends Module
                 return $templateDirectories;
             },
             'getCoreNamespaces' => function () {
-                return ['Spryker'];
+                return ['Spryker', 'SprykerShop'];
             },
             'getProjectNamespace' => function () {
                 return 'Pyz';
