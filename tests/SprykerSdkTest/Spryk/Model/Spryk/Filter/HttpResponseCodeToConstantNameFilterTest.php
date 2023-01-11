@@ -8,8 +8,17 @@
 namespace SprykerSdkTest\Spryk\Model\Spryk\Filter;
 
 use Codeception\Test\Unit;
+use RuntimeException;
 use SprykerSdkTest\SprykTester;
 
+/**
+ * @group SprykerSdkTest
+ * @group Spryk
+ * @group Model
+ * @group Spryk
+ * @group Filter
+ * @group HttpResponseCodeToConstantNameFilterTest
+ */
 class HttpResponseCodeToConstantNameFilterTest extends Unit
 {
     /**
@@ -47,5 +56,15 @@ class HttpResponseCodeToConstantNameFilterTest extends Unit
             [404, '\Symfony\Component\HttpFoundation\Response::HTTP_NOT_FOUND'],
             [500, '\Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR'],
         ];
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterTransformDataProperlyThrowsException(): void
+    {
+        $this->expectException(RuntimeException::class);
+
+        $this->tester->getHttpResponseCodeToConstantNameFilter()->filter(600);
     }
 }

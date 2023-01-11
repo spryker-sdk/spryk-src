@@ -37,8 +37,16 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
      */
     protected function build(): void
     {
-        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedXmlInterface $resolved */
+        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedXmlInterface|null $resolved */
         $resolved = $this->fileResolver->resolve($this->getTargetPath());
+
+        // @codeCoverageIgnoreStart
+        if (!$resolved) {
+            $this->log(sprintf('Could not find an XMl by path <fg=yellow>%s</>', $this->getTargetPath()));
+
+            return;
+        }
+        // @codeCoverageIgnoreEnd
 
         /** @var \SimpleXMLElement $simpleXMLElement */
         $simpleXMLElement = $resolved->getSimpleXmlElement();
