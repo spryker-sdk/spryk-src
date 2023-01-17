@@ -38,7 +38,7 @@ class XmlDumper implements XmlDumperInterface
             // replace two with four spaces to get back the original formatting (as close as possible)
             $xmlString = str_replace('  ', '    ', (string)$xmlString);
 
-            $resolvedFile->setContent((string)$xmlString);
+            $resolvedFile->setContent($xmlString);
         }
     }
 }

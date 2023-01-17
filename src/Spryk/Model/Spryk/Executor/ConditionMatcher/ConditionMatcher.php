@@ -51,13 +51,12 @@ class ConditionMatcher implements ConditionMatcherInterface
         $argumentCandidates = array_unique($extractedArguments[0]);
 
         foreach ($argumentCandidates as $argumentCandidate) {
-            if (
-                in_array($argumentCandidate, static::RESERVED_KEYWORDS, true)
-                || !$argumentCollection->hasArgument($argumentCandidate, true)
-            ) {
+            if (in_array($argumentCandidate, static::RESERVED_KEYWORDS, true)) {
                 continue;
             }
-
+            if (!$argumentCollection->hasArgument($argumentCandidate, true)) {
+                continue;
+            }
             $arguments[$argumentCandidate] = $argumentCollection->getArgument($argumentCandidate, true)->getValue();
         }
 
