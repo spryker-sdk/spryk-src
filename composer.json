@@ -32,6 +32,7 @@
         "mikey179/vfsstream": "^1.6",
         "psalm/phar": "^4.23",
         "rector/rector": "*",
+        "phpstan/phpdoc-parser": "~1.5.1",
         "spryker-sdk/architector": "0.1.x-dev",
         "spryker/code-sniffer": "0.17.9",
         "spryker/message-broker": "^1.0.0"
@@ -78,7 +79,8 @@
         "lowest": "validate-prefer-lowest -m",
         "lowest-setup": "composer update --prefer-lowest --prefer-stable --prefer-dist --no-interaction && cp composer.json composer.backup && composer require --dev dereuromark/composer-prefer-lowest && mv composer.backup composer.json",
         "rector": "vendor/bin/rector process src/Spryk/ --config architector.php --ansi",
-        "rector-diff": "vendor/bin/rector process src/Spryk/ --config architector.php --ansi --dry-run"
+        "rector-diff": "vendor/bin/rector process src/Spryk/ --config architector.php --ansi --dry-run",
+        "local-ci": "composer cs-fix && composer cs-check && composer rector-diff && composer test"
     },
     "extra": {
         "branch-alias": {
