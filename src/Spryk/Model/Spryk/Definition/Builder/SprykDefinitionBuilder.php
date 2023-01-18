@@ -171,7 +171,7 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
 
         $context = [
             'mode' => $mode,
-            'organization' => $mode,
+            'organization' => $organization,
             'sprykName' => $sprykName,
         ];
 
