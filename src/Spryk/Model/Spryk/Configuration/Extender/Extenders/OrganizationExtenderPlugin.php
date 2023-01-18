@@ -31,8 +31,14 @@ class OrganizationExtenderPlugin extends AbstractExtender implements SprykConfig
 
         $arguments = $this->buildProjectOrganization($arguments);
         $arguments = $this->buildCoreOrganization($arguments);
+        $arguments = $this->setArguments($arguments, $sprykConfig);
 
-        return $this->setArguments($arguments, $sprykConfig);
+        if (isset($context[SprykConfig::NAME_ARGUMENT_ORGANIZATION]) && isset($arguments[SprykConfig::NAME_ARGUMENT_ORGANIZATION])) {
+            unset($arguments[SprykConfig::NAME_ARGUMENT_ORGANIZATION][SprykConfig::NAME_ARGUMENT_KEY_DEFAULT], $arguments[SprykConfig::NAME_ARGUMENT_ORGANIZATION][SprykConfig::NAME_ARGUMENT_KEY_VALUES]);
+            $arguments[SprykConfig::NAME_ARGUMENT_ORGANIZATION][SprykConfig::NAME_ARGUMENT_KEY_VALUE] = $context[SprykConfig::NAME_ARGUMENT_ORGANIZATION];
+        }
+
+        return $arguments;
     }
 
     /**
