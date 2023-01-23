@@ -7,17 +7,21 @@ level: 2
 
 arguments:
     organization:
+        description: "The Organization name the code should be genertaed to. Default: Spryker"
         inherit: true
         default: Spryker
 
     module:
+        description: "The Module name the code should be genertaed to."
         inherit: true
         type: NewModuleType
 
     targetPath:
+        description: "The target path to where code should generated to. Empty as it will be in root level of the project or on core level."
         value: ""
 
     directories:
+        description: "List of directories that need to be generated. WIll not be used on project level."
         skipOnProjectLevel: true
         value:
             - "src/{{ organization }}/"

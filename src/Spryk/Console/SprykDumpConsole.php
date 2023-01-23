@@ -9,7 +9,6 @@ namespace SprykerSdk\Spryk\Console;
 
 use Exception;
 use SprykerSdk\Spryk\SprykConfig;
-use Symfony\Component\Console\Helper\FormatterHelper;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -117,33 +116,147 @@ class SprykDumpConsole extends AbstractSprykConsole
     protected function dumpSpryk(OutputInterface $output, string $sprykName): void
     {
         $sprykDefinition = $this->getFacade()->getSprykDefinition($sprykName);
-        $sprykArguments = $this->formatSingleSprykArguments($sprykDefinition[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS]);
-        $sprykDescription = $this->formatSingleSprykDescription($sprykDefinition[SprykConfig::SPRYK_DEFINITION_KEY_DESCRIPTION]);
 
-        $this->printTitleBlock($output, sprintf('Description of the "%s" Spryk:', $sprykName));
+        $output->writeln(sprintf('<fg=green>Description of the <fg=yellow>%s</> Spryk</>', $sprykName));
+        $this->printTableWithRequiredArguments($sprykDefinition[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS], $output);
+        $this->printTableWithOptionalArguments($sprykDefinition[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS], $output);
+        $this->printTableWithPreSpryks($sprykDefinition['preSpryks'] ?? [], $output);
+        $this->printTableWithPostSpryks($sprykDefinition['postSpryks'] ?? [], $output);
+        $this->printCommandRunExample($sprykDefinition[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS], $sprykName, $output);
+    }
 
-        $this->printTable($output, [$sprykName, $sprykDescription], $sprykArguments);
+    /**
+     * @param array $sprykArguments
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return void
+     */
+    protected function printTableWithRequiredArguments(array $sprykArguments, OutputInterface $output): void
+    {
+        $output->writeln('');
 
-        $optionalSpryks = $this->getFormattedOptionalSpryks($sprykDefinition);
-        if ($optionalSpryks !== []) {
-            $this->printTitleBlock($output, 'Optional Spryks:');
-            $this->printTable($output, ['Spryk'], $optionalSpryks);
+        $headers = ['Required Argument', 'Description'];
+        $rows = [];
+
+        foreach ($sprykArguments as $sprykArgumentName => $sprykArgumentDefinition) {
+            if (isset($sprykArgumentDefinition['value'])) {
+                continue;
+            }
+            if (isset($sprykArgumentDefinition['default'])) {
+                continue;
+            }
+            $rows[] = [$sprykArgumentName, $sprykArgumentDefinition['description'] ?? 'No description provided'];
+        }
+
+        if (count($rows)) {
+            $output->writeln('<fg=yellow>The following arguments are required and you need to pass them</>');
+            $this->printTable($output, $headers, $rows);
+
+            return;
+        }
+
+        $output->writeln('<fg=yellow>This Spryk does not have any required arguments to be passed</>');
+    }
+
+    /**
+     * @param array $sprykArguments
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return void
+     */
+    protected function printTableWithOptionalArguments(array $sprykArguments, OutputInterface $output): void
+    {
+        $headers = ['Optional Argument', 'Description', 'Default', 'Value'];
+        $rows = [];
+
+        foreach ($sprykArguments as $sprykArgumentName => $sprykArgumentDefinition) {
+            if (!isset($sprykArgumentDefinition['value']) && !isset($sprykArgumentDefinition['default'])) {
+                continue;
+            }
+
+            $value = '';
+
+            if (isset($sprykArgumentDefinition['value'])) {
+                $value = is_array($sprykArgumentDefinition['value']) ? implode(', ', $sprykArgumentDefinition['value']) : $sprykArgumentDefinition['value'] ?? 'No value provided';
+            }
+
+            $rows[] = [
+                $sprykArgumentName,
+                $sprykArgumentDefinition['description'] ?? '',
+                $value,
+                $sprykArgumentDefinition['default'] ?? '',
+            ];
+        }
+
+        if (count($rows)) {
+            $output->writeln('');
+            $output->writeln('<fg=yellow>The following arguments are optional and you can pass them when needed</>');
+            $this->printTable($output, $headers, $rows);
         }
     }
 
     /**
+     * @param array $preSpryks
      * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param string $title
-     * @param string $style
      *
      * @return void
      */
-    protected function printTitleBlock(OutputInterface $output, string $title, string $style = 'info'): void
+    protected function printTableWithPreSpryks(array $preSpryks, OutputInterface $output): void
     {
-        $output->writeln(
-            (new FormatterHelper())
-                ->formatBlock($title, $style),
-        );
+        $output->writeln('');
+
+        $headers = ['PreSpryks'];
+        $rows = [];
+
+        foreach ($preSpryks as $preSpryk) {
+            if (is_array($preSpryk)) {
+                $preSpryk = array_key_first($preSpryk);
+            }
+
+            $rows[] = [
+                $preSpryk,
+            ];
+        }
+        if (count($rows)) {
+            $output->writeln('<fg=yellow>Pre Spryks which are executed before the Spryk is running</>');
+            $this->printTable($output, $headers, $rows);
+
+            return;
+        }
+
+        $output->writeln('<fg=yellow>This Spryk does not have any preSpryk to be executed</>');
+    }
+
+    /**
+     * @param array $postSpryks
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return void
+     */
+    protected function printTableWithPostSpryks(array $postSpryks, OutputInterface $output): void
+    {
+        $output->writeln('');
+
+        $headers = ['PostSpryks'];
+        $rows = [];
+
+        foreach ($postSpryks as $postSpryk) {
+            if (is_array($postSpryk)) {
+                $postSpryk = array_key_first($postSpryk);
+            }
+
+            $rows[] = [
+                $postSpryk,
+            ];
+        }
+        if (count($rows)) {
+            $output->writeln('<fg=yellow>Post Spryks which are executed after the Spryk was running</>');
+            $this->printTable($output, $headers, $rows);
+
+            return;
+        }
+
+        $output->writeln('<fg=yellow>This Spryk does not have any postSpryk to be executed</>');
     }
 
     /**
@@ -156,10 +269,43 @@ class SprykDumpConsole extends AbstractSprykConsole
     protected function printTable(OutputInterface $output, array $headers, array $rows): void
     {
         (new Table($output))
-            ->setStyle('compact')
             ->setHeaders($headers)
             ->setRows($rows)
             ->render();
+    }
+
+    /**
+     * @param array $arguments
+     * @param string $sprykName
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return void
+     */
+    protected function printCommandRunExample(array $arguments, string $sprykName, OutputInterface $output): void
+    {
+        $consoleOutput = [
+            'vendor/bin/spryk-run',
+            $sprykName,
+        ];
+
+        foreach ($arguments as $argumentName => $argumentDefinition) {
+            if (isset($argumentDefinition['value'])) {
+                continue;
+            }
+            if (isset($argumentDefinition['default'])) {
+                continue;
+            }
+            $consoleOutput[] = '--' . $argumentName;
+            $consoleOutput[] = $argumentDefinition['example'] ?? $argumentName . 'Value';
+        }
+
+        $consoleOutput[] = '--no-interaction';
+
+        $output->writeln('');
+        $output->writeln('Use the following command to run this Spyk. You need to replace the placeholder values with your real value.');
+        $output->writeln('');
+        $output->writeln(sprintf('<fg=green>%s</>', implode(' ', $consoleOutput)));
+        $output->writeln('');
     }
 
     /**
@@ -190,96 +336,10 @@ class SprykDumpConsole extends AbstractSprykConsole
     /**
      * @param array $sprykDefinition
      *
-     * @return array
-     */
-    protected function formatSingleSprykArguments(array $sprykDefinition): array
-    {
-        $formatted = ['mode' => ['mode']];
-        foreach ($sprykDefinition as $argument => $argumentDefinition) {
-            if (isset($argumentDefinition[SprykConfig::NAME_ARGUMENT_KEY_VALUE])) {
-                continue;
-            }
-
-            $formatted[$argument] = [
-                $argument,
-                $argumentDefinition[SprykConfig::NAME_ARGUMENT_KEY_DESCRIPTION] ?? '',
-            ];
-        }
-        sort($formatted);
-
-        return $formatted;
-    }
-
-    /**
-     * @param string $sprykDescription
-     *
-     * @return string
-     */
-    protected function formatSingleSprykDescription(string $sprykDescription): string
-    {
-        return trim($sprykDescription);
-    }
-
-    /**
-     * @param array $sprykDefinition
-     *
      * @return string
      */
     protected function formatArguments(array $sprykDefinition): string
     {
         return implode(', ', array_keys($sprykDefinition[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS]));
-    }
-
-    /**
-     * @param array $sprykDefinition
-     *
-     * @return array
-     */
-    protected function getFormattedOptionalSpryks(array $sprykDefinition): array
-    {
-        $optionalSpryks = [];
-        $preAndPostSpryks = $this->getPreAndPostSpryks($sprykDefinition);
-        $preAndPostSpryks = $this->filterSprykDefinitions($preAndPostSpryks);
-
-        $flattenPreAndPostSpryks = array_reduce($preAndPostSpryks, 'array_merge', []);
-        foreach ($flattenPreAndPostSpryks as $sprykName => $flattenPreAndPostSpryk) {
-            if (!$this->isOptionalSpryk($flattenPreAndPostSpryk)) {
-                continue;
-            }
-
-            $optionalSpryks[$sprykName] = [$sprykName];
-        }
-
-        return $optionalSpryks;
-    }
-
-    /**
-     * @param array $sprykDefinition
-     *
-     * @return array
-     */
-    protected function getPreAndPostSpryks(array $sprykDefinition): array
-    {
-        return ($sprykDefinition['preSpryks'] ?? []) + ($sprykDefinition['postSpryks'] ?? []);
-    }
-
-    /**
-     * @param array $sprykDefinitions
-     *
-     * @return array
-     */
-    protected function filterSprykDefinitions(array $sprykDefinitions): array
-    {
-        return array_filter($sprykDefinitions, 'is_array');
-    }
-
-    /**
-     * @param array $sprykDefinition
-     *
-     * @return bool
-     */
-    protected function isOptionalSpryk(array $sprykDefinition): bool
-    {
-        return isset($sprykDefinition['isOptional']) && $sprykDefinition['isOptional'] === true;
     }
 }
