@@ -128,9 +128,9 @@ class {{ domainEntity }}CrudHelper extends Module
     /**
     * @param array<string, mixed> $seed
     *
-    * @return \Generated\Shared\Transfer\AppTransfer|null
+    * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer|null
     */
-    public function have{{ domainEntity }}TransferPersisted(array $seed = []): ?AppTransfer
+    public function have{{ domainEntity }}TransferPersisted(array $seed = []): ?{{ domainEntity }}Transfer
     {
         return $this->persist{{ domainEntity }}($this->have{{ domainEntity }}Transfer($seed));
     }

@@ -37,7 +37,7 @@ class SprykHelper extends Module
     /**
      * @var array
      */
-    protected $config = [
+    protected array $config = [
         'withTestSpryks' => false,
         'withTestTemplates' => false,
     ];

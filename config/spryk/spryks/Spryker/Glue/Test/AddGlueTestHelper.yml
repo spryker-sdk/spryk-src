@@ -78,11 +78,11 @@ postSpryks:
               method:
                   value: "build{{ resource | resourceNameToModelName }}Url"
               input:
-                  value: "?int ${{ zedDomainEntity | lcfirst }}Identifier = null"
+                  value: "?string ${{ zedDomainEntity | lcfirst }}Identifier = null"
               output:
                   value: string
               body:
-                  value: "return ${{ zedDomainEntity | lcfirst }}Identifier !== null ? $this->build{{ applicationType | ucfirst }}ApiUrl('{{ resource | normalizeResourceName | lcfirst }}/{id}', ['id' => ${{ zedDomainEntity | lcfirst }}Identifier]) : $this->build{{ applicationType | ucfirst }}ApiUrl('{{ resource | resourceNameToModelName }}');"
+                  value: "return ${{ zedDomainEntity | lcfirst }}Identifier !== null ? $this->build{{ applicationType | ucfirst }}ApiUrl('{{ resource | normalizeResourceName | lcfirst }}/{id}', ['id' => ${{ zedDomainEntity | lcfirst }}Identifier]) : $this->build{{ applicationType | ucfirst }}ApiUrl('{{ resource | resourceNameToModelName | lcfirst }}');"
               target:
                   value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ resource | resourceNameToModelName }}Helper"
               withInterface:

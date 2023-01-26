@@ -1,5 +1,5 @@
 {{ suite }}:
-    class_name: {{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester
+    actor: {{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester
     modules:
         enabled:
             - Asserts

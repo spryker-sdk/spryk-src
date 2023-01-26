@@ -97,6 +97,7 @@ class UpdateYmlSpryk extends AbstractBuilder
         $afterElement = $this->getAfterElement();
 
         $currentLevel = &$targetYaml;
+
         foreach ($addToElementPath as $pathElement) {
             if (!array_key_exists($pathElement, $currentLevel)) {
                 $newCurrentLevel = [];
