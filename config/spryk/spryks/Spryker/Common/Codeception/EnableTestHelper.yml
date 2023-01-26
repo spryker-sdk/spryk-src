@@ -27,6 +27,9 @@ arguments:
     addToElement:
         value: "suites.{{ suite }}.modules.enabled"
 
+    addToElementType:
+        value: "array"
+
     targetPath:
         value: "tests/{{ organization }}Test/{{ application}}/{{ module }}/codeception.yml"
 

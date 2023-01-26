@@ -20,6 +20,9 @@ arguments:
     addToElement:
         description: "Path to where the content should be added to."
 
+    addToElementType:
+        description: "Can be set to array or left empty. Used to ensure that when an element does not exis and it has to be an array that the newly added element is an array."
+
     targetPath:
         description: "Target path will be extended with the subDirectory inside the TemplateSpryk when set."
 
