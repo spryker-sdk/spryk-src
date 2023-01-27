@@ -179,7 +179,7 @@ class CheckSprykDefinition extends AbstractSprykConsole
      */
     protected function printWarningMessage(OutputInterface $output, string $message): void
     {
-        $output->writeln('<bg=yellow>' . $message . '</>');
+        $output->writeln($message);
     }
 
     /**

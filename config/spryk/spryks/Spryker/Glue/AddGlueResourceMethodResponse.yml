@@ -52,12 +52,12 @@ arguments:
         example: /customers
 
     httpMethod:
-        description: "The HTTP method."
+        description: "The HTTP method e.g. POST"
         callback: StringToLower
         example: get
 
     httpResponseCode:
-        description: "The HTTP response code."
+        description: "The HTTP response code e.g. 200 (OK)"
         example: 200
 
     controller:
