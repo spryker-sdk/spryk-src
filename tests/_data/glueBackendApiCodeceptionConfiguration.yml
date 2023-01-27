@@ -1,0 +1,20 @@
+namespace: SprykerTest\Glue\FooBarsBackendApi
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist:
+        include:
+            - '../../../../src/*'
+suites:
+    RestApi:
+        actor: FooBarsBackendApiTester
+        modules:
+            enabled:
+                - SomeHelper
+                - \SprykerTest\Glue\FooBarsBackendApi\Helper\FooBarsHelper

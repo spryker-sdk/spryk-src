@@ -1,0 +1,7 @@
+name: ExampleWithoutOptionalArguments
+spryk: template
+description: "Unit Test Example file"
+
+arguments:
+    argumentA: ~
+

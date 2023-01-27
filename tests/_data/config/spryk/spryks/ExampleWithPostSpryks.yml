@@ -1,0 +1,11 @@
+spryk: template
+name: ExampleWithPostSpryks
+description: "Unit Test Example file"
+
+arguments:
+    argumentA: ~
+
+postSpryks:
+    - AddReadme:
+          baz: bat
+

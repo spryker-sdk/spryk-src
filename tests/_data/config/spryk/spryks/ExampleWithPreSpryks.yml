@@ -1,0 +1,11 @@
+spryk: template
+name: ExampleWithPreSpryks
+description: "Unit Test Example file"
+
+arguments:
+    argumentA: ~
+
+preSpryks:
+    - AddModule:
+          foo: bar
+
