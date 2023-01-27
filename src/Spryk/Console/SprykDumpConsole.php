@@ -177,14 +177,14 @@ class SprykDumpConsole extends AbstractSprykConsole
             $value = '';
 
             if (isset($sprykArgumentDefinition['value'])) {
-                $value = is_array($sprykArgumentDefinition['value']) ? implode(', ', $sprykArgumentDefinition['value']) : $sprykArgumentDefinition['value'] ?? 'No value provided';
+                $value = is_array($sprykArgumentDefinition['value']) ? 'Is an array check Spryk definition' : substr($sprykArgumentDefinition['value'], 0, 100) ?? 'No value provided';
             }
 
             $rows[] = [
                 $sprykArgumentName,
-                $sprykArgumentDefinition['description'] ?? '',
+                isset($sprykArgumentDefinition['description']) ? substr($sprykArgumentDefinition['description'], 0, 100) : '',
                 $value,
-                $sprykArgumentDefinition['default'] ?? '',
+                isset($sprykArgumentDefinition['default']) ? substr($sprykArgumentDefinition['default'], 0, 100) : '',
             ];
         }
 

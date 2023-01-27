@@ -41,7 +41,7 @@ class {{ domainEntity }}Deleter implements {{ domainEntity }}DeleterInterface
      *
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
-    public function delete{{ domainEntity }}Collection({{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer): {{ domainEntity }}CollectionResponseTransfer
+    public function delete{{ domainEntity }}Collection(\Generated\Shared\Transfer\{{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use (${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer) {
             return $this->executeDelete{{ domainEntity }}CollectionTransaction(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
@@ -53,7 +53,7 @@ class {{ domainEntity }}Deleter implements {{ domainEntity }}DeleterInterface
      *
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
-    protected function executeDelete{{ domainEntity }}CollectionTransaction({{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer): {{ domainEntity }}CollectionResponseTransfer
+    protected function executeDelete{{ domainEntity }}CollectionTransaction({{ domainEntity }}CollectionDeleteCriteriaTransfer ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
     {
         ${{ domainEntity | lcfirst }}CollectionTransfer = $this->{{ module | lcfirst }}Repository->get{{ domainEntity }}DeleteCollection(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
 

@@ -81,21 +81,11 @@ class OrderStatementsInClassVisitor extends NodeVisitorAbstract
     protected function orderStatements(array $traitStatements, array $constStatements, array $propertyStatements, array $methodStatements): array
     {
         $orderedStatements = [];
-        $orderedStatements = array_merge($orderedStatements, $this->orderTraitStatements($traitStatements));
-        $orderedStatements = array_merge($orderedStatements, $this->orderByVisibility($constStatements));
-        $orderedStatements = array_merge($orderedStatements, $this->orderByVisibility($propertyStatements));
+        $orderedStatements = array_merge($orderedStatements, $traitStatements);
+        $orderedStatements = array_merge($orderedStatements, $constStatements);
+        $orderedStatements = array_merge($orderedStatements, $propertyStatements);
 
         return array_merge($orderedStatements, $this->orderMethodStatements($methodStatements));
-    }
-
-    /**
-     * @param array $traitStatements
-     *
-     * @return array
-     */
-    protected function orderTraitStatements(array $traitStatements): array
-    {
-        return $traitStatements;
     }
 
     /**
@@ -133,36 +123,8 @@ class OrderStatementsInClassVisitor extends NodeVisitorAbstract
             $unorderedMethods[] = $methodStatement;
         }
 
-        $orderedUnorderedMethods = $this->orderByVisibility($unorderedMethods);
+        $orderedUnorderedMethods = $unorderedMethods;
 
-        return array_merge($orderedMethods, $orderedUnorderedMethods);
-    }
-
-    /**
-     * @param array<(\PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Stmt\Property|\PhpParser\Node\Stmt\ClassConst)> $unorderedStatements
-     *
-     * @return array
-     */
-    protected function orderByVisibility(array $unorderedStatements): array
-    {
-        $public = [];
-        $protected = [];
-        $private = [];
-
-        foreach ($unorderedStatements as $unorderedStatement) {
-            if ($unorderedStatement->isPublic()) {
-                $public[] = $unorderedStatement;
-
-                continue;
-            }
-            if ($unorderedStatement->isProtected()) {
-                $protected[] = $unorderedStatement;
-
-                continue;
-            }
-            $private[] = $unorderedStatement;
-        }
-
-        return [...$public, ...$protected, ...$private];
+        return [...$orderedMethods, ...$orderedUnorderedMethods];
     }
 }

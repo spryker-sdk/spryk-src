@@ -14,19 +14,21 @@ class UnorderedClass
     /**
      * @var string
      */
-    public const PUBLIC_CONST = 'PUBLIC_CONST';
+    private const PRIVATE_CONST = 'PRIVATE_CONST';
+
     /**
      * @var string
      */
     protected const PROTECTED_CONST = 'PROTECTED_CONST';
+
     /**
      * @var string
      */
-    private const PRIVATE_CONST = 'PRIVATE_CONST';
+    public const PUBLIC_CONST = 'PUBLIC_CONST';
     /**
      * @var string
      */
-    public string $baz;
+    private string $foo;
     /**
      * @var string
      */
@@ -34,7 +36,7 @@ class UnorderedClass
     /**
      * @var string
      */
-    private string $foo;
+    public string $baz;
     /**
      * @param string $foo
      */
@@ -45,7 +47,7 @@ class UnorderedClass
     /**
      * @return void
      */
-    public function baz(): void
+    private function foo(): void
     {
     }
     /**
@@ -57,7 +59,7 @@ class UnorderedClass
     /**
      * @return void
      */
-    private function foo(): void
+    public function baz(): void
     {
     }
 }

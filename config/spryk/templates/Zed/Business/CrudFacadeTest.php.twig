@@ -51,7 +51,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
     public function testGet{{ domainEntity }}ReturnsCollectionWithOne{{ domainEntity }}EntityWhenCriteriaMatched(): void
     {
         // Arrange
-        ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferTwoPersisted();
+        ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferOnePersisted();
         ${{ domainEntity | lcfirst }}CriteriaTransfer = $this->tester->have{{ domainEntity }}CriteriaTransferWith{{ domainEntity }}TransferOneCriteria();
 
         // Act
@@ -70,7 +70,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
     {
         // Arrange
         $this->tester->have{{ domainEntity }}ExpanderPluginSetUuidTwoEnabled();
-        ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferTwoPersisted();
+        ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferOnePersisted();
 
         ${{ domainEntity | lcfirst }}CriteriaTransfer = $this->tester->have{{ domainEntity }}CriteriaTransferWith{{ domainEntity }}TransferOneCriteria();
 

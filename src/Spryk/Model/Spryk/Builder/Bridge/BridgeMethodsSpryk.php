@@ -119,6 +119,7 @@ class BridgeMethodsSpryk extends AbstractBuilder
     protected function getNewClassMethodNode(BuilderFactory $builderFactory, ClassMethod $classMethodNode): ClassMethod
     {
         $newClassMethod = $builderFactory->method($classMethodNode->name);
+        $newClassMethod->makePublic();
 
         foreach ($classMethodNode->getParams() as $param) {
             $param->setAttributes([]);
