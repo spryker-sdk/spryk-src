@@ -78,7 +78,7 @@ class SprykExecutor implements SprykExecutorInterface
     protected ConditionMatcherInterface $conditionMatcher;
 
     /**
-     * @var \Spryk\Model\Spryk\Cleanup\CleanupRunnerInterface
+     * @var \SprykerSdk\Spryk\Model\Spryk\Cleanup\CleanupRunnerInterface
      */
     protected CleanupRunnerInterface $cleanupRunner;
 
@@ -95,7 +95,7 @@ class SprykExecutor implements SprykExecutorInterface
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface $fileResolver
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\FileDumperInterface $fileDumper
      * @param \SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface $conditionMatcher
-     * @param \Spryk\Model\Spryk\Cleanup\CleanupRunnerInterface $cleanupRunner
+     * @param \SprykerSdk\Spryk\Model\Spryk\Cleanup\CleanupRunnerInterface $cleanupRunner
      */
     public function __construct(
         SprykConfig $sprykConfig,

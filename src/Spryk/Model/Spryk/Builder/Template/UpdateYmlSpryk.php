@@ -230,7 +230,7 @@ class UpdateYmlSpryk extends AbstractBuilder
     }
 
     /**
-     * @return ?string|null
+     * @return string|null
      */
     protected function getAddToElementType(): ?string
     {

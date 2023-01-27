@@ -177,7 +177,7 @@ class SprykDumpConsole extends AbstractSprykConsole
             $value = '';
 
             if (isset($sprykArgumentDefinition['value'])) {
-                $value = is_array($sprykArgumentDefinition['value']) ? 'Is an array check Spryk definition' : substr($sprykArgumentDefinition['value'], 0, 100) ?? 'No value provided';
+                $value = is_array($sprykArgumentDefinition['value']) ? 'Is an array check Spryk definition' : substr($sprykArgumentDefinition['value'], 0, 100);
             }
 
             $rows[] = [
