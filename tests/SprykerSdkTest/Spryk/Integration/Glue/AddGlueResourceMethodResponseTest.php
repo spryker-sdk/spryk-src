@@ -29,6 +29,39 @@ class AddGlueResourceMethodResponseTest extends Unit
     protected SprykIntegrationTester $tester;
 
     /**
+     * @dataProvider controllerNameProvider
+     *
+     * @param string $controllerName
+     *
+     * @return void
+     */
+    public function testEnsureResourceControllerSuffix(string $controllerName): void
+    {
+        $commandOptions = [
+            '--resource' => '/foo-bars',
+            '--httpMethod' => 'GET',
+            '--httpResponseCode' => 200,
+            '--controller' => $controllerName,
+        ];
+
+        $this->tester->run($this, $commandOptions);
+
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_FOO_BAR_CONTROLLER);
+    }
+
+    /**
+     * @return \array<array<string>>
+     */
+    public function controllerNameProvider(): array
+    {
+        return [
+            ['FooBar'],
+            ['FooBarController'],
+            ['FooBarResourceController'],
+        ];
+    }
+
+    /**
      * @dataProvider resourceMethodResponse
      *
      * @param string $httpMethod
@@ -53,7 +86,7 @@ class AddGlueResourceMethodResponseTest extends Unit
         ?string $resource = null
     ): void {
         $commandOptions = [
-            // TODO We also need to add tests for project level
+            // TODO We also need to add tests for the project level
 //            '--mode' => 'project',
 //            '--organization' => 'Pyz',
             '--resource' => $resource ?? '/foo-bars',

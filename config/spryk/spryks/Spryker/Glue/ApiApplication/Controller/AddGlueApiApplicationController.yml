@@ -39,7 +39,9 @@ arguments:
 
     controller:
         inherit: true
-        default: "{{ resource | resourceNameToControllerName }}ResourceController"
+        default: "{{ resource | resourceNameToControllerName }}"
+        callback:
+            - EnsureResourceControllerSuffixCallback    # Ensure we always have ResourceController as suffix
 
 postSpryks:
     - AddGlueApiApplicationFactory

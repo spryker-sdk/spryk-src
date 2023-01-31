@@ -61,7 +61,10 @@ arguments:
         example: 200
 
     controller:
-        default: "{{ resource | resourceNameToControllerName }}ResourceController"
+        default: "{{ resource | resourceNameToControllerName }}"
+        callback:
+            - RemoveControllerSuffixCallback            # Filter our when someone passes FooBarController
+            - EnsureResourceControllerSuffixCallback    # Ensure we always have ResourceController as suffix
 
     zedDomainEntity:
         description: "Defines the domainEntity used on Zed side for the CRUD Facade. It will be used to create all needed Transfer Objects."

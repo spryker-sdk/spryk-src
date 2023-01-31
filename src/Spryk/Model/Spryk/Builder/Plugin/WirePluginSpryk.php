@@ -63,9 +63,6 @@ class WirePluginSpryk extends AbstractBuilder
         $pluginClassNames = $this->getPluginClassNames();
 
         foreach ($pluginClassNames as $pluginClassName) {
-            // Check if a plugin already
-
-
             $traverser = new NodeTraverser();
             $traverser->addVisitor(new AddUseVisitor($pluginClassName));
             $traverser->addVisitor(
