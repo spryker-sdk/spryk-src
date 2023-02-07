@@ -3,10 +3,6 @@
 {{ include('Partials/license.twig') }}
 namespace {{ organization }}Test\{{ application }}\{{ module }}\{{ suite }};
 
-{% if httpMethod | lower != 'post' %}
-use {{ organization }}Test\{{ application }}\{{ module }}\{{ suite }}\Fixtures\{{ fixtureClass }};
-{% endif %}
-
 /**
  * Auto-generated group annotations
  *
@@ -17,23 +13,4 @@ use {{ organization }}Test\{{ application }}\{{ module }}\{{ suite }}\Fixtures\{
  */
 class {{ className }}
 {
-{% if httpMethod | lower != 'post' %}
-    /**
-     * @var \{{ organization }}Test\{{ application }}\{{ module }}\{{ suite }}\Fixtures\{{ fixtureClass }}
-     */
-    protected \{{ organization }}Test\{{ application }}\{{ module }}\{{ suite }}\Fixtures\{{ fixtureClass }} $fixtures;
-
-    /**
-     * @param \{{ organization }}Test\{{ application }}\{{ resource | resourceNameToModelName }}{{ applicationType }}Api\{{ resource | normalizeResourceName | ucfirst }}{{ applicationType }}ApiTester $I
-     *
-     * @return void
-     */
-    public function loadFixtures(\{{ organization }}Test\{{ application }}\{{ resource | resourceNameToModelName }}{{ applicationType }}Api\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester $I): void
-    {
-        /** @var \{{ organization }}Test\{{ application }}\{{ module }}\{{ suite }}\Fixtures\{{ fixtureClass }} $fixtures */
-        $fixtures = $I->loadFixtures({{ fixtureClass }}::class);
-
-        $this->fixtures = $fixtures;
-    }
-{% endif %}
 }

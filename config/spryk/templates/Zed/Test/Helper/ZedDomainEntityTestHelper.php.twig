@@ -38,7 +38,7 @@ class {{ domainEntity }}CrudHelper extends Module
      */
     public function have{{ domainEntity }}TransferOnePersisted(): ?{{ domainEntity }}Transfer
     {
-        return $this->persist{{ domainEntity }}($this->have{{ domainEntity }}Transfer(['uuid' => static::UUID_TWO]));
+        return $this->persist{{ domainEntity }}($this->have{{ domainEntity }}Transfer(['uuid' => static::UUID_ONE]));
     }
 
     /**

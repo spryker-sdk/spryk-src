@@ -87,6 +87,8 @@ postSpryks:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               dataModule:
                   inherit: true
+              applicationType:
+                  inherit: true
               zedDomainEntity:
                   inherit: true
               resourceDataObject:

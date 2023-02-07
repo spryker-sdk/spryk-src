@@ -7,11 +7,15 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Cleanup;
 
+use _PHPStan_ecc307676\Nette\Neon\Exception;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface;
+use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedJsonInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedXmlInterface;
+use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedYmlInterface;
 use SprykerSdk\Spryk\Style\SprykStyleInterface;
 use Symfony\Component\Process\Process;
+use function _HumbugBox633d515bfccb\KevinGH\Box\FileSystem\filename;
 
 class CleanupRunner implements CleanupRunnerInterface
 {
@@ -24,6 +28,11 @@ class CleanupRunner implements CleanupRunnerInterface
      * @var array<string, string>
      */
     protected array $pathsToRunCodeSniffer = [];
+
+    /**
+     * @var array<string, string>
+     */
+    protected array $pathsToRunCodeceptionBuild = [];
 
     /**
      * @var bool
@@ -40,6 +49,11 @@ class CleanupRunner implements CleanupRunnerInterface
         if ($resolved instanceof ResolvedClassInterface) {
             $this->addResolvedClassForCleanup($resolved);
         }
+
+        if ($resolved instanceof ResolvedYmlInterface) {
+            $this->addResolvedJsonForCleanup($resolved);
+        }
+
         if ($resolved instanceof ResolvedXmlInterface) {
             $this->runTransferBuilders = true;
         }
@@ -58,6 +72,7 @@ class CleanupRunner implements CleanupRunnerInterface
         }
 
         // @codeCoverageIgnoreStart
+        $this->runCodeceptionBuildOnPaths($style);
         $this->runCodeSnifferOnModules($style);
         $this->runCodeSnifferOnPaths($style);
         $this->runTransferBuilders($style);
@@ -84,6 +99,50 @@ class CleanupRunner implements CleanupRunnerInterface
             $pathToRunCodeSniffer = $this->getPathForCodeSniffer($resolved->getFilePath());
             $this->pathsToRunCodeSniffer[$pathToRunCodeSniffer] = $pathToRunCodeSniffer;
         }
+    }
+
+    /**
+     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedYmlInterface $resolved
+     *
+     * @return void
+     */
+    protected function addResolvedJsonForCleanup(ResolvedYmlInterface $resolved): void
+    {
+        $pathToRunCodeceptionBuild = $this->getPathToRunCodeceptionBuild($resolved->getFilePath());
+
+        if ($pathToRunCodeceptionBuild) {
+            if (substr($pathToRunCodeceptionBuild, 0, strlen(APPLICATION_ROOT_DIR)) === APPLICATION_ROOT_DIR) {
+                $pathToRunCodeceptionBuild = ltrim(substr($pathToRunCodeceptionBuild, strlen(APPLICATION_ROOT_DIR)), DIRECTORY_SEPARATOR);
+            }
+            $this->pathsToRunCodeceptionBuild[$pathToRunCodeceptionBuild] = $pathToRunCodeceptionBuild;
+        }
+    }
+
+    /**
+     * @param string $filePath
+     *
+     * @return ?string
+     */
+    protected function getPathToRunCodeceptionBuild(string $filePath): ?string
+    {
+        $pathFragments = explode(DIRECTORY_SEPARATOR, $filePath);
+        $fileName = array_pop($pathFragments);
+
+        if ($fileName !== 'codeception.yml') {
+            return null;
+        }
+
+        // Project codeception.yml
+        if (!array_search('vendor', $pathFragments)) {
+            return $filePath;
+        }
+
+        // Core codeception.yml can be ignored in tests directory as those are included in the root codeception.yml
+        if (array_search('tests', $pathFragments)) {
+            return null;
+        }
+
+        return $filePath;
     }
 
     /**
@@ -130,6 +189,27 @@ class CleanupRunner implements CleanupRunnerInterface
         }
 
         return count($pathFragments);
+    }
+
+    /**
+     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
+     *
+     * @return void
+     */
+    protected function runCodeceptionBuildOnPaths(SprykStyleInterface $style): void
+    {
+        foreach ($this->pathsToRunCodeceptionBuild as $pathToRunCodeception) {
+            $style->writeln(sprintf('Run Build Codeception command for <fg=green>%s</> config, this can take while...', $pathToRunCodeception));
+
+            $process = new Process(['vendor/bin/codecept', 'build', '-c', $pathToRunCodeception], null, null, null, 600);
+            $process->run();
+
+            if (!$process->isSuccessful()) {
+                throw new \Exception($process->getErrorOutput());
+            }
+
+            echo $process->getOutput();
+        }
     }
 
     /**

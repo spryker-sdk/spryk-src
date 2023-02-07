@@ -185,7 +185,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
     public function testUpdate{{ domainEntity }}CollectionReturnsCollectionWithOne{{ domainEntity }}EntityWhenEntityWasSaved(): void
     {
         // Arrange
-        ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferTwoPersisted();
+        ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferOnePersisted();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new {{ domainEntity }}CollectionRequestTransfer();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
 
@@ -302,7 +302,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
     public function testDelete{{ domainEntity }}ReturnsCollectionWithOne{{ domainEntity }}EntityWhenCriteriaMatched(): void
     {
         // Arrange
-        ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferTwoPersisted();
+        ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferOnePersisted();
         ${{ domainEntity | lcfirst }}DeleteCriteriaTransfer = $this->tester->have{{ domainEntity }}DeleteCriteriaTransferWith{{ domainEntity }}TransferOneCriteria();
 
         // Act

@@ -1,4 +1,6 @@
 // Arrange
+$I->addJsonApiResourcePlugin(new \{{ organization }}\Glue\{{ module }}\Plugin\{{ module }}Resource());
+
 $url = $I->build{{ resource | resourceNameToModelName }}Url();
 
 // Act
