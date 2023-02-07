@@ -7,15 +7,13 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Cleanup;
 
-use _PHPStan_ecc307676\Nette\Neon\Exception;
+use Exception;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface;
-use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedJsonInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedXmlInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedYmlInterface;
 use SprykerSdk\Spryk\Style\SprykStyleInterface;
 use Symfony\Component\Process\Process;
-use function _HumbugBox633d515bfccb\KevinGH\Box\FileSystem\filename;
 
 class CleanupRunner implements CleanupRunnerInterface
 {
@@ -121,7 +119,7 @@ class CleanupRunner implements CleanupRunnerInterface
     /**
      * @param string $filePath
      *
-     * @return ?string
+     * @return string|null
      */
     protected function getPathToRunCodeceptionBuild(string $filePath): ?string
     {
@@ -194,6 +192,8 @@ class CleanupRunner implements CleanupRunnerInterface
     /**
      * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
      *
+     * @throws \Exception
+     *
      * @return void
      */
     protected function runCodeceptionBuildOnPaths(SprykStyleInterface $style): void
@@ -205,7 +205,7 @@ class CleanupRunner implements CleanupRunnerInterface
             $process->run();
 
             if (!$process->isSuccessful()) {
-                throw new \Exception($process->getErrorOutput());
+                throw new Exception($process->getErrorOutput());
             }
 
             echo $process->getOutput();

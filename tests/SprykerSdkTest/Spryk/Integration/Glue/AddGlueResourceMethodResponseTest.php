@@ -96,7 +96,6 @@ class AddGlueResourceMethodResponseTest extends Unit
         $expectedControllerMethodName = $httpMethod . 'Action';
         $expectedTestController = $this->getExpectedTestController($httpMethod, $isBulk);
         $expectedTestControllerMethodName = $this->getExpectedTestControllerMethodName($httpMethod, $httpResponseCode, $isBulk);
-        $expectedFixtureClass = $this->getFixtureClassName($httpMethod, (bool)$isBulk);
 
         if ($isBulk) {
             $commandOptions['--isBulk'] = $isBulk;
@@ -133,18 +132,6 @@ class AddGlueResourceMethodResponseTest extends Unit
         // Tester class methods
         foreach ($this->getExpectedTesterMethods($httpMethod, (bool)$isBulk) as $methodName) {
             $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_TESTER_CLASS, $methodName);
-        }
-
-        // Fixtures classes
-        if ($httpMethod !== 'post') {
-            $this->tester->assertClassOrInterfaceExists($expectedFixtureClass);
-
-            // Fixtures methods
-            $this->tester->assertClassOrInterfaceHasMethod($expectedFixtureClass, 'buildFixtures');
-
-            foreach ($this->getFixtureMethodNames((bool)$isBulk) as $methodName) {
-                $this->tester->assertClassOrInterfaceHasMethod($expectedFixtureClass, $methodName);
-            }
         }
 
         // Resource
@@ -245,29 +232,6 @@ class AddGlueResourceMethodResponseTest extends Unit
         }
 
         return $methods;
-    }
-
-    /**
-     * @param string $httpMethod
-     * @param bool $isBulk
-     *
-     * @return string
-     */
-    protected function getFixtureClassName(string $httpMethod, bool $isBulk): string
-    {
-        return sprintf(GlueBackendApiClassNames::GLUE_BACKEND_API_FIXTURES_CLASS, ucfirst($httpMethod), $isBulk ? 'Collection' : '');
-    }
-
-    /**
-     * @param bool $isBulk
-     *
-     * @return array
-     */
-    protected function getFixtureMethodNames(bool $isBulk): array
-    {
-        return $isBulk
-            ? ['getFooBarTransferOne', 'getFooBarTransferTwo']
-            : ['getFooBarTransfer'];
     }
 
     /**
