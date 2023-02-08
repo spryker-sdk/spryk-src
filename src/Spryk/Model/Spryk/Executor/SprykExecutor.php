@@ -12,6 +12,7 @@ use SprykerSdk\Spryk\Exception\SprykWrongDevelopmentLayerException;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Collection\SprykBuilderCollectionInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\FileDumperInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface;
+use SprykerSdk\Spryk\Model\Spryk\Cleanup\CleanupRunnerInterface;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Builder\SprykDefinitionBuilderInterface;
 use SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface;
 use SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface;
@@ -77,6 +78,11 @@ class SprykExecutor implements SprykExecutorInterface
     protected ConditionMatcherInterface $conditionMatcher;
 
     /**
+     * @var \SprykerSdk\Spryk\Model\Spryk\Cleanup\CleanupRunnerInterface
+     */
+    protected CleanupRunnerInterface $cleanupRunner;
+
+    /**
      * @var array<string, \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface>
      */
     protected array $postCommandCache = [];
@@ -89,6 +95,7 @@ class SprykExecutor implements SprykExecutorInterface
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface $fileResolver
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\FileDumperInterface $fileDumper
      * @param \SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface $conditionMatcher
+     * @param \SprykerSdk\Spryk\Model\Spryk\Cleanup\CleanupRunnerInterface $cleanupRunner
      */
     public function __construct(
         SprykConfig $sprykConfig,
@@ -97,7 +104,8 @@ class SprykExecutor implements SprykExecutorInterface
         array $sprykCommands,
         FileResolverInterface $fileResolver,
         FileDumperInterface $fileDumper,
-        ConditionMatcherInterface $conditionMatcher
+        ConditionMatcherInterface $conditionMatcher,
+        CleanupRunnerInterface $cleanupRunner
     ) {
         $this->sprykConfig = $sprykConfig;
         $this->definitionBuilder = $definitionBuilder;
@@ -106,6 +114,7 @@ class SprykExecutor implements SprykExecutorInterface
         $this->fileResolver = $fileResolver;
         $this->fileDumper = $fileDumper;
         $this->conditionMatcher = $conditionMatcher;
+        $this->cleanupRunner = $cleanupRunner;
     }
 
     /**
@@ -142,6 +151,7 @@ class SprykExecutor implements SprykExecutorInterface
 
         $this->dumpFiles();
         $this->writeFiles($style);
+        $this->cleanupRunner->runCleanup($style);
     }
 
     /**
@@ -173,6 +183,9 @@ class SprykExecutor implements SprykExecutorInterface
 
                 continue;
             }
+
+            $this->cleanupRunner->addForCleanup($resolved);
+
             file_put_contents($resolved->getFilePath(), $resolved->getContent());
         }
     }

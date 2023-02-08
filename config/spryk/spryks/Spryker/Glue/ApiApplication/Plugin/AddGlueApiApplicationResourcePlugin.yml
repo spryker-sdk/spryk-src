@@ -28,6 +28,10 @@ arguments:
         description: "Defines the resource name this resource plugin will work with."
         inherit: true
 
+    controller:
+        inherit: true
+        default: "{{ resource | resourceNameToControllerName }}"
+
     className:
         default: "{{ resource | resourceNameToModelName }}{{ applicationType }}ApiResource"
 
@@ -36,6 +40,9 @@ arguments:
         value:
             - "\\Spryker\\{{ application }}\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
             - "\\Spryker\\Glue\\GlueApplication\\Plugin\\GlueApplication{% if applicationType != 'Storefront' %}\\{{ applicationType }}{% endif %}\\AbstractResourcePlugin"
+
+    implements:
+        value: "\\Spryker\\Glue\\GlueJsonApiConventionExtension\\Dependency\\Plugin\\JsonApiResourceInterface"
 
     template:
         value: Common/Class.php.twig
@@ -79,7 +86,7 @@ postSpryks:
                   value: "string"
               body:
                   value:
-                      - "return '{{ resource | trim(\"/\",) | dasherize }}';"
+                      - "return '{{ resource | resourcePluginToGetType }}';"
               target:
                   value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
               withInterface:
@@ -90,12 +97,12 @@ postSpryks:
                   value: "getController"
               annotations:
                   value:
-                      - "@uses \\{{ organization }}\\{{ application }}\\{{ module }}\\Controller\\{{ resource | resourceNameToControllerName }}ResourceController"
+                      - "@uses \\{{ organization }}\\{{ application }}\\{{ module }}\\Controller\\{{ controller }}"
               output:
                   value: "string"
               body:
                   value:
-                      - "return \\{{ organization }}\\{{ application }}\\{{ module }}\\Controller\\{{ resource | resourceNameToControllerName }}ResourceController::class;"
+                      - "return \\{{ organization }}\\{{ application }}\\{{ module }}\\Controller\\{{ controller }}::class;"
               target:
                   value: "\\{{ organization }}\\Glue\\{{ module }}\\Plugin\\{{ className }}"
               withInterface:

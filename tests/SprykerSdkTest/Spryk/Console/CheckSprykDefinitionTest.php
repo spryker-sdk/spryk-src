@@ -9,6 +9,7 @@ namespace SprykerSdkTest\Spryk\Console;
 
 use Codeception\Test\Unit;
 use SprykerSdk\Spryk\Console\CheckSprykDefinition;
+use SprykerSdkTest\SprykConsoleTester;
 
 /**
  * Auto-generated group annotations
@@ -24,30 +25,7 @@ class CheckSprykDefinitionTest extends Unit
     /**
      * @var \SprykerSdkTest\SprykConsoleTester
      */
-    protected $tester;
-
-    /**
-     * @dataProvider checkDefinitionDataProvider()
-     *
-     * @param array<string, array> $arguments
-     * @param string $expectedReturn
-     *
-     * @return void
-     */
-    public function testCheckDefinition(array $arguments, string $expectedReturn): void
-    {
-        /** @var \SprykerSdk\Spryk\Console\SprykRunConsole $command */
-        $command = $this->tester->getClass(CheckSprykDefinition::class);
-        $tester = $this->tester->getConsoleTester($command);
-
-        $arguments['command'] = $command->getName();
-
-        $tester->execute($arguments);
-
-        $output = $tester->getDisplay();
-
-        $this->assertRegExp($expectedReturn, $output);
-    }
+    protected SprykConsoleTester $tester;
 
     /**
      * @return array<string, array>
@@ -68,5 +46,28 @@ class CheckSprykDefinitionTest extends Unit
                 'expected return' => '/No validation errors found/',
             ],
         ];
+    }
+
+    /**
+     * @dataProvider checkDefinitionDataProvider
+     *
+     * @param array<string, array> $arguments
+     * @param string $expectedReturn
+     *
+     * @return void
+     */
+    public function testCheckDefinition(array $arguments, string $expectedReturn): void
+    {
+        /** @var \SprykerSdk\Spryk\Console\SprykRunConsole $command */
+        $command = $this->tester->getClass(CheckSprykDefinition::class);
+        $tester = $this->tester->getConsoleTester($command);
+
+        $arguments['command'] = $command->getName();
+
+        $tester->execute($arguments);
+
+        $output = $tester->getDisplay();
+
+        $this->assertRegExp($expectedReturn, $output);
     }
 }

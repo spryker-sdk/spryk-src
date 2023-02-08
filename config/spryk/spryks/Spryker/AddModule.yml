@@ -7,6 +7,7 @@ level: 2
 
 arguments:
     organization:
+        description: "Defines the organization name"
         inherit: true
         default: Spryker
 

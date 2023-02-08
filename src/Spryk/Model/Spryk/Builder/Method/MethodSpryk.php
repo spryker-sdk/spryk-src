@@ -178,6 +178,10 @@ class MethodSpryk extends AbstractBuilder
             return;
         }
 
+        if ($methodExists) {
+            return;
+        }
+
         $traverser = new NodeTraverser();
         $traverser->addVisitor(new AddMethodVisitor($classMethodNode));
         $newStmts = $traverser->traverse($resolvedClass->getClassTokenTree());

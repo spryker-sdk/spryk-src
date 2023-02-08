@@ -65,7 +65,6 @@ arguments:
 
 preSpryks:
     - AddGlueTestHelper
-    - AddGlueTestFixtures
     - AddGlueTestTester
 
 postSpryks:

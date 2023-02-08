@@ -18,6 +18,8 @@ use Laminas\Filter\Word\DashToCamelCase;
  *
  * Example:
  * $this->filter('/foo') == 'Index'
+ * $this->filter('/foo/{id}') == 'Index'
+ * $this->filter('/foo/{id}/something') == 'Something'
  * $this->filter('/foo/bar/baz') == 'Bar'
  */
 class ResourceNameToControllerNameFilter implements FilterInterface
@@ -59,7 +61,14 @@ class ResourceNameToControllerNameFilter implements FilterInterface
         # resets indexes used further down
         $parts = array_values($parts);
         $name = 'Index';
-        if (!empty($parts[1])) {
+
+        // Try third fragment as controller, when it is a placeholder, try second
+        if (!empty($parts[2]) && !preg_match('/\{/', $parts[2])) {
+            $name = $parts[2];
+        }
+
+        // Try second fragment as controller, when it is a placeholder, fallback to Index
+        if (!empty($parts[1]) && !preg_match('/\{/', $parts[1])) {
             $name = $parts[1];
         }
 

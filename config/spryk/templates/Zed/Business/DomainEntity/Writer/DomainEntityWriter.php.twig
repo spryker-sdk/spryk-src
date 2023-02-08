@@ -85,7 +85,7 @@ class {{ domainEntity }}{{ className }} implements {{ domainEntity }}{{ classNam
         // This will save all entities in one transaction. If any of the entities in the collection fails to be persisted
         // it will roll all of them back. And we don't catch exceptions here intentionally!
         return $this->getTransactionHandler()->handleTransaction(function () use (${{ domainEntity | lcfirst }}CollectionResponseTransfer) {
-            return $this->execute{{ type }}{{ domainEntity }}CollectionResponseTransaction(${{ domainEntity | lcfirst }}CollectionResponseTransfer);
+            return $this->execute{{ type }}{{ domainEntity }}CollectionTransaction(${{ domainEntity | lcfirst }}CollectionResponseTransfer);
         });
     }
 
@@ -116,7 +116,7 @@ class {{ domainEntity }}{{ className }} implements {{ domainEntity }}{{ classNam
      *
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
-    protected function execute{{ type }}{{ domainEntity }}CollectionResponseTransaction(
+    protected function execute{{ type }}{{ domainEntity }}CollectionTransaction(
         {{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
     ): {{ domainEntity }}CollectionResponseTransfer {
         // Run pre-save plugins

@@ -20,11 +20,25 @@ class XmlDumper implements XmlDumperInterface
     {
         foreach ($resolvedFiles as $resolvedFile) {
             $dom = new DOMDocument('1.0');
-            $dom->preserveWhiteSpace = false;
             $dom->formatOutput = true;
+            $dom->preserveWhiteSpace = false;
+            $dom->encoding = 'UTF-8';
 
             $dom->loadXML((string)$resolvedFile->getSimpleXmlElement()->asXML());
-            $resolvedFile->setContent((string)$dom->saveXML());
+
+            $dom->recover = true;
+
+            $xmlString = (string)$dom->saveXML();
+
+            // Add a new line after each transfer definition and...
+            $xmlString = preg_replace_callback('/(<\/transfer>)/', function ($matches) {
+                return $matches[1] . "\n";
+            }, $xmlString);
+
+            // replace two with four spaces to get back the original formatting (as close as possible)
+            $xmlString = str_replace('  ', '    ', (string)$xmlString);
+
+            $resolvedFile->setContent($xmlString);
         }
     }
 }

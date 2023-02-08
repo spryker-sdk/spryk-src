@@ -1,8 +1,17 @@
 // Arrange
+$I->addJsonApiResourcePlugin(new \{{ organization }}\Glue\{{ module }}\Plugin\{{ module }}Resource());
+
+${{ zedDomainEntity | lcfirst }}Transfer = $I->have{{ zedDomainEntity }}Transfer();
+$id{{ zedDomainEntity | lcfirst }} = ${{ zedDomainEntity | lcfirst }}Transfer->getId{{ zedDomainEntity }}();
+
 $url = $I->build{{ resource | resourceNameToModelName }}Url();
 
 // Act
-$I->sendPost($url);
+$I->sendPost($url, [
+    'data' => [
+        'attributes' => ${{ zedDomainEntity | lcfirst }}Transfer->toArray(),
+    ],
+]);
 
 // Assert
 $I->seeResponseCodeIs({{ httpResponseCode | httpResponseCodeToConstantName }});

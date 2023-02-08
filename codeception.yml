@@ -3,7 +3,7 @@ namespace: SprykerSdkTest
 paths:
     # paths should not end with slashes, see https://github.com/spryker-sdk/spryk-src/pull/47
     tests: tests
-    log: tests/_output
+    output: tests/_output
     data: tests/_data
     support: tests/_support
     envs: tests/_envs
@@ -27,7 +27,7 @@ suites:
     Spryk:
         bootstrap: _bootstrap.php
         path: SprykerSdkTest/Spryk/Model
-        class_name: SprykTester
+        actor: SprykTester
         extensions:
             enabled:
                 - Codeception\Extension\RunFailed
@@ -46,7 +46,7 @@ suites:
     Console:
         bootstrap: _bootstrap.php
         path: SprykerSdkTest/Spryk/Console
-        class_name: SprykConsoleTester
+        actor: SprykConsoleTester
         extensions:
             enabled:
                 - Codeception\Extension\RunFailed
@@ -65,7 +65,7 @@ suites:
     Integration:
         bootstrap: _bootstrap.php
         path: SprykerSdkTest/Spryk/Integration
-        class_name: SprykIntegrationTester
+        actor: SprykIntegrationTester
         extensions:
             enabled:
                    - Codeception\Extension\RunFailed
@@ -80,4 +80,5 @@ suites:
                 - SprykerSdkTest\Module\AssertionModule
                 - SprykerSdkTest\Module\IntegrationModule
                 - SprykerSdkTest\Module\TransferModule
+                - SprykerSdkTest\Module\YmlModule
                 - SprykerSdkTest\Module\SchemaModule

@@ -12,38 +12,15 @@ nbproject/
 *.AppleDB
 *.AppleDesktop
 
-# grunt stuff
-.grunt
-.sass-cache
-/node_modules/
-
 # tooling
 vendor/
 compiler/vendor/
 composer.lock
 .phpunit.result.cache
 
-# built client resources
-src/*/Zed/*/Static/Public
-src/*/Zed/*/Static/Assets/sprite
-
-# Propel classes
-src/*/Zed/*/Persistence/Propel/Base/*
-src/*/Zed/*/Persistence/Propel/Map/*
-
 # PHAR
 tmp/spryk.phar
 
 # tests
-tests/**/_generated/
-tests/_data/src/
-tests/_data/vendor/
-tests/_output/*
-!tests/_output/.gitkeep
-
-!tests/_data/config/*
-!tests/_data/Glue/*
-tests/_data/*
-
 var/*
-generated/*
+tests/_support/_generated/*

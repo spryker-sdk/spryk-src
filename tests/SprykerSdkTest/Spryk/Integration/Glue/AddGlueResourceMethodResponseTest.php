@@ -29,6 +29,39 @@ class AddGlueResourceMethodResponseTest extends Unit
     protected SprykIntegrationTester $tester;
 
     /**
+     * @dataProvider controllerNameProvider
+     *
+     * @param string $controllerName
+     *
+     * @return void
+     */
+    public function testEnsureResourceControllerSuffix(string $controllerName): void
+    {
+        $commandOptions = [
+            '--resource' => '/foo-bars',
+            '--httpMethod' => 'GET',
+            '--httpResponseCode' => 200,
+            '--controller' => $controllerName,
+        ];
+
+        $this->tester->run($this, $commandOptions);
+
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_FOO_BAR_CONTROLLER);
+    }
+
+    /**
+     * @return \array<array<string>>
+     */
+    public function controllerNameProvider(): array
+    {
+        return [
+            ['FooBar'],
+            ['FooBarController'],
+            ['FooBarResourceController'],
+        ];
+    }
+
+    /**
      * @dataProvider resourceMethodResponse
      *
      * @param string $httpMethod
@@ -53,7 +86,7 @@ class AddGlueResourceMethodResponseTest extends Unit
         ?string $resource = null
     ): void {
         $commandOptions = [
-            // TODO We also need to add tests for project level
+            // TODO We also need to add tests for the project level
 //            '--mode' => 'project',
 //            '--organization' => 'Pyz',
             '--resource' => $resource ?? '/foo-bars',
@@ -63,7 +96,6 @@ class AddGlueResourceMethodResponseTest extends Unit
         $expectedControllerMethodName = $httpMethod . 'Action';
         $expectedTestController = $this->getExpectedTestController($httpMethod, $isBulk);
         $expectedTestControllerMethodName = $this->getExpectedTestControllerMethodName($httpMethod, $httpResponseCode, $isBulk);
-        $expectedFixtureClass = $this->getFixtureClassName($httpMethod, (bool)$isBulk);
 
         if ($isBulk) {
             $commandOptions['--isBulk'] = $isBulk;
@@ -100,18 +132,6 @@ class AddGlueResourceMethodResponseTest extends Unit
         // Tester class methods
         foreach ($this->getExpectedTesterMethods($httpMethod, (bool)$isBulk) as $methodName) {
             $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_TESTER_CLASS, $methodName);
-        }
-
-        // Fixtures classes
-        if ($httpMethod !== 'post') {
-            $this->tester->assertClassOrInterfaceExists($expectedFixtureClass);
-
-            // Fixtures methods
-            $this->tester->assertClassOrInterfaceHasMethod($expectedFixtureClass, 'buildFixtures');
-
-            foreach ($this->getFixtureMethodNames((bool)$isBulk) as $methodName) {
-                $this->tester->assertClassOrInterfaceHasMethod($expectedFixtureClass, $methodName);
-            }
         }
 
         // Resource
@@ -212,29 +232,6 @@ class AddGlueResourceMethodResponseTest extends Unit
         }
 
         return $methods;
-    }
-
-    /**
-     * @param string $httpMethod
-     * @param bool $isBulk
-     *
-     * @return string
-     */
-    protected function getFixtureClassName(string $httpMethod, bool $isBulk): string
-    {
-        return sprintf(GlueBackendApiClassNames::GLUE_BACKEND_API_FIXTURES_CLASS, ucfirst($httpMethod), $isBulk ? 'Collection' : '');
-    }
-
-    /**
-     * @param bool $isBulk
-     *
-     * @return array
-     */
-    protected function getFixtureMethodNames(bool $isBulk): array
-    {
-        return $isBulk
-            ? ['getFooBarTransferOne', 'getFooBarTransferTwo']
-            : ['getFooBarTransfer'];
     }
 
     /**

@@ -104,6 +104,34 @@ class TransferModule extends Module
     }
 
     /**
+     * @param string $pathToTransferFile
+     * @param string $transferName
+     *
+     * @return void
+     */
+    public function haveDataBuilderSchema(string $pathToTransferFile, string $transferName): void
+    {
+        $transferSchema = sprintf('<?xml version="1.0"?>
+<transfers
+    xmlns="spryker:databuilder-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
+>
+  <transfer name="%s">
+  </transfer>
+
+</transfers>', $transferName);
+
+        $directory = dirname($pathToTransferFile);
+
+        if (!is_dir($directory)) {
+            mkdir($directory, 0777, true);
+        }
+
+        file_put_contents($pathToTransferFile, $transferSchema);
+    }
+
+    /**
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedXmlInterface $resolvedXml
      * @param string $transferName
      *

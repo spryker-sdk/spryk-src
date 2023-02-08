@@ -28,12 +28,12 @@ class {{ className | classNameShort }} implements {{ interfaceName | classNameSh
     }
 
     /**
-     * @var \Spryker\Shared\Kernel\Transfer\TransferInterface $newMessageTransfer
-     * @var \Spryker\Shared\Kernel\Transfer\TransferInterface|null $previousMessageTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $newMessageTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $previousMessageTransfer
      */
     public function sendMessage($newMessageTransfer, $previousMessageTransfer = null): void
     {
-        if ($previousMessageTransfer !== null) {
+        if ($previousMessageTransfer !== null && method_exists($previousMessageTransfer, 'getMessageAttributes') && method_exists($newMessageTransfer, 'setMessageAttributes')) {
             $newMessageTransfer->setMessageAttributes($previousMessageTransfer->getMessageAttributes());
         }
 

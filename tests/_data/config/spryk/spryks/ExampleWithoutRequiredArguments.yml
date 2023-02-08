@@ -1,0 +1,11 @@
+name: ExampleWithoutRequiredArguments
+spryk: template
+description: "Unit Test Example file"
+
+arguments:
+    argumentA:
+        value: "some value"
+
+    argumentB:
+        default: "some default"
+

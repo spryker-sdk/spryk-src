@@ -2,7 +2,7 @@
 
 {{ include('Partials/license.twig') }}
 
-namespace {{ organization }}\{{ subDirectory | replace({'/': '\\'}) }};
+namespace {{ organization }}\Zed\{{ module }}\{{ subDirectory | replace({'/': '\\'}) }};
 
 {% if extends %}
 use {{ extends | replace({'/': '\\'}) | trim('\\') }};

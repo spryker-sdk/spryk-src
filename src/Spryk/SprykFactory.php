@@ -21,6 +21,7 @@ use SprykerSdk\Spryk\Model\Spryk\Dumper\SprykDefinitionDumperInterface;
 use SprykerSdk\Spryk\Model\Spryk\Executor\SprykExecutorInterface;
 use SprykerSdk\Spryk\Model\Spryk\Fixer\SprykDefinitionFixerInterface;
 
+// @codeCoverageIgnore
 class SprykFactory
 {
     /**

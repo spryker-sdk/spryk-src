@@ -11,6 +11,14 @@ use Codeception\Test\Unit;
 use SprykerSdk\Spryk\Model\Spryk\Filter\ResourceNameToControllerNameFilter;
 use SprykerSdkTest\SprykTester;
 
+/**
+ * @group SprykerSdkTest
+ * @group Spryk
+ * @group Model
+ * @group Spryk
+ * @group Filter
+ * @group ResourceNameToControllerNameFilterTest
+ */
 class ResourceNameToControllerNameFilterTest extends Unit
 {
     protected SprykTester $tester;

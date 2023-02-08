@@ -49,7 +49,9 @@ arguments:
     controller:
         inherit: true
         description: "Defines the Controller name to use."
-        value: "{{ resource | resourceNameToControllerName }}ResourceController"
+        default: "{{ resource | resourceNameToControllerName }}"
+        callback:
+            - EnsureResourceControllerSuffixCallback    # Ensure we always have ResourceController as suffix
 
     zedDomainEntity:
         description: "Defines the domainEntity used on Zed side for the CRUD Facade. It will be used to create all needed Transfer Objects."
@@ -60,7 +62,7 @@ arguments:
         value: "{{ resource | resourceNameToModelName }}"
 
     target:
-        value: "{{ organization }}\\Glue\\{{ module }}\\Controller\\{{ controller | classNameShort | ensureControllerSuffix }}"
+        value: "{{ organization }}\\Glue\\{{ module }}\\Controller\\{{ controller }}"
 
     input:
         inherit: true
@@ -86,6 +88,8 @@ postSpryks:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"
               dataModule:
                   inherit: true
+              applicationType:
+                  inherit: true
               zedDomainEntity:
                   inherit: true
               resourceDataObject:
@@ -93,7 +97,7 @@ postSpryks:
               body:
                   value: Glue/ApiApplication/Controller/DeleteMethod.php.twig
               target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\Controller\\{{ resource | resourceNameToControllerName }}ResourceController"
+                  value: "{{ organization }}\\Glue\\{{ module }}\\Controller\\{{ controller }}"
               withInterface:
                   value: false
 

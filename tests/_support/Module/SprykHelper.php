@@ -37,7 +37,7 @@ class SprykHelper extends Module
     /**
      * @var array
      */
-    protected $config = [
+    protected array $config = [
         'withTestSpryks' => false,
         'withTestTemplates' => false,
     ];
@@ -76,9 +76,9 @@ class SprykHelper extends Module
      * @param \Codeception\Test\Unit $testClass
      * @param array $arguments
      *
-     * @return void
+     * @return \Symfony\Component\Console\Tester\CommandTester
      */
-    public function run(Unit $testClass, array $arguments): void
+    public function run(Unit $testClass, array $arguments): CommandTester
     {
         $sprykName = $this->getSprykName($testClass);
 
@@ -97,6 +97,8 @@ class SprykHelper extends Module
         $arguments = $this->addDevelopmentModeFromConfig($arguments);
 
         $tester->execute($arguments, ['interactive' => false]);
+
+        return $tester;
     }
 
     /**
@@ -222,7 +224,7 @@ class SprykHelper extends Module
                 return $templateDirectories;
             },
             'getCoreNamespaces' => function () {
-                return ['Spryker'];
+                return ['Spryker', 'SprykerShop'];
             },
             'getProjectNamespace' => function () {
                 return 'Pyz';

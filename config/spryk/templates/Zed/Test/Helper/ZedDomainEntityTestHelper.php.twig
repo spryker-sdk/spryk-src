@@ -36,23 +36,7 @@ class {{ domainEntity }}CrudHelper extends Module
     /**
      * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer|null
      */
-    public function have{{ domainEntity }}TransferWithUuidTwoPersisted(): ?{{ domainEntity }}Transfer
-    {
-        return $this->persist{{ domainEntity }}($this->have{{ domainEntity }}Transfer(['uuid' => static::UUID_TWO]));
-    }
-
-    /**
-    * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer
-    */
-    public function have{{ domainEntity }}TransferWithUuidTwo(): {{ domainEntity }}Transfer
-    {
-        return $this->have{{ domainEntity }}Transfer(['uuid' => static::UUID_ONE]);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer|null
-     */
-    public function have{{ domainEntity }}TransferWithUuidOnePersisted(): ?{{ domainEntity }}Transfer
+    public function have{{ domainEntity }}TransferOnePersisted(): ?{{ domainEntity }}Transfer
     {
         return $this->persist{{ domainEntity }}($this->have{{ domainEntity }}Transfer(['uuid' => static::UUID_ONE]));
     }
@@ -60,9 +44,25 @@ class {{ domainEntity }}CrudHelper extends Module
     /**
     * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer
     */
-    public function have{{ domainEntity }}TransferWithUuidOne(): {{ domainEntity }}Transfer
+    public function have{{ domainEntity }}TransferOne(): {{ domainEntity }}Transfer
     {
         return $this->have{{ domainEntity }}Transfer(['uuid' => static::UUID_ONE]);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer|null
+     */
+    public function have{{ domainEntity }}TransferTwoPersisted(): ?{{ domainEntity }}Transfer
+    {
+        return $this->persist{{ domainEntity }}($this->have{{ domainEntity }}Transfer(['uuid' => static::UUID_TWO]));
+    }
+
+    /**
+    * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer
+    */
+    public function have{{ domainEntity }}TransferTwo(): {{ domainEntity }}Transfer
+    {
+        return $this->have{{ domainEntity }}Transfer(['uuid' => static::UUID_TWO]);
     }
 
     /**
@@ -80,7 +80,7 @@ class {{ domainEntity }}CrudHelper extends Module
     /**
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CriteriaTransfer
      */
-    public function have{{ domainEntity }}CriteriaTransferWithUuidOneCriteria(): {{ domainEntity }}CriteriaTransfer
+    public function have{{ domainEntity }}CriteriaTransferWith{{ domainEntity }}TransferOneCriteria(): {{ domainEntity }}CriteriaTransfer
     {
         ${{ domainEntity | lcfirst }}CriteriaTransfer = new {{ domainEntity }}CriteriaTransfer();
         ${{ domainEntity | lcfirst }}ConditionsTransfer = new {{ domainEntity }}ConditionsTransfer();
@@ -93,7 +93,7 @@ class {{ domainEntity }}CrudHelper extends Module
     /**
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionDeleteCriteriaTransfer
      */
-    public function have{{ domainEntity }}DeleteCriteriaTransferWithUuidOneCriteria(): {{ domainEntity }}CollectionDeleteCriteriaTransfer
+    public function have{{ domainEntity }}DeleteCriteriaTransferWith{{ domainEntity }}TransferOneCriteria(): {{ domainEntity }}CollectionDeleteCriteriaTransfer
     {
         ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer = new {{ domainEntity }}CollectionDeleteCriteriaTransfer();
         ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->setUuids([static::UUID_ONE]);
@@ -104,7 +104,7 @@ class {{ domainEntity }}CrudHelper extends Module
     /**
     * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionDeleteCriteriaTransfer
     */
-    public function have{{ domainEntity }}DeleteCriteriaTransferWithUuidTwoCriteria(): {{ domainEntity }}CollectionDeleteCriteriaTransfer
+    public function have{{ domainEntity }}DeleteCriteriaTransferWith{{ domainEntity }}TransferTwoCriteria(): {{ domainEntity }}CollectionDeleteCriteriaTransfer
     {
         ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer = new {{ domainEntity }}CollectionDeleteCriteriaTransfer();
         ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->setUuids([static::UUID_TWO]);
@@ -115,7 +115,7 @@ class {{ domainEntity }}CrudHelper extends Module
     /**
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CriteriaTransfer
      */
-    public function have{{ domainEntity }}CriteriaTransferWithUuidTwoCriteria(): {{ domainEntity }}CriteriaTransfer
+    public function have{{ domainEntity }}CriteriaTransfer{{ domainEntity }}TransferTwoCriteria(): {{ domainEntity }}CriteriaTransfer
     {
         ${{ domainEntity | lcfirst }}CriteriaTransfer = new {{ domainEntity }}CriteriaTransfer();
         ${{ domainEntity | lcfirst }}ConditionsTransfer = new {{ domainEntity }}ConditionsTransfer();
@@ -128,9 +128,9 @@ class {{ domainEntity }}CrudHelper extends Module
     /**
     * @param array<string, mixed> $seed
     *
-    * @return \Generated\Shared\Transfer\AppTransfer|null
+    * @return \Generated\Shared\Transfer\{{ domainEntity }}Transfer|null
     */
-    public function have{{ domainEntity }}TransferPersisted(array $seed = []): ?AppTransfer
+    public function have{{ domainEntity }}TransferPersisted(array $seed = []): ?{{ domainEntity }}Transfer
     {
         return $this->persist{{ domainEntity }}($this->have{{ domainEntity }}Transfer($seed));
     }
@@ -399,12 +399,12 @@ class {{ domainEntity }}CrudHelper extends Module
     *
     * @return void
     */
-    public function assert{{ domainEntity }}CollectionResponseContainsOneWithUuidOneTransferWithId({{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer, {{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer): void
+    public function assert{{ domainEntity }}CollectionResponseContainsOne{{ domainEntity }}TransferOneWithId({{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer, {{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer): void
     {
         ${{ domainEntity | lcfirst }}CollectionTransfer = (new {{ domainEntity }}CollectionTransfer())->set{{ domainEntity | pluralize }}(${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}());
 
         $this->assert{{ domainEntity }}CollectionContainsTransferWithId(${{ domainEntity | lcfirst }}CollectionTransfer, ${{ domainEntity | lcfirst }}Transfer);
-        $this->assert{{ domainEntity }}CollectionResponseContainsOneWithUuidOneTransfer(${{ domainEntity | lcfirst }}CollectionResponseTransfer);
+        $this->assert{{ domainEntity }}CollectionResponseContainsOne{{ domainEntity }}TransferOne(${{ domainEntity | lcfirst }}CollectionResponseTransfer);
     }
 
    /**
@@ -412,7 +412,7 @@ class {{ domainEntity }}CrudHelper extends Module
     *
     * @return void
     */
-    public function assert{{ domainEntity }}CollectionResponseContainsOneWithUuidOneTransfer({{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): void
+    public function assert{{ domainEntity }}CollectionResponseContainsOne{{ domainEntity }}TransferOne({{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): void
     {
         $this->assertCount(1, ${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}());
         $this->assertEquals(static::UUID_ONE, ${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}()[0]->getUuid());
@@ -424,12 +424,12 @@ class {{ domainEntity }}CrudHelper extends Module
     *
     * @return void
     */
-    public function assert{{ domainEntity }}CollectionResponseContainsOneWithUuidTwoTransferWithId({{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer, {{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer): void
+    public function assert{{ domainEntity }}CollectionResponseContainsOne{{ domainEntity }}TransferTwoWithId({{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer, {{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer): void
     {
         ${{ domainEntity | lcfirst }}CollectionTransfer = (new {{ domainEntity }}CollectionTransfer())->set{{ domainEntity | pluralize }}(${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}());
 
         $this->assert{{ domainEntity }}CollectionContainsTransferWithId(${{ domainEntity | lcfirst }}CollectionTransfer, ${{ domainEntity | lcfirst }}Transfer);
-        $this->assert{{ domainEntity }}CollectionResponseContainsOneWithUuidTwoTransfer(${{ domainEntity | lcfirst }}CollectionResponseTransfer);
+        $this->assert{{ domainEntity }}CollectionResponseContainsOne{{ domainEntity }}TransferTwo(${{ domainEntity | lcfirst }}CollectionResponseTransfer);
     }
 
    /**
@@ -437,7 +437,7 @@ class {{ domainEntity }}CrudHelper extends Module
     *
     * @return void
     */
-    public function assert{{ domainEntity }}CollectionResponseContainsOneWithUuidTwoTransfer({{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): void
+    public function assert{{ domainEntity }}CollectionResponseContainsOne{{ domainEntity }}TransferTwo({{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): void
     {
         $this->assertCount(1, ${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}());
         $this->assertEquals(static::UUID_TWO, ${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}()[0]->getUuid());

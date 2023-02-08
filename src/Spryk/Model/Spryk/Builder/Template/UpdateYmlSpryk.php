@@ -12,6 +12,7 @@ use SprykerSdk\Spryk\Model\Spryk\Builder\AbstractBuilder;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface;
 use SprykerSdk\Spryk\SprykConfig;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Yaml\Yaml;
 
 class UpdateYmlSpryk extends AbstractBuilder
@@ -30,6 +31,11 @@ class UpdateYmlSpryk extends AbstractBuilder
      * @var string
      */
     public const ARGUMENT_ADD_TO_ELEMENT = 'addToElement';
+
+    /**
+     * @var string
+     */
+    public const ARGUMENT_ADD_TO_ELEMENT_TYPE = 'addToElementType';
 
     /**
      * @var string
@@ -81,7 +87,7 @@ class UpdateYmlSpryk extends AbstractBuilder
         }
 
         $targetYml = $this->prepareTargetYaml($resolved->getDecodedYml());
-        $resolved->setDecodedYml($this->updateYaml($targetYml));
+        $resolved->setDecodedYml($targetYml);
 
         $this->log(sprintf('Updated <fg=green>%s</>', $this->getTargetPath()));
     }
@@ -93,28 +99,69 @@ class UpdateYmlSpryk extends AbstractBuilder
      */
     protected function prepareTargetYaml(array $targetYaml): array
     {
-        $addToElementPath = $this->getAddToElement();
-        $afterElement = $this->getAfterElement();
+        $propertyAccessor = PropertyAccess::createPropertyAccessor();
 
-        $currentLevel = &$targetYaml;
-        foreach ($addToElementPath as $pathElement) {
-            if (!array_key_exists($pathElement, $currentLevel)) {
-                $newCurrentLevel = [];
-                foreach ($currentLevel as $key => $value) {
-                    $newCurrentLevel[$key] = $value;
-                    if ($key === $afterElement) {
-                        $newCurrentLevel[$pathElement] = [];
-                    }
-                }
-                if (!array_key_exists($pathElement, $newCurrentLevel)) {
-                    $newCurrentLevel[$pathElement] = [];
-                }
-                $currentLevel = $newCurrentLevel;
-            }
-            $currentLevel = &$currentLevel[$pathElement];
+        $addToElementType = $this->getAddToElementType();
+        $addToElementPath = $this->getAddToElementPath();
+        $addToElementName = $this->getAddToElementName();
+        $ymlToAdd = $this->getYamlToAdd();
+        $ymlToAdd = ($addToElementType === 'array') ? (array)$ymlToAdd : $ymlToAdd;
+
+        // Add after is either a root element or null, support for adding it inside an array is not yet implemented
+        $addAfter = $this->getAfterElement();
+
+        $targetToAddYmlTo = $propertyAccessor->getValue($targetYaml, $addToElementPath);
+
+        if ($targetToAddYmlTo) {
+            $ymlToAdd = $this->mergeYmlToAddWithExistingYml($targetToAddYmlTo, $ymlToAdd);
+            unset($targetYaml[$addToElementName]);
         }
 
+        if ($addAfter) {
+            $newYml = [];
+
+            foreach ($targetYaml as $key => $value) {
+                $newYml[$key] = $value;
+                if ($key === $addAfter) {
+                    $newYml[$addToElementName] = $ymlToAdd;
+                }
+            }
+
+            return $newYml;
+        }
+
+        $propertyAccessor->setValue($targetYaml, $addToElementPath, $ymlToAdd);
+
         return $targetYaml;
+    }
+
+    /**
+     * @param array $existingYml
+     * @param array $newYml
+     *
+     * @return array
+     */
+    protected function mergeYmlToAddWithExistingYml(array $existingYml, array $newYml): array
+    {
+        foreach ($newYml as $key => $value) {
+            if (!is_int($key) && !isset($existingYml[$key])) {
+                $existingYml[$key] = $value;
+
+                continue;
+            }
+
+            if (!is_int($key) && is_array($value)) {
+                $existingYml[$key] = $this->mergeYmlToAddWithExistingYml($existingYml[$key], $newYml[$key]);
+
+                continue;
+            }
+
+            if (!in_array($value, $existingYml)) {
+                $existingYml[] = $value;
+            }
+        }
+
+        return $existingYml;
     }
 
     /**
@@ -161,41 +208,37 @@ class UpdateYmlSpryk extends AbstractBuilder
     }
 
     /**
-     * @param array $targetYaml
-     *
-     * @return array
+     * @return string
      */
-    protected function updateYaml(array $targetYaml): array
+    protected function getAddToElementPath(): string
     {
-        $content = $this->getYamlToAdd();
-        $addToElementPath = $this->getAddToElement();
+        $addToElement = $this->getStringArgument(static::ARGUMENT_ADD_TO_ELEMENT);
+        $addToElementFragments = explode('.', $addToElement);
 
-        $currentLevel = &$targetYaml;
-        foreach ($addToElementPath as $key) {
-            $currentLevel = &$currentLevel[$key];
-        }
-
-        if (is_array($content)) {
-            $currentLevel = array_merge($currentLevel, $content);
-
-            return $targetYaml;
-        }
-
-        if (in_array($content, $currentLevel, true)) {
-            return $targetYaml;
-        }
-
-        $currentLevel[] = $content;
-
-        return $targetYaml;
+        return sprintf('[%s]', implode('][', $addToElementFragments));
     }
 
     /**
-     * @return array
+     * @return string
      */
-    protected function getAddToElement(): array
+    protected function getAddToElementName(): string
     {
-        return explode('.', $this->getStringArgument(static::ARGUMENT_ADD_TO_ELEMENT));
+        $addToElement = $this->getStringArgument(static::ARGUMENT_ADD_TO_ELEMENT);
+        $addToElementFragments = explode('.', $addToElement);
+
+        return array_pop($addToElementFragments);
+    }
+
+    /**
+     * @return string|null
+     */
+    protected function getAddToElementType(): ?string
+    {
+        if (!$this->arguments->hasArgument(static::ARGUMENT_ADD_TO_ELEMENT_TYPE)) {
+            return null;
+        }
+
+        return $this->arguments->getArgument(static::ARGUMENT_ADD_TO_ELEMENT_TYPE)->getValue();
     }
 
     /**

@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 
     $kernel = new Kernel(APPLICATION_ENV_SPRYK, APPLICATION_DEBUG);
     $application = new Application($kernel);
-    $application->setDefaultCommand('spryk:run', true);
 
     $application->run();
 })();

@@ -7,9 +7,9 @@
 
 namespace SprykerSdkTest\Spryk\Console;
 
+use Codeception\Stub;
 use Codeception\Stub\Expected;
 use Codeception\Test\Unit;
-use Codeception\Util\Stub;
 use SprykerSdk\Spryk\Console\CompilePharConsole;
 use SprykerSdk\Spryk\SprykFacade;
 use SprykerSdkTest\SprykConsoleTester;

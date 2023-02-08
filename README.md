@@ -1,5 +1,6 @@
 # Spryk
 [![CI](https://github.com/spryker-sdk/spryk-src/workflows/CI/badge.svg?branch=master)](https://github.com/spryker-sdk/spryk-src/actions?query=workflow%3ACI+branch%3Amaster)
+[![Latest Stable Version](https://poser.pugx.org/spryker-sdk/spryk-src/v/stable.svg)](https://packagist.org/packages/spryker-sdk/spryk-src)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
 [![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat)](https://github.com/phpstan/phpstan)
 
@@ -75,7 +76,6 @@ When this is done re-run your tests. Now you should see a green test.
 > You need to have [BOX](https://github.com/box-project/box) installed to create the `spryk.phar` archive.
 >
 > `spryker-sdk/spryk` and `spryker-sdk/spryk-src` need to be installed together.
-
 
 To compile the `spryk.phar` you need to run the following steps:
 

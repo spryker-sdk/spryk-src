@@ -17,6 +17,9 @@ arguments:
     addToElement:
         value: include
 
+    addToElementType:
+        value: array
+
     content:
         value: "tests/{{ organization }}Test/Zed/{{ module }}"
 

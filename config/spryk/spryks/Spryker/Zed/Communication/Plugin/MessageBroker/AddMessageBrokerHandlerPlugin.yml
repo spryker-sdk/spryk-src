@@ -85,3 +85,15 @@ postSpryks:
                       - ""
                       - "        // Assert"
                       - "$this->markTestSkipped('Test needs implementation');"
+
+    - AddZedTestHelperMethod:
+          arguments:
+              method:
+                  value: "have{{ messageName }}Transfer"
+              input:
+                  value: "array $seed = null"
+              output:
+                  value: "\\Generated\\Shared\\Transfer\\{{ messageName }}Transfer"
+              body:
+                  value:
+                      - "return (new \\Generated\\Shared\\DataBuilder\\{{ messageName }}Builder($seed))->build();"

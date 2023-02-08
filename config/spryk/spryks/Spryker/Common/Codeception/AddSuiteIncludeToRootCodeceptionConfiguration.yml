@@ -24,6 +24,9 @@ arguments:
     addToElement:
         value: include
 
+    addToElementType:
+        value: array
+
     content:
         description: "The content of the element."
         value: "tests/{{ organization }}Test/{{ application }}/{{ module }}"

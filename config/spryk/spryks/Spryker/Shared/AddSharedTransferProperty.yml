@@ -31,3 +31,6 @@ arguments:
 
 preSpryks:
     - AddSharedTransferDefinition
+
+postSpryks:
+    - AddDataBuilderProperty

@@ -13,11 +13,13 @@ arguments:
         inherit: true
         default: "{{ resource | resourceNameToModuleName }}"
         callback: GlueResourceModuleName
+        example: Customer
 
     dataModule: # dataModule
         inherit: true
         description: "The module name for the Zed Application. It's the same name as for the Glue Module but without the Api suffix."
         value: "{{ module | removeApiSuffix | singularize }}"
+        example: Customer
 
     organization:
         inherit: true
@@ -47,16 +49,22 @@ arguments:
     resource:
         inherit: true
         description: "Defines the resource name this resource plugin will work with."
+        example: /customers
 
     httpMethod:
         description: "The HTTP method e.g. POST"
         callback: StringToLower
+        example: get
 
     httpResponseCode:
         description: "The HTTP response code e.g. 200 (OK)"
+        example: 200
 
     controller:
-        default: "{{ resource | resourceNameToControllerName }}ResourceController"
+        default: "{{ resource | resourceNameToControllerName }}"
+        callback:
+            - RemoveControllerSuffixCallback            # Filter our when someone passes FooBarController
+            - EnsureResourceControllerSuffixCallback    # Ensure we always have ResourceController as suffix
 
     zedDomainEntity:
         description: "Defines the domainEntity used on Zed side for the CRUD Facade. It will be used to create all needed Transfer Objects."
