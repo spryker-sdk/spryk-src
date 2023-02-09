@@ -12,7 +12,7 @@ jobs:
     build:
         name: Build
 #        if: ${{github.event.pull_request.merged == true }} && ${{ github.event.workflow_run.conclusion == 'success' }}
-        runs-on: 'ubuntu-latest'
+        runs-on: "ubuntu-latest"
         timeout-minutes: 60
 
         steps:
@@ -24,8 +24,8 @@ jobs:
             - name: Install PHP test
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: '8.0'
-                  coverage: 'none'
+                  php-version: "8.0"
+                  coverage: "none"
 
             - name: Composer install
               run: composer install --no-interaction --no-progress
@@ -45,7 +45,7 @@ jobs:
 #        name: Commit spryk.phar
 #        if: ${{github.event.pull_request.merged == true }} && ${{ github.event.workflow_run.conclusion == 'success' }}
 #        needs: build
-#        runs-on: 'ubuntu-latest'
+#        runs-on: "ubuntu-latest"
 #        timeout-minutes: 60
 #        steps:
 #            - name: Checkout
