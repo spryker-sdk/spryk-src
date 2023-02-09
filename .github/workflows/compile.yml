@@ -1,14 +1,14 @@
-name: Compile
+name: 'Compile'
 
-on: workflow_dispatch
-#    workflow_run:
-#        workflows: [CI]
-#        types: [completed]
-#
-#    pull_request:
-#        types: [merged]
+on:
+    workflow_run:
+        workflows: [CI]
+        types: [completed]
 
-#    workflow_dispatch:
+    pull_request:
+        types: [merged]
+
+    workflow_dispatch:
 
 jobs:
     build:
@@ -45,6 +45,7 @@ jobs:
 
     commit:
         name: Commit spryk.phar
+#        if: ${{github.event.pull_request.merged == true }} && ${{ github.event.workflow_run.conclusion == 'success' }}
         needs: build
         runs-on: 'ubuntu-latest'
         timeout-minutes: 60
