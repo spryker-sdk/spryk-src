@@ -1,4 +1,4 @@
-name: 'Compile'
+name: Compile
 
 on: workflow_dispatch
 #    workflow_run:
