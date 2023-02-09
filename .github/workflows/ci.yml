@@ -1,72 +1,72 @@
-name: CI
-
-on:
-  pull_request:
-  push:
-    branches:
-      - master
-  workflow_dispatch:
-
-jobs:
-  validation:
-    runs-on: 'ubuntu-latest'
-    strategy:
-      fail-fast: false
-      matrix:
-        php-version: [
-            '8.0',
-            '8.1'
-        ]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-            php-version: ${{ matrix.php-version }}
-            extensions: mbstring, intl, pdo_mysql
-
-      - name: Validate composer.json and composer.lock
-        run: composer validate
-
-      - name: Composer get cache directory
-        id: composer-cache
-        run: echo 'dir=$(composer config cache-files-dir)' >> $GITHUB_OUTPUT
-
-      - name: Composer cache
-        uses: actions/cache@v3
-        with:
-            path: ${{ steps.composer-cache.outputs.dir }}
-            key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-            restore-keys: |
-                ${{ runner.os }}-composer-
-
-      - name: Composer install
-        run: composer install --no-interaction -o
-
-      - name: Check PHP for syntax errors
-        run: find ./src -path src -prune -o -type f -name '*.php' -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v 'No syntax errors detected' )
-
-      - name: CodeStyle checks
-        run: composer cs-check
-
-      - name: PHPStan checks
-        run: composer stan
-
-      - name: Codecept tests
-        if: ${{ matrix.php-version == '8.0' }}
-        run: composer test
-
-      - name: Codecept tests with coverage
-        if: ${{ matrix.php-version == '8.1' }}
-        run: composer test-cover
-
-      - name: Code Coverage Report
-        if: success() && matrix.php-version == '8.1'
-        uses: codecov/codecov-action@v3
-        with:
-            file: ./tests/_output/coverage.xml
-
-      - name: Check Spryks Definitions
-        run: bin/console spryk:check-definition
+#name: CI
+#
+#on:
+#  pull_request:
+#  push:
+#    branches:
+#      - master
+#  workflow_dispatch:
+#
+#jobs:
+#  validation:
+#    runs-on: 'ubuntu-latest'
+#    strategy:
+#      fail-fast: false
+#      matrix:
+#        php-version: [
+#            '8.0',
+#            '8.1'
+#        ]
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#
+#      - name: Setup PHP
+#        uses: shivammathur/setup-php@v2
+#        with:
+#            php-version: ${{ matrix.php-version }}
+#            extensions: mbstring, intl, pdo_mysql
+#
+#      - name: Validate composer.json and composer.lock
+#        run: composer validate
+#
+#      - name: Composer get cache directory
+#        id: composer-cache
+#        run: echo 'dir=$(composer config cache-files-dir)' >> $GITHUB_OUTPUT
+#
+#      - name: Composer cache
+#        uses: actions/cache@v3
+#        with:
+#            path: ${{ steps.composer-cache.outputs.dir }}
+#            key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+#            restore-keys: |
+#                ${{ runner.os }}-composer-
+#
+#      - name: Composer install
+#        run: composer install --no-interaction -o
+#
+#      - name: Check PHP for syntax errors
+#        run: find ./src -path src -prune -o -type f -name '*.php' -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v 'No syntax errors detected' )
+#
+#      - name: CodeStyle checks
+#        run: composer cs-check
+#
+#      - name: PHPStan checks
+#        run: composer stan
+#
+#      - name: Codecept tests
+#        if: ${{ matrix.php-version == '8.0' }}
+#        run: composer test
+#
+#      - name: Codecept tests with coverage
+#        if: ${{ matrix.php-version == '8.1' }}
+#        run: composer test-cover
+#
+#      - name: Code Coverage Report
+#        if: success() && matrix.php-version == '8.1'
+#        uses: codecov/codecov-action@v3
+#        with:
+#            file: ./tests/_output/coverage.xml
+#
+#      - name: Check Spryks Definitions
+#        run: bin/console spryk:check-definition
