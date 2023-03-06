@@ -34,7 +34,7 @@
         "phpstan/phpdoc-parser": "~1.5.1",
         "psalm/phar": "^4.23",
         "rector/rector": "*",
-        "spryker-sdk/architector": "dev-master#308296ecc5fa793b56e229ca9fdf09c2f69775f2",
+        "spryker-sdk/architector": "0.1.x-dev",
         "spryker/code-sniffer": "0.17.9",
         "spryker/message-broker": "^1.0.0"
     },
