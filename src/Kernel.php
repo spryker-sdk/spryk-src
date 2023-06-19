@@ -13,6 +13,7 @@ use SprykerSdk\Spryk\Twig\TwigCompilerPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\HttpKernel\DependencyInjection\AddAnnotatedClassesToCachePass;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symplify\AutowireArrayParameter\DependencyInjection\CompilerPass\AutowireArrayParameterCompilerPass;
 
@@ -41,6 +42,30 @@ class Kernel extends BaseKernel
 
         $container->addCompilerPass(new AutowireArrayParameterCompilerPass());
         $container->addCompilerPass(new TwigCompilerPass());
+    }
+
+    /**
+     * Gets the container class.
+     *
+     * @throws \InvalidArgumentException If the generated classname is invalid
+     */
+    protected function getContainerClass(): string
+    {
+        $class = static::class;
+        $class = str_contains($class, "@anonymous\0") ? get_parent_class($class).str_replace('.', '_', ContainerBuilder::hash($class)) : $class;
+        $class = str_replace('\\', '_', $class).ucfirst($this->environment).($this->debug ? 'Debug' : '').'Container';
+
+        $pattern = '/_Spryk_([a-zA-Z0-9]+)_/';
+        preg_match($pattern, $class, $matches);
+        if (isset($matches[1])) {
+            $class = str_replace("_Spryk_{$matches[1]}_", '', $class);
+        }
+
+        if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $class)) {
+            throw new \InvalidArgumentException(sprintf('The environment "%s" contains invalid characters, it can only contain characters allowed in PHP class names.', $this->environment));
+        }
+
+        return $class;
     }
 
     /**
