@@ -49,6 +49,8 @@ class Kernel extends BaseKernel
      *
      * @throws \InvalidArgumentException If the generated classname is invalid
      *
+     * @codeCoverageIgnore
+     *
      * @return string
      */
     protected function getContainerClass(): string
