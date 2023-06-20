@@ -45,11 +45,11 @@ class Kernel extends BaseKernel
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * Gets the container class.
      *
      * @throws \InvalidArgumentException If the generated classname is invalid
-     *
-     * @codeCoverageIgnore
      *
      * @return string
      */
