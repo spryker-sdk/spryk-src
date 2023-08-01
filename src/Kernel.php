@@ -7,6 +7,7 @@
 
 namespace SprykerSdk;
 
+use InvalidArgumentException;
 use SprykerSdk\Spryk\Model\Spryk\Configuration\Extender\SprykConfigurationExtender;
 use SprykerSdk\Spryk\Model\Spryk\Configuration\Extender\SprykConfigurationExtenderPluginInterface;
 use SprykerSdk\Spryk\Twig\TwigCompilerPass;
@@ -41,6 +42,34 @@ class Kernel extends BaseKernel
 
         $container->addCompilerPass(new AutowireArrayParameterCompilerPass());
         $container->addCompilerPass(new TwigCompilerPass());
+    }
+
+    /**
+     * @codeCoverageIgnore
+     *
+     * Gets the container class.
+     *
+     * @throws \InvalidArgumentException If the generated classname is invalid
+     *
+     * @return string
+     */
+    protected function getContainerClass(): string
+    {
+        $class = static::class;
+        $class = strpos($class, "@anonymous\0") !== false ? get_parent_class($class) . str_replace('.', '_', ContainerBuilder::hash($class)) : $class;
+        $class = str_replace('\\', '_', $class) . ucfirst($this->environment) . ($this->debug ? 'Debug' : '') . 'Container';
+
+        $pattern = '/_Spryk_([a-zA-Z0-9]+)_/';
+        preg_match($pattern, $class, $matches);
+        if (isset($matches[1])) {
+            $class = str_replace("_Spryk_{$matches[1]}_", '', $class);
+        }
+
+        if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $class)) {
+            throw new InvalidArgumentException(sprintf('The environment "%s" contains invalid characters, it can only contain characters allowed in PHP class names.', $this->environment));
+        }
+
+        return $class;
     }
 
     /**

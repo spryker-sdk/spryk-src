@@ -36,9 +36,7 @@ if ($_SERVER['PHAR_CHECKSUM'] ?? false) {
 return [
     'prefix' => $prefix,
     'finders' => [],
-    'files-whitelist' => $stubs,
-    // Newer box version the one above are renamed, currently failing.
-    // 'exclude-files' => $stubs,
+    'exclude-files' => $stubs,
     'patchers' => [
         function (string $filePath, string $prefix, string $content): string {
             if (!in_array($filePath, [
@@ -71,20 +69,23 @@ return [
             return str_replace('\'twig_', sprintf('\'%s\\twig_', $prefix), $content);
         },
         function (string $filePath, string $prefix, string $content): string {
-            return str_replace('= twig_', sprintf('= %s\\\\twig_', $prefix), $content);
+            return str_replace('$context[\'_seq\'] = twig_', sprintf('$context[\'_seq\'] = %s\\\\twig_', $prefix), $content);
+        },
+        function (string $filePath, string $prefix, string $content): string {
+            return str_replace('= twig_', sprintf('= %s\\twig_', $prefix), $content);
         },
         function (string $filePath, string $prefix, string $content): string {
             return str_replace('(twig_', sprintf('(%s\\twig_', $prefix), $content);
         },
+        function (string $filePath, string $prefix, string $content): string {
+            return str_replace(sprintf('%s	wig_', $prefix), sprintf('(%s\\twig_', $prefix), $content);
+        },
     ],
-    'whitelist' => [
+    'exclude-namespaces' => [
         'SprykerSdk\*',
         'PhpParser\*',
         'Symfony\Polyfill\Php80\*',
     ],
-    'whitelist-global-functions' => false,
-    'whitelist-global-classes' => false,
-    // Newer box version the two above are renamed, currently failing.
-    // 'expose-global-functions' => false,
-    // 'expose-global-classes' => false,
+     'expose-global-functions' => false,
+     'expose-global-classes' => false,
 ];
