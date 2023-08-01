@@ -11,7 +11,7 @@ on:
 jobs:
     build:
         name: Build
-        if: ${{ github.event.workflow_run.conclusion == 'success' }}
+        if: ${{ 'success' == 'success' }}
         runs-on: "ubuntu-latest"
         timeout-minutes: 60
 
