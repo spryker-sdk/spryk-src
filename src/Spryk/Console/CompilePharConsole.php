@@ -33,8 +33,8 @@ class CompilePharConsole extends AbstractSprykConsole
         $output->writeln('Building argument list cache...');
         $this->executeProcess(['php', 'bin/console', 'spryk:build']);
 
-//        $output->writeln('Clean the cache...');
-//        $this->executeProcess(['php', 'bin/console', 'cache:clear', '-e', 'prod', '--no-debug']);
+        $output->writeln('Clean the cache...');
+        $this->executeProcess(['php', 'bin/console', 'cache:clear', '-e', 'prod', '--no-debug']);
 
         $output->writeln('Warm up the cache...');
         $this->executeProcess(['php', 'bin/console', 'cache:warmup', '-e', 'prod', '--no-debug']);
