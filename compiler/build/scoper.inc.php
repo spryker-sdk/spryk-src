@@ -72,8 +72,6 @@ return [
             return str_replace('$context[\'_seq\'] = twig_', sprintf('$context[\'_seq\'] = %s\\\\twig_', $prefix), $content);
         },
         function (string $filePath, string $prefix, string $content): string {
-            // $values = twig_convert_encoding($values, 'UTF-8', $charset);
-            // $values = _Spryk_177ba811\twig_convert_encoding($values, 'UTF-8', $charset);
             return str_replace('= twig_', sprintf('= %s\\twig_', $prefix), $content);
         },
         function (string $filePath, string $prefix, string $content): string {
