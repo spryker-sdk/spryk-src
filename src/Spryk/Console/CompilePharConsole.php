@@ -40,6 +40,8 @@ class CompilePharConsole extends AbstractSprykConsole
         $this->executeProcess(['php', 'bin/console', 'cache:warmup', '-e', 'prod', '--no-debug']);
 
         $output->writeln('Build the PHAR...');
+        var_dump(file_exists(getcwd() . '/compiler/build/box.phar'));
+        var_dump(is_executable(getcwd() . '/compiler/build/box.phar'));
         $this->executeProcess(['php', 'box.phar', 'compile', '--no-parallel -vvv'], getcwd() . '/compiler/build');
 
         return static::CODE_SUCCESS;
