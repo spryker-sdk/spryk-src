@@ -57,18 +57,9 @@ class CompilePharConsole extends AbstractSprykConsole
     protected function executeProcess(array $processDefinition, ?string $cwd = null, ?array $env = []): void
     {
         $process = new Process($processDefinition, $cwd);
-        $process->start();
 
-        echo sprintf('Executing %s', $process->getCommandLine());
+        $process->run();
 
-        while (!$process->isRunning()) {
-            sleep(1);
-        }
-
-        $iterator = $process->getIterator($process::ITER_SKIP_ERR | $process::ITER_KEEP_OUTPUT);
-
-        foreach ($iterator as $data) {
-            echo $data . "\n";
-        }
+        echo $process->getOutput();
     }
 }
