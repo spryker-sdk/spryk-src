@@ -214,6 +214,10 @@ class SprykConfig
         }
 
         if (defined('SPRYKER_CORE_NAMESPACES')) {
+            if (is_array(SPRYKER_CORE_NAMESPACES)) {
+                return SPRYKER_CORE_NAMESPACES;
+            }
+
             return explode(', ', SPRYKER_CORE_NAMESPACES);
         }
 
