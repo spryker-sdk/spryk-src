@@ -40,12 +40,6 @@ class CompilePharConsole extends AbstractSprykConsole
         $this->executeProcess(['php', 'bin/console', 'cache:warmup', '-e', 'prod', '--no-debug']);
 
         $output->writeln('Build the PHAR');
-        var_dump(file_exists("/home/runner/work/spryk-src/spryk-src/bin/spryk.phar"));
-        $this->executeProcess(['php', 'box.phar', 'compile', '--no-parallel -vvv'], getcwd() . '/compiler/build');
-        var_dump(file_exists("/home/runner/work/spryk-src/spryk-src/bin/spryk.phar"));
-
-        $x = null; $y = null; exec(getcwd() . '/compiler/build/box.phar compile', $x, $y); var_dump($x); var_dump($y);
-        var_dump(file_exists("/home/runner/work/spryk-src/spryk-src/bin/spryk.phar"));
 
         return static::CODE_SUCCESS;
     }
@@ -63,6 +57,9 @@ class CompilePharConsole extends AbstractSprykConsole
     {
         $process = new Process($processDefinition, $cwd);
         $process->start();
+        while (!$process->isRunning()) {
+            sleep(1);
+        }
         $iterator = $process->getIterator($process::ITER_SKIP_ERR | $process::ITER_KEEP_OUTPUT);
 
         foreach ($iterator as $data) {
