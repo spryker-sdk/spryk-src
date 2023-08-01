@@ -11,7 +11,7 @@ on:
 jobs:
     build:
         name: Build
-        if: ${{github.event.pull_request.merged == true }} && ${{ github.event.workflow_run.conclusion == 'success' }}
+        if: ${{ github.event.workflow_run.conclusion == 'success' }}
         runs-on: "ubuntu-latest"
         timeout-minutes: 60
 
@@ -40,65 +40,3 @@ jobs:
 
             - name: Delete PHAR
               run: rm tmp/spryk.phar
-
-    commit:
-        name: Commit spryk.phar
-        needs: build
-        runs-on: "ubuntu-latest"
-        timeout-minutes: 60
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v3
-              with:
-                  fetch-depth: 0
-
-            - uses: 8BitJonny/gh-get-current-pr@2.0.0
-              id: PR
-              with:
-                  github-token: ${{ secrets.PAT }}
-                  sha: ${{ github.event.pull_request.head.sha }}
-
-            - name: Get PR details
-              run: echo "The PR number is ${prNumber}"
-              if: success() && steps.PR.outputs.number
-              env:
-                 prNumber: ${{ steps.PR.outputs.number }}
-
-            - name: "Checkout target repository"
-              uses: actions/checkout@v3
-              with:
-                  token: ${{ secrets.PAT }}
-                  repository: spryker-sdk/spryk
-                  path: spryk-target
-                  fetch-depth: 0
-
-            - name: Download spryk.phar
-              uses: actions/download-artifact@v3
-              with:
-                  name: phar-file
-
-            - name: Copy phar from source to target
-              run: mv spryk.phar spryk-target/spryk.phar
-
-            - name: CHMOD spryk.phar
-              run: chmod 0755 spryk-target/spryk.phar
-
-            - name: Create Pull Request
-              id: cpr
-              uses: peter-evans/create-pull-request@v4
-              with:
-                  token: ${{ secrets.PAT }}
-                  path: spryk-target
-                  branch: spryker-sdk/spryk-src/${{ env.prBranchName }}
-                  delete-branch: true
-                  title: PR ${{ env.prNumber }} (spryker-sdk/spryk-src) spryk.phar update
-                  body: ${{ steps.PR.outputs.pr_body }}
-              env:
-                  prNumber: ${{ steps.PR.outputs.number }}
-                  prBranchName: ${{ fromJson(steps.PR.outputs.pr).head.ref }}
-
-            - name: Check outputs
-              if: ${{ steps.cpr.outputs.pull-request-number }}
-              run: |
-                  echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
-                  echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
