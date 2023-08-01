@@ -25,13 +25,13 @@ jobs:
               uses: shivammathur/setup-php@v2
               with:
                   coverage: "none"
-                  php-version: "8.0"
+                  php-version: "8.1"
 
             - name: Composer install
               run: composer install --no-interaction --no-progress
 
             - name: Build caches and compile the PHAR
-              run: bin/console spryk:compile
+              run: bin/console spryk:compile --env=prod
 
             - uses: actions/upload-artifact@v3
               with:
