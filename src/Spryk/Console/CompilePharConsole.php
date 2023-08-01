@@ -9,7 +9,6 @@ namespace SprykerSdk\Spryk\Console;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
 class CompilePharConsole extends AbstractSprykConsole
 {
@@ -56,9 +55,13 @@ class CompilePharConsole extends AbstractSprykConsole
      */
     protected function executeProcess(array $processDefinition, ?string $cwd = null, ?array $env = []): void
     {
-        $process = new Process($processDefinition, $cwd);
+        echo "\r\nCreating process";
+        $process = new PyzProcess($processDefinition, $cwd);
+        echo "\r\nStarting process";
 
         $process->run();
+
+        echo "\r\nProcess started\r\n";
 
         echo $process->getOutput();
     }
