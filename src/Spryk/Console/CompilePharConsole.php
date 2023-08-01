@@ -58,6 +58,9 @@ class CompilePharConsole extends AbstractSprykConsole
     {
         $process = new Process($processDefinition, $cwd);
         $process->start();
+        while (!$process->isRunning()) {
+            sleep(1);
+        }
         $iterator = $process->getIterator($process::ITER_SKIP_ERR | $process::ITER_KEEP_OUTPUT);
 
         foreach ($iterator as $data) {
