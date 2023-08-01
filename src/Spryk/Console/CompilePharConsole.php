@@ -39,7 +39,8 @@ class CompilePharConsole extends AbstractSprykConsole
         $output->writeln('Warm up the cache...');
         $this->executeProcess(['php', 'bin/console', 'cache:warmup', '-e', 'prod', '--no-debug']);
 
-        $output->writeln('Build the PHAR');
+        $output->writeln('Build the PHAR...');
+        $this->executeProcess(['php', 'box.phar', 'compile', '--no-parallel'], getcwd() . '/compiler/build');
 
         return static::CODE_SUCCESS;
     }
@@ -57,6 +58,7 @@ class CompilePharConsole extends AbstractSprykConsole
     {
         $process = new Process($processDefinition, $cwd);
         $process->start();
+        var_dump($process->getCommandLine());
         while (!$process->isRunning()) {
             sleep(1);
         }
