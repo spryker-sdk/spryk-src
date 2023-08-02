@@ -72,15 +72,18 @@ return [
             return str_replace('$context[\'_seq\'] = twig_', sprintf('$context[\'_seq\'] = %s\\\\twig_', $prefix), $content);
         },
         function (string $filePath, string $prefix, string $content): string {
+            // Skip function renaming in twig/twig/src/ those functions are in the same namespace anyways
+            if (str_contains($filePath, 'twig/twig/src/')) {
+                return $content;
+            }
+
+            // Twig cache files
             // $values = twig_convert_encoding($values, 'UTF-8', $charset);
             // $values = _Spryk_177ba811\twig_convert_encoding($values, 'UTF-8', $charset);
             return str_replace('= twig_', sprintf('= %s\\twig_', $prefix), $content);
         },
         function (string $filePath, string $prefix, string $content): string {
             return str_replace('(twig_', sprintf('(%s\\twig_', $prefix), $content);
-        },
-        function (string $filePath, string $prefix, string $content): string {
-            return str_replace(sprintf('%s	wig_', $prefix), sprintf('(%s\\twig_', $prefix), $content);
         },
     ],
     'exclude-namespaces' => [

@@ -90,6 +90,9 @@
         }
     },
     "config": {
+        "platform": {
+            "php": "8.0.19"
+        },
         "use-include-path": true,
         "process-timeout": 600,
         "sort-packages": true,
