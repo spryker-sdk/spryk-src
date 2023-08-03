@@ -22,4 +22,4 @@ arguments:
         value: "{{ module | underscored }}.databuilder.xml"
 
     targetPath:
-        value: "tests/{{ organization }}Test/Zed/{{ module }}/_data/"
+        value: "tests/_data/"

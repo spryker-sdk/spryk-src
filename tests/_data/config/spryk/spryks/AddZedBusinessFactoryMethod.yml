@@ -10,7 +10,12 @@ arguments:
     value: Spryker
 
   className:
-    value: Spryker\Zed\FooBar\Business\Model\FooBar
+    inherit: true
+    default: Spryker\Zed\FooBar\Business\Model\FooBar
+
+  interfaceName:
+    inherit: true
+    default: Spryker\Zed\FooBar\Business\Model\FooBar
 
   output:
     value: Spryker\Zed\FooBar\Business\Model\FooBar
