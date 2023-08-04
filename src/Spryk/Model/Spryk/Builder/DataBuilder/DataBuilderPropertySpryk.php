@@ -62,6 +62,10 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
             foreach ($properties as $propertyParts) {
                 $propertyDefinition = explode(':', trim($propertyParts));
 
+                if ($this->isAutoIncrementField($propertyDefinition[0], $transferName)) {
+                    continue;
+                }
+
                 $this->addProperty($transferXMLElement, $transferName, $propertyDefinition[0], $propertyDefinition[1], $this->dataBuilderRuleByProperty($propertyDefinition[1]));
             }
 
@@ -69,10 +73,35 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
         }
 
         $propertyName = $this->getPropertyName();
+
+        if ($this->isAutoIncrementField($propertyName, $transferName)) {
+            return;
+        }
+
         $propertyType = $this->getPropertyType();
         $dataBuilderRule = $this->getDataBuilderRule();
 
         $this->addProperty($transferXMLElement, $transferName, $propertyName, $propertyType, $dataBuilderRule);
+    }
+
+    /**
+     * We can't have default values for database id fields. If we would not skip those the helper used in tests
+     * would throw an exception when they try to insert an Entity with an id.
+     *
+     * [Propel\Runtime\Exception\PropelException] Cannot insert a value for auto-increment primary key
+     *
+     * @param string $propertyName
+     * @param string $transferName
+     * @return bool
+     */
+    protected function isAutoIncrementField(string $propertyName, string $transferName): bool
+    {
+        $databaseIdField = sprintf('id%s', $transferName);
+        if ($propertyName === $databaseIdField) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

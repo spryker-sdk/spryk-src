@@ -51,7 +51,7 @@ class HttpResponseCodeToConstantNameFilter implements FilterInterface
             ));
         }
 
-        return sprintf('\%s::%s', Response::class, key($constantEntry));
+        return sprintf('\Symfony\Component\HttpFoundation\Response::%s', key($constantEntry));
     }
 
     /**

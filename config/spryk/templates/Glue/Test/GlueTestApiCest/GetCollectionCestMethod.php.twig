@@ -1,5 +1,5 @@
 // Arrange
-$I->addJsonApiResourcePlugin(new \{{ organization }}\Glue\{{ module }}\Plugin\GlueApplication\{{ resource | resourceNameToModelName }}Resource());
+$I->addJsonApiResourcePlugin(new \{{ organization }}\Glue\{{ module }}\Plugin\GlueApplication\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiResource());
 
 $url = $I->build{{ resource | resourceNameToModelName }}Url();
 

@@ -29,7 +29,7 @@ arguments:
     extends:
         callback: ResolveExtends
         value:
-#            - "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
+            - "\\Spryker\\{{ application }}\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
             - "\\Spryker\\{{ application }}\\Kernel{% if applicationType == 'Backend' %}\\Backend{% endif %}\\AbstractPlugin"
 
     implements:
@@ -85,9 +85,9 @@ postSpryks:
               withInterface:
                   value: false
     # Wire the plugin after it was created
-#    - WirePlugin:
-#          arguments:
-#              plugin:
-#                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
-#              target:
-#                  value: "\\{{ organization }}\\{{ application }}\\Glue{{ applicationType }}ApiApplication\\Glue{{ applicationType }}ApiApplicationDependencyProvider::getRouteProviderPlugins"
+    - WirePlugin:
+          arguments:
+              plugin:
+                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
+              target:
+                  value: "\\{{ organization }}\\{{ application }}\\Glue{{ applicationType }}ApiApplication\\Glue{{ applicationType }}ApiApplicationDependencyProvider::getRouteProviderPlugins"

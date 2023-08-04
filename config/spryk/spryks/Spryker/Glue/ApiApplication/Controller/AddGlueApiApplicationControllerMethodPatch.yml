@@ -6,10 +6,7 @@ level: 2
 
 arguments:
     module:
-        description: "Based on the applicationType the module name will be suffixed with BackendApi or StorefrontApi by the ResourceModuleName callback."
         inherit: true
-        default: "{{ resource | resourceNameToModuleName }}"
-        callback: GlueResourceModuleName
 
     dataModule:
         inherit: true
@@ -70,7 +67,7 @@ preSpryks:
     - AddGlueTestApiCest
 
 postSpryks:
-    - AddGlueApiApplicationResourceMethod
+#    - AddGlueApiApplicationResourceMethod
     - AddGlueApiApplicationFactory
     # Add controller patchAction
     - AddMethod:

@@ -1,5 +1,5 @@
 // Arrange
-$I->addJsonApiResourcePlugin(new \{{ organization }}\Glue\{{ module }}\Plugin\GlueApplication\{{ resource | resourceNameToModelName }}Resource());
+$I->addJsonApiResourcePlugin(new \{{ organization }}\Glue\{{ module }}\Plugin\GlueApplication\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiResource());
 
 ${{ zedDomainEntity | lcfirst }}Transfer = $I->have{{ zedDomainEntity }}TransferPersisted();
 $id{{ zedDomainEntity | lcfirst }} = ${{ zedDomainEntity | lcfirst }}Transfer->getId{{ zedDomainEntity }}();

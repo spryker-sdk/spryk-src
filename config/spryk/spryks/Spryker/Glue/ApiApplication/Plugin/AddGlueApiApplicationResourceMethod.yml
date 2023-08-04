@@ -6,8 +6,6 @@ mode: both
 arguments:
     module:
         inherit: true
-        default: "{{ resource | resourceNameToModuleName }}"
-        callback: GlueResourceModuleName
 
     organization:
         inherit: true
@@ -42,7 +40,7 @@ arguments:
         default: "{{ resource | resourceNameToModelName }}{{ applicationType }}ApiResource"
 
     target:
-        value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
+        value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
 
     httpMethod:
         description: "The HTTP method e.g. POST"

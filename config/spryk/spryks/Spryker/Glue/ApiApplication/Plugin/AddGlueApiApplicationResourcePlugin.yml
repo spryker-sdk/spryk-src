@@ -36,7 +36,7 @@ arguments:
     extends:
         callback: ResolveExtends
         value:
-#            - "\\Spryker\\{{ application }}\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
+            - "\\Spryker\\{{ application }}\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
             - "\\Spryker\\Glue\\GlueApplication\\Plugin\\GlueApplication{% if applicationType != 'Storefront' %}\\{{ applicationType }}{% endif %}\\AbstractResourcePlugin"
 
     implements:
@@ -126,10 +126,10 @@ postSpryks:
               target:
                   value: "\\{{ organization }}\\Glue\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
     # Wire the plugin after it was created
-#    - WirePlugin:
-#          arguments:
-#              plugin:
-#                  value: "\\{{ organization }}\\Glue\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
-#              target:
-#                  value: "\\Pyz\\Glue\\Glue{{ applicationType }}ApiApplication\\Glue{{ applicationType }}ApiApplicationDependencyProvider::getResourcePlugins"
+    - WirePlugin:
+          arguments:
+              plugin:
+                  value: "\\{{ organization }}\\Glue\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
+              target:
+                  value: "\\Pyz\\Glue\\Glue{{ applicationType }}ApiApplication\\Glue{{ applicationType }}ApiApplicationDependencyProvider::getResourcePlugins"
 

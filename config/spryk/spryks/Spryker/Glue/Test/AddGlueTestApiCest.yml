@@ -71,6 +71,8 @@ postSpryks:
     - AddMethod:
           condition: "httpMethod === 'get' && isBulk === false"
           arguments:
+              applicationType:
+                  inherit: true
               isBulk:
                   inherit: true
               httpResponseCode:
@@ -97,6 +99,8 @@ postSpryks:
     - AddMethod:
         condition: "httpMethod === 'get' && isBulk === true"
         arguments:
+            applicationType:
+                inherit: true
             isBulk:
                 inherit: true
             httpResponseCode:
@@ -123,6 +127,8 @@ postSpryks:
     - AddMethod:
         condition: "httpMethod === 'delete' && isBulk === true"
         arguments:
+            applicationType:
+                inherit: true
             isBulk:
                 inherit: true
             httpResponseCode:
@@ -149,6 +155,8 @@ postSpryks:
     - AddMethod:
         condition: "httpMethod === 'post' && isBulk === false"
         arguments:
+            applicationType:
+                inherit: true
             isBulk:
                 inherit: true
             httpResponseCode:
@@ -175,6 +183,8 @@ postSpryks:
     - AddMethod:
         condition: "httpMethod === 'delete' && isBulk === false"
         arguments:
+            applicationType:
+                inherit: true
             isBulk:
                 inherit: true
             httpResponseCode:
@@ -201,6 +211,8 @@ postSpryks:
     - AddMethod:
         condition: "httpMethod === 'patch' && isBulk === false"
         arguments:
+            applicationType:
+                inherit: true
             isBulk:
                 inherit: true
             httpResponseCode:

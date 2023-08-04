@@ -105,8 +105,6 @@ abstract class AbstractBuilder implements SprykBuilderInterface
     abstract protected function build(): void;
 
     /**
-     * @retrun void
-     *
      * @param string $message
      *
      * @return void
