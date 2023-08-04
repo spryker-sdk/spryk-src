@@ -5,7 +5,7 @@ mode: both
 
 arguments:
     module:
-        value: "{{ resource | resourceNameToModuleName }}{{ applicationType }}Api"
+        inherit: true
 
     organization:
         inherit: true

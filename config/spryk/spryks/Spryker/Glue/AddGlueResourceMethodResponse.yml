@@ -78,6 +78,7 @@ postSpryks:
     - AddGlueApiApplicationRequestMapper
     - AddGlueApiApplicationResponseMapper
     - AddGlueApiApplicationResourcePlugin
+    - AddGlueApiApplicationRouteProviderPlugin
     # Add CrudFacade code
     - AddCrudFacade:
           arguments:

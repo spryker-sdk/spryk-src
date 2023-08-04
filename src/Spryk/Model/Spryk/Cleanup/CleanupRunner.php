@@ -70,10 +70,10 @@ class CleanupRunner implements CleanupRunnerInterface
         }
 
         // @codeCoverageIgnoreStart
-        $this->runCodeceptionBuildOnPaths($style);
-        $this->runCodeSnifferOnModules($style);
-        $this->runCodeSnifferOnPaths($style);
-        $this->runTransferBuilders($style);
+//        $this->runCodeceptionBuildOnPaths($style);
+//        $this->runCodeSnifferOnModules($style);
+//        $this->runCodeSnifferOnPaths($style);
+//        $this->runTransferBuilders($style);
         // @codeCoverageIgnoreEnd
     }
 

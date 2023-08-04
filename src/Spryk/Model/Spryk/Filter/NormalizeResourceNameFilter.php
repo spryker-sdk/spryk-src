@@ -16,6 +16,7 @@ use Laminas\Filter\Word\DashToCamelCase;
  *
  * Example:
  * $this->filter('/foo-bars') === `FooBars';
+ * $this->filter('/foo-bars/{som-param}') === `FooBars';
  *
  * @deprecated Use one of the ResourceNameTo* filters instead
  * @see \SprykerSdk\Spryk\Model\Spryk\Filter\ResourceNameToModuleNameFilter
@@ -45,6 +46,9 @@ class NormalizeResourceNameFilter implements FilterInterface
     public function filter(string $value): string
     {
         $value = trim($value, '/');
+        $values = explode('/', $value);
+        $value = current($values);
+
         $filterChain = new FilterChain();
         $filterChain->attach(new DashToCamelCase());
 

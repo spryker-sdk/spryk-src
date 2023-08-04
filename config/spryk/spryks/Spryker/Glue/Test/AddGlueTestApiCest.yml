@@ -16,7 +16,7 @@ arguments:
         default: false
 
     module:
-        value: "{{ resource | resourceNameToModuleName }}{{ applicationType }}Api"
+        inherit: true
 
     organization:
         inherit: true
@@ -84,7 +84,7 @@ postSpryks:
               method:
                   value: "request{{ resource | resourceNameToModelName | singularize }}{{ httpMethod | ucfirst }}ReturnsHttpResponseCode{{ httpResponseCode }}"
               input:
-                  value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | resourceNameToModelName }}{{ applicationType }}Api\\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester $I"
+                  value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ module }}Tester $I"
               output:
                  value: "void"
               body:
@@ -110,7 +110,7 @@ postSpryks:
             method:
                 value: "request{{ resource | resourceNameToModelName | singularize }}{{ httpMethod | ucfirst }}CollectionReturnsHttpResponseCode{{ httpResponseCode }}"
             input:
-                value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | resourceNameToModelName }}{{ applicationType }}Api\\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester $I"
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ module }}Tester $I"
             output:
                 value: "void"
             body:
@@ -136,7 +136,7 @@ postSpryks:
             method:
                 value: "request{{ resource | resourceNameToModelName | singularize | ucfirst }}{{ httpMethod | ucfirst }}CollectionReturnsHttpResponseCode{{ httpResponseCode }}"
             input:
-                value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | resourceNameToModelName }}{{ applicationType }}Api\\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester $I"
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ module }}Tester $I"
             output:
                 value: "void"
             body:
@@ -162,7 +162,7 @@ postSpryks:
             method:
                 value: "request{{ resource | resourceNameToModelName | singularize }}{{ httpMethod | ucfirst }}ReturnsHttpResponseCode{{ httpResponseCode }}"
             input:
-                value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | resourceNameToModelName }}{{ applicationType }}Api\\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester $I"
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ module }}Tester $I"
             output:
                 value: "void"
             body:
@@ -188,7 +188,7 @@ postSpryks:
             method:
                 value: "request{{ resource | resourceNameToModelName | singularize }}{{ httpMethod | ucfirst }}ReturnsHttpResponseCode{{ httpResponseCode }}"
             input:
-                value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | resourceNameToModelName }}{{ applicationType }}Api\\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester $I"
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ module }}Tester $I"
             output:
                 value: "void"
             body:
@@ -214,7 +214,7 @@ postSpryks:
             method:
                 value: "request{{ resource | resourceNameToModelName | singularize }}{{ httpMethod | ucfirst }}ReturnsHttpResponseCode{{ httpResponseCode }}"
             input:
-                value: "\\{{ organization }}Test\\{{ application }}\\{{ resource | resourceNameToModelName }}{{ applicationType }}Api\\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester $I"
+                value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ module }}Tester $I"
             output:
                 value: "void"
             body:

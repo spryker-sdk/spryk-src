@@ -1,5 +1,5 @@
 {{ suite }}:
-    actor: {{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester
+    actor: {{ module }}{{ applicationType }}ApiTester
     modules:
         enabled:
             - Asserts
@@ -15,5 +15,5 @@
             - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
             - \SprykerTest\Glue\Testify\Helper\GlueBackendApiHelper
             - \SprykerTest\Glue\Testify\Helper\JsonPath
-            - \{{ organization }}Test\Zed\{{ zedDomainEntity }}\Helper\{{ zedDomainEntity }}CrudHelper
+            - \{{ organization }}Test\Zed\{{ module | removeApiSuffix }}\Helper\{{ zedDomainEntity }}CrudHelper
             - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper

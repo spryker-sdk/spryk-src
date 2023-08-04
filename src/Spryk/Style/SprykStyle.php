@@ -111,7 +111,7 @@ class SprykStyle implements SprykStyleInterface
      */
     public function startPreSpryks(SprykDefinitionInterface $sprykDefinition): void
     {
-        if (!$this->output->isVerbose()) {
+        if (!$this->output->isVeryVerbose()) {
             return;
         }
 
@@ -169,7 +169,7 @@ class SprykStyle implements SprykStyleInterface
      */
     public function startPostSpryks(SprykDefinitionInterface $sprykDefinition): void
     {
-        if (!$this->output->isVerbose()) {
+        if (!$this->output->isVeryVerbose()) {
             return;
         }
 
