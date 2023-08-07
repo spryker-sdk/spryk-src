@@ -1,0 +1,21 @@
+name: AddToMethodBeforeReturn
+spryk: addToMethodBeforeReturn
+description: "Adds a new element to the specified method body before the return statement."
+mode: both
+
+arguments:
+    organization:
+        inherit: true
+    application:
+        inherit: true
+    module:
+        inherit: true
+
+    target:
+        description: "Target class that should be changed."
+
+    methodName:
+        description: "Target method where we want to add content to.."
+
+    body:
+        description: "The content that should be added before the return statement"

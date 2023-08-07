@@ -75,7 +75,6 @@ postSpryks:
               method:
                   value: "postAction"
               input:
-                  - "\\Generated\\Shared\\Transfer\\{{ zedDomainEntity | pluralize }}AttributesTransfer ${{ zedDomainEntity | pluralize | lcfirst }}AttributesTransfer"
                   - "\\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"

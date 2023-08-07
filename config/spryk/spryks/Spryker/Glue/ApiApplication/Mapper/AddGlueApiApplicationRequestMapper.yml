@@ -100,39 +100,9 @@ postSpryks:
     - AddMethod:
           arguments:
               method:
-                  value: "mapIdentifierTo{{ zedDomainEntity }}CriteriaTransfer"
+                  value: "mapGlueRequestTransferTo{{ zedDomainEntity }}CollectionRequestTransfer"
               input:
-                  value: "int $identifier, \\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
-              output:
-                  value: "\\Generated\\Shared\\Transfer\\{{ zedDomainEntity }}CriteriaTransfer"
-              body:
-                  value: Glue/ApiApplication/RequestMapper/MapIdentifierToCriteriaTransfer.php.twig
-              target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueRequest{{ resourceDataObject }}Mapper"
-              # Overloading AddMethod Spryk
-              zedDomainEntity:
-                  inherit: true
-    - AddMethod:
-          arguments:
-              method:
-                  value: "mapIdentifierTo{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer"
-              input:
-                  value: "int $identifier, \\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
-              output:
-                  value: "\\Generated\\Shared\\Transfer\\{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer"
-              body:
-                  value: Glue/ApiApplication/RequestMapper/MapIdentifierToCollectionDeleteCriteriaTransfer.php.twig
-              target:
-                  value: "{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueRequest{{ resourceDataObject }}Mapper"
-              # Overloading AddMethod Spryk
-              zedDomainEntity:
-                  inherit: true
-    - AddMethod:
-          arguments:
-              method:
-                  value: "map{{ resourceDataObject }}TransferTo{{ zedDomainEntity }}CollectionRequestTransfer"
-              input:
-                  value: "\\Generated\\Shared\\Transfer\\{{ resourceDataObject }}Transfer ${{ resourceDataObject | lcfirst }}Transfer, \\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
+                  value: "\\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
               output:
                   value: "\\Generated\\Shared\\Transfer\\{{ zedDomainEntity }}CollectionRequestTransfer"
               body:

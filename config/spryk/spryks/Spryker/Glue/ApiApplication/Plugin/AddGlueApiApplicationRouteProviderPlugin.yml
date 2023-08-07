@@ -35,6 +35,9 @@ arguments:
     implements:
         value: "\\Spryker\\{{ application }}\\GlueApplicationExtension\\Dependency\\Plugin\\RouteProviderPluginInterface"
 
+    httpMethod:
+        inherit: true
+
     template:
         value: Common/Class.php.twig
 
@@ -84,6 +87,34 @@ postSpryks:
                   value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
               withInterface:
                   value: false
+    - AddMethod:
+          arguments:
+              organization:
+                  inherit : true
+              module:
+                  inherit : true
+              resource:
+                  inherit : true
+              httpMethod:
+                  inherit : true
+              method:
+                  value: "get{{ httpMethod | lower | ucfirst }}{{ resource | resourceNameToModuleName }}Route"
+              output:
+                  value: "\\Symfony\\Component\\Routing\\Route"
+              body:
+                  value: Glue/Plugin/GlueApplication/GlueRouteProviderPluginMethodBody.php.twig
+              target:
+                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
+              withInterface:
+                  value: false
+    - AddToMethodBeforeReturn:
+          arguments:
+              target:
+                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
+              methodName:
+                  value: "addRoutes"
+              body:
+                  value: "$routeCollection->add('{{ httpMethod | lower }}{{ resource | resourceNameToModuleName }}', $this->get{{ httpMethod | lower | ucfirst }}{{ resource | resourceNameToModuleName }}Route());"
     # Wire the plugin after it was created
     - WirePlugin:
           arguments:

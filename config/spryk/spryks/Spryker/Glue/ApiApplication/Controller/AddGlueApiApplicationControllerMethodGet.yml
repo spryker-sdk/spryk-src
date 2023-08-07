@@ -63,7 +63,7 @@ arguments:
 
     input:
         inherit: true
-        default: "string $id, \\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
+        default: "\\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
 
 preSpryks:
     # Add the Api Controller
@@ -79,7 +79,6 @@ postSpryks:
               method:
                   value: "getAction"
               input:
-                  - "string $id"
                   - "\\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
               output:
                   value: "\\Generated\\Shared\\Transfer\\GlueResponseTransfer"

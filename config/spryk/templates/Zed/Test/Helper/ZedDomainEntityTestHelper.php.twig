@@ -486,9 +486,8 @@ class {{ domainEntity }}CrudHelper extends Module
     /**
      * @return \{{ organization }}\Zed\{{ module }}\Business\{{ module }}FacadeInterface
      */
-    protected function getFacade(): {{ module }}FacadeInterface
+    protected function getFacade(): \{{ organization }}\Zed\{{ module }}\Business\{{ module }}FacadeInterface
     {
-        /** @var \{{ organization }}\Zed\{{ module }}\Business\{{ module }}FacadeInterface */
-        return $this->getBusinessHelper()->getFacade('{{ module }}');
+        return new \{{ organization }}\Zed\{{ module }}\Business\{{ module }}Facade();
     }
 }
