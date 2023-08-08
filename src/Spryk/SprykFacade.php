@@ -8,6 +8,7 @@
 namespace SprykerSdk\Spryk;
 
 use SprykerSdk\Kernel;
+use SprykerSdk\Spryk\Debug\DebugInterface;
 use SprykerSdk\Spryk\Model\Spryk\Executor\Configuration\SprykExecutorConfigurationInterface;
 use SprykerSdk\Spryk\Style\SprykStyleInterface;
 

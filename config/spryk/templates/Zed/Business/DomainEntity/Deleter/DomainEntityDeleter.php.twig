@@ -57,7 +57,7 @@ class {{ domainEntity }}Deleter implements {{ domainEntity }}DeleterInterface
     {
         ${{ domainEntity | lcfirst }}CollectionTransfer = $this->{{ module | lcfirst }}Repository->get{{ domainEntity }}DeleteCollection(${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer);
 
-        ${{ domainEntity | lcfirst }}CollectionResponseTransfer = new {{ domainEntity }}CollectionResponseTransfer();
+        ${{ domainEntity | lcfirst }}CollectionResponseTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer();
 
         foreach(${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize }}() as ${{ domainEntity | lcfirst }}Transfer) {
             ${{ domainEntity | lcfirst }}CollectionResponseTransfer->add{{ domainEntity }}(

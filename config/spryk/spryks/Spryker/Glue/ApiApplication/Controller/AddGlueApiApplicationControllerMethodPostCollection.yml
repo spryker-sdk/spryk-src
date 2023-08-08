@@ -1,6 +1,6 @@
-name: AddGlueApiApplicationControllerMethodGetCollection
+name: AddGlueApiApplicationControllerMethodPostCollection
 spryk: wrapper
-description: "Adds a new method to the Glue controller."
+description: "Adds a new method to the Glue controller with bulk support."
 mode: both
 level: 2
 
@@ -23,11 +23,7 @@ arguments:
 
     httpMethod:
         inherit: true
-        default: "get"
-
-    isBulk:
-        description: "Defines if this resource should work with Collections. When set to true the method will use collections when possible."
-        inherit: true
+        default: "post"
 
     apiType:
         inherit: true
@@ -64,7 +60,7 @@ arguments:
 
     input:
         inherit: true
-        default: "\\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
+        default: "\\Generated\\Shared\\Transfer\\{{ zedDomainEntity }}Transfer ${{ zedDomainEntity | lcfirst }}Transfer, \\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
 
 preSpryks:
     # Add the Api Controller
@@ -74,11 +70,11 @@ preSpryks:
 postSpryks:
 #    - AddGlueApiApplicationResourceMethod
     - AddGlueApiApplicationFactory
-    # Add controller getCollectionAction
+    # Add controller postAction
     - AddMethod:
           arguments:
               method:
-                  value: "getCollectionAction"
+                  value: "postAction"
               input:
                   - "\\Generated\\Shared\\Transfer\\GlueRequestTransfer $glueRequestTransfer"
               output:
@@ -92,7 +88,7 @@ postSpryks:
               resourceDataObject:
                   inherit: true
               body:
-                  value: Glue/ApiApplication/Controller/GetCollectionMethod.php.twig
+                  value: Glue/ApiApplication/Controller/PostCollectionMethod.php.twig
               target:
                   value: "{{ organization }}\\Glue\\{{ module }}\\Controller\\{{ controller }}"
               withInterface:

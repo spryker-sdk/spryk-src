@@ -4,10 +4,6 @@
 
 namespace {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Writer;
 
-use Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer;
-use Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer;
-use Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer;
-use Generated\Shared\Transfer\ErrorTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\IdentifierBuilder\{{ domainEntity }}IdentifierBuilderInterface;
 use {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Validator\{{ domainEntity }}ValidatorInterface;
@@ -69,9 +65,9 @@ class {{ domainEntity }}{{ className }} implements {{ domainEntity }}{{ classNam
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
     public function {{ type | lcfirst }}{{ domainEntity }}Collection(
-        {{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
-    ): {{ domainEntity }}CollectionResponseTransfer {
-        ${{ domainEntity | lcfirst }}CollectionResponseTransfer = new {{ domainEntity }}CollectionResponseTransfer();
+        \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer ${{ domainEntity | lcfirst }}CollectionRequestTransfer
+    ): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer {
+        ${{ domainEntity | lcfirst }}CollectionResponseTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer();
         ${{ domainEntity | lcfirst }}CollectionResponseTransfer->set{{ domainEntity | pluralize }}(${{ domainEntity | lcfirst }}CollectionRequestTransfer->get{{ domainEntity | pluralize }}());
 
         ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->{{ domainEntity | lcfirst }}Validator->validateCollection(${{ domainEntity | lcfirst }}CollectionResponseTransfer);
@@ -94,7 +90,7 @@ class {{ domainEntity }}{{ className }} implements {{ domainEntity }}{{ classNam
      *
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
-    protected function filterInvalid{{ domainEntity | pluralize }}({{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
+    protected function filterInvalid{{ domainEntity | pluralize }}(\Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
     {
         ${{ domainEntity | lcfirst }}IdsWithErrors = $this->get{{ domainEntity }}IdsWithErrors(${{ domainEntity | lcfirst }}CollectionResponseTransfer->getErrors());
 
@@ -117,8 +113,8 @@ class {{ domainEntity }}{{ className }} implements {{ domainEntity }}{{ classNam
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer
      */
     protected function execute{{ type }}{{ domainEntity }}CollectionTransaction(
-        {{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
-    ): {{ domainEntity }}CollectionResponseTransfer {
+        \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer ${{ domainEntity | lcfirst }}CollectionResponseTransfer
+    ): \Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer {
         // Run pre-save plugins
         ${{ domainEntity | lcfirst }}Transfers = $this->execute{{ domainEntity }}Pre{{ type }}Plugins(${{ domainEntity | lcfirst }}CollectionResponseTransfer->get{{ domainEntity | pluralize }}()->getArrayCopy());
 
@@ -173,7 +169,7 @@ class {{ domainEntity }}{{ className }} implements {{ domainEntity }}{{ classNam
     */
     protected function get{{ domainEntity }}IdsWithErrors(\ArrayObject $errorTransfers): array
     {
-        return array_unique(array_map(static function (ErrorTransfer $errorTransfer): ?string {
+        return array_unique(array_map(static function (\Generated\Shared\Transfer\ErrorTransfer $errorTransfer): ?string {
             return $errorTransfer->getEntityIdentifier();
         }, $errorTransfers->getArrayCopy()));
     }

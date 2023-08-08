@@ -1,5 +1,5 @@
     // @todo refactor the method according to your needs
-    $glueResponseTransfer = new GlueResponseTransfer();
+    $glueResponseTransfer = new \Generated\Shared\Transfer\GlueResponseTransfer();
 
     foreach (${{ zedDomainEntity | lcfirst }}CollectionTransfer->get{{ zedDomainEntity | pluralize }}() as ${{ zedDomainEntity | lcfirst }}Transfer) {
         $glueResponseTransfer = $this->add{{ zedDomainEntity }}TransferToGlueResponse(${{ zedDomainEntity | lcfirst }}Transfer, $glueResponseTransfer);

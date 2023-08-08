@@ -1,5 +1,5 @@
     // @todo refactor the method according to your needs
-    ${{ zedDomainEntity | lcfirst }}CollectionDeleteCriteriaTransfer = new {{ zedDomainEntity }}CollectionDeleteCriteriaTransfer();
+    ${{ zedDomainEntity | lcfirst }}CollectionDeleteCriteriaTransfer = new \Generated\Shared\Transfer\{{ zedDomainEntity }}CollectionDeleteCriteriaTransfer();
     ${{ zedDomainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->setIsTransactional(false)->addId{{ zedDomainEntity }}($identifier);
 
     return ${{ zedDomainEntity | lcfirst }}CollectionDeleteCriteriaTransfer;

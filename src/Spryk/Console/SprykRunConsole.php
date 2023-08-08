@@ -8,6 +8,7 @@
 namespace SprykerSdk\Spryk\Console;
 
 use RuntimeException;
+use SprykerSdk\Spryk\Debug\Debug;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Resolver\OptionsContainer;
 use SprykerSdk\Spryk\Model\Spryk\Executor\Configuration\SprykExecutorConfigurationInterface;
 use SprykerSdk\Spryk\SprykConfig;
@@ -89,7 +90,10 @@ class SprykRunConsole extends AbstractSprykConsole
             ->addArgument(static::ARGUMENT_TARGET_MODULE, InputArgument::OPTIONAL, 'Name of the target module in format "[Organization.]ModuleName[.LayerName]".')
             ->addArgument(static::ARGUMENT_DEPENDENT_MODULE, InputArgument::OPTIONAL, 'Name of the dependent module in format "[Organization.]ModuleName[.LayerName]".')
             ->addOption(static::OPTION_INCLUDE_OPTIONALS, static::OPTION_INCLUDE_OPTIONALS_SHORT, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Name(s) of the Spryks which are marked as optional but should be build.')
-            ->addOption('dry-run', 'd', InputOption::VALUE_NONE, 'Only print a diff, do not change files');
+            ->addOption('dry-run', 'd', InputOption::VALUE_NONE, 'Only print a diff, do not change files')
+            ->addOption('debug', 'dd', InputOption::VALUE_NONE, 'Print standard debug information. This will only print Spryk Names in their executed order.')
+            ->addOption('debug-verbose', 'ddd', InputOption::VALUE_NONE, 'Print verbose debug information. This will print Spryk Names in their executed order and the resolved arguments.')
+            ->addOption('debug-very-verbose', 'dddd', InputOption::VALUE_NONE, 'Print very verbose debug information. This will print Spryk Names in their executed order, the resolved arguments, and why the argument was resolved to the current value.');
 
         foreach ($this->getSprykArguments() as $argumentDefinition) {
             $this->addOption(
@@ -134,7 +138,7 @@ class SprykRunConsole extends AbstractSprykConsole
 
         $this->getFacade()->executeSpryk(
             $sprykExecutorConfiguration,
-            new SprykStyle($input, $output),
+            new SprykStyle($input, $output)
         );
 
         return static::CODE_SUCCESS;

@@ -34,7 +34,7 @@ spryks:
                   value:
                       - "$appRegistryRequestTransfer->requireTenantIdentifier();"
                       - ""
-                      - "return (new AppRegistryResponseTransfer())->setIsSuccessful(true);"
+                      - "return (new \\Generated\\Shared\\Transfer\\AppRegistryResponseTransfer())->setIsSuccessful(true);"
 
     - AddConstant:
           arguments:

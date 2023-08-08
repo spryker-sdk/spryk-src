@@ -3,10 +3,10 @@
 // $I->addRouteProviderPlugin(new \{{ organization }}\Glue\{{ module }}\Plugin\GlueApplication\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiRouteProvider());
 
 ${{ zedDomainEntity | lcfirst }}Transfer = $I->have{{ zedDomainEntity }}TransferPersisted();
-$id{{ zedDomainEntity | lcfirst }} = ${{ zedDomainEntity | lcfirst }}Transfer->getId{{ zedDomainEntity }}();
+$id{{ zedDomainEntity }} = ${{ zedDomainEntity | lcfirst }}Transfer->getId{{ zedDomainEntity }}();
 $uuid = ${{ zedDomainEntity | lcfirst }}Transfer->getUuid();
 
-$url = $I->build{{ resource | resourceNameToModelName }}Url($id{{ zedDomainEntity | lcfirst }});
+$url = $I->build{{ resource | resourceNameToModelName }}Url($id{{ zedDomainEntity }});
 
 // Act
 $I->sendGet($url);
@@ -14,4 +14,4 @@ $I->sendGet($url);
 // Assert
 $I->seeResponseCodeIs({{ httpResponseCode | httpResponseCodeToConstantName }});
 $I->seeResponseIsJson();
-$I->seeResponseJsonContains{{ zedDomainEntity }}IdAndUuid($id{{ zedDomainEntity | lcfirst }}, $uuid);
+$I->seeResponseJsonContains{{ zedDomainEntity }}IdAndUuid($id{{ zedDomainEntity }}, $uuid);

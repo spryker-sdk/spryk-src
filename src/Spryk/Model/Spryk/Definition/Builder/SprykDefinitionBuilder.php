@@ -7,6 +7,7 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Definition\Builder;
 
+use SprykerSdk\Spryk\Debug\DebugInterface;
 use SprykerSdk\Spryk\Model\Spryk\Configuration\Extender\SprykConfigurationExtenderInterface;
 use SprykerSdk\Spryk\Model\Spryk\Configuration\Loader\SprykConfigurationLoaderInterface;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Argument;
@@ -101,6 +102,11 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
     protected SprykStyleInterface $style;
 
     /**
+     * @var \SprykerSdk\Spryk\Debug\DebugInterface
+     */
+    protected DebugInterface $debug;
+
+    /**
      * @var string|null
      */
     protected ?string $mode = null;
@@ -136,6 +142,18 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
     public function setStyle(SprykStyleInterface $style)
     {
         $this->style = $style;
+
+        return $this;
+    }
+
+    /**
+     * @param \SprykerSdk\Spryk\Debug\DebugInterface $debug
+     *
+     * @return $this
+     */
+    public function setDebug(DebugInterface $debug)
+    {
+        $this->debug = $debug;
 
         return $this;
     }

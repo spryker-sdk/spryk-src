@@ -102,7 +102,6 @@ postSpryks:
                 body:
                     value:
                         - "$this->seeResponseJsonPathContains(['data' => [['type' => '{{ zedDomainEntity | lcfirst }}']]]);"
-                        - "$this->seeResponseMatchesJsonType(['data' => [['id' => 'integer:>0', 'attributes' => ['id{{ zedDomainEntity }}' => 'integer:>0', 'uuid' => 'string']]]]);"
                 target:
                     value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ module }}Tester"
                 withInterface:
@@ -119,8 +118,7 @@ postSpryks:
                 value: "void"
             body:
                 value:
-                    - "$this->seeResponseJsonPathContains(['data' => ['type' => '{{ zedDomainEntity | lcfirst }}']]);"
-                    - "$this->seeResponseMatchesJsonType(['data' => ['id' => 'integer:>0', 'attributes' => ['id{{ zedDomainEntity }}' => 'integer:>0', 'uuid' => 'string']]]);"
+                    - "$this->seeResponseJsonPathContains(['data' => [['type' => '{{ zedDomainEntity | lcfirst }}']]]);"
             target:
                 value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ module }}Tester"
             withInterface:

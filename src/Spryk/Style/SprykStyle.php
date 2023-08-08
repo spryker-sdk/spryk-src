@@ -280,6 +280,14 @@ class SprykStyle implements SprykStyleInterface
     }
 
     /**
+     * @return \Symfony\Component\Console\Output\OutputInterface
+     */
+    public function getOutput(): OutputInterface
+    {
+        return $this->output;
+    }
+
+    /**
      * @param string $message
      *
      * @return void

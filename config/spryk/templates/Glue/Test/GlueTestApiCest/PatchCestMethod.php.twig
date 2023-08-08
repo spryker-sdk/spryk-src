@@ -3,16 +3,16 @@
 // $I->addRouteProviderPlugin(new \{{ organization }}\Glue\{{ module }}\Plugin\GlueApplication\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiRouteProvider());
 
 ${{ zedDomainEntity | lcfirst }}Transfer = $I->have{{ zedDomainEntity }}TransferPersisted();
-$id{{ zedDomainEntity | lcfirst }} = ${{ zedDomainEntity | lcfirst }}Transfer->getId{{ zedDomainEntity }}();
+$id{{ zedDomainEntity }} = ${{ zedDomainEntity | lcfirst }}Transfer->getId{{ zedDomainEntity }}();
 
 $newUuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
 
-$url = $I->build{{ resource | resourceNameToModelName }}Url($id{{ zedDomainEntity | lcfirst }});
+$url = $I->build{{ resource | resourceNameToModelName }}Url($id{{ zedDomainEntity }});
 
 // Act
-$I->sendPatch($url, $I->build{{ zedDomainEntity }}RequestData($id{{ zedDomainEntity | lcfirst }}, $newUuid));
+$I->sendPatch($url, $I->build{{ zedDomainEntity }}RequestData($id{{ zedDomainEntity }}, $newUuid));
 
 // Assert
 $I->seeResponseCodeIs({{ httpResponseCode | httpResponseCodeToConstantName }});
 $I->seeResponseIsJson();
-$I->seeResponseJsonContains{{ zedDomainEntity }}IdAndUuid($id{{ zedDomainEntity | lcfirst }}, $newUuid);
+$I->seeResponseJsonContains{{ zedDomainEntity }}IdAndUuid($id{{ zedDomainEntity }}, $newUuid);

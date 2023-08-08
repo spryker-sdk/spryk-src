@@ -8,6 +8,7 @@
 namespace SprykerSdk\Spryk\Model\Spryk\Executor;
 
 use Jfcherng\Diff\DiffHelper;
+use SprykerSdk\Spryk\Debug\DebugInterface;
 use SprykerSdk\Spryk\Exception\SprykWrongDevelopmentLayerException;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Collection\SprykBuilderCollectionInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\FileDumperInterface;
@@ -88,6 +89,11 @@ class SprykExecutor implements SprykExecutorInterface
     protected array $postCommandCache = [];
 
     /**
+     * @var DebugInterface
+     */
+    protected DebugInterface $debug;
+
+    /**
      * @param \SprykerSdk\Spryk\SprykConfig $sprykConfig
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Builder\SprykDefinitionBuilderInterface $definitionBuilder
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Collection\SprykBuilderCollectionInterface $sprykBuilderCollection
@@ -96,6 +102,7 @@ class SprykExecutor implements SprykExecutorInterface
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\FileDumperInterface $fileDumper
      * @param \SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface $conditionMatcher
      * @param \SprykerSdk\Spryk\Model\Spryk\Cleanup\CleanupRunnerInterface $cleanupRunner
+     * @param DebugInterface $debug
      */
     public function __construct(
         SprykConfig $sprykConfig,
@@ -105,7 +112,8 @@ class SprykExecutor implements SprykExecutorInterface
         FileResolverInterface $fileResolver,
         FileDumperInterface $fileDumper,
         ConditionMatcherInterface $conditionMatcher,
-        CleanupRunnerInterface $cleanupRunner
+        CleanupRunnerInterface $cleanupRunner,
+        DebugInterface $debug
     ) {
         $this->sprykConfig = $sprykConfig;
         $this->definitionBuilder = $definitionBuilder;
@@ -115,6 +123,7 @@ class SprykExecutor implements SprykExecutorInterface
         $this->fileDumper = $fileDumper;
         $this->conditionMatcher = $conditionMatcher;
         $this->cleanupRunner = $cleanupRunner;
+        $this->debug = $debug;
     }
 
     /**
@@ -127,6 +136,7 @@ class SprykExecutor implements SprykExecutorInterface
         SprykExecutorConfigurationInterface $sprykExecutorConfiguration,
         SprykStyleInterface $style
     ): void {
+
         $this->definitionBuilder->setStyle($style);
         $this->includeOptionalSubSpryks = $sprykExecutorConfiguration->getIncludeOptionalSubSpryks();
 
@@ -146,7 +156,16 @@ class SprykExecutor implements SprykExecutorInterface
 
         $this->mainSprykDefinitionMode = $this->getSprykDefinitionMode($sprykDefinition, $style);
 
+        $this->debug->setStyle($style);
+        // Execute nothing after debug information was printed
+        if ($this->debug->isDebug()) {
+            $this->debug->printDebug($sprykDefinition);
+
+            return;
+        }
+
         $this->buildSpryk($sprykDefinition, $style);
+
         $this->executePostCommands($style);
 
         $this->dumpFiles();
@@ -155,6 +174,8 @@ class SprykExecutor implements SprykExecutorInterface
     }
 
     /**
+     * Dumps all files to their location.
+     *
      * @return void
      */
     protected function dumpFiles(): void

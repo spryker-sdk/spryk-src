@@ -38,6 +38,11 @@ class CleanupRunner implements CleanupRunnerInterface
     protected bool $runTransferBuilders = false;
 
     /**
+     * @var bool
+     */
+    protected bool $runPropelInstall = false;
+
+    /**
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface $resolved
      *
      * @return void
@@ -54,6 +59,7 @@ class CleanupRunner implements CleanupRunnerInterface
 
         if ($resolved instanceof ResolvedXmlInterface) {
             $this->runTransferBuilders = true;
+            $this->runPropelInstall = true;
         }
     }
 
@@ -74,6 +80,7 @@ class CleanupRunner implements CleanupRunnerInterface
         $this->runCodeSnifferOnModules($style);
         $this->runCodeSnifferOnPaths($style);
         $this->runTransferBuilders($style);
+        $this->runPropelInstall($style);
         // @codeCoverageIgnoreEnd
     }
 
@@ -267,6 +274,25 @@ class CleanupRunner implements CleanupRunnerInterface
         $style->writeln('Run vendor/bin/console transfer:databuilder:generate');
 
         $process = new Process(['vendor/bin/console', 'transfer:databuilder:generate'], null, null, null, 180);
+        $process->run();
+
+        echo $process->getOutput();
+    }
+
+    /**
+     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
+     *
+     * @return void
+     */
+    protected function runPropelInstall(SprykStyleInterface $style): void
+    {
+        if (!$this->runPropelInstall) {
+            return;
+        }
+
+        $style->writeln('Run vendor/bin/console propel:install');
+
+        $process = new Process(['vendor/bin/console', 'propel:install'], null, null, null, 180);
         $process->run();
 
         echo $process->getOutput();

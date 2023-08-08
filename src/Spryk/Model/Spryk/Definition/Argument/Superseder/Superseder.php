@@ -109,10 +109,15 @@ class Superseder implements SupersederInterface
         $argumentValue,
         ArgumentCollectionInterface $sprykArguments,
         ArgumentCollectionInterface $resolvedArguments
-    ) {
+    ): mixed {
         if (is_bool($argumentValue) || is_int($argumentValue)) {
             return $argumentValue;
         }
+
+        // In case we have a condition like {% if .... %} we need to resolve this one differently
+//        if (is_string($argumentValue) && str_contains('{%', $argumentValue)) {
+//            return $this->replacePlaceholderInValueWithCondition($argumentValue, $sprykArguments, $resolvedArguments);
+//        }
 
         preg_match_all(static::PLACEHOLDER_PATTERN, $argumentValue, $matches, PREG_SET_ORDER);
 
@@ -128,6 +133,34 @@ class Superseder implements SupersederInterface
         }
 
         $replacements = array_merge($replacements, $sprykArguments->getArguments());
+
+        return $this->templateRenderer->renderString($argumentValue, $replacements, $sprykArguments->getSprykName());
+    }
+
+    /**
+     * The argument value contains a condition like {% if .... %}. We first need to get the values from the collection resolved
+     * which are not yet resolved. After that we can use Twig to check if the condition is matched and resolve the condition.
+     *
+     * @param string $argumentValue
+     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $sprykArguments
+     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $resolvedArguments
+     *
+     * @return string
+     */
+    protected function replacePlaceholderInValueWithCondition(
+        string $argumentValue,
+        ArgumentCollectionInterface $sprykArguments,
+        ArgumentCollectionInterface $resolvedArguments
+    ): string {
+        $replacements = [];
+
+        foreach ($resolvedArguments->getArguments() as $resolvedArgument) {
+            $value = $resolvedArgument->getValue();
+            if ($value === 'default' || (is_string($value) && str_contains('{{', $value))) {
+                $value = $this->getResolvedValue($resolvedArgument->getName(), $sprykArguments, $resolvedArguments);;
+            }
+            $replacements[$resolvedArgument->getName()] = $value;
+        }
 
         return $this->templateRenderer->renderString($argumentValue, $replacements, $sprykArguments->getSprykName());
     }

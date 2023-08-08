@@ -36,7 +36,7 @@ arguments:
 
     controller:
         inherit: true
-        default: "{{ resource | resourceNameToControllerName | pluralize }}"
+        default: "{{ resource | resourceNameToControllerName }}"
         callback:
             - EnsureResourceControllerSuffixCallback    # Ensure we always have ResourceController as suffix
 
