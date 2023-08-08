@@ -1,7 +1,7 @@
         // @todo refactor the method according to your needs
         ${{ zedDomainEntity | lcfirst }}CriteriaTransfer = $this->getFactory()
             ->createGlueRequest{{ zedDomainEntity }}Mapper()
-            ->mapIdentifierTo{{ zedDomainEntity }}CriteriaTransfer({{ input | removeParametersTypeFilter }});
+            ->mapGlueRequestTransferTo{{ zedDomainEntity }}CriteriaTransfer({{ input | removeParametersTypeFilter }});
 
         ${{ zedDomainEntity | lcfirst }}CollectionTransfer = $this->getFactory()
             ->get{{ dataModule }}{% if applicationType == 'Backend' %}Facade{% else %}Client{% endif %}()

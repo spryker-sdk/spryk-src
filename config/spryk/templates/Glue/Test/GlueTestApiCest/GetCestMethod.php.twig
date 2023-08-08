@@ -6,7 +6,7 @@ ${{ zedDomainEntity | lcfirst }}Transfer = $I->have{{ zedDomainEntity }}Transfer
 $id{{ zedDomainEntity }} = ${{ zedDomainEntity | lcfirst }}Transfer->getId{{ zedDomainEntity }}();
 $uuid = ${{ zedDomainEntity | lcfirst }}Transfer->getUuid();
 
-$url = $I->build{{ resource | resourceNameToModelName }}Url($id{{ zedDomainEntity }});
+$url = $I->build{{ resource | resourceNameToModelName }}Url($uuid);
 
 // Act
 $I->sendGet($url);

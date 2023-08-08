@@ -6,6 +6,10 @@
 
     ${{ zedDomainEntity | lcfirst }}ConditionsTransfer = new \Generated\Shared\Transfer\{{ zedDomainEntity }}ConditionsTransfer();
 
+    if (isset($glueRequestTransfer->getResource()->getParameters()['uuid'])) {
+        ${{ zedDomainEntity | lcfirst }}ConditionsTransfer->addUuid($glueRequestTransfer->getResource()->getParameters()['uuid']);
+    }
+
     if (!isset($glueRequestTransfer->getQueryFields()['filter'])) {
         return ${{ zedDomainEntity | lcfirst }}CriteriaTransfer;
     }

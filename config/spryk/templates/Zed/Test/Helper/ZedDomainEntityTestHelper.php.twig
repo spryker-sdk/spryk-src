@@ -17,10 +17,13 @@ use {{ organization }}\Zed\{{ module }}\Business\{{ module }}FacadeInterface;
 use {{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Expander\{{ domainEntity }}ExpanderPluginInterface;
 use {{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Writer\{{ domainEntity }}CreatePluginInterface;
 use {{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Writer\{{ domainEntity }}UpdatePluginInterface;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Business\BusinessHelperTrait;
 
 class {{ domainEntity }}CrudHelper extends Module
 {
+    use DataCleanupHelperTrait;
+
     /**
     * @var string
     */
@@ -74,7 +77,13 @@ class {{ domainEntity }}CrudHelper extends Module
     {
         ${{ domainEntity | lcfirst }}Builder = new \Generated\Shared\DataBuilder\{{ domainEntity }}Builder($seed);
 
-        return ${{ domainEntity | lcfirst }}Builder->build();
+        ${{ domainEntity | lcfirst }}Transfer = ${{ domainEntity | lcfirst }}Builder->build();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use (${{ domainEntity | lcfirst }}Transfer) {
+            \Orm\Zed\{{ module }}\Persistence\Spy{{ domainEntity }}Query::create()->filterByUuid(${{ domainEntity | lcfirst }}Transfer->getUuid())->delete();
+        });
+
+        return ${{ domainEntity | lcfirst }}Transfer;
     }
 
     /**

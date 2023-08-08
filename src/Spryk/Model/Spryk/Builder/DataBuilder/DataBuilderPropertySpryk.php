@@ -66,7 +66,7 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
                     continue;
                 }
 
-                $this->addProperty($transferXMLElement, $transferName, $propertyDefinition[0], $propertyDefinition[1], $this->dataBuilderRuleByProperty($propertyDefinition[1]));
+                $this->addProperty($transferXMLElement, $transferName, $propertyDefinition[0], $propertyDefinition[1], $this->dataBuilderRuleByProperty($propertyDefinition[0], $propertyDefinition[1]));
             }
 
             return;
@@ -213,17 +213,23 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
         }
 
         $propertyType = $this->getPropertyType();
+        $propertyName = $this->getPropertyName();
 
-        return $this->dataBuilderRuleByProperty($propertyType);
+        return $this->dataBuilderRuleByProperty($propertyName, $propertyType);
     }
 
     /**
+     * @param string $propertyName
      * @param string $propertyType
      *
      * @return string|null
      */
-    protected function dataBuilderRuleByProperty(string $propertyType): ?string
+    protected function dataBuilderRuleByProperty(string $propertyName, string $propertyType): ?string
     {
+        if ($propertyName === 'uuid') {
+            return 'unique()->uuid()';
+        }
+
         switch ($propertyType) {
             case 'string':
                 return 'word()';

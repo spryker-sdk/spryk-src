@@ -69,7 +69,7 @@ postSpryks:
             output:
                 value: "void"
             body:
-                value: "$this->seeResponseJsonPathContains(['data' => ['type' => '{{ zedDomainEntity | lcfirst }}', 'id' => ${{ zedDomainEntity | lcfirst }}Id, 'attributes' => ['id{{ zedDomainEntity }}' => ${{ zedDomainEntity | lcfirst }}Id, 'uuid' => $uuid]]]);"
+                value: "$this->seeResponseJsonPathContains(['data' => [['type' => '{{ zedDomainEntity | lcfirst }}', 'id' => ${{ zedDomainEntity | lcfirst }}Id, 'attributes' => ['id{{ zedDomainEntity }}' => ${{ zedDomainEntity | lcfirst }}Id, 'uuid' => $uuid]]]]);"
             target:
                 value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\{{ module }}Tester"
             withInterface:
