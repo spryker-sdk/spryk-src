@@ -94,7 +94,7 @@ class SprykFactory
         SprykConfigurationLoaderInterface $configurationLoader,
         SprykDefinitionFinderInterface $sprykDefinitionFinder,
         SprykDefinitionCheckerInterface $sprykDefinitionChecker,
-        SprykDefinitionFixerInterface $sprykDefinitionFixer
+        SprykDefinitionFixerInterface $sprykDefinitionFixer,
     ) {
         $this->config = $config;
         $this->executor = $executor;

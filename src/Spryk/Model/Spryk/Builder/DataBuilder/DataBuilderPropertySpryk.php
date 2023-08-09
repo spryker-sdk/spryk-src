@@ -92,6 +92,7 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
      *
      * @param string $propertyName
      * @param string $transferName
+     *
      * @return bool
      */
     protected function isAutoIncrementField(string $propertyName, string $transferName): bool
@@ -135,7 +136,7 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
         string $transferName,
         string $propertyName,
         string $propertyType,
-        ?string $dataBuilderRule
+        ?string $dataBuilderRule,
     ): void {
         // When no data builder rule can be found it must be a reference to another transfer object and we must ignore it.
         if (!$dataBuilderRule) {

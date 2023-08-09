@@ -77,6 +77,8 @@ class Debug implements DebugInterface
     }
 
     /**
+     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
+     *
      * @return void
      */
     public function printDebug(SprykDefinitionInterface $sprykDefinition): void
@@ -88,8 +90,6 @@ class Debug implements DebugInterface
         }
 
         $this->buildSpryk($sprykDefinition);
-
-        return;
     }
 
     /**

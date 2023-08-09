@@ -49,7 +49,7 @@ class AddImplementsSpryk extends AbstractBuilder
         SprykConfig $config,
         FileResolverInterface $fileResolver,
         NodeFinderInterface $nodeFinder,
-        ClassNameShortFilter $classNameShortFilter
+        ClassNameShortFilter $classNameShortFilter,
     ) {
         parent::__construct($config, $fileResolver);
         $this->nodeFinder = $nodeFinder;
@@ -112,7 +112,7 @@ class AddImplementsSpryk extends AbstractBuilder
      */
     protected function hasImplements(
         ResolvedClassInterface $resolvedClass,
-        string $interface
+        string $interface,
     ): bool {
         return $this->nodeFinder->findImplements($resolvedClass->getClassTokenTree(), $interface) !== null;
     }

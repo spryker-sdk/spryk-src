@@ -38,7 +38,7 @@ class ClassDumper implements ClassDumperInterface
     public function __construct(
         Standard $classPrinter,
         Parser $parser,
-        Lexer $lexer
+        Lexer $lexer,
     ) {
         $this->classPrinter = $classPrinter;
         $this->parser = $parser;

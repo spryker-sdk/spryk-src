@@ -37,7 +37,7 @@ class ArgumentListReader implements ArgumentListReaderInterface
     public function __construct(
         SprykConfig $config,
         ArgumentListBuilderInterface $argumentListBuilder,
-        SprykDefinitionDumperInterface $definitionDumper
+        SprykDefinitionDumperInterface $definitionDumper,
     ) {
         $this->config = $config;
         $this->argumentListBuilder = $argumentListBuilder;

@@ -7,7 +7,6 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Executor;
 
-use SprykerSdk\Spryk\Debug\DebugInterface;
 use SprykerSdk\Spryk\Model\Spryk\Executor\Configuration\SprykExecutorConfigurationInterface;
 use SprykerSdk\Spryk\Style\SprykStyleInterface;
 
@@ -21,6 +20,6 @@ interface SprykExecutorInterface
      */
     public function execute(
         SprykExecutorConfigurationInterface $sprykExecutorConfiguration,
-        SprykStyleInterface $style
+        SprykStyleInterface $style,
     ): void;
 }

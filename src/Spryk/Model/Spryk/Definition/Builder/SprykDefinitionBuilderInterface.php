@@ -29,7 +29,7 @@ interface SprykDefinitionBuilderInterface
      */
     public function addTargetModuleParams(
         SprykExecutorConfigurationInterface $sprykExecutorConfiguration,
-        array $sprykConfiguration
+        array $sprykConfiguration,
     ): array;
 
     /**
@@ -40,7 +40,7 @@ interface SprykDefinitionBuilderInterface
      */
     public function addDependentModuleParams(
         SprykExecutorConfigurationInterface $sprykExecutorConfiguration,
-        array $sprykConfiguration
+        array $sprykConfiguration,
     ): array;
 
     /**

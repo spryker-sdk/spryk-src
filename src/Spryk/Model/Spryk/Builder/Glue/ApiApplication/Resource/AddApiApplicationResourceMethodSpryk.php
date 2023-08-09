@@ -77,7 +77,7 @@ class AddApiApplicationResourceMethodSpryk extends AbstractBuilder
         FileResolverInterface $fileResolver,
         NodeFinderInterface $nodeFinder,
         Parser $parser,
-        Lexer $lexer
+        Lexer $lexer,
     ) {
         parent::__construct($config, $fileResolver);
 

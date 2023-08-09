@@ -164,7 +164,7 @@ class TransferModule extends Module
         string $transferName,
         string $propertyName,
         string $propertyType,
-        ?string $singular = null
+        ?string $singular = null,
     ): void {
         $simpleXMLElement = $resolvedXml->getSimpleXmlElement();
         $this->assertInstanceOf(SimpleXMLElement::class, $simpleXMLElement);

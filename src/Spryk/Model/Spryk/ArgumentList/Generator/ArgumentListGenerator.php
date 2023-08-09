@@ -35,7 +35,7 @@ class ArgumentListGenerator implements ArgumentListGeneratorInterface
      */
     public function __construct(
         SprykConfig $config,
-        ArgumentListBuilderInterface $argumentListBuilder
+        ArgumentListBuilderInterface $argumentListBuilder,
     ) {
         $this->config = $config;
         $this->argumentListBuilder = $argumentListBuilder;

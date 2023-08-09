@@ -48,7 +48,7 @@ class FileDumper implements FileDumperInterface
         ClassDumperInterface $classDumper,
         YmlDumperInterface $ymlDumper,
         JsonDumperInterface $jsonDumper,
-        XmlDumperInterface $xmlDumper
+        XmlDumperInterface $xmlDumper,
     ) {
         $this->classDumper = $classDumper;
         $this->ymlDumper = $ymlDumper;

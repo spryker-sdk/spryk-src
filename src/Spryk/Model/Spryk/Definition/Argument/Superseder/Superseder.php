@@ -77,7 +77,7 @@ class Superseder implements SupersederInterface
     protected function resolveArgument(
         ArgumentInterface $argument,
         ArgumentCollectionInterface $sprykArguments,
-        ArgumentCollectionInterface $resolvedArguments
+        ArgumentCollectionInterface $resolvedArguments,
     ): void {
         $argumentValue = $argument->getValue();
 
@@ -108,7 +108,7 @@ class Superseder implements SupersederInterface
     protected function replacePlaceholderInValue(
         $argumentValue,
         ArgumentCollectionInterface $sprykArguments,
-        ArgumentCollectionInterface $resolvedArguments
+        ArgumentCollectionInterface $resolvedArguments,
     ): mixed {
         if (is_bool($argumentValue) || is_int($argumentValue)) {
             return $argumentValue;
@@ -150,14 +150,14 @@ class Superseder implements SupersederInterface
     protected function replacePlaceholderInValueWithCondition(
         string $argumentValue,
         ArgumentCollectionInterface $sprykArguments,
-        ArgumentCollectionInterface $resolvedArguments
+        ArgumentCollectionInterface $resolvedArguments,
     ): string {
         $replacements = [];
 
         foreach ($resolvedArguments->getArguments() as $resolvedArgument) {
             $value = $resolvedArgument->getValue();
             if ($value === 'default' || (is_string($value) && str_contains('{{', $value))) {
-                $value = $this->getResolvedValue($resolvedArgument->getName(), $sprykArguments, $resolvedArguments);;
+                $value = $this->getResolvedValue($resolvedArgument->getName(), $sprykArguments, $resolvedArguments);
             }
             $replacements[$resolvedArgument->getName()] = $value;
         }

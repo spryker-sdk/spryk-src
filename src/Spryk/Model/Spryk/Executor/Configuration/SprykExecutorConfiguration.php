@@ -61,7 +61,7 @@ class SprykExecutorConfiguration implements SprykExecutorConfigurationInterface
         string $sprykName,
         array $includeOptionalSubSpryks,
         string $targetModuleName,
-        string $dependentModuleName
+        string $dependentModuleName,
     ): SprykExecutorConfigurationInterface {
         $this->sprykName = $sprykName;
         $this->includeOptionalSubSpryks = $includeOptionalSubSpryks;

@@ -83,7 +83,7 @@ class AddGlueResourceMethodResponseTest extends Unit
         ?string $dataModule = null,
         ?string $zedDomainEntity = null,
         ?string $resourceDataObject = null,
-        ?string $resource = null
+        ?string $resource = null,
     ): void {
         $commandOptions = [
             // TODO We also need to add tests for the project level

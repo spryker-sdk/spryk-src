@@ -54,7 +54,7 @@ class BridgeMethodsSpryk extends AbstractBuilder
     public function __construct(
         SprykConfig $config,
         FileResolverInterface $fileResolver,
-        NodeFinderInterface $nodeFinder
+        NodeFinderInterface $nodeFinder,
     ) {
         parent::__construct($config, $fileResolver);
 

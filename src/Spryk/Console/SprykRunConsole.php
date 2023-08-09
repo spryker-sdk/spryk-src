@@ -8,7 +8,6 @@
 namespace SprykerSdk\Spryk\Console;
 
 use RuntimeException;
-use SprykerSdk\Spryk\Debug\Debug;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Resolver\OptionsContainer;
 use SprykerSdk\Spryk\Model\Spryk\Executor\Configuration\SprykExecutorConfigurationInterface;
 use SprykerSdk\Spryk\SprykConfig;
@@ -138,7 +137,7 @@ class SprykRunConsole extends AbstractSprykConsole
 
         $this->getFacade()->executeSpryk(
             $sprykExecutorConfiguration,
-            new SprykStyle($input, $output)
+            new SprykStyle($input, $output),
         );
 
         return static::CODE_SUCCESS;

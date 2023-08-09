@@ -28,7 +28,7 @@ class SprykDefinitionFixer implements SprykDefinitionFixerInterface
      */
     public function __construct(
         SprykDefinitionFinderInterface $sprykDefinitionFinder,
-        SprykDefinitionChecker $sprykDefinitionChecker
+        SprykDefinitionChecker $sprykDefinitionChecker,
     ) {
         $this->sprykDefinitionFinder = $sprykDefinitionFinder;
         $this->sprykDefinitionChecker = $sprykDefinitionChecker;

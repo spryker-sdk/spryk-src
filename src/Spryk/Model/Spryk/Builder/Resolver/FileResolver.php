@@ -56,7 +56,7 @@ class FileResolver implements FileResolverInterface
         ParserInterface $ymlParser,
         ParserInterface $jsonParser,
         ParserInterface $xmlParser,
-        ParserInterface $fileParser
+        ParserInterface $fileParser,
     ) {
         $this->classParser = $classParser;
         $this->ymlParser = $ymlParser;

@@ -56,7 +56,7 @@ class SprykConfigurationLoader implements SprykConfigurationLoaderInterface
         SprykConfigurationFinderInterface $configurationFinder,
         SprykConfigurationExtenderInterface $configurationExtender,
         ConfigurationValidatorInterface $configurationValidator,
-        SprykConfig $sprykConfig
+        SprykConfig $sprykConfig,
     ) {
         $this->configurationFinder = $configurationFinder;
         $this->configurationExtender = $configurationExtender;

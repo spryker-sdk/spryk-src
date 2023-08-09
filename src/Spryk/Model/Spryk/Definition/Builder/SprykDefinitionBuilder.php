@@ -126,7 +126,7 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         SprykConfigurationExtenderInterface $configurationExtender,
         SprykConfigurationLoaderInterface $sprykLoader,
         ArgumentResolverInterface $argumentResolver,
-        SprykConfig $sprykConfig
+        SprykConfig $sprykConfig,
     ) {
         $this->configurationExtender = $configurationExtender;
         $this->sprykLoader = $sprykLoader;
@@ -168,7 +168,7 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
     public function buildDefinition(
         string $sprykName,
         ?array $preDefinedDefinition = null,
-        ?ArgumentCollectionInterface $parentArgumentCollection = null
+        ?ArgumentCollectionInterface $parentArgumentCollection = null,
     ): SprykDefinitionInterface {
         $this->debugData['countAll'] = isset($this->debugData['countAll']) ? ++$this->debugData['countAll'] : 1;
         $this->debugData['countAdded'] ??= 0;
@@ -295,7 +295,7 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
      */
     public function addTargetModuleParams(
         SprykExecutorConfigurationInterface $sprykExecutorConfiguration,
-        array $sprykConfiguration
+        array $sprykConfiguration,
     ): array {
         if ($sprykExecutorConfiguration->getTargetModule()) {
             $sprykConfiguration[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS]['module'][SprykConfig::NAME_ARGUMENT_KEY_VALUE] = $sprykExecutorConfiguration->getTargetModule();
@@ -320,7 +320,7 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
      */
     public function addDependentModuleParams(
         SprykExecutorConfigurationInterface $sprykExecutorConfiguration,
-        array $sprykConfiguration
+        array $sprykConfiguration,
     ): array {
         if ($sprykExecutorConfiguration->getDependentModule()) {
             $sprykConfiguration[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS]['dependentModule'][SprykConfig::NAME_ARGUMENT_KEY_VALUE] = $sprykExecutorConfiguration->getDependentModule();

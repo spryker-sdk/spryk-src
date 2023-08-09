@@ -22,7 +22,7 @@ interface DebugInterface
     /**
      * @return bool
      */
-    public function isDebug();
+    public function isDebug(): bool;
 
     /**
      * Prints based on the debug level information about the Spryk That Should be debugged.

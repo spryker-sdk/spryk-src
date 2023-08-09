@@ -8,7 +8,6 @@
 namespace SprykerSdkTest\Module;
 
 use Codeception\Module;
-use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedYmlInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 

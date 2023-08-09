@@ -47,7 +47,7 @@ class ArgumentResolver implements ArgumentResolverInterface
     public function __construct(
         ArgumentCollectionInterface $argumentCollection,
         SupersederInterface $superseder,
-        ArgumentDefinitionNormalizerInterface $argumentDefinitionNormalizer
+        ArgumentDefinitionNormalizerInterface $argumentDefinitionNormalizer,
     ) {
         $this->argumentCollection = $argumentCollection;
         $this->superseder = $superseder;
@@ -66,7 +66,7 @@ class ArgumentResolver implements ArgumentResolverInterface
         array $arguments,
         string $sprykName,
         SprykStyleInterface $style,
-        ?ArgumentCollectionInterface $resolvedArgumentCollection = null
+        ?ArgumentCollectionInterface $resolvedArgumentCollection = null,
     ): ArgumentCollectionInterface {
         $this->style = $style;
         $argumentCollection = clone $this->argumentCollection;
@@ -105,7 +105,7 @@ class ArgumentResolver implements ArgumentResolverInterface
         string $argumentName,
         string $sprykName,
         array $argumentDefinition,
-        ArgumentCollectionInterface $resolvedArgumentCollection
+        ArgumentCollectionInterface $resolvedArgumentCollection,
     ): Argument {
         $argument = new Argument();
         $argument->setName($argumentName);
@@ -144,7 +144,7 @@ class ArgumentResolver implements ArgumentResolverInterface
         string $argumentName,
         string $sprykName,
         array $argumentDefinition,
-        ArgumentCollectionInterface $resolvedArgumentCollection
+        ArgumentCollectionInterface $resolvedArgumentCollection,
     ) {
         if ($this->isValueKnownForArgument($argumentName, $argumentDefinition, $resolvedArgumentCollection)) {
             return $this->getKnownValueForArgument($argumentName, $argumentDefinition, $resolvedArgumentCollection);
@@ -175,7 +175,7 @@ class ArgumentResolver implements ArgumentResolverInterface
     protected function isValueKnownForArgument(
         string $argumentName,
         array $argumentDefinition,
-        ArgumentCollectionInterface $resolvedArgumentCollection
+        ArgumentCollectionInterface $resolvedArgumentCollection,
     ): bool {
         if (
             isset($argumentDefinition[SprykConfig::NAME_ARGUMENT_KEY_VALUE])
@@ -198,7 +198,7 @@ class ArgumentResolver implements ArgumentResolverInterface
     protected function canInherit(
         string $argumentName,
         array $argumentDefinition,
-        ArgumentCollectionInterface $resolvedArgumentCollection
+        ArgumentCollectionInterface $resolvedArgumentCollection,
     ): bool {
         return (isset($argumentDefinition['inherit']) && $resolvedArgumentCollection->hasArgument($argumentName));
     }
@@ -213,7 +213,7 @@ class ArgumentResolver implements ArgumentResolverInterface
     protected function getKnownValueForArgument(
         string $argumentName,
         array $argumentDefinition,
-        ArgumentCollectionInterface $resolvedArgumentCollection
+        ArgumentCollectionInterface $resolvedArgumentCollection,
     ) {
         if (isset($argumentDefinition[SprykConfig::NAME_ARGUMENT_KEY_VALUE]) && !$this->issetNonEmptyOption($argumentName)) {
             return $argumentDefinition[SprykConfig::NAME_ARGUMENT_KEY_VALUE];
@@ -261,7 +261,7 @@ class ArgumentResolver implements ArgumentResolverInterface
     protected function getDefaultValue(
         string $argumentName,
         array $argumentDefinition,
-        ArgumentCollectionInterface $resolvedArgumentCollection
+        ArgumentCollectionInterface $resolvedArgumentCollection,
     ) {
         if (isset($argumentDefinition[SprykConfig::NAME_ARGUMENT_KEY_DEFAULT])) {
             return $argumentDefinition[SprykConfig::NAME_ARGUMENT_KEY_DEFAULT];

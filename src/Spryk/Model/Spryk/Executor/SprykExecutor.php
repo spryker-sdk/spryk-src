@@ -18,7 +18,6 @@ use SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface;
 use SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface;
 use SprykerSdk\Spryk\Model\Spryk\Executor\Configuration\SprykExecutorConfigurationInterface;
 use SprykerSdk\Spryk\ModeResolver\ModeResolverInterface;
-use SprykerSdk\Spryk\SprykConfig;
 use SprykerSdk\Spryk\Style\SprykStyleInterface;
 
 class SprykExecutor implements SprykExecutorInterface
@@ -57,6 +56,7 @@ class SprykExecutor implements SprykExecutorInterface
      * @param \SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface $conditionMatcher
      * @param \SprykerSdk\Spryk\Model\Spryk\Cleanup\CleanupRunnerInterface $cleanupRunner
      * @param \SprykerSdk\Spryk\Debug\DebugInterface $debug
+     * @param \SprykerSdk\Spryk\ModeResolver\ModeResolverInterface $modeResolver
      */
     public function __construct(
         private SprykDefinitionBuilderInterface $definitionBuilder,
@@ -67,7 +67,7 @@ class SprykExecutor implements SprykExecutorInterface
         private ConditionMatcherInterface $conditionMatcher,
         private CleanupRunnerInterface $cleanupRunner,
         private DebugInterface $debug,
-        private ModeResolverInterface $modeResolver
+        private ModeResolverInterface $modeResolver,
     ) {
     }
 
@@ -79,7 +79,7 @@ class SprykExecutor implements SprykExecutorInterface
      */
     public function execute(
         SprykExecutorConfigurationInterface $sprykExecutorConfiguration,
-        SprykStyleInterface $style
+        SprykStyleInterface $style,
     ): void {
         $this->definitionBuilder->setStyle($style);
         $this->includeOptionalSubSpryks = $sprykExecutorConfiguration->getIncludeOptionalSubSpryks();
@@ -324,7 +324,7 @@ class SprykExecutor implements SprykExecutorInterface
     protected function executeCommand(
         string $commandName,
         SprykDefinitionInterface $sprykDefinition,
-        SprykStyleInterface $style
+        SprykStyleInterface $style,
     ): void {
         foreach ($this->sprykCommands as $command) {
             if ($command->getName() !== $commandName) {

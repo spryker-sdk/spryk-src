@@ -78,7 +78,7 @@ class DependencyProviderSpryk extends AbstractBuilder
         TemplateRendererInterface $renderer,
         NodeFinderInterface $nodeFinder,
         Parser $parser,
-        Lexer $lexer
+        Lexer $lexer,
     ) {
         parent::__construct($config, $fileResolver);
 

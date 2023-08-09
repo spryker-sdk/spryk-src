@@ -99,7 +99,7 @@ class TransferPropertySpryk extends AbstractTransferSpryk
         string $transferName,
         string $propertyName,
         string $propertyType,
-        ?string $singular = null
+        ?string $singular = null,
     ): void {
         $propertyXMLElement = $this->findPropertyByName($transferXMLElement, $propertyName);
 

@@ -45,7 +45,7 @@ class SprykDefinitionChecker implements SprykDefinitionCheckerInterface
         SprykDefinitionFinderInterface $sprykDefinitionFinder,
         SprykConfigurationLoaderInterface $configurationLoader,
         CheckerSprykDefinitionValidatorInterface $checkerSprykDefinitionValidator,
-        SprykConfig $sprykConfig
+        SprykConfig $sprykConfig,
     ) {
         $this->sprykDefinitionFinder = $sprykDefinitionFinder;
         $this->configurationLoader = $configurationLoader;
