@@ -26,9 +26,9 @@
         <exclude name="SprykerStrict.TypeHints.PropertyTypeHint"/>
     </rule>
 
-<!--    <rule ref="SlevomatCodingStandard">-->
-<!--        <exclude name="SlevomatCodingStandard.Classes.DisallowConstructorPropertyPromotion.DisallowedConstructorPropertyPromotion"/>-->
-<!--    </rule>-->
+    <rule ref="SlevomatCodingStandard.Classes.DisallowConstructorPropertyPromotion">
+        <exclude name="SlevomatCodingStandard.Classes.DisallowConstructorPropertyPromotion.DisallowedConstructorPropertyPromotion"/>
+    </rule>
 
     <!-- Define your own sniffs here -->
 

@@ -174,18 +174,18 @@ class Debug implements DebugInterface
      */
     private function getValueOfArgument(ArgumentInterface $argument): mixed
     {
+        /** @var string|int|array|bool $value */
         $value = $argument->getValue();
-        if (is_scalar($value)) {
-            return $value;
-        }
+
         if (is_bool($value)) {
             return $value ? 'true' : 'false';
         }
+
         if (is_array($value)) {
             return implode("\n", $argument->getValue());
         }
 
-        return 'n/a';
+        return $value;
     }
 
     /**

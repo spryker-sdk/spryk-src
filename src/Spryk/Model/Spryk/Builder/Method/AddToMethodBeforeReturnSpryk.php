@@ -94,8 +94,9 @@ class AddToMethodBeforeReturnSpryk extends AbstractBuilder
     {
         $content = $this->getContent();
 
-        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolved */
+        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface|null $resolved */
         $resolved = $this->fileResolver->resolve($this->getTarget());
+
         if (!$resolved) {
             return true;
         }
