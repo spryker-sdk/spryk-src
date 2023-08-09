@@ -168,20 +168,10 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         }
 
         $arguments = $this->mergeArguments($sprykConfiguration[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS], $preDefinedDefinition);
-
-        $context = [
-            'mode' => $mode,
-            'organization' => $mode,
-            'sprykName' => $sprykName,
-        ];
-
-        $arguments = $this->configurationExtender->extend($arguments, $context);
-
-        if ($organization && isset($arguments[SprykConfig::NAME_ARGUMENT_ORGANIZATION])) {
-            unset($arguments[SprykConfig::NAME_ARGUMENT_ORGANIZATION]['default'], $arguments[SprykConfig::NAME_ARGUMENT_ORGANIZATION]['values']);
-            $arguments[SprykConfig::NAME_ARGUMENT_ORGANIZATION]['value'] = $organization;
-        }
-
+        $arguments = $this->configurationExtender->extend($arguments, [
+            SprykConfig::NAME_ARGUMENT_MODE => $mode,
+            SprykConfig::NAME_ARGUMENT_ORGANIZATION => $organization,
+        ]);
         $argumentCollection = $this->argumentResolver->resolve(
             $arguments,
             $sprykName,

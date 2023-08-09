@@ -77,9 +77,7 @@ class SprykConfigurationLoader implements SprykConfigurationLoaderInterface
         $sprykConfiguration = $this->buildMode($sprykConfiguration, $sprykMode);
         $sprykConfiguration = $this->buildLevel($sprykConfiguration);
 
-        return $this->configurationExtender->extend($sprykConfiguration, [
-            'sprykName' => $sprykName,
-        ]);
+        return $this->configurationExtender->extend($sprykConfiguration, []);
     }
 
     /**
