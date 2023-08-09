@@ -37,6 +37,7 @@
         "rector/rector": "*",
         "spryker-sdk/architector": "0.1.x-dev",
         "spryker/code-sniffer": "0.17.9",
+        "spryker/glue-backend-api-application": "^1.4",
         "spryker/message-broker": "^1.0.0"
     },
     "autoload": {
