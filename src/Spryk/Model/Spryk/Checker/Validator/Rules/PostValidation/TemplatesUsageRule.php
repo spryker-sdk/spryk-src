@@ -165,21 +165,18 @@ class TemplatesUsageRule implements PostValidationInterface
      */
     protected function checkTemplateInArgument(array &$usedTemplates, array $argument): void
     {
-        if (is_array($argument)) {
-            if (isset($argument['value'])) {
-                if (is_array($argument['value'])) {
-                    return;
-                }
-                $this->writeUnusedTemplate($usedTemplates, $argument['value']);
+        if (isset($argument['value'])) {
+            if (is_array($argument['value'])) {
+                return;
             }
-            if (isset($argument['default'])) {
-                if (is_array($argument['default'])) {
-                    return;
-                }
-                $this->writeUnusedTemplate($usedTemplates, $argument['default']);
-            }
+            $this->writeUnusedTemplate($usedTemplates, $argument['value']);
         }
-
+        if (isset($argument['default'])) {
+            if (is_array($argument['default'])) {
+                return;
+            }
+            $this->writeUnusedTemplate($usedTemplates, $argument['default']);
+        }
         if (isset($argument['value'])) {
             $this->writeUnusedTemplate($usedTemplates, $argument['value']);
         }

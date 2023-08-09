@@ -156,11 +156,9 @@ class SchemaPropertySpryk extends AbstractBuilder
     {
         $columnXmlElements = $simpleXmlElement->xpath('//column');
 
-        if ($columnXmlElements !== false) {
-            foreach ($columnXmlElements as $tableXmlElement) {
-                if ((string)$tableXmlElement['name'] === $columnName) {
-                    return true;
-                }
+        foreach ($columnXmlElements as $tableXmlElement) {
+            if ((string)$tableXmlElement['name'] === $columnName) {
+                return true;
             }
         }
 

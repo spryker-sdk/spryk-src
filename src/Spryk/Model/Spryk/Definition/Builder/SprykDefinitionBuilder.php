@@ -263,7 +263,7 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         $mode = $this->style->getInput()->getOption(SprykConfig::NAME_ARGUMENT_MODE);
 
         if (!$mode) {
-            $mode = $this->sprykConfig->getDefaultMode();
+            return $this->sprykConfig->getDefaultMode();
         }
 
         return $mode;
@@ -281,7 +281,7 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         $organization = $this->style->getInput()->getOption(SprykConfig::NAME_ARGUMENT_ORGANIZATION);
 
         if (!$organization && $mode === SprykConfig::NAME_DEVELOPMENT_LAYER_PROJECT) {
-            $organization = $this->sprykConfig->getProjectNamespace();
+            return $this->sprykConfig->getProjectNamespace();
         }
 
         return $organization;
@@ -384,7 +384,7 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         }
 
         if (is_array($preDefinedConfiguration)) {
-            $configuration = array_merge($configuration, $preDefinedConfiguration);
+            return array_merge($configuration, $preDefinedConfiguration);
         }
 
         return $configuration;

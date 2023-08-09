@@ -138,11 +138,9 @@ class SchemaUniqueKeySpryk extends AbstractBuilder
     {
         $columnXmlElements = $simpleXmlElement->xpath('//unique');
 
-        if ($columnXmlElements !== false) {
-            foreach ($columnXmlElements as $tableXmlElement) {
-                if ((string)$tableXmlElement['name'] === $uniqueKeyName) {
-                    return true;
-                }
+        foreach ($columnXmlElements as $tableXmlElement) {
+            if ((string)$tableXmlElement['name'] === $uniqueKeyName) {
+                return true;
             }
         }
 

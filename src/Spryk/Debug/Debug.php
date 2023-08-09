@@ -73,7 +73,10 @@ class Debug implements DebugInterface
      */
     public function isDebug(): bool
     {
-        return $this->style->getInput()->hasParameterOption('-dd') || $this->style->getInput()->hasParameterOption('-ddd');
+        if ($this->style->getInput()->hasParameterOption('-dd')) {
+            return true;
+        }
+        return $this->style->getInput()->hasParameterOption('-ddd');
     }
 
     /**

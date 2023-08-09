@@ -162,11 +162,9 @@ class SchemaBehaviorSpryk extends AbstractBuilder
     {
         $columnXmlElements = $simpleXmlElement->xpath('//behavior');
 
-        if ($columnXmlElements !== false) {
-            foreach ($columnXmlElements as $tableXmlElement) {
-                if ((string)$tableXmlElement['name'] === $behaviorName) {
-                    return true;
-                }
+        foreach ($columnXmlElements as $tableXmlElement) {
+            if ((string)$tableXmlElement['name'] === $behaviorName) {
+                return true;
             }
         }
 
