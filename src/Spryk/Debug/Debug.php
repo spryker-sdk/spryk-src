@@ -7,11 +7,10 @@
 
 namespace SprykerSdk\Spryk\Debug;
 
-use SprykerSdk\Spryk\Exception\SprykWrongDevelopmentLayerException;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\ArgumentInterface;
 use SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface;
 use SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface;
-use SprykerSdk\Spryk\SprykConfig;
+use SprykerSdk\Spryk\ModeResolver\ModeResolverInterface;
 use SprykerSdk\Spryk\Style\SprykStyleInterface;
 use Symfony\Component\Console\Helper\Table;
 
@@ -49,8 +48,9 @@ class Debug implements DebugInterface
 
     /**
      * @param \SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface $conditionMatcher
+     * @param \SprykerSdk\Spryk\ModeResolver\ModeResolverInterface $modeResolver
      */
-    public function __construct(protected ConditionMatcherInterface $conditionMatcher)
+    public function __construct(private ConditionMatcherInterface $conditionMatcher, private ModeResolverInterface $modeResolver)
     {
     }
 
@@ -81,7 +81,7 @@ class Debug implements DebugInterface
      */
     public function printDebug(SprykDefinitionInterface $sprykDefinition): void
     {
-        $this->mainSprykDefinitionMode = $this->getSprykDefinitionMode($sprykDefinition);
+        $this->mainSprykDefinitionMode = $this->modeResolver->getMode($sprykDefinition, $this->style);
 
         if (($sprykDefinition->getMode() !== 'both' && $sprykDefinition->getMode() !== $this->mainSprykDefinitionMode) || !$this->conditionMatched($sprykDefinition)) {
             return;
@@ -90,39 +90,10 @@ class Debug implements DebugInterface
         $this->buildSpryk($sprykDefinition);
 
         return;
-
-        $orderSpryks = $this->orderSpryks($sprykDefinition, []);
-
-        foreach ($orderSpryks as $sprykName => $spryDefinition) {
-            $this->output->writeln($sprykName);
-        }
-//        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($orderSpryks) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
     }
 
     /**
      * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     * @param array $orderedSpryks
-     *
-     * @return array
-     */
-    private function orderSpryks(SprykDefinitionInterface $sprykDefinition, array $orderedSpryks)
-    {
-        foreach ($sprykDefinition->getPreSpryks() as $preSprykDefinition) {
-            $orderedSpryks = $this->orderSpryks($preSprykDefinition, $orderedSpryks);
-        }
-
-        $orderedSpryks[$sprykDefinition->getSprykName()] = $sprykDefinition;
-
-        foreach ($sprykDefinition->getPostSpryks() as $postSprykDefinition) {
-            $orderedSpryks = $this->orderSpryks($postSprykDefinition, $orderedSpryks);
-        }
-
-        return $orderedSpryks;
-    }
-
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
      *
      * @return void
      */
@@ -320,49 +291,5 @@ class Debug implements DebugInterface
         }
 
         return true;
-    }
-
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     *
-     * @throws \SprykerSdk\Spryk\Exception\SprykWrongDevelopmentLayerException
-     *
-     * @return string
-     */
-    protected function getSprykDefinitionMode(
-        SprykDefinitionInterface $sprykDefinition
-    ): string {
-        if (!$this->isValidMode($sprykDefinition)) {
-            $errorMessage = '`%s` spryk support `%s` development layer only.';
-
-            throw new SprykWrongDevelopmentLayerException(
-                sprintf($errorMessage, $sprykDefinition->getSprykName(), strtoupper($sprykDefinition->getMode())),
-            );
-        }
-
-        $sprykMode = $this->style->getInput()->getOption(SprykConfig::NAME_ARGUMENT_MODE);
-
-        return is_string($sprykMode) ? $sprykMode : $sprykDefinition->getMode();
-    }
-
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     *
-     * @return bool
-     */
-    protected function isValidMode(SprykDefinitionInterface $sprykDefinition): bool
-    {
-        $sprykModeArgument = $this->style->getInput()->getOption(SprykConfig::NAME_ARGUMENT_MODE);
-        $sprykModeDefinition = $sprykDefinition->getMode();
-
-        if ($sprykModeDefinition === 'both') {
-            return true;
-        }
-
-        if ($sprykModeArgument === false || $sprykModeArgument === null) {
-            return true;
-        }
-
-        return $sprykModeArgument === $sprykModeDefinition;
     }
 }

@@ -72,7 +72,6 @@ preSpryks:
     - AddGlueTestApiCest
 
 postSpryks:
-#    - AddGlueApiApplicationResourceMethod
     - AddGlueApiApplicationFactory
     # Add controller deleteAction
     - AddMethod:

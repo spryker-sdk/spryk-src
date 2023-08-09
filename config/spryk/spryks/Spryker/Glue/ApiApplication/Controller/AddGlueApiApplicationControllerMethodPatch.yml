@@ -68,7 +68,6 @@ preSpryks:
     - AddGlueTestApiCest
 
 postSpryks:
-#    - AddGlueApiApplicationResourceMethod
     - AddGlueApiApplicationFactory
     # Add controller patchAction
     - AddMethod:
