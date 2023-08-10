@@ -51,37 +51,47 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
         /** @var \SimpleXMLElement $simpleXMLElement */
         $simpleXMLElement = $resolved->getSimpleXmlElement();
 
-        $transferName = $this->getTransferName();
+        // Multiple transfers
+        $transferDefinitions = $this->getTransferDefinitions();
 
-        /** @var \SimpleXMLElement $transferXMLElement */
-        $transferXMLElement = $this->findTransferByName($simpleXMLElement, $transferName);
-
-        $properties = $this->getProperties();
-
-        if ($properties) {
-            foreach ($properties as $propertyParts) {
-                $propertyDefinition = explode(':', trim($propertyParts));
-
-                if ($this->isAutoIncrementField($propertyDefinition[0], $transferName)) {
-                    continue;
-                }
-
-                $this->addProperty($transferXMLElement, $transferName, $propertyDefinition[0], $propertyDefinition[1], $this->dataBuilderRuleByProperty($propertyDefinition[0], $propertyDefinition[1]));
+        foreach ($transferDefinitions as $transferName => $properties) {
+            $transferXMLElement = $this->findTransferByName($simpleXMLElement, $transferName);
+            foreach ($properties as $property) {
+                $this->addProperty($transferXMLElement, $transferName, $property['name'], $property['type'], $property['singular'] ?? null);
             }
-
-            return;
         }
 
-        $propertyName = $this->getPropertyName();
-
-        if ($this->isAutoIncrementField($propertyName, $transferName)) {
-            return;
-        }
-
-        $propertyType = $this->getPropertyType();
-        $dataBuilderRule = $this->getDataBuilderRule();
-
-        $this->addProperty($transferXMLElement, $transferName, $propertyName, $propertyType, $dataBuilderRule);
+//        $transferName = $this->getTransferName();
+//
+//        /** @var \SimpleXMLElement $transferXMLElement */
+//        $transferXMLElement = $this->findTransferByName($simpleXMLElement, $transferName);
+//
+//        $properties = $this->getProperties();
+//
+//        if ($properties) {
+//            foreach ($properties as $propertyParts) {
+//                $propertyDefinition = explode(':', trim($propertyParts));
+//
+//                if ($this->isAutoIncrementField($propertyDefinition[0], $transferName)) {
+//                    continue;
+//                }
+//
+//                $this->addProperty($transferXMLElement, $transferName, $propertyDefinition[0], $propertyDefinition[1], $this->dataBuilderRuleByProperty($propertyDefinition[0], $propertyDefinition[1]));
+//            }
+//
+//            return;
+//        }
+//
+//        $propertyName = $this->getPropertyName();
+//
+//        if ($this->isAutoIncrementField($propertyName, $transferName)) {
+//            return;
+//        }
+//
+//        $propertyType = $this->getPropertyType();
+//        $dataBuilderRule = $this->getDataBuilderRule();
+//
+//        $this->addProperty($transferXMLElement, $transferName, $propertyName, $propertyType, $dataBuilderRule);
     }
 
     /**

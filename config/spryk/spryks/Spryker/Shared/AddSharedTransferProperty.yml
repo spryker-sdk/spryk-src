@@ -19,6 +19,9 @@ arguments:
     name:
         inherit: true
 
+    transfersProperties:
+        description: "Used when Multiple transfers needs to be added otherwise empty. Format: TransferA&propertyA:string,propertyB:int:singular;TransferB&propertyA:string,propertyB:int:singular"
+
     propertyName: ~
 
     propertyType: ~

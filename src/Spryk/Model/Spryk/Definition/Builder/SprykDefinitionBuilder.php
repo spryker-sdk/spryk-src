@@ -200,6 +200,8 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
             $arguments[SprykConfig::NAME_ARGUMENT_ORGANIZATION]['value'] = $organization;
         }
 
+        // The Argument Collection will contain all Spryk argument collections. The last one is the first entry and
+        // each entry has a `previousSprykArgumentCollection` containing the previously resolved arguments.
         $argumentCollection = $this->argumentResolver->resolve(
             $arguments,
             $sprykName,
@@ -210,6 +212,7 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         $sprykDefinitionKey = sprintf('%s.%s', $sprykName, $argumentCollection->getFingerprint());
         $this->argumentCollectionCache[$sprykDefinitionKey] = $argumentCollection;
 
+        // Some Spryks don't have the need for an application argument but for the debug information we need to have an application.
         if (!$argumentCollection->hasArgument('application')) {
             $applicationArgument = new Argument();
             $applicationArgument->setName('application')

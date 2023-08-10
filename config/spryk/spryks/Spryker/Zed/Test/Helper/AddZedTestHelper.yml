@@ -15,7 +15,10 @@ arguments:
 
     organization:
         inherit: true
-        default: Spryker
+
+    application:
+        inherit: true
+        default: Zed
 
     template:
         value: Zed/Test/Helper/ZedTestHelper.php.twig

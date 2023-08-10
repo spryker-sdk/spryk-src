@@ -76,6 +76,8 @@ class ArgumentResolver implements ArgumentResolverInterface
             $resolvedArgumentCollection->setSprykName($sprykName);
         }
 
+        // The Argument Collection will contain all Spryk argument collections. The last one is the first entry and
+        // each entry has a `previousSprykArgumentCollection` containing the previously resolved arguments.
         $argumentCollection->setSprykName($sprykName);
         $argumentCollection->setPreviousSprykArguments($resolvedArgumentCollection);
 
@@ -87,6 +89,7 @@ class ArgumentResolver implements ArgumentResolverInterface
                 $resolvedArgumentCollection,
             );
             $argumentCollection->addArgument($argument);
+            $argument->addMeta('resolvedBySpryk', $sprykName);
             $resolvedArgumentCollection->addArgument($argument);
         }
 

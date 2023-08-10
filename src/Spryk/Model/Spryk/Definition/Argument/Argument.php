@@ -30,6 +30,11 @@ class Argument implements ArgumentInterface
     protected $callbacks = [];
 
     /**
+     * @var array<string, mixed>
+     */
+    protected array $meta = [];
+
+    /**
      * @param string $name
      *
      * @return $this
@@ -107,6 +112,17 @@ class Argument implements ArgumentInterface
         $this->callbacks = $callbacks;
 
         return $this;
+    }
+
+    /**
+     * @param string $key
+     * @param mixed $value
+     *
+     * @return void
+     */
+    public function addMeta(string $key, mixed $value): void
+    {
+        $this->meta[$key] = $value;
     }
 
     /**

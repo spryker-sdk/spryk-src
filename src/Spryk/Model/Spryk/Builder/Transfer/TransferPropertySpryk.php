@@ -14,21 +14,6 @@ class TransferPropertySpryk extends AbstractTransferSpryk
     /**
      * @var string
      */
-    public const PROPERTY_TYPE = 'propertyType';
-
-    /**
-     * @var string
-     */
-    public const PROPERTY_NAME = 'propertyName';
-
-    /**
-     * @var string
-     */
-    public const SINGULAR = 'singular';
-
-    /**
-     * @var string
-     */
     protected const SPRYK_NAME = 'transferProperty';
 
     /**
@@ -40,32 +25,15 @@ class TransferPropertySpryk extends AbstractTransferSpryk
         $resolved = $this->fileResolver->resolve($this->getTargetPath());
         $simpleXMLElement = $resolved->getSimpleXmlElement();
 
-        $transferName = $this->getTransferName();
+        // Multiple transfers
+        $transferDefinitions = $this->getTransferDefinitions();
 
-        $transferXMLElement = $this->findTransferByName($simpleXMLElement, $transferName);
-
-        if (!$transferXMLElement) {
-            $this->log(sprintf('Could not find transferXMLElement by name <fg=green>%s</> in <fg=green>%s</>', $transferName, $this->getTargetPath()));
-
-            return;
-        }
-
-        $properties = $this->getProperties();
-
-        if ($properties) {
-            foreach ($properties as $propertyParts) {
-                $propertyDefinition = explode(':', trim($propertyParts));
-                $this->addProperty($transferXMLElement, $transferName, $propertyDefinition[0], $propertyDefinition[1], $propertyDefinition[2] ?? null);
+        foreach ($transferDefinitions as $transferName => $properties) {
+            $transferXMLElement = $this->findTransferByName($simpleXMLElement, $transferName);
+            foreach ($properties as $property) {
+                $this->addProperty($transferXMLElement, $transferName, $property['name'], $property['type'], $property['singular']);
             }
-
-            return;
         }
-
-        $propertyName = $this->getPropertyName();
-        $propertyType = $this->getPropertyType();
-        $singular = $this->getSingular();
-
-        $this->addProperty($transferXMLElement, $transferName, $propertyName, $propertyType, $singular);
     }
 
     /**
@@ -119,6 +87,11 @@ class TransferPropertySpryk extends AbstractTransferSpryk
     }
 
     /**
+     * Properties can have the following formats:
+     * - MessageA&messages:MessageA:message,propertyB:int;MessageB&propertyA:string,propertyB:string
+     * - messages:MessageA:message,propertyB:int
+     *
+     *
      * @return array|null
      */
     protected function getProperties(): ?array
@@ -128,9 +101,9 @@ class TransferPropertySpryk extends AbstractTransferSpryk
             ->getValue();
 
         // When this property is an array it was executed with:
-        // --property propertyA --propertyB ...
+        // --propertyName propertyA --propertyB ...
         // or with
-        // --property propertyA:string --propertyB:int ...
+        // --propertyName propertyA:string --propertyB:int ...
         if (is_array($properties)) {
             return $properties;
         }
@@ -138,40 +111,10 @@ class TransferPropertySpryk extends AbstractTransferSpryk
         // When this argument contains a `:` this Spryk was called in a way that multiple properties should be added with one call
         // This will most likely come from other SDK tools to have fewer calls to this Spryk.
         // Examples:
-        // --property propertyA:string
-        // --property propertyA:string,propertyB:int
+        // --propertyName propertyA:string
+        // --propertyName propertyA:string,propertyB:int
         if (strpos($properties, ':') !== false) {
             return explode(',', $properties);
-        }
-
-        return null;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getPropertyName(): string
-    {
-        return $this->getStringArgument(static::PROPERTY_NAME);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getPropertyType(): string
-    {
-        return $this->getStringArgument(static::PROPERTY_TYPE);
-    }
-
-    /**
-     * @return string|null
-     */
-    protected function getSingular(): ?string
-    {
-        $singular = $this->arguments->getArgument(static::SINGULAR)->getValue();
-
-        if ($singular) {
-            return $singular;
         }
 
         return null;

@@ -1,6 +1,6 @@
 name: AddZedBusinessMessageBrokerMessageHandlerMethod
 spryk: method
-description: "Adds a new handle message method to the **module** MessageBroker MessageHandler plugin."
+description: "Adds a new message handler class to the **module** with the handle**messageName** method. This class::method will be called from the facade and should handle the message."
 mode: both
 level: 2
 
@@ -17,8 +17,12 @@ arguments:
         inherit: true
         default: Spryker
 
+    application:
+        inherit: true
+        default: Zed
+
     className:
-        value: "{{ module }}MessageHandler"
+        value: "{{ messageName }}MessageHandler"
 
     subDirectory:
         value: "MessageBroker"

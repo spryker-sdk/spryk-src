@@ -1,4 +1,4 @@
-name: AddZedTestHelperMethod
+name: AddTestHelperMethod
 spryk: method
 description: "Adds a new method to the *module*Helper."
 mode: both
@@ -25,7 +25,10 @@ arguments:
         value: Common/Method.php.twig
 
     target:
-        value: "\\{{ organization }}Test\\Zed\\{{ module }}\\Helper\\{{ module }}Helper"
+        value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ module }}Helper"
+
+    suite:
+        inherit: true
 
 preSpryks:
-    - AddZedTestHelper
+    - AddTestHelper

@@ -1,0 +1,100 @@
+name: AddMessageBrokerMessageHandlerPlugin
+spryk: template
+description: "Adds a new *module* *message*HandlerPlugin class."
+mode: both
+
+arguments:
+    module:
+        inherit: true
+
+    organization:
+        inherit: true
+
+    application:
+        inherit: true
+
+    messageName:
+        inherit: true
+
+    className:
+        value: "{{ messageName }}MessageHandlerPlugin"
+
+    implements:
+        inherit: true
+        value: "Spryker/Zed/MessageBrokerExtension/Dependency/Plugin/MessageHandlerPluginInterface"
+
+    extends:
+        inherit: true
+        value: "Spryker/Zed/Kernel/Communication/AbstractPlugin"
+
+    subDirectory:
+        inherit: true
+        value: "Communication/Plugin/MessageBroker"
+
+    template:
+        value: Zed/Communication/Plugin/MessageBroker/MessageHandlerPluginClass.php.twig
+
+    targetFilename:
+        value: "{{ module }}{{ messageName }}MessageHandlerPlugin.php"
+
+    targetPath:
+         value: "src/{{ organization }}/{{ application }}/{{ module }}/"
+
+postSpryks:
+    - AddZedBusinessMessageBrokerMessageHandlerMethod
+    # Add MessageBrokerDependencyProvider
+    - AddZedDependencyProvider:
+          arguments:
+              organization:
+                  value: "Pyz"
+              module:
+                  value: "MessageBroker"
+    - AddMethod:
+          arguments:
+              target:
+                  value: "\\Pyz\\Zed\\MessageBroker\\MessageBrokerDependencyProvider"
+              method:
+                  value: "getMessageHandlerPlugins"
+              body:
+                  value: "return [];"
+              output:
+                  value: "array<\\Spryker\\Zed\\MessageBrokerExtension\\Dependency\\Plugin\\MessageHandlerPluginInterface>"
+              withInterface:
+                  value: false
+
+    # Wire the plugin after it was created
+    - WirePlugin:
+          arguments:
+              plugin:
+                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\MessageBroker\\{{ className }}"
+              target:
+                  value: "\\Pyz\\Zed\\MessageBroker\\MessageBrokerDependencyProvider::getMessageHandlerPlugins()"
+
+    # Add the Facade method to create the message handler and call it.
+    - AddZedBusinessFacadeMethod:
+          arguments:
+              allowOverride:
+                  value: true
+              facadeMethod:
+                  value: "handle{{ messageName }}"
+              input:
+                  value: "\\Generated\\Shared\\Transfer\\{{ messageName }}Transfer ${{ messageName | lcfirst }}Transfer"
+              output:
+                  value: void
+              body:
+                  allowOverride: true
+                  value:
+                      - "$this->getFactory()->create{{ messageName }}MessageHandler()->handle{{ messageName }}(${{ messageName | lcfirst }}Transfer);"
+
+    # Add the Factory method to create the message handler
+    - AddZedBusinessFactoryMethod:
+          arguments:
+              allowOverride:
+                  value: true
+              factoryMethod:
+                  value: "create{{ messageName }}MessageHandler"
+              output:
+                  value: "\\{{ organization }}\\Zed\\{{ module }}\\Business\\MessageBroker\\{{ messageName }}MessageHandlerInterface"
+              body:
+                  allowOverride: true
+                  value: "return new \\{{ organization }}\\Zed\\{{ module }}\\Business\\MessageBroker\\{{ messageName }}MessageHandler();"
