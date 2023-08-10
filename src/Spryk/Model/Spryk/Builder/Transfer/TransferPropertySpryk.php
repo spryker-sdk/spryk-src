@@ -38,23 +38,6 @@ class TransferPropertySpryk extends AbstractTransferSpryk
 
     /**
      * @param \SimpleXMLElement $transferXMLElement
-     * @param string $propertyName
-     *
-     * @return \SimpleXMLElement|null
-     */
-    protected function findPropertyByName(SimpleXMLElement $transferXMLElement, string $propertyName): ?SimpleXMLElement
-    {
-        foreach ($transferXMLElement->children() as $propertyXMLElement) {
-            if ((string)$propertyXMLElement['name'] === $propertyName) {
-                return $propertyXMLElement;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param \SimpleXMLElement $transferXMLElement
      * @param string $transferName
      * @param string $propertyName
      * @param string $propertyType
@@ -84,66 +67,5 @@ class TransferPropertySpryk extends AbstractTransferSpryk
         }
 
         $this->log(sprintf('Added transferXMLElement property <fg=green>%s.%s</>', $transferName, $propertyName));
-    }
-
-    /**
-     * Properties can have the following formats:
-     * - MessageA&messages:MessageA:message,propertyB:int;MessageB&propertyA:string,propertyB:string
-     * - messages:MessageA:message,propertyB:int
-     *
-     *
-     * @return array|null
-     */
-    protected function getProperties(): ?array
-    {
-        $properties = $this->arguments
-            ->getArgument(static::PROPERTY_NAME)
-            ->getValue();
-
-        // When this property is an array it was executed with:
-        // --propertyName propertyA --propertyB ...
-        // or with
-        // --propertyName propertyA:string --propertyB:int ...
-        if (is_array($properties)) {
-            return $properties;
-        }
-
-        // When this argument contains a `:` this Spryk was called in a way that multiple properties should be added with one call
-        // This will most likely come from other SDK tools to have fewer calls to this Spryk.
-        // Examples:
-        // --propertyName propertyA:string
-        // --propertyName propertyA:string,propertyB:int
-        if (strpos($properties, ':') !== false) {
-            return explode(',', $properties);
-        }
-
-        return null;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isTransferPropertyDefined(): bool
-    {
-        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedXmlInterface $resolved */
-        $resolved = $this->fileResolver->resolve($this->getTargetPath());
-        $simpleXMLElement = $resolved->getSimpleXmlElement();
-
-        $transferName = $this->getTransferName();
-        $propertyName = $this->getPropertyName();
-
-        $transferXMLElement = $this->findTransferByName($simpleXMLElement, $transferName);
-
-        if (!$transferXMLElement) {
-            return false;
-        }
-
-        $propertyXMLElement = $this->findPropertyByName($transferXMLElement, $propertyName);
-
-        if (!$propertyXMLElement) {
-            return false;
-        }
-
-        return true;
     }
 }

@@ -35,7 +35,7 @@ arguments:
         value: Zed/Communication/Plugin/MessageBroker/MessageHandlerPluginClass.php.twig
 
     targetFilename:
-        value: "{{ module }}{{ messageName }}MessageHandlerPlugin.php"
+        value: "{{ messageName }}MessageHandlerPlugin.php"
 
     targetPath:
          value: "src/{{ organization }}/{{ application }}/{{ module }}/"
@@ -66,12 +66,15 @@ postSpryks:
     - WirePlugin:
           arguments:
               plugin:
-                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\MessageBroker\\{{ className }}"
+                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Communication\\Plugin\\MessageBroker\\{{ className }}"
               target:
                   value: "\\Pyz\\Zed\\MessageBroker\\MessageBrokerDependencyProvider::getMessageHandlerPlugins()"
 
     # Add the Facade method to create the message handler and call it.
     - AddZedBusinessFacadeMethod:
+          excludedSpryks:
+              - AddZedBusinessFacadeMethodTest
+
           arguments:
               allowOverride:
                   value: true

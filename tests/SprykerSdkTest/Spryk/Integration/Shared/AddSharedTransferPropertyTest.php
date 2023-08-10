@@ -112,7 +112,7 @@ class AddSharedTransferPropertyTest extends Unit
         $this->tester->run($this, [
             '--module' => 'FooBar',
             '--name' => 'FooBarItem',
-            '--transfersProperties' => 'TransferA&propertyA:string,propertyB:int:singular;TransferB&propertyA:string,propertyB:int:singular',
+            '--transfersProperties' => 'TransferA#propertyA:string,propertyB:int:singular;TransferB#propertyA:string,propertyB:int:singular',
         ]);
 
         $expectedXml = '<transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">

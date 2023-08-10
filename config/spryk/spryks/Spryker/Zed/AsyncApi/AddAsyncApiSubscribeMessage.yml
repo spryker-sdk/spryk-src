@@ -1,6 +1,6 @@
-name: AddAsyncApiPublishMessage
+name: AddAsyncApiSubscribeMessage
 spryk: wrapper
-description: "Adds code to be able to receive a defined message. You can publish me this message."
+description: "Adds code to be able to receive a defined message. You can subscribe to this message I will send."
 mode: both
 level: 2
 application: Zed
@@ -30,8 +30,6 @@ arguments:
 
 postSpryks:
     - AddAsyncApiDefaults
-#    # MessageHandlerPlugin
-    - AddMessageBrokerMessageHandlerPlugin
     - AddClass:
           arguments:
               channelName:
@@ -45,7 +43,7 @@ postSpryks:
               isTestClass:
                   value: true
               template:
-                  value: Zed/AsyncApi/Tests/AsyncApiMessageHandlingTestClass.yml.twig
+                  value: Zed/AsyncApi/Tests/AsyncApiMessageSendingTestClass.yml.twig
               subDirectory:
                   value: "{{ module }}Tests/{{ channelName | dashToCamelCase | camelCased | ucfirst }}/"
 

@@ -37,7 +37,7 @@ class AddAsyncApiPublishMessageTest extends Unit
             '--module' => 'FooBar',
             '--messageName' => 'ZipZap',
             '--channelName' => 'FooBarEvents',
-            '--properties' => 'propertyA:string,propertyB:int',
+            '--messages' => 'ZipZap#propertyA:string,propertyB:int',
             '--mode' => 'project',
         ]);
 

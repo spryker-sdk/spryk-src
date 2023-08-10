@@ -16,15 +16,20 @@ arguments:
         default: Shared
 
     name:
+        description: "The name of the Transfer to be build. Can be empty when transfersProperties is used."
         inherit: true
+        default: ""
 
     transfersProperties:
-        inherit: true # Will be inherited from AddSharedTransferProperty when given
         description: "Used when Multiple transfers needs to be added otherwise empty. Format: TransferA&propertyA:string,propertyB:int:singular;TransferB&propertyA:string,propertyB:int:singular"
 
-    propertyName: ~
+    propertyName:
+        description: "The name of the property to be added. Can be empty when transfersProperties is used."
+        default: ""
+
     propertyType:
-        inherit: true
+        description: "The type of the property to be added. Can be empty when transfersProperties is used."
+        default: ""
 
     dataBuilderRule: ~
 

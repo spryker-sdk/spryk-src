@@ -36,6 +36,9 @@ arguments:
     interfaceName:
         value: "\\{{ organization}}\\Zed\\{{ module}}\\Business\\MessageBroker\\{{ className }}Interface"
 
+    implements:
+        value: "\\{{ organization}}\\Zed\\{{ module}}\\Business\\MessageBroker\\{{ className }}Interface"
+
     template:
         value: Common/Class.php.twig
 
@@ -48,6 +51,3 @@ arguments:
 
 preSpryks:
     - AddModule
-
-postSpryks:
-    - AddZedBusinessModelInterface # Add Interface for the newly created method

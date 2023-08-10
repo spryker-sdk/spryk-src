@@ -15,16 +15,6 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
     /**
      * @var string
      */
-    public const PROPERTY_TYPE = 'propertyType';
-
-    /**
-     * @var string
-     */
-    public const PROPERTY_NAME = 'propertyName';
-
-    /**
-     * @var string
-     */
     public const DATA_BUILDER_RULE = 'dataBuilderRule';
 
     /**
@@ -57,41 +47,9 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
         foreach ($transferDefinitions as $transferName => $properties) {
             $transferXMLElement = $this->findTransferByName($simpleXMLElement, $transferName);
             foreach ($properties as $property) {
-                $this->addProperty($transferXMLElement, $transferName, $property['name'], $property['type'], $property['singular'] ?? null);
+                $this->addProperty($transferXMLElement, $transferName, $property['name'], $this->dataBuilderRuleByProperty($property['name'], $property['type']));
             }
         }
-
-//        $transferName = $this->getTransferName();
-//
-//        /** @var \SimpleXMLElement $transferXMLElement */
-//        $transferXMLElement = $this->findTransferByName($simpleXMLElement, $transferName);
-//
-//        $properties = $this->getProperties();
-//
-//        if ($properties) {
-//            foreach ($properties as $propertyParts) {
-//                $propertyDefinition = explode(':', trim($propertyParts));
-//
-//                if ($this->isAutoIncrementField($propertyDefinition[0], $transferName)) {
-//                    continue;
-//                }
-//
-//                $this->addProperty($transferXMLElement, $transferName, $propertyDefinition[0], $propertyDefinition[1], $this->dataBuilderRuleByProperty($propertyDefinition[0], $propertyDefinition[1]));
-//            }
-//
-//            return;
-//        }
-//
-//        $propertyName = $this->getPropertyName();
-//
-//        if ($this->isAutoIncrementField($propertyName, $transferName)) {
-//            return;
-//        }
-//
-//        $propertyType = $this->getPropertyType();
-//        $dataBuilderRule = $this->getDataBuilderRule();
-//
-//        $this->addProperty($transferXMLElement, $transferName, $propertyName, $propertyType, $dataBuilderRule);
     }
 
     /**
@@ -117,26 +75,8 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
 
     /**
      * @param \SimpleXMLElement $transferXMLElement
-     * @param string $propertyName
-     *
-     * @return \SimpleXMLElement|null
-     */
-    protected function findPropertyByName(SimpleXMLElement $transferXMLElement, string $propertyName): ?SimpleXMLElement
-    {
-        foreach ($transferXMLElement->children() as $propertyXMLElement) {
-            if ((string)$propertyXMLElement['name'] === $propertyName) {
-                return $propertyXMLElement;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param \SimpleXMLElement $transferXMLElement
      * @param string $transferName
      * @param string $propertyName
-     * @param string $propertyType
      * @param string|null $dataBuilderRule
      *
      * @return void
@@ -145,11 +85,10 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
         SimpleXMLElement $transferXMLElement,
         string $transferName,
         string $propertyName,
-        string $propertyType,
         ?string $dataBuilderRule,
     ): void {
         // When no data builder rule can be found it must be a reference to another transfer object and we must ignore it.
-        if (!$dataBuilderRule) {
+        if (!$dataBuilderRule || $this->isAutoIncrementField($propertyName, $transferName)) {
             return;
         }
         $propertyXMLElement = $this->findPropertyByName($transferXMLElement, $propertyName);
@@ -168,68 +107,6 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
     }
 
     /**
-     * @return array|null
-     */
-    protected function getProperties(): ?array
-    {
-        $properties = $this->arguments
-            ->getArgument(static::PROPERTY_NAME)
-            ->getValue();
-
-        // When this property is an array it was executed with:
-        // --property propertyA --property propertyB ...
-        // or with
-        // --property propertyA:string --property propertyB:int ...
-        if (is_array($properties)) {
-            return $properties;
-        }
-
-        // When this argument contains a `:` this Spryk was called in a way that multiple properties should be added with one call
-        // This will most likely come from other SDK tools to have fewer calls to this Spryk.
-        // Examples:
-        // --property propertyA:string
-        // --property propertyA:string,propertyB:int
-        if (strpos($properties, ':') !== false) {
-            return explode(',', $properties);
-        }
-
-        return null;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getPropertyName(): string
-    {
-        return $this->getStringArgument(static::PROPERTY_NAME);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getPropertyType(): string
-    {
-        return $this->getStringArgument(static::PROPERTY_TYPE);
-    }
-
-    /**
-     * @return string|null
-     */
-    protected function getDataBuilderRule(): ?string
-    {
-        $dataBuilderRule = $this->arguments->getArgument(static::DATA_BUILDER_RULE)->getValue();
-
-        if ($dataBuilderRule) {
-            return $dataBuilderRule;
-        }
-
-        $propertyType = $this->getPropertyType();
-        $propertyName = $this->getPropertyName();
-
-        return $this->dataBuilderRuleByProperty($propertyName, $propertyType);
-    }
-
-    /**
      * @param string $propertyName
      * @param string $propertyType
      *
@@ -238,7 +115,7 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
     protected function dataBuilderRuleByProperty(string $propertyName, string $propertyType): ?string
     {
         if ($propertyName === 'uuid') {
-            return 'unique()->uuid()';
+            return 'uuid()';
         }
 
         switch ($propertyType) {

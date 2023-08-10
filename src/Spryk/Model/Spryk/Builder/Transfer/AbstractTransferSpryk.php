@@ -65,7 +65,7 @@ abstract class AbstractTransferSpryk extends AbstractBuilder
 
             foreach ($transfersProperties as $transferDefinition) {
                 // $transferDefinition = TransferA&propertyA:string,propertyB:int:singular
-                [$transferName, $transferProperties] = explode('&', $transferDefinition);
+                [$transferName, $transferProperties] = explode('#', $transferDefinition);
                 $transferProperties = explode(',', $transferProperties);
                 foreach ($transferProperties as $properties) {
                     $transferDefinitions[$transferName][] = $this->getPropertiesFromString($properties);
@@ -97,6 +97,35 @@ abstract class AbstractTransferSpryk extends AbstractBuilder
                 ]
             ]
         ];
+    }
+
+    /**
+     * @return array|null
+     */
+    protected function getProperties(): ?array
+    {
+        $properties = $this->arguments
+            ->getArgument(static::PROPERTY_NAME)
+            ->getValue();
+
+        // When this property is an array it was executed with:
+        // --property propertyA --property propertyB ...
+        // or with
+        // --property propertyA:string --property propertyB:int ...
+        if (is_array($properties)) {
+            return $properties;
+        }
+
+        // When this argument contains a `:` this Spryk was called in a way that multiple properties should be added with one call
+        // This will most likely come from other SDK tools to have fewer calls to this Spryk.
+        // Examples:
+        // --property propertyA:string
+        // --property propertyA:string,propertyB:int
+        if (strpos($properties, ':') !== false) {
+            return explode(',', $properties);
+        }
+
+        return null;
     }
 
     /**
@@ -174,6 +203,23 @@ abstract class AbstractTransferSpryk extends AbstractBuilder
 
         if ($singular) {
             return $singular;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \SimpleXMLElement $transferXMLElement
+     * @param string $propertyName
+     *
+     * @return \SimpleXMLElement|null
+     */
+    protected function findPropertyByName(SimpleXMLElement $transferXMLElement, string $propertyName): ?SimpleXMLElement
+    {
+        foreach ($transferXMLElement->children() as $propertyXMLElement) {
+            if ((string)$propertyXMLElement['name'] === $propertyName) {
+                return $propertyXMLElement;
+            }
         }
 
         return null;

@@ -1,0 +1,100 @@
+name: AddAsyncApiDefaults
+spryk: wrapper
+description: "Adds default code which is needed for publish & subscribe."
+mode: both
+level: 2
+application: Zed
+
+priority: 1
+
+arguments:
+    module:
+        description: "The module name to which the message belongs to."
+        inherit: true
+
+    organization:
+        inherit: true
+        value: Spryker
+
+    application:
+        inherit: true
+        value: Zed
+
+    messageName:
+        inherit: true
+    channelName:
+        inherit: true
+    messages:
+        description: "Pass multiple properties in one by using --messages MessageA&propertyA:string,propertyB:int;MessageB&propertyA:string,propertyB:int"
+        inherit: true
+
+    suite:
+        inherit: true
+
+postSpryks:
+    - AddComposerJson
+    - UpdateJson:
+          arguments:
+              target:
+                  value: "require"
+              key:
+                  value: "spryker/message-broker"
+              value:
+                  value: "^1.8.0"
+              targetFilename:
+                  value: composer.json
+              targetPath:
+                  value: ""
+    - UpdateJson:
+          arguments:
+              target:
+                  value: "require"
+              key:
+                  value: "spryker/testify-async-api"
+              value:
+                  value: "^0.1.0"
+              targetFilename:
+                  value: composer.json
+              targetPath:
+                  value: ""
+
+    # Since we exclude the AddSharedTransferDefinition which would also ensure the schema file exists
+    # we need to add this one manually.
+    - AddSharedTransferSchema
+    # Add Message Transfer properties
+    # This one will create many messages with properties
+    - AddSharedTransferProperty:
+          excludedSpryks:
+              - AddSharedTransferDefinition
+          arguments:
+              transfersProperties:
+                  value: "{{ messages }}"
+
+    # Add default required MessageAttributes Transfer
+    - AddSharedTransferDefinition:
+          arguments:
+              name:
+                  value: "MessageAttributes"
+
+    - AddSuiteConfiguration: # tests/PyzTest/AsyncApi/Module/codeception.yml
+          arguments:
+              application:
+                  value: "AsyncApi"
+              template:
+                  value: Zed/AsyncApi/Tests/AsyncApiSuiteCodeceptionConfiguration.yml.twig
+
+    - AddTestHelperMethod:
+          arguments:
+              target:
+                  value: "\\{{ organization }}Test\\AsyncApi\\{{ module }}\\Helper\\{{ module }}Helper"
+              application:
+                  value: AsyncApi
+              method:
+                  value: "have{{ messageName }}Transfer"
+              input:
+                  value: "array $seed = []"
+              output:
+                  value: "\\Generated\\Shared\\Transfer\\{{ messageName }}Transfer"
+              body:
+                  value:
+                      - "return (new \\Generated\\Shared\\DataBuilder\\{{ messageName }}Builder($seed))->build();"

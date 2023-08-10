@@ -15,16 +15,15 @@ class {{ messageName }}Test extends Unit
     /**
      * @return void
      */
-    public function test{{ messageName }}MessageIsHandled(): void
+    public function test{{ messageName }}MessageIsSend(): void
     {
         // Arrange
         ${{ messageName | lcfirst }}Transfer = $this->tester->have{{ messageName }}Transfer();
 
-        // Act: This will trigger the MessageHandlerPlugin for this message.
-        $this->tester->runMessageReceiveTest(${{ messageName | lcfirst }}Transfer, '{{ channelName }}');
+        // Act: Here you call the facade method where you expect that the message will be sent
+        (new \Spryker\Zed\MessageBroker\Business\MessageBrokerFacade())->sendMessage(${{ messageName | lcfirst }}Transfer);
 
         // Assert
-        // You need to update the assertion to something meaningful. e.g. test if an entity was saved to the database.
-        $this->assertTrue(true);
+        $this->tester->assertMessageWasEmittedOnChannel(${{ messageName | lcfirst }}Transfer, '{{ channelName }}');
     }
 }
