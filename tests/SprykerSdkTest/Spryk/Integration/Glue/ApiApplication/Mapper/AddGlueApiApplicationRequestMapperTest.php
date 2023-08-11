@@ -50,14 +50,8 @@ class AddGlueApiApplicationRequestMapperTest extends Unit
         $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER, 'mapGlueRequestTransferToFooBarCollectionDeleteCriteriaTransfer');
         $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER_INTERFACE, 'mapGlueRequestTransferToFooBarCollectionDeleteCriteriaTransfer');
 
-        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER, 'mapIdentifierToFooBarCriteriaTransfer');
-        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER_INTERFACE, 'mapIdentifierToFooBarCriteriaTransfer');
-
-        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER, 'mapIdentifierToFooBarCollectionDeleteCriteriaTransfer');
-        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER_INTERFACE, 'mapIdentifierToFooBarCollectionDeleteCriteriaTransfer');
-
-        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER, 'mapFooBarTransferToFooBarCollectionRequestTransfer');
-        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER_INTERFACE, 'mapFooBarTransferToFooBarCollectionRequestTransfer');
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER, 'mapGlueRequestTransferToFooBarCollectionRequestTransfer');
+        $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_REQUEST_MAPPER_INTERFACE, 'mapGlueRequestTransferToFooBarCollectionRequestTransfer');
     }
 
     /**
@@ -79,13 +73,7 @@ class AddGlueApiApplicationRequestMapperTest extends Unit
         $this->tester->assertClassOrInterfaceHasMethod(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_REQUEST_MAPPER, 'mapGlueRequestTransferToFooBarCollectionDeleteCriteriaTransfer');
         $this->tester->assertClassOrInterfaceHasMethod(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_REQUEST_MAPPER_INTERFACE, 'mapGlueRequestTransferToFooBarCollectionDeleteCriteriaTransfer');
 
-        $this->tester->assertClassOrInterfaceHasMethod(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_REQUEST_MAPPER, 'mapIdentifierToFooBarCriteriaTransfer');
-        $this->tester->assertClassOrInterfaceHasMethod(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_REQUEST_MAPPER_INTERFACE, 'mapIdentifierToFooBarCriteriaTransfer');
-
-        $this->tester->assertClassOrInterfaceHasMethod(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_REQUEST_MAPPER, 'mapIdentifierToFooBarCollectionDeleteCriteriaTransfer');
-        $this->tester->assertClassOrInterfaceHasMethod(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_REQUEST_MAPPER_INTERFACE, 'mapIdentifierToFooBarCollectionDeleteCriteriaTransfer');
-
-        $this->tester->assertClassOrInterfaceHasMethod(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_REQUEST_MAPPER, 'mapFooBarTransferToFooBarCollectionRequestTransfer');
-        $this->tester->assertClassOrInterfaceHasMethod(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_REQUEST_MAPPER_INTERFACE, 'mapFooBarTransferToFooBarCollectionRequestTransfer');
+        $this->tester->assertClassOrInterfaceHasMethod(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_REQUEST_MAPPER, 'mapGlueRequestTransferToFooBarCollectionRequestTransfer');
+        $this->tester->assertClassOrInterfaceHasMethod(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_REQUEST_MAPPER_INTERFACE, 'mapGlueRequestTransferToFooBarCollectionRequestTransfer');
     }
 }

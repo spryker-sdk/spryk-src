@@ -36,13 +36,14 @@ class AddGlueApiApplicationControllerMethodDeleteTest extends Unit
     public function testAddsGlueBackendApiControllerMethodDelete(): void
     {
         $this->tester->run($this, [
+            '--module' => 'FooBarsBackendApi',
             '--resource' => '/foo-bars',
             '--zedDomainEntity' => 'ZipZap',
             '--applicationType' => 'Backend',
         ]);
 
         $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_INDEX_CONTROLLER);
-        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_INDEX_CONTROLLER_TEST);
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_INDEX_REST_API_RESOURCE_TEST);
         $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_INDEX_CONTROLLER, 'deleteAction');
     }
 
@@ -52,13 +53,14 @@ class AddGlueApiApplicationControllerMethodDeleteTest extends Unit
     public function testAddsGlueStorefrontApiControllerMethodDelete(): void
     {
         $this->tester->run($this, [
+            '--module' => 'FooBarsStorefrontApi',
             '--resource' => '/foo-bars',
             '--zedDomainEntity' => 'ZipZap',
             '--applicationType' => 'Storefront',
         ]);
 
         $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_INDEX_CONTROLLER);
-        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_INDEX_CONTROLLER_TEST);
+        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_INDEX_REST_API_RESOURCE_TEST);
         $this->tester->assertClassOrInterfaceHasMethod(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_INDEX_CONTROLLER, 'deleteAction');
     }
 }

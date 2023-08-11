@@ -38,6 +38,7 @@ class AddGlueApiApplicationResourceMethodTest extends Unit
         $this->tester->run($this, [
             '--mode' => 'project',
             '--organization' => 'Pyz',
+            '--module' => 'FooBarsBackendApi',
             '--resource' => '/foo-bars',
             '--httpMethod' => 'Post',
             '--zedDomainEntity' => 'FooBar',
@@ -55,6 +56,7 @@ class AddGlueApiApplicationResourceMethodTest extends Unit
         $this->tester->run($this, [
             '--mode' => 'project',
             '--organization' => 'Pyz',
+            '--module' => 'FooBarsStorefrontApi',
             '--resource' => '/foo-bars',
             '--httpMethod' => 'Post',
             '--zedDomainEntity' => 'FooBar',

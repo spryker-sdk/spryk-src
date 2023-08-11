@@ -21,10 +21,10 @@ use SprykerSdkTest\SprykIntegrationTester;
  * @group Communication
  * @group Plugin
  * @group MessageBroker
- * @group AddMessageBrokerHandlerPluginTest
+ * @group AddMessageBrokerMessageHandlerPluginTest
  * Add your own group annotations below this line
  */
-class AddMessageBrokerHandlerPluginTest extends Unit
+class AddMessageBrokerMessageHandlerPluginTest extends Unit
 {
     /**
      * @var \SprykerSdkTest\SprykIntegrationTester

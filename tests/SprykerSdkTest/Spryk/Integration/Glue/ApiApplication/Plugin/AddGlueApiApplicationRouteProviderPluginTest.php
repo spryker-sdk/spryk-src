@@ -37,6 +37,7 @@ class AddGlueApiApplicationRouteProviderPluginTest extends Unit
     public function testAddsGlueApiApplicationRouteProviderPlugin(): void
     {
         $this->tester->run($this, [
+            '--module' => 'FooBarsBackendApi',
             '--organization' => 'Pyz',
             '--resource' => '/foo-bars',
             '--applicationType' => 'Backend',

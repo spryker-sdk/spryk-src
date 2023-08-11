@@ -36,6 +36,7 @@ class AddGlueApiApplicationControllerMethodPostTest extends Unit
     public function testAddsGlueBackendApiControllerMethodPost(): void
     {
         $this->tester->run($this, [
+            '--module' => 'FooBarsBackendApi',
             '--resource' => '/foo-bars',
             '--zedDomainEntity' => 'ZipZap',
             '--applicationType' => 'Backend',
@@ -52,6 +53,7 @@ class AddGlueApiApplicationControllerMethodPostTest extends Unit
     public function testAddsGlueStorefrontApiControllerMethodPost(): void
     {
         $this->tester->run($this, [
+            '--module' => 'FooBarsStorefrontApi',
             '--resource' => '/foo-bars',
             '--zedDomainEntity' => 'ZipZap',
             '--applicationType' => 'Storefront',

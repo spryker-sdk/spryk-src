@@ -39,6 +39,7 @@ class AddGlueApiApplicationResourcePluginTest extends Unit
     {
         $this->tester->run($this, [
             '--organization' => 'Pyz',
+            '--module' => 'FooBarsBackendApi',
             '--resource' => '/foo-bars',
             '--applicationType' => 'Backend',
         ]);
@@ -61,6 +62,7 @@ class AddGlueApiApplicationResourcePluginTest extends Unit
     {
         $this->tester->run($this, [
             '--organization' => 'Pyz',
+            '--module' => 'FooBarsStorefrontApi',
             '--resource' => '/foo-bars',
             '--applicationType' => 'Storefront',
         ]);

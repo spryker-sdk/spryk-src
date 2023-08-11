@@ -47,6 +47,21 @@ interface GlueStorefrontApiClassNames
     /**
      * @var string
      */
+    public const GLUE_STOREFRONT_API_INDEX_REST_API_RESOURCE_TEST = 'SprykerTest\Glue\FooBarsStorefrontApi\RestApi\FooBarsIndexRestApiCest';
+
+    /**
+     * @var string
+     */
+    public const GLUE_STOREFRONT_API_GET_REST_API_RESOURCE_TEST = 'SprykerTest\Glue\FooBarsStorefrontApi\RestApi\FooBarsGetRestApiCest';
+
+    /**
+     * @var string
+     */
+    public const GLUE_STOREFRONT_API_DELETE_REST_API_RESOURCE_TEST = 'SprykerTest\Glue\FooBarsStorefrontApi\RestApi\FooBarsDeleteRestApiCest';
+
+    /**
+     * @var string
+     */
     public const GLUE_STOREFRONT_API_RESOURCE_PLUGIN = 'Spryker\Glue\FooBarsStorefrontApi\Plugin\FooBarsStorefrontApiResource';
 
     /**
