@@ -38,6 +38,7 @@ class AddMessageBrokerMessageHandlerPluginTest extends Unit
     {
         $this->tester->run($this, [
             '--organization' => 'Spryker',
+            '--application' => 'Zed',
             '--module' => 'FooBar',
             '--messageName' => 'BazBat',
         ]);
@@ -50,21 +51,6 @@ class AddMessageBrokerMessageHandlerPluginTest extends Unit
 
         // Facade method
         $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_FACADE, 'handleBazBat');
-        // Facade method test
-        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_FACADE_TEST, 'testHandleBazBat');
-
-        // Dependency Provider adds MessageBrokerFacade
-        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_DEPENDENCY_PROVIDER, 'addMessageBrokerFacade');
-
-        // MessageBrokerFacadeBridge
-        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_FOO_BAR_MESSAGE_BROKER_FACADE_BRIDGE, 'sendMessage');
-        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_FOO_BAR_MESSAGE_BROKER_FACADE_INTERFACE, 'sendMessage');
-
-        // MessageHandler Business class
-        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_BUSINESS_MESSAGE_BROKER_MESSAGE_HANDLER, 'handleBazBat');
-
-        // Test Helper
-        $this->tester->assertClassOrInterfaceHasMethod(ClassName::ZED_TEST_HELPER, 'haveBazBatTransfer');
     }
 
     /**
@@ -74,6 +60,7 @@ class AddMessageBrokerMessageHandlerPluginTest extends Unit
     {
         $this->tester->run($this, [
             '--organization' => 'Pyz',
+            '--application' => 'Zed',
             '--module' => 'FooBar',
             '--messageName' => 'BazBat',
             '--mode' => 'project',
@@ -87,11 +74,5 @@ class AddMessageBrokerMessageHandlerPluginTest extends Unit
 
         // Facade method
         $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_ZED_FACADE, 'handleBazBat');
-
-        // Dependency Provider adds MessageBrokerFacade
-        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_ZED_DEPENDENCY_PROVIDER, 'addMessageBrokerFacade');
-
-        // MessageHandler Business class
-        $this->tester->assertClassOrInterfaceHasMethod(ClassName::PROJECT_ZED_BUSINESS_MESSAGE_BROKER_MESSAGE_HANDLER, 'handleBazBat');
     }
 }

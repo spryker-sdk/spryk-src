@@ -133,7 +133,7 @@ class AddDataBuilderPropertyTest extends Unit
     /**
      * @return void
      */
-    public function testAddsDataBuilderAddsSpecifiedDataBuilder(): void
+    public function testAddsDataBuilderAddsSpecifiedDataBuilderRule(): void
     {
         $this->tester->haveDataBuilderSchema(
             $this->tester->getSprykerModuleDirectory() . 'tests/_data/foo_bar.databuilder.xml',

@@ -1,0 +1,27 @@
+name: AddGlueTestGlueBackendApiHelper
+spryk: template
+condition: "mode === 'project'"
+description: "Adds a new GlueBackendApiHelper class."
+mode: project
+level: 2
+
+arguments:
+    organization:
+        inherit: true
+        description: "Defines the organization name"
+        default: Pyz
+
+    application:
+        value: "Glue"
+
+    module:
+        value: Testify
+
+    template:
+        value: Glue/Test/GlueTestHelper/GlueBackendApiHelper.php.twig
+
+    targetFilename:
+        value: "GlueBackendApiHelper.php"
+
+    targetPath:
+        value: "tests/{{ organization }}Test/Glue/Testify/_support/Helper"

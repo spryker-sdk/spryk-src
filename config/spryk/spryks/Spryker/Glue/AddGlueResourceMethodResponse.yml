@@ -175,3 +175,4 @@ postSpryks:
     # Test
     - AddGlueTestCodeceptionConfiguration
     - AddGlueTestHelper
+    - AddGlueTestGlueBackendApiHelper

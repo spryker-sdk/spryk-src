@@ -47,7 +47,12 @@ interface GlueStorefrontApiClassNames
     /**
      * @var string
      */
-    public const GLUE_STOREFRONT_API_INDEX_REST_API_RESOURCE_TEST = 'SprykerTest\Glue\FooBarsStorefrontApi\RestApi\FooBarsIndexRestApiCest';
+    public const GLUE_STOREFRONT_API_POST_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsStorefrontApi\Controller\PostResourceControllerTest';
+
+    /**
+     * @var string
+     */
+    public const GLUE_STOREFRONT_API_PATCH_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsStorefrontApi\Controller\PatchResourceControllerTest';
 
     /**
      * @var string
@@ -57,7 +62,17 @@ interface GlueStorefrontApiClassNames
     /**
      * @var string
      */
+    public const GLUE_STOREFRONT_API_PATCH_REST_API_RESOURCE_TEST = 'SprykerTest\Glue\FooBarsStorefrontApi\RestApi\FooBarsPatchRestApiCest';
+
+    /**
+     * @var string
+     */
     public const GLUE_STOREFRONT_API_DELETE_REST_API_RESOURCE_TEST = 'SprykerTest\Glue\FooBarsStorefrontApi\RestApi\FooBarsDeleteRestApiCest';
+
+    /**
+     * @var string
+     */
+    public const GLUE_STOREFRONT_API_POST_REST_API_RESOURCE_TEST = 'SprykerTest\Glue\FooBarsStorefrontApi\RestApi\FooBarsPostRestApiCest';
 
     /**
      * @var string

@@ -62,17 +62,12 @@ interface GlueBackendApiClassNames
     /**
      * @var string
      */
-    public const GLUE_STOREFRONT_API_INDEX_REST_API_RESOURCE_TEST = 'SprykerTest\Glue\FooBarsStorefrontApi\RestApi\FooBarsIndexRestApiCest';
+    public const GLUE_BACKEND_API_DELETE_REST_API_RESOURCE_TEST = 'SprykerTest\Glue\FooBarsBackendApi\RestApi\FooBarsDeleteRestApiCest';
 
     /**
      * @var string
      */
     public const GLUE_BACKEND_API_DELETE_REST_API_CEST_TEST = 'SprykerTest\Glue\FooBarsBackendApi\RestApi\FooBarsDeleteRestApiCest';
-
-    /**
-     * @var string
-     */
-    public const GLUE_STOREFRONT_API_DELETE_REST_API_CEST_TEST = 'SprykerTest\Glue\FooBarsStorefrontApi\RestApi\FooBarsDeleteRestApiCest';
 
     /**
      * @var string

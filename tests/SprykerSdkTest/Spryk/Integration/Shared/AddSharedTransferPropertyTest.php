@@ -45,12 +45,12 @@ class AddSharedTransferPropertyTest extends Unit
         ]);
 
         $expectedXml = '<transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
-  <transfer name="FooBar">
-    <property name="something" type="string" />
+  <transfer name="FooBar" strict="true">
+    <property name="something" type="string" strict="true" />
   </transfer>
 
-  <transfer name="FooBarItem">
-    <property name="testProperty" type="string" />
+  <transfer name="FooBarItem" strict="true">
+    <property name="testProperty" type="string" strict="true" />
   </transfer>
 
 </transfers>';
@@ -79,12 +79,12 @@ class AddSharedTransferPropertyTest extends Unit
         ]);
 
         $expectedXml = '<transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
-  <transfer name="FooBar">
-    <property name="something" type="string" />
+  <transfer name="FooBar" strict="true">
+    <property name="something" type="string" strict="true" />
   </transfer>
 
-  <transfer name="FooBarItem">
-    <property name="testProperty" type="string" />
+  <transfer name="FooBarItem" strict="true">
+    <property name="testProperty" type="string" strict="true" />
   </transfer>
 
 </transfers>';
@@ -116,21 +116,21 @@ class AddSharedTransferPropertyTest extends Unit
         ]);
 
         $expectedXml = '<transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
-  <transfer name="FooBar">
-    <property name="something" type="string" />
+  <transfer name="FooBar" strict="true">
+    <property name="something" type="string" strict="true" />
   </transfer>
 
-  <transfer name="FooBarItem">
+  <transfer name="FooBarItem" strict="true">
     </transfer>
 
-  <transfer name="TransferA">
-    <property name="propertyA" type="string" />
-    <property name="propertyB" type="int" singular="singular" />
+  <transfer name="TransferA" strict="true">
+    <property name="propertyA" type="string" strict="true" />
+    <property name="propertyB" type="int" singular="singular" strict="true" />
   </transfer>
 
-  <transfer name="TransferB">
-    <property name="propertyA" type="string" />
-    <property name="propertyB" type="int" singular="singular" />
+  <transfer name="TransferB" strict="true">
+    <property name="propertyA" type="string" strict="true" />
+    <property name="propertyB" type="int" singular="singular" strict="true" />
   </transfer>
 
 </transfers>';
@@ -160,12 +160,12 @@ class AddSharedTransferPropertyTest extends Unit
         ]);
 
         $expectedXml = '<transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
-  <transfer name="FooBar">
-    <property name="something" type="string" />
+  <transfer name="FooBar" strict="true">
+    <property name="something" type="string" strict="true" />
   </transfer>
 
-  <transfer name="FooBarItem">
-    <property name="testProperty" type="string" />
+  <transfer name="FooBarItem" strict="true">
+    <property name="testProperty" type="string" strict="true" />
   </transfer>
 
 </transfers>';

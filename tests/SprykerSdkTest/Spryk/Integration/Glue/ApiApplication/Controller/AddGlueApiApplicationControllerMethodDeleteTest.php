@@ -10,6 +10,7 @@ namespace SprykerSdkTest\Spryk\Integration\Glue\ApiApplication\Controller;
 use Codeception\Test\Unit;
 use SprykerSdkTest\Module\GlueBackendApiClassNames;
 use SprykerSdkTest\Module\GlueStorefrontApiClassNames;
+use SprykerSdkTest\SprykIntegrationTester;
 
 /**
  * Auto-generated group annotations
@@ -28,7 +29,7 @@ class AddGlueApiApplicationControllerMethodDeleteTest extends Unit
     /**
      * @var \SprykerSdkTest\SprykIntegrationTester
      */
-    protected $tester;
+    protected SprykIntegrationTester $tester;
 
     /**
      * @return void
@@ -43,7 +44,7 @@ class AddGlueApiApplicationControllerMethodDeleteTest extends Unit
         ]);
 
         $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_INDEX_CONTROLLER);
-        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_INDEX_REST_API_RESOURCE_TEST);
+        $this->tester->assertClassOrInterfaceExists(GlueBackendApiClassNames::GLUE_BACKEND_API_DELETE_REST_API_RESOURCE_TEST);
         $this->tester->assertClassOrInterfaceHasMethod(GlueBackendApiClassNames::GLUE_BACKEND_API_INDEX_CONTROLLER, 'deleteAction');
     }
 
@@ -60,7 +61,7 @@ class AddGlueApiApplicationControllerMethodDeleteTest extends Unit
         ]);
 
         $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_INDEX_CONTROLLER);
-        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_INDEX_REST_API_RESOURCE_TEST);
+        $this->tester->assertClassOrInterfaceExists(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_DELETE_REST_API_RESOURCE_TEST);
         $this->tester->assertClassOrInterfaceHasMethod(GlueStorefrontApiClassNames::GLUE_STOREFRONT_API_INDEX_CONTROLLER, 'deleteAction');
     }
 }

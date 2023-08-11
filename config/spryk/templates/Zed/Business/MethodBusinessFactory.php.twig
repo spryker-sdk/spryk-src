@@ -12,17 +12,21 @@
 
 {% if not dependencyMethods.value %}
     /**
-    * @return {% if output is not null %}{{ output | returnValueToDocParameter }}{% else %}{{ interfaceName }}{% endif %}
-    */
-    public function {{ factoryMethod }}(): {% if output is not null %} {{ output | typedArrayConvert }} {% else %} {{ interfaceName }} {% endif %}
+     * @return {% if output is not null %}{{ output | returnValueToDocParameter }}{% else %}{{ interfaceName }}{% endif %}
+
+     */
+    public function {{ factoryMethod }}(): {% if output is not null %}{{ output | typedArrayConvert }}{% else %}{{ interfaceName }}{% endif %}
+
     {
         {{ methodBody }}
     }
 {% else %}
     /**
-    * @return {% if output is not null %}{{ output | returnValueToDocParameter }}{% else %}{{ interfaceName }}{% endif %}
-    */
-    public function {{ factoryMethod }}(): {% if output is not null %} {{ output | typedArrayConvert }} {% else %} {{ interfaceName }} {% endif %}
+     * @return {% if output is not null %}{{ output | returnValueToDocParameter }}{% else %}{{ interfaceName }}{% endif %}
+
+     */
+    public function {{ factoryMethod }}(): {% if output is not null %}{{ output | typedArrayConvert }}{% else %}{{ interfaceName }}{% endif %}
+
     {
     return new \{{ organization }}\Zed\{{ module }}\Business\{{ subDirectoryName }}{{ className }}(
     {% for dependencyMethod in dependencyMethods.value -%}

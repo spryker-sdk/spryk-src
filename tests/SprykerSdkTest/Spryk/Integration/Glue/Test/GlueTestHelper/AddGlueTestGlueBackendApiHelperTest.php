@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerSdkTest\Spryk\Integration\Zed\Test\Helper;
+namespace SprykerSdkTest\Spryk\Integration\Glue\Test\GlueTestHelper;
 
 use Codeception\Test\Unit;
 use SprykerSdkTest\SprykIntegrationTester;
@@ -16,13 +16,13 @@ use SprykerSdkTest\SprykIntegrationTester;
  * @group SprykerSdkTest
  * @group Spryk
  * @group Integration
- * @group Zed
+ * @group Glue
  * @group Test
- * @group Helper
- * @group AddZedTestHelperTest
+ * @group GlueTestHelper
+ * @group AddGlueTestGlueBackendApiHelperTest
  * Add your own group annotations below this line
  */
-class AddZedTestHelperTest extends Unit
+class AddGlueTestGlueBackendApiHelperTest extends Unit
 {
     /**
      * @var \SprykerSdkTest\SprykIntegrationTester
@@ -32,14 +32,13 @@ class AddZedTestHelperTest extends Unit
     /**
      * @return void
      */
-    public function testAddsZedTestHelperOnProjectLevel(): void
+    public function testAddsGlueTestBackendApiHelper(): void
     {
-        $this->tester->run($this, [
-            '--mode' => 'project',
-            '--organization' => 'Pyz',
-            '--module' => 'FooBar',
-        ]);
+        // Act
+        $this->tester->run($this, []);
 
-        $this->assertFileExists($this->tester->getVirtualDirectory() . 'tests/PyzTest/Zed/FooBar/_support/Helper/FooBarHelper.php');
+        // Assert
+        $expectedFile = $this->tester->getProjectTestDirectory('Testify', 'Glue') . '_support/Helper/GlueBackendApiHelper.php';
+        $this->assertFileExists($expectedFile);
     }
 }

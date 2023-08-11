@@ -23,6 +23,7 @@ abstract class AbstractTransferSpryk extends AbstractBuilder
      * @var string
      */
     public const ARGUMENT_NAME = 'name';
+
     /**
      * @var string
      */
@@ -44,6 +45,33 @@ abstract class AbstractTransferSpryk extends AbstractBuilder
     protected const SPRYK_NAME = 'implemented by derived classes';
 
     /**
+     * Some Transfer properties can't be made strict as they are not strict in modules.
+     *
+     * This is the list of known transfers which MUST not be made strict.
+     *
+     * @var array<int, string>
+     */
+    protected array $strictTransfersBlacklist = [
+        'UserCriteria',
+        'Sort',
+        'User',
+        'Pagination',
+        'Error',
+    ];
+
+    /**
+     * Some Transfer properties can't be made strict as they are not strict in modules.
+     *
+     * This is the list of known transfers which MUST not be made strict.
+     *
+     * @var array<int, string>
+     */
+    protected array $strictPropertiesWhitelist = [
+        'userConditions',
+        'uuid',
+    ];
+
+    /**
      * @return string
      */
     public function getName(): string
@@ -52,11 +80,11 @@ abstract class AbstractTransferSpryk extends AbstractBuilder
     }
 
     /**
-     * @return array|null
+     * @return array
      */
-    protected function getTransferDefinitions(): ?array
+    protected function getTransferDefinitions(): array
     {
-        if ($this->arguments->hasArgument(static::TRANSFERS_PROPERTIES) && !empty($this->arguments->getArgument(static::TRANSFERS_PROPERTIES)->getValue())) {
+        if ($this->arguments->hasArgument(static::TRANSFERS_PROPERTIES) && $this->arguments->getArgument(static::TRANSFERS_PROPERTIES)->getValue()) {
             // TransferA&propertyA:string,propertyB:int:singular;TransferB&propertyA:string,propertyB:int:singular
             $transfersProperties = $this->arguments->getArgument(static::TRANSFERS_PROPERTIES)->getValue();
             $transfersProperties = explode(';', $transfersProperties);
@@ -88,14 +116,22 @@ abstract class AbstractTransferSpryk extends AbstractBuilder
             return $transferDefinitions;
         }
 
+        return $this->getSingleProperty();
+    }
+
+    /**
+     * @return array<string, array<int, array<string, string|null>>>
+     */
+    protected function getSingleProperty(): array
+    {
         return [
-            $transferName => [
+            $this->getTransferName() => [
                 [
                     'name' => $this->getPropertyName(),
                     'type' => $this->getPropertyType(),
                     'singular' => $this->getSingular(),
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -130,6 +166,7 @@ abstract class AbstractTransferSpryk extends AbstractBuilder
 
     /**
      * @param string $properties
+     *
      * @return array
      */
     protected function getPropertiesFromString(string $properties): array
@@ -160,6 +197,12 @@ abstract class AbstractTransferSpryk extends AbstractBuilder
 
         $transferNodeXmlElement = $simpleXMLElement->addChild('transfer');
         $transferNodeXmlElement->addAttribute('name', $transferName);
+
+        if (in_array($transferName, $this->strictTransfersBlacklist)) {
+            return $transferNodeXmlElement;
+        }
+
+        $transferNodeXmlElement->addAttribute('strict', 'true');
 
         return $transferNodeXmlElement;
     }

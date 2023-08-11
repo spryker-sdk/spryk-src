@@ -76,6 +76,7 @@ class Debug implements DebugInterface
         if ($this->style->getInput()->hasParameterOption('-dd')) {
             return true;
         }
+
         return $this->style->getInput()->hasParameterOption('-ddd');
     }
 
@@ -177,7 +178,7 @@ class Debug implements DebugInterface
      */
     private function getValueOfArgument(ArgumentInterface $argument): mixed
     {
-        /** @var string|int|array|bool $value */
+        /** @var array|string|int|bool $value */
         $value = $argument->getValue();
 
         if (is_bool($value)) {

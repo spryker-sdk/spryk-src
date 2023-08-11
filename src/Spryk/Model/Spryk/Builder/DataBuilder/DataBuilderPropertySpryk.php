@@ -47,9 +47,26 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
         foreach ($transferDefinitions as $transferName => $properties) {
             $transferXMLElement = $this->findTransferByName($simpleXMLElement, $transferName);
             foreach ($properties as $property) {
-                $this->addProperty($transferXMLElement, $transferName, $property['name'], $this->dataBuilderRuleByProperty($property['name'], $property['type']));
+                $dataBuilderRule = $property['dataBuilderRule'] ?? $this->dataBuilderRuleByProperty($property['name'], $property['type']);
+                $this->addProperty($transferXMLElement, $transferName, $property['name'], $dataBuilderRule);
             }
         }
+    }
+
+    /**
+     * @return array<string, array<int, array<string, string|null>>>
+     */
+    protected function getSingleProperty(): array
+    {
+        return [
+            $this->getTransferName() => [
+                [
+                    'name' => $this->getPropertyName(),
+                    'type' => $this->getPropertyType(),
+                    'dataBuilderRule' => $this->getDataBuilderRule(),
+                ],
+            ],
+        ];
     }
 
     /**
@@ -66,11 +83,29 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
     protected function isAutoIncrementField(string $propertyName, string $transferName): bool
     {
         $databaseIdField = sprintf('id%s', $transferName);
+
         if ($propertyName === $databaseIdField) {
             return true;
         }
 
         return false;
+    }
+
+    /**
+     * @return string|null
+     */
+    protected function getDataBuilderRule(): ?string
+    {
+        $dataBuilderRule = $this->arguments->getArgument(static::DATA_BUILDER_RULE)->getValue();
+
+        if ($dataBuilderRule) {
+            return $dataBuilderRule;
+        }
+
+        return $this->dataBuilderRuleByProperty(
+            $this->getPropertyName(),
+            $this->getPropertyType(),
+        );
     }
 
     /**

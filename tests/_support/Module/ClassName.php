@@ -332,7 +332,7 @@ interface ClassName
     /**
      * @var string
      */
-    public const ZED_PLUGIN_MESSAGE_BROKER_MESSAGE_HANDLER_PLUGIN = 'Spryker\Zed\FooBar\Communication\Plugin\MessageBroker\FooBarBazBatMessageHandlerPlugin';
+    public const ZED_PLUGIN_MESSAGE_BROKER_MESSAGE_HANDLER_PLUGIN = 'Spryker\Zed\FooBar\Communication\Plugin\MessageBroker\BazBatMessageHandlerPlugin';
 
     /**
      * @var string
@@ -592,7 +592,7 @@ interface ClassName
     /**
      * @var string
      */
-    public const PROJECT_ZED_PLUGIN_MESSAGE_BROKER_MESSAGE_HANDLER_PLUGIN = 'Pyz\Zed\FooBar\Communication\Plugin\MessageBroker\FooBarBazBatMessageHandlerPlugin';
+    public const PROJECT_ZED_PLUGIN_MESSAGE_BROKER_MESSAGE_HANDLER_PLUGIN = 'Pyz\Zed\FooBar\Communication\Plugin\MessageBroker\BazBatMessageHandlerPlugin';
 
     /**
      * @var string

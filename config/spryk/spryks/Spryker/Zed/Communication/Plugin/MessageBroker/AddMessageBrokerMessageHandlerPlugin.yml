@@ -44,12 +44,15 @@ postSpryks:
     - AddZedBusinessMessageBrokerMessageHandlerMethod
     # Add MessageBrokerDependencyProvider
     - AddZedDependencyProvider:
+          condition: "organization !== 'Spryker'"
           arguments:
               organization:
+                  inherit: false
                   value: "Pyz"
               module:
                   value: "MessageBroker"
     - AddMethod:
+          condition: "organization !== 'Spryker'"
           arguments:
               target:
                   value: "\\Pyz\\Zed\\MessageBroker\\MessageBrokerDependencyProvider"
@@ -64,6 +67,7 @@ postSpryks:
 
     # Wire the plugin after it was created
     - WirePlugin:
+          condition: "organization !== 'Spryker'"
           arguments:
               plugin:
                   value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Communication\\Plugin\\MessageBroker\\{{ className }}"

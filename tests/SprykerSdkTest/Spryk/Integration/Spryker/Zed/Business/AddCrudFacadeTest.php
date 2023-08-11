@@ -128,12 +128,12 @@ class AddCrudFacadeTest extends Unit
         $this->tester->assertResolvedXmlHasTransfer($transferXml, 'ZipZapCriteria');
         $this->tester->assertResolvedXmlHasTransfer($transferXml, 'ZipZapConditions');
         $this->tester->assertResolvedXmlHasTransfer($transferXml, 'ZipZapCollection');
-        $this->tester->assertResolvedXmlHasTransfer($transferXml, 'Sort');
-        $this->tester->assertResolvedXmlHasTransfer($transferXml, 'Pagination');
+        $this->tester->assertResolvedXmlHasTransfer($transferXml, 'Sort', false);
+        $this->tester->assertResolvedXmlHasTransfer($transferXml, 'Pagination', false);
         $this->tester->assertResolvedXmlHasTransfer($transferXml, 'ZipZapCollectionRequest');
         $this->tester->assertResolvedXmlHasTransfer($transferXml, 'ZipZapCollectionResponse');
         $this->tester->assertResolvedXmlHasTransfer($transferXml, 'ZipZapCollectionDeleteCriteria');
-        $this->tester->assertResolvedXmlHasTransfer($transferXml, 'Error');
+        $this->tester->assertResolvedXmlHasTransfer($transferXml, 'Error', false);
 
         // Test helper
         $this->assertFileExists(

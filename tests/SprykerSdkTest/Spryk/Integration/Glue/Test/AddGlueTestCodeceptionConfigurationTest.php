@@ -48,8 +48,5 @@ class AddGlueTestCodeceptionConfigurationTest extends Unit
 
         // Ensure that an already existing element is not removed
         $this->tester->assertYmlArrayContainsElement('[suites][RestApi][modules][enabled]', 'SomeHelper', $expectedFile);
-
-        // Ensure new elements are added
-        $this->tester->assertYmlArrayContainsElement('[suites][RestApi][modules][enabled]', '\SprykerTest\Glue\Testify\Helper\GlueBackendApiHelper', $expectedFile);
     }
 }

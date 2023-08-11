@@ -62,6 +62,11 @@ class TransferPropertySpryk extends AbstractTransferSpryk
         $propertyXMLElement->addAttribute('name', $propertyName);
         $propertyXMLElement->addAttribute('type', $propertyType);
 
+        // Some Transfer properties can't be made strict as they are not strict in modules.
+        if (!in_array($transferName, $this->strictTransfersBlacklist) || in_array($propertyName, $this->strictPropertiesWhitelist)) {
+            $propertyXMLElement->addAttribute('strict', 'true');
+        }
+
         if ($singular) {
             $propertyXMLElement->addAttribute('singular', $singular);
         }

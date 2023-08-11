@@ -60,6 +60,8 @@ interface ArgumentInterface
     /**
      * @param string $key
      * @param mixed $value
+     *
+     * @return void
      */
     public function addMeta(string $key, mixed $value): void;
 

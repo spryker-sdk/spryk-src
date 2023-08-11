@@ -61,7 +61,7 @@ postSpryks:
                 propertyType:
                     value: "int[]"
                 singular:
-                    value: "{{ domainEntity | lcfirst }}Id"
+                    value: "id{{ domainEntity }}"
     -   AddSharedTransferProperty:
             arguments:
                 name:
