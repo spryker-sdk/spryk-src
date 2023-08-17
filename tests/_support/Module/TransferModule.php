@@ -117,7 +117,7 @@ class TransferModule extends Module
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
 >
-  <transfer name="%s" strict="true">
+  <transfer name="%s">
   </transfer>
 
 </transfers>', $transferName);
