@@ -53,6 +53,7 @@ abstract class AbstractTransferSpryk extends AbstractBuilder
      */
     protected array $strictTransfersBlacklist = [
         'UserCriteria',
+        'MessageAttributes',
         'Sort',
         'User',
         'Pagination',
