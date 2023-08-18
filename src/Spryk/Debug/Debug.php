@@ -14,6 +14,9 @@ use SprykerSdk\Spryk\ModeResolver\ModeResolverInterface;
 use SprykerSdk\Spryk\Style\SprykStyleInterface;
 use Symfony\Component\Console\Helper\Table;
 
+/**
+ * @codeCoverageIgnore
+ */
 class Debug implements DebugInterface
 {
     /**
