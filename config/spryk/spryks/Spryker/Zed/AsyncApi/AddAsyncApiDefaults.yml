@@ -25,7 +25,7 @@ arguments:
     channelName:
         inherit: true
     messages:
-        description: "Pass multiple properties in one by using --messages MessageA&propertyA:string,propertyB:int;MessageB&propertyA:string,propertyB:int"
+        description: "Pass multiple properties in one by using --messages 'MessageA#propertyA:string,propertyB:int;MessageB#propertyA:string,propertyB:int'"
         inherit: true
 
     suite:

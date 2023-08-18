@@ -20,7 +20,6 @@ arguments:
     pluginAfter:
         isOptional: true
 
-    target:
-        description: "Target place where it should be added to. The Format must be FQCN::method()"
+    target: ~ # Target place where it should be added to. The Format must be FQCN::method()
 
     plugin: ~

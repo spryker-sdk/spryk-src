@@ -69,6 +69,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
+        "check-definitions": "bin/console spryk:check-definition",
         "cs-check": "phpcs -p -s",
         "cs-fix": "phpcbf -p -s",
         "stan": "phpstan analyse",
@@ -83,7 +84,7 @@
         "lowest-setup": "composer update --prefer-lowest --prefer-stable --prefer-dist --no-interaction && cp composer.json composer.backup && composer require --dev dereuromark/composer-prefer-lowest && mv composer.backup composer.json",
         "rector": "vendor/bin/rector process src/Spryk/ --config architector.php --ansi",
         "rector-diff": "vendor/bin/rector process src/Spryk/ --config architector.php --ansi --dry-run",
-        "local-ci": "composer cs-fix && composer cs-check && composer stan && composer rector-diff && composer test"
+        "local-ci": "composer cs-fix && composer cs-check && composer stan && composer rector-diff && composer test && composer check-definitions"
     },
     "extra": {
         "branch-alias": {

@@ -11,11 +11,9 @@ arguments:
     module:
         inherit: true
 
-    target:
-        description: "Target class that should be changed."
+    target: ~ # Target class that should be changed.
 
     methodName:
         description: "Target method where we want to add content to.."
 
-    body:
-        description: "The content that should be added before the return statement"
+    body: ~ # The content that should be added before the return statement
