@@ -11,6 +11,10 @@ arguments:
         inherit: true
         default: SprykerTest
 
+    application:
+        inherit: true
+        default: Zed
+
     method: ~
     body: ~
 

@@ -28,18 +28,11 @@ abstract class AbstractSprykConsole extends Command
     protected const CODE_WARNING = 2;
 
     /**
-     * @var \SprykerSdk\Spryk\SprykFacadeInterface
-     */
-    protected SprykFacadeInterface $facade;
-
-    /**
      * @param \SprykerSdk\Spryk\SprykFacadeInterface $facade
      * @param string|null $name
      */
-    public function __construct(SprykFacadeInterface $facade, ?string $name = null)
+    public function __construct(protected SprykFacadeInterface $facade, ?string $name = null)
     {
-        $this->facade = $facade;
-
         parent::__construct($name);
     }
 

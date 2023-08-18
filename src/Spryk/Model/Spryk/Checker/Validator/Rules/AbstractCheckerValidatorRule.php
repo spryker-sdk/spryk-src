@@ -73,8 +73,6 @@ abstract class AbstractCheckerValidatorRule implements CheckerValidatorRuleInter
     }
 
     /**
-     * @param bool $isValid
-     *
      * @return void
      */
     public function setIsValid(bool $isValid): void
@@ -83,8 +81,6 @@ abstract class AbstractCheckerValidatorRule implements CheckerValidatorRuleInter
     }
 
     /**
-     * @param string $errorMessage
-     *
      * @return void
      */
     protected function addErrorMessage(string $errorMessage): void

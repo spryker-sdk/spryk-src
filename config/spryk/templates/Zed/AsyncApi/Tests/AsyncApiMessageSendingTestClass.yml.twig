@@ -1,0 +1,29 @@
+<?php
+
+namespace {{ organization }}Test\AsyncApi\{{ module }}\{{ module }}Tests\{{ channelName | dashToCamelCase | camelCased | ucfirst }};
+
+use Codeception\Test\Unit;
+use {{ organization }}Test\AsyncApi\{{ module }}\{{ module }}AsyncApiTester;
+
+class {{ messageName }}Test extends Unit
+{
+    /**
+     * @var \{{ organization }}Test\AsyncApi\{{ module }}\{{ module }}AsyncApiTester
+     */
+    protected {{ module }}AsyncApiTester $tester;
+
+    /**
+     * @return void
+     */
+    public function test{{ messageName }}MessageIsSend(): void
+    {
+        // Arrange
+        ${{ messageName | lcfirst }}Transfer = $this->tester->have{{ messageName }}Transfer();
+
+        // Act: Here you call the facade method where you expect that the message will be sent
+        (new \Spryker\Zed\MessageBroker\Business\MessageBrokerFacade())->sendMessage(${{ messageName | lcfirst }}Transfer);
+
+        // Assert
+        $this->tester->assertMessageWasEmittedOnChannel(${{ messageName | lcfirst }}Transfer, '{{ channelName }}');
+    }
+}

@@ -21,7 +21,7 @@ interface SprykExecutorConfigurationInterface
         string $sprykName,
         array $includeOptionalSubSpryks,
         string $targetModuleName,
-        string $dependentModuleName
+        string $dependentModuleName,
     );
 
     /**

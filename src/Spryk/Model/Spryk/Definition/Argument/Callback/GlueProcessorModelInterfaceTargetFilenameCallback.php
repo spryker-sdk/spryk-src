@@ -25,7 +25,6 @@ class GlueProcessorModelInterfaceTargetFilenameCallback implements CallbackInter
     }
 
     /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $argumentCollection
      * @param mixed|null $value
      *
      * @return mixed
@@ -33,7 +32,7 @@ class GlueProcessorModelInterfaceTargetFilenameCallback implements CallbackInter
     public function getValue(ArgumentCollectionInterface $argumentCollection, $value)
     {
         $className = (string)$argumentCollection->getArgument('className')->getValue();
-        if (strpos($className, '\\') !== false) {
+        if (str_contains($className, '\\')) {
             $classNameFragments = explode('\\', $className);
 
             $className = array_pop($classNameFragments);

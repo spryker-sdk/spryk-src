@@ -332,7 +332,7 @@ interface ClassName
     /**
      * @var string
      */
-    public const ZED_PLUGIN_MESSAGE_BROKER_MESSAGE_HANDLER_PLUGIN = 'Spryker\Zed\FooBar\Communication\Plugin\MessageBroker\FooBarBazBatMessageHandlerPlugin';
+    public const ZED_PLUGIN_MESSAGE_BROKER_MESSAGE_HANDLER_PLUGIN = 'Spryker\Zed\FooBar\Communication\Plugin\MessageBroker\BazBatMessageHandlerPlugin';
 
     /**
      * @var string
@@ -592,7 +592,7 @@ interface ClassName
     /**
      * @var string
      */
-    public const PROJECT_ZED_PLUGIN_MESSAGE_BROKER_MESSAGE_HANDLER_PLUGIN = 'Pyz\Zed\FooBar\Communication\Plugin\MessageBroker\FooBarBazBatMessageHandlerPlugin';
+    public const PROJECT_ZED_PLUGIN_MESSAGE_BROKER_MESSAGE_HANDLER_PLUGIN = 'Pyz\Zed\FooBar\Communication\Plugin\MessageBroker\BazBatMessageHandlerPlugin';
 
     /**
      * @var string
@@ -607,12 +607,12 @@ interface ClassName
     /**
      * @var string
      */
-    public const PROJECT_GLUE_BACKEND_API_RESOURCE_PLUGIN = 'Pyz\Glue\FooBarsBackendApi\Plugin\FooBarsBackendApiResource';
+    public const PROJECT_GLUE_BACKEND_API_RESOURCE_PLUGIN = 'Pyz\Glue\FooBarsBackendApi\Plugin\GlueApplication\FooBarsBackendApiResource';
 
     /**
      * @var string
      */
-    public const PROJECT_GLUE_BACKEND_API_ROUTE_PROVIDER_PLUGIN = 'Pyz\Glue\FooBarsBackendApi\Plugin\FooBarsBackendApiRouteProviderPlugin';
+    public const PROJECT_GLUE_BACKEND_API_ROUTE_PROVIDER_PLUGIN = 'Pyz\Glue\FooBarsBackendApi\Plugin\GlueApplication\FooBarsBackendApiRouteProviderPlugin';
 
     /**
      * @var string
@@ -622,7 +622,7 @@ interface ClassName
     /**
      * @var string
      */
-    public const PROJECT_GLUE_STOREFRONT_API_RESOURCE_PLUGIN = 'Pyz\Glue\FooBarsStorefrontApi\Plugin\FooBarsStorefrontApiResource';
+    public const PROJECT_GLUE_STOREFRONT_API_RESOURCE_PLUGIN = 'Pyz\Glue\FooBarsStorefrontApi\Plugin\GlueApplication\FooBarsStorefrontApiResource';
 
     /**
      * @var string

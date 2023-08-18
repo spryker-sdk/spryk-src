@@ -19,31 +19,8 @@ use PhpParser\NodeVisitorAbstract;
 
 class AddConstantVisitor extends NodeVisitorAbstract
 {
- /**
-  * @var string
-  */
-    protected string $constantName;
-
-    /**
-     * @var mixed
-     */
-    protected $constantValue;
-
-    /**
-     * @var string
-     */
-    protected string $modifier;
-
-    /**
-     * @param string $constantName
-     * @param mixed $constantValue
-     * @param string $modifier
-     */
-    public function __construct(string $constantName, $constantValue, string $modifier)
+    public function __construct(protected string $constantName, protected mixed $constantValue, protected string $modifier)
     {
-        $this->constantName = $constantName;
-        $this->constantValue = $constantValue;
-        $this->modifier = $modifier;
     }
 
     /**
@@ -72,30 +49,17 @@ class AddConstantVisitor extends NodeVisitorAbstract
         return $node;
     }
 
-    /**
-     * @return \PhpParser\Node\Stmt\ClassConst
-     */
     protected function createConst(): ClassConst
     {
-        switch ($this->modifier) {
-            case 'protected':
-                $modifier = Class_::MODIFIER_PROTECTED;
-
-                break;
-            case 'private':
-                $modifier = Class_::MODIFIER_PRIVATE;
-
-                break;
-            default:
-                $modifier = Class_::MODIFIER_PUBLIC;
-        }
+        $modifier = match ($this->modifier) {
+            'protected' => Class_::MODIFIER_PROTECTED,
+            'private' => Class_::MODIFIER_PRIVATE,
+            default => Class_::MODIFIER_PUBLIC,
+        };
 
         return (new ClassConst([new Const_($this->constantName, $this->prepareValue())], $modifier));
     }
 
-    /**
-     * @return \PhpParser\Node\Expr
-     */
     protected function prepareValue(): Expr
     {
         return (new BuilderFactory())->val($this->constantValue);

@@ -20,14 +20,13 @@ class ClassNameShortCallback implements CallbackInterface
     }
 
     /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $argumentCollection
      * @param mixed|null $value
      *
      * @return mixed
      */
     public function getValue(ArgumentCollectionInterface $argumentCollection, $value)
     {
-        if (strpos($value, '\\') === false) {
+        if (!str_contains($value, '\\')) {
             return $value;
         }
 

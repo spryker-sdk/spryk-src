@@ -23,10 +23,6 @@ class SprykDefinitionDumper implements SprykDefinitionDumperInterface
      */
     protected $configurationLoader;
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Dumper\Finder\SprykDefinitionFinderInterface $definitionFinder
-     * @param \SprykerSdk\Spryk\Model\Spryk\Configuration\Loader\SprykConfigurationLoaderInterface $configurationLoader
-     */
     public function __construct(SprykDefinitionFinderInterface $definitionFinder, SprykConfigurationLoaderInterface $configurationLoader)
     {
         $this->definitionFinder = $definitionFinder;

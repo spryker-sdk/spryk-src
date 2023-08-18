@@ -1,5 +1,5 @@
 {{ suite }}:
-    actor: {{ resource | resourceNameToModelName }}{{ applicationType }}ApiTester
+    actor: {{ module }}Tester
     modules:
         enabled:
             - Asserts
@@ -9,11 +9,11 @@
                 \SprykerTest\Shared\Testify\Helper\LocatorHelper:
                     projectNamespaces:
                         - {{ organization }}
-            - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+            - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
             - \SprykerTest\Shared\Testify\Helper\ConfigHelper
             - \SprykerTest\Glue\Testify\Helper\DependencyProviderHelper
             - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
-            - \SprykerTest\Glue\Testify\Helper\GlueBackendApiHelper
+            - \{{ organization }}Test\Glue\Testify\Helper\GlueBackendApiHelper
             - \SprykerTest\Glue\Testify\Helper\JsonPath
-            - \{{ organization }}Test\Zed\{{ zedDomainEntity }}\Helper\{{ zedDomainEntity }}CrudHelper
+            - \{{ organization }}Test\Zed\{{ module | removeApiSuffix }}\Helper\{{ zedDomainEntity }}CrudHelper
             - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper

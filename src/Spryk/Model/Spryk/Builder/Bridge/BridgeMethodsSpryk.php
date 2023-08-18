@@ -42,11 +42,6 @@ class BridgeMethodsSpryk extends AbstractBuilder
     public const ARGUMENT_DEPENDENCY_TYPE = 'dependencyType';
 
     /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface
-     */
-    protected NodeFinderInterface $nodeFinder;
-
-    /**
      * @param \SprykerSdk\Spryk\SprykConfig $config
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface $fileResolver
      * @param \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface $nodeFinder
@@ -54,11 +49,9 @@ class BridgeMethodsSpryk extends AbstractBuilder
     public function __construct(
         SprykConfig $config,
         FileResolverInterface $fileResolver,
-        NodeFinderInterface $nodeFinder
+        protected NodeFinderInterface $nodeFinder,
     ) {
         parent::__construct($config, $fileResolver);
-
-        $this->nodeFinder = $nodeFinder;
     }
 
     /**
@@ -110,11 +103,6 @@ class BridgeMethodsSpryk extends AbstractBuilder
     /**
      * Copy from an existing method and create a "fresh" ClassMethod without attributes. Using the original ClassMethod
      * with its attributes will crash the PrettyPrinter.
-     *
-     * @param \PhpParser\BuilderFactory $builderFactory
-     * @param \PhpParser\Node\Stmt\ClassMethod $classMethodNode
-     *
-     * @return \PhpParser\Node\Stmt\ClassMethod
      */
     protected function getNewClassMethodNode(BuilderFactory $builderFactory, ClassMethod $classMethodNode): ClassMethod
     {
@@ -166,8 +154,6 @@ class BridgeMethodsSpryk extends AbstractBuilder
     }
 
     /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolvedClass
-     *
      * @return array<\PhpParser\Node\Stmt\ClassMethod>
      */
     protected function getBridgeMethodsToAdd(ResolvedClassInterface $resolvedClass): array
@@ -193,8 +179,6 @@ class BridgeMethodsSpryk extends AbstractBuilder
     }
 
     /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolvedClass
-     *
      * @return array<string, string>
      */
     protected function getMethodNamesFromResolvedClass(ResolvedClassInterface $resolvedClass): array
@@ -204,8 +188,6 @@ class BridgeMethodsSpryk extends AbstractBuilder
 
     /**
      * @phpstan-return class-string
-     *
-     * @return string
      */
     protected function getSourceClassName(): string
     {
@@ -213,9 +195,6 @@ class BridgeMethodsSpryk extends AbstractBuilder
         return $this->getStringArgument(static::ARGUMENT_SOURCE_CLASS);
     }
 
-    /**
-     * @return array
-     */
     protected function getMethodNames(): array
     {
         return $this->getArrayArgument(static::ARGUMENT_METHODS);

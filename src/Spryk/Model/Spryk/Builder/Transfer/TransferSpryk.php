@@ -44,14 +44,16 @@ class TransferSpryk extends AbstractTransferSpryk
         $transferNodeXmlElement = $simpleXmlElement->addChild('transfer');
         $transferNodeXmlElement->addAttribute('name', $transferName);
 
+        // Some Transfer can't be made strict as they are not strict in modules.
+        if (!in_array($transferName, $this->strictTransfersBlacklist)) {
+            $transferNodeXmlElement->addAttribute('strict', 'true');
+        }
+
         $resolved->setSimpleXmlElement($simpleXmlElement);
 
         $this->log(sprintf('Added transfer in <fg=green>%s</>', $this->getTargetPath()));
     }
 
-    /**
-     * @return bool
-     */
     protected function isTransferDefined(): bool
     {
         $transferName = $this->getTransferName();

@@ -27,11 +27,6 @@ class YmlParser implements ParserInterface
         return $this->fromFileContent($type);
     }
 
-    /**
-     * @param string $filePath
-     *
-     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedYml
-     */
     protected function fromFilePath(string $filePath): ResolvedYml
     {
         $resolved = new ResolvedYml();
@@ -51,11 +46,6 @@ class YmlParser implements ParserInterface
         return $resolved;
     }
 
-    /**
-     * @param string $fileContents
-     *
-     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedYml
-     */
     protected function fromFileContent(string $fileContents): ResolvedYml
     {
         $resolved = new ResolvedYml();

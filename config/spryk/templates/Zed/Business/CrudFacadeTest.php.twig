@@ -5,7 +5,6 @@
 namespace {{ organization }}Test\Zed\{{ module }}\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer;
 
 /**
  * Auto-generated group annotations
@@ -23,7 +22,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
     /**
      * @var \{{ organization }}Test\Zed\{{ module }}\{{ module }}BusinessTester
      */
-    protected $tester;
+    protected \{{ organization }}Test\Zed\{{ module }}\{{ module }}BusinessTester $tester;
 
     /**
      * Test ensures to always get a Collection back even if no entity was found.
@@ -88,7 +87,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
     {
         // Arrange
         ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferOne();
-        ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new {{ domainEntity }}CollectionRequestTransfer();
+        ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
 
         // Act
@@ -108,7 +107,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
         // Arrange
         $this->tester->have{{ domainEntity }}PreCreatePluginSetUuidTwoEnabled();
         ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferOne();
-        ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new {{ domainEntity }}CollectionRequestTransfer();
+        ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
 
         // Act
@@ -128,7 +127,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
         // Arrange
         $this->tester->have{{ domainEntity }}PostCreatePluginSetUuidTwoEnabled();
         ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferOne();
-        ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new {{ domainEntity }}CollectionRequestTransfer();
+        ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
 
         // Act
@@ -149,7 +148,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
         ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferTwoPersisted();
 
         $this->tester->have{{ domainEntity }}AlwaysFailingCreateValidatorRuleEnabled(); // This will always return a validation error
-        ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new {{ domainEntity }}CollectionRequestTransfer();
+        ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
 
         // Act
@@ -169,7 +168,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
         // Arrange
         $this->tester->have{{ domainEntity }}AlwaysFailingCreateValidatorRulePluginEnabled(); // This will always return a validation error
         ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferOne();
-        ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new {{ domainEntity }}CollectionRequestTransfer();
+        ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
 
         // Act
@@ -186,7 +185,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
     {
         // Arrange
         ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferOnePersisted();
-        ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new {{ domainEntity }}CollectionRequestTransfer();
+        ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
 
         // Act
@@ -206,7 +205,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
         // Arrange
         $this->tester->have{{ domainEntity }}PreUpdatePluginSetUuidTwoEnabled();
         ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferTwoPersisted();
-        ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new {{ domainEntity }}CollectionRequestTransfer();
+        ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
 
         // Act
@@ -226,7 +225,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
         // Arrange
         $this->tester->have{{ domainEntity }}PostUpdatePluginSetUuidTwoEnabled();
         ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferTwoPersisted();
-        ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new {{ domainEntity }}CollectionRequestTransfer();
+        ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
 
         // Act
@@ -246,7 +245,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
         // Arrange
         $this->tester->have{{ domainEntity }}AlwaysFailingUpdateValidatorRuleEnabled(); // This will always return a validation error
         ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferTwoPersisted();
-        ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new {{ domainEntity }}CollectionRequestTransfer();
+        ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
 
         // Act
@@ -266,7 +265,7 @@ class {{ domainEntity }}CrudFacadeTest extends Unit
         // Arrange
         $this->tester->have{{ domainEntity }}AlwaysFailingUpdateValidatorRulePluginEnabled(); // This will always return a validation error
         ${{ domainEntity | lcfirst }}Transfer = $this->tester->have{{ domainEntity }}TransferTwoPersisted();
-        ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new {{ domainEntity }}CollectionRequestTransfer();
+        ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
 
         // Act

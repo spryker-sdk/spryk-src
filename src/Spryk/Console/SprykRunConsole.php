@@ -56,11 +56,6 @@ class SprykRunConsole extends AbstractSprykConsole
     public const OPTION_INCLUDE_OPTIONALS_SHORT = 'i';
 
     /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Executor\Configuration\SprykExecutorConfigurationInterface
-     */
-    protected SprykExecutorConfigurationInterface $executorConfiguration;
-
-    /**
      * @var array|null
      */
     protected static ?array $argumentsList = null;
@@ -70,11 +65,9 @@ class SprykRunConsole extends AbstractSprykConsole
      * @param \SprykerSdk\Spryk\SprykFacadeInterface $facade
      * @param string|null $name
      */
-    public function __construct(SprykExecutorConfigurationInterface $executorConfiguration, SprykFacadeInterface $facade, ?string $name = null)
+    public function __construct(protected SprykExecutorConfigurationInterface $executorConfiguration, SprykFacadeInterface $facade, ?string $name = null)
     {
         parent::__construct($facade, $name);
-
-        $this->executorConfiguration = $executorConfiguration;
     }
 
     /**
@@ -89,7 +82,10 @@ class SprykRunConsole extends AbstractSprykConsole
             ->addArgument(static::ARGUMENT_TARGET_MODULE, InputArgument::OPTIONAL, 'Name of the target module in format "[Organization.]ModuleName[.LayerName]".')
             ->addArgument(static::ARGUMENT_DEPENDENT_MODULE, InputArgument::OPTIONAL, 'Name of the dependent module in format "[Organization.]ModuleName[.LayerName]".')
             ->addOption(static::OPTION_INCLUDE_OPTIONALS, static::OPTION_INCLUDE_OPTIONALS_SHORT, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Name(s) of the Spryks which are marked as optional but should be build.')
-            ->addOption('dry-run', 'd', InputOption::VALUE_NONE, 'Only print a diff, do not change files');
+            ->addOption('dry-run', 'd', InputOption::VALUE_NONE, 'Only print a diff, do not change files')
+            ->addOption('debug', 'dd', InputOption::VALUE_NONE, 'Print standard debug information. This will only print Spryk Names in their executed order.')
+            ->addOption('debug-verbose', 'ddd', InputOption::VALUE_NONE, 'Print verbose debug information. This will print Spryk Names in their executed order and the resolved arguments.')
+            ->addOption('debug-very-verbose', 'dddd', InputOption::VALUE_NONE, 'Print very verbose debug information. This will print Spryk Names in their executed order, the resolved arguments, and why the argument was resolved to the current value.');
 
         foreach ($this->getSprykArguments() as $argumentDefinition) {
             $this->addOption(
@@ -101,9 +97,6 @@ class SprykRunConsole extends AbstractSprykConsole
         }
     }
 
-    /**
-     * @return array
-     */
     protected function getSprykArguments(): array
     {
         if (static::$argumentsList === null) {
@@ -111,7 +104,7 @@ class SprykRunConsole extends AbstractSprykConsole
         }
 
         return array_filter(static::$argumentsList, function (array $argumentDefinition) {
-            return strpos($argumentDefinition['name'], '.') === false;
+            return !str_contains($argumentDefinition['name'], '.');
         });
     }
 
@@ -141,11 +134,7 @@ class SprykRunConsole extends AbstractSprykConsole
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     *
      * @throws \RuntimeException
-     *
-     * @return string
      */
     protected function getSprykName(InputInterface $input): string
     {
@@ -157,29 +146,16 @@ class SprykRunConsole extends AbstractSprykConsole
         return $name;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     *
-     * @return string
-     */
     protected function getTargetModuleName(InputInterface $input): string
     {
         return current((array)$input->getArgument(static::ARGUMENT_TARGET_MODULE)) ?: '';
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     *
-     * @return string
-     */
     protected function getDependentModuleName(InputInterface $input): string
     {
         return current((array)$input->getArgument(static::ARGUMENT_DEPENDENT_MODULE)) ?: '';
     }
 
-    /**
-     * @return string
-     */
     protected function getHelpText(): string
     {
         return 'Use `console spryk:dump <info>{SPRYK NAME}</info>` to get the options of a specific Spryk.';

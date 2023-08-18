@@ -17,10 +17,13 @@ use {{ organization }}\Zed\{{ module }}\Business\{{ module }}FacadeInterface;
 use {{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Expander\{{ domainEntity }}ExpanderPluginInterface;
 use {{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Writer\{{ domainEntity }}CreatePluginInterface;
 use {{ organization }}\Zed\{{ module }}Extension\Dependency\Plugin\{{ domainEntity }}\Writer\{{ domainEntity }}UpdatePluginInterface;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Business\BusinessHelperTrait;
 
 class {{ domainEntity }}CrudHelper extends Module
 {
+    use DataCleanupHelperTrait;
+
     /**
     * @var string
     */
@@ -72,9 +75,15 @@ class {{ domainEntity }}CrudHelper extends Module
      */
     public function have{{ domainEntity }}Transfer(array $seed = []): {{ domainEntity }}Transfer
     {
-        ${{ domainEntity | lcfirst }}Builder = new {{ domainEntity }}Builder($seed);
+        ${{ domainEntity | lcfirst }}Builder = new \Generated\Shared\DataBuilder\{{ domainEntity }}Builder($seed);
 
-        return ${{ domainEntity | lcfirst }}Builder->build();
+        ${{ domainEntity | lcfirst }}Transfer = ${{ domainEntity | lcfirst }}Builder->build();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use (${{ domainEntity | lcfirst }}Transfer) {
+            \Orm\Zed\{{ module }}\Persistence\Spy{{ domainEntity }}Query::create()->filterByUuid(${{ domainEntity | lcfirst }}Transfer->getUuid())->delete();
+        });
+
+        return ${{ domainEntity | lcfirst }}Transfer;
     }
 
     /**
@@ -82,8 +91,8 @@ class {{ domainEntity }}CrudHelper extends Module
      */
     public function have{{ domainEntity }}CriteriaTransferWith{{ domainEntity }}TransferOneCriteria(): {{ domainEntity }}CriteriaTransfer
     {
-        ${{ domainEntity | lcfirst }}CriteriaTransfer = new {{ domainEntity }}CriteriaTransfer();
-        ${{ domainEntity | lcfirst }}ConditionsTransfer = new {{ domainEntity }}ConditionsTransfer();
+        ${{ domainEntity | lcfirst }}CriteriaTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CriteriaTransfer();
+        ${{ domainEntity | lcfirst }}ConditionsTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}ConditionsTransfer();
         ${{ domainEntity | lcfirst }}ConditionsTransfer->setUuids([static::UUID_ONE]);
         ${{ domainEntity | lcfirst }}CriteriaTransfer->set{{ domainEntity }}Conditions(${{ domainEntity | lcfirst }}ConditionsTransfer);
 
@@ -95,7 +104,7 @@ class {{ domainEntity }}CrudHelper extends Module
      */
     public function have{{ domainEntity }}DeleteCriteriaTransferWith{{ domainEntity }}TransferOneCriteria(): {{ domainEntity }}CollectionDeleteCriteriaTransfer
     {
-        ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer = new {{ domainEntity }}CollectionDeleteCriteriaTransfer();
+        ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionDeleteCriteriaTransfer();
         ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->setUuids([static::UUID_ONE]);
 
         return ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer;
@@ -106,7 +115,7 @@ class {{ domainEntity }}CrudHelper extends Module
     */
     public function have{{ domainEntity }}DeleteCriteriaTransferWith{{ domainEntity }}TransferTwoCriteria(): {{ domainEntity }}CollectionDeleteCriteriaTransfer
     {
-        ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer = new {{ domainEntity }}CollectionDeleteCriteriaTransfer();
+        ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionDeleteCriteriaTransfer();
         ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer->setUuids([static::UUID_TWO]);
 
         return ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer;
@@ -117,8 +126,8 @@ class {{ domainEntity }}CrudHelper extends Module
      */
     public function have{{ domainEntity }}CriteriaTransfer{{ domainEntity }}TransferTwoCriteria(): {{ domainEntity }}CriteriaTransfer
     {
-        ${{ domainEntity | lcfirst }}CriteriaTransfer = new {{ domainEntity }}CriteriaTransfer();
-        ${{ domainEntity | lcfirst }}ConditionsTransfer = new {{ domainEntity }}ConditionsTransfer();
+        ${{ domainEntity | lcfirst }}CriteriaTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CriteriaTransfer();
+        ${{ domainEntity | lcfirst }}ConditionsTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}ConditionsTransfer();
         ${{ domainEntity | lcfirst }}ConditionsTransfer->setUuids([static::UUID_TWO]);
         ${{ domainEntity | lcfirst }}CriteriaTransfer->set{{ domainEntity }}Conditions(${{ domainEntity | lcfirst }}ConditionsTransfer);
 
@@ -142,7 +151,7 @@ class {{ domainEntity }}CrudHelper extends Module
      */
     protected function persist{{ domainEntity }}({{ domainEntity }}Transfer ${{ domainEntity | lcfirst }}Transfer): ?{{ domainEntity }}Transfer
     {
-        ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new {{ domainEntity }}CollectionRequestTransfer();
+        ${{ domainEntity | lcfirst }}CollectionRequestTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer();
         ${{ domainEntity | lcfirst }}CollectionRequestTransfer->add{{ domainEntity }}(${{ domainEntity | lcfirst }}Transfer);
 
         ${{ domainEntity | lcfirst }}CollectionResponseTransfer = $this->getFacade()->create{{ domainEntity }}Collection(${{ domainEntity | lcfirst }}CollectionRequestTransfer);
@@ -486,9 +495,8 @@ class {{ domainEntity }}CrudHelper extends Module
     /**
      * @return \{{ organization }}\Zed\{{ module }}\Business\{{ module }}FacadeInterface
      */
-    protected function getFacade(): {{ module }}FacadeInterface
+    protected function getFacade(): \{{ organization }}\Zed\{{ module }}\Business\{{ module }}FacadeInterface
     {
-        /** @var \{{ organization }}\Zed\{{ module }}\Business\{{ module }}FacadeInterface */
-        return $this->getBusinessHelper()->getFacade('{{ module }}');
+        return new \{{ organization }}\Zed\{{ module }}\Business\{{ module }}Facade();
     }
 }

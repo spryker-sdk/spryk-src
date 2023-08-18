@@ -7,7 +7,7 @@
         All sniffs in ./Sniffs will be auto loaded
     </description>
 
-    <config name="php_version" value="70400"/>
+    <config name="php_version" value="80000"/>
 
     <file>src/</file>
     <file>config/</file>
@@ -19,20 +19,45 @@
     <exclude-pattern>*/tests/_data/*</exclude-pattern>
     <exclude-pattern>*/tests/_support/Fixtures/*</exclude-pattern>
 
-    <rule ref="vendor/spryker/code-sniffer/Spryker/ruleset.xml"/>
+    <rule ref="vendor/spryker/code-sniffer/Spryker/ruleset.xml">
+        <exclude name="Spryker.Commenting.DocBlockReturnVoid.ReturnVoidMissing"/>
+        <exclude name="Spryker.Commenting.DocBlock.DocBlockMissing"/>
+        <exclude name="Spryker.Commenting.DocBlockReturnVoid.ReturnMissing"/>
+        <exclude name="Spryker.Commenting.DocBlock.ReturnVoidMissing"/>
+        <exclude name="Spryker.Commenting.DocBlockParam.SignatureMismatch"/>
+        <exclude name="Spryker.Commenting.DocBlockParamAllowDefaultValue.Typehint"/>
+        <exclude name="Spryker.Commenting.DocBlock.ConstructDesctructMissingDocBlock"/>
+    </rule>
 
     <rule ref="vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml">
         <exclude name="SprykerStrict.TypeHints.ParameterTypeHint"/>
         <exclude name="SprykerStrict.TypeHints.PropertyTypeHint"/>
     </rule>
 
+    <rule ref="SlevomatCodingStandard.Classes.DisallowConstructorPropertyPromotion">
+        <exclude name="SlevomatCodingStandard.Classes.DisallowConstructorPropertyPromotion.DisallowedConstructorPropertyPromotion"/>
+    </rule>
+
     <!-- Define your own sniffs here -->
 
     <rule ref="Spryker.Internal.SprykerDisallowFunctions">
         <properties>
-            <!-- We want to prevent 8.0+ functions to break 7.4 compatibility -->
-            <property name="phpVersion" value="7.4"/>
+            <!-- We want to prevent 8.1+ functions to break 8.0 compatibility -->
+            <property name="phpVersion" value="8.0"/>
         </properties>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration"/>
+    <rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInClosureUse"/>
+
+    <rule ref="SlevomatCodingStandard.ControlStructures.DisallowNullSafeObjectOperator">
+        <severity>0</severity>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Functions.DisallowTrailingCommaInDeclaration">
+        <severity>0</severity>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Functions.DisallowTrailingCommaInClosureUse">
+        <severity>0</severity>
     </rule>
 
 </ruleset>

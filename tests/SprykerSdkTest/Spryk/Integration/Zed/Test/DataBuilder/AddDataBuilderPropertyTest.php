@@ -35,7 +35,7 @@ class AddDataBuilderPropertyTest extends Unit
     public function testAddsDataBuilderPropertiesFromArrayWithSingleProperty(): void
     {
         $this->tester->haveDataBuilderSchema(
-            $this->tester->getSprykerModuleDirectory() . 'tests/SprykerTest/Zed/FooBar/_data/foo_bar.databuilder.xml',
+            $this->tester->getSprykerModuleDirectory() . 'tests/_data/foo_bar.databuilder.xml',
             'FooBarItem',
         );
 
@@ -61,7 +61,7 @@ class AddDataBuilderPropertyTest extends Unit
 </transfers>';
 
         $this->assertXmlStringEqualsXmlFile(
-            $this->tester->getSprykerModuleDirectory() . 'tests/SprykerTest/Zed/FooBar/_data/foo_bar.databuilder.xml',
+            $this->tester->getSprykerModuleDirectory() . 'tests/_data/foo_bar.databuilder.xml',
             $expectedXml,
         );
     }
@@ -72,7 +72,7 @@ class AddDataBuilderPropertyTest extends Unit
     public function testAddsDataBuilderPropertiesWithMultipleProperties(): void
     {
         $this->tester->haveDataBuilderSchema(
-            $this->tester->getSprykerModuleDirectory() . 'tests/SprykerTest/Zed/FooBar/_data/foo_bar.databuilder.xml',
+            $this->tester->getSprykerModuleDirectory() . 'tests/_data/foo_bar.databuilder.xml',
             'FooBarItem',
         );
 
@@ -97,7 +97,7 @@ class AddDataBuilderPropertyTest extends Unit
 </transfers>';
 
         $this->assertXmlStringEqualsXmlFile(
-            $this->tester->getSprykerModuleDirectory() . 'tests/SprykerTest/Zed/FooBar/_data/foo_bar.databuilder.xml',
+            $this->tester->getSprykerModuleDirectory() . 'tests/_data/foo_bar.databuilder.xml',
             $expectedXml,
         );
     }
@@ -108,7 +108,7 @@ class AddDataBuilderPropertyTest extends Unit
     public function testAddsDataBuilderPropertyOnlyOnceAndDoesNotOverrideAnExistingProperty(): void
     {
         $this->tester->haveDataBuilderSchema(
-            $this->tester->getSprykerModuleDirectory() . 'tests/SprykerTest/Zed/FooBar/_data/foo_bar.databuilder.xml',
+            $this->tester->getSprykerModuleDirectory() . 'tests/_data/foo_bar.databuilder.xml',
             'FooBarItem',
         );
 
@@ -133,10 +133,10 @@ class AddDataBuilderPropertyTest extends Unit
     /**
      * @return void
      */
-    public function testAddsDataBuilderAddsSpecifiedDataBuilder(): void
+    public function testAddsDataBuilderAddsSpecifiedDataBuilderRule(): void
     {
         $this->tester->haveDataBuilderSchema(
-            $this->tester->getSprykerModuleDirectory() . 'tests/SprykerTest/Zed/FooBar/_data/foo_bar.databuilder.xml',
+            $this->tester->getSprykerModuleDirectory() . 'tests/_data/foo_bar.databuilder.xml',
             'FooBarItem',
         );
 
@@ -162,7 +162,7 @@ class AddDataBuilderPropertyTest extends Unit
 </transfers>';
 
         $this->assertXmlStringEqualsXmlFile(
-            $this->tester->getSprykerModuleDirectory() . 'tests/SprykerTest/Zed/FooBar/_data/foo_bar.databuilder.xml',
+            $this->tester->getSprykerModuleDirectory() . 'tests/_data/foo_bar.databuilder.xml',
             $expectedXml,
         );
     }
@@ -192,7 +192,7 @@ class AddDataBuilderPropertyTest extends Unit
     public function testAddsDataBuilderProperty(string $type, ?string $expectedDataBuilderRule): void
     {
         $this->tester->haveDataBuilderSchema(
-            $this->tester->getSprykerModuleDirectory() . 'tests/SprykerTest/Zed/FooBar/_data/foo_bar.databuilder.xml',
+            $this->tester->getSprykerModuleDirectory() . 'tests/_data/foo_bar.databuilder.xml',
             'FooBarItem',
         );
 
@@ -227,7 +227,7 @@ class AddDataBuilderPropertyTest extends Unit
 </transfers>', $expectedTransferDefinition);
 
         $this->assertXmlStringEqualsXmlFile(
-            $this->tester->getSprykerModuleDirectory() . 'tests/SprykerTest/Zed/FooBar/_data/foo_bar.databuilder.xml',
+            $this->tester->getSprykerModuleDirectory() . 'tests/_data/foo_bar.databuilder.xml',
             $expectedXml,
         );
     }

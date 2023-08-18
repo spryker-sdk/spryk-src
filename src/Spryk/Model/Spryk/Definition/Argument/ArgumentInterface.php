@@ -58,6 +58,14 @@ interface ArgumentInterface
     public function getCallbacks(): array;
 
     /**
+     * @param string $key
+     * @param mixed $value
+     *
+     * @return void
+     */
+    public function addMeta(string $key, mixed $value): void;
+
+    /**
      * @return mixed
      */
     public function __toString();

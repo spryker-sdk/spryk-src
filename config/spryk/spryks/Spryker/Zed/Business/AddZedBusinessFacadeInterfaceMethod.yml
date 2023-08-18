@@ -15,6 +15,10 @@ arguments:
         inherit: true
         default: Spryker
 
+    application:
+        inherit: true
+        default: Zed
+
     specification:
         multiline: true
         inherit: true

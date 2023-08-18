@@ -40,7 +40,7 @@ class AddGlueResourceRestResponseBuilderFactoryMethodTest extends Unit
         array $params,
         string $className,
         string $methodName,
-        string $expectedBody
+        string $expectedBody,
     ): void {
         $this->tester->run($this, $params);
         $this->tester->assertMethodBody($className, $methodName, $expectedBody);

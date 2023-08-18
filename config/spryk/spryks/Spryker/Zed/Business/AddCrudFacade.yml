@@ -740,7 +740,7 @@ postSpryks:
             body:
                 value:
                     - "foreach (${{ domainEntity | lcfirst }}EntityCollection as ${{ domainEntity | lcfirst }}Entity) {"
-                    - "    ${{ domainEntity | lcfirst }}CollectionResponseTransfer->add{{ domainEntity }}($this->map{{ domainEntity }}EntityTo{{ domainEntity }}Transfer(${{ domainEntity | lcfirst }}Entity, new {{ domainEntity }}Transfer()));"
+                    - "    ${{ domainEntity | lcfirst }}CollectionResponseTransfer->add{{ domainEntity }}($this->map{{ domainEntity }}EntityTo{{ domainEntity }}Transfer(${{ domainEntity | lcfirst }}Entity, new \\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer()));"
                     - "}"
                     - ""
                     - "return ${{ domainEntity | lcfirst }}CollectionResponseTransfer;"
@@ -766,7 +766,7 @@ postSpryks:
                 body:
                     value:
                         - "foreach (${{ domainEntity | lcfirst }}EntityCollection as ${{ domainEntity | lcfirst }}Entity) {"
-                        - "    ${{ domainEntity | lcfirst }}CollectionTransfer->add{{ domainEntity }}($this->map{{ domainEntity }}EntityTo{{ domainEntity }}Transfer(${{ domainEntity | lcfirst }}Entity, new {{ domainEntity }}Transfer()));"
+                        - "    ${{ domainEntity | lcfirst }}CollectionTransfer->add{{ domainEntity }}($this->map{{ domainEntity }}EntityTo{{ domainEntity }}Transfer(${{ domainEntity | lcfirst }}Entity, new \\Generated\\Shared\\Transfer\\{{ domainEntity }}Transfer()));"
                         - "}"
                         - ""
                         - "return ${{ domainEntity | lcfirst }}CollectionTransfer;"

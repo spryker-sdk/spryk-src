@@ -8,8 +8,7 @@ application: Glue
 priority: 1
 
 arguments:
-    module:
-        description: "Based on the applicationType the module name will be suffixed with BackendApi or StorefrontApi by the ResourceModuleName callback."
+    module: # Based on the applicationType the module name will be suffixed with BackendApi or StorefrontApi by the ResourceModuleName callback.
         inherit: true
         default: "{{ resource | resourceNameToModuleName }}"
         callback: GlueResourceModuleName
@@ -51,6 +50,9 @@ arguments:
         description: "Defines the resource name this resource plugin will work with."
         example: /customers
 
+    use:
+        default: "{{ resource | resourceNameToModelName | singularize }}"
+
     httpMethod:
         description: "The HTTP method e.g. POST"
         callback: StringToLower
@@ -67,8 +69,9 @@ arguments:
             - EnsureResourceControllerSuffixCallback    # Ensure we always have ResourceController as suffix
 
     zedDomainEntity:
+        allowOverride: true
         description: "Defines the domainEntity used on Zed side for the CRUD Facade. It will be used to create all needed Transfer Objects."
-        default: "{{ resource | resourceNameToModelName | singularize }}"
+        value: "{% if use is defined %}{{ use }}{% else %}{{ resource | resourceNameToModelName | singularize }}{% endif %}"
 
     resourceDataObject:
         description: "Defines the Transfer that will be used in the Methods. Do not use Transfer as suffix, it will be added automatically. Example: Customer (ok) CustomerTransfer (wrong)"
@@ -77,7 +80,8 @@ arguments:
 postSpryks:
     - AddGlueApiApplicationRequestMapper
     - AddGlueApiApplicationResponseMapper
-    - AddGlueApiApplicationResourcePlugin
+#    - AddGlueApiApplicationResourcePlugin
+    - AddGlueApiApplicationRouteProviderPlugin
     # Add CrudFacade code
     - AddCrudFacade:
           arguments:
@@ -157,7 +161,9 @@ postSpryks:
     - AddGlueApiApplicationControllerMethodGetCollection:
           condition: "httpMethod === 'get' && isBulk === true"
     - AddGlueApiApplicationControllerMethodPost:
-          condition: "httpMethod === 'post'"
+          condition: "httpMethod === 'post' && isBulk === false"
+    - AddGlueApiApplicationControllerMethodPostCollection:
+          condition: "httpMethod === 'post' && isBulk === true"
     - AddGlueApiApplicationControllerMethodPatch:
           condition: "httpMethod === 'patch'"
     - AddGlueApiApplicationControllerMethodDelete:
@@ -168,3 +174,4 @@ postSpryks:
     # Test
     - AddGlueTestCodeceptionConfiguration
     - AddGlueTestHelper
+    - AddGlueTestGlueBackendApiHelper

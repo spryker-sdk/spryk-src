@@ -1,13 +1,10 @@
 <?php
-
 {{ include('Partials/license.twig') }}
 {% block namespace %}
 namespace {{ organization }}{% if isTestClass.value == true %}Test{% endif %}\{{ application }}\{{ module }}{% if subDirectory is defined %}\{{ subDirectory | convertToClassNameFragment }}{% endif %};
 {% endblock %}
-
 {% block useStatements %}
 {% endblock %}
-
 {% block classDocBlock %}
 {% if isTestClass.value == true %}
 /**

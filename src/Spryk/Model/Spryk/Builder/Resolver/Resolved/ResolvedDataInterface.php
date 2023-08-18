@@ -10,8 +10,6 @@ namespace SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved;
 interface ResolvedDataInterface extends ResolvedInterface
 {
     /**
-     * @param array $data
-     *
      * @return void
      */
     public function setDecodedYml(array $data): void;

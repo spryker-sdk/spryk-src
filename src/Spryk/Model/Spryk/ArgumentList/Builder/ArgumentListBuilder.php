@@ -38,11 +38,6 @@ class ArgumentListBuilder implements ArgumentListBuilderInterface
         return $argumentList;
     }
 
-    /**
-     * @param array $arguments
-     *
-     * @return array
-     */
     protected function buildStandardArgumentList(array $arguments): array
     {
         $standardArguments = [];
@@ -56,12 +51,6 @@ class ArgumentListBuilder implements ArgumentListBuilderInterface
         return $standardArguments;
     }
 
-    /**
-     * @param string $sprykName
-     * @param array $arguments
-     *
-     * @return array
-     */
     protected function buildSprykArgumentList(string $sprykName, array $arguments): array
     {
         $sprykArguments = [];
@@ -75,11 +64,6 @@ class ArgumentListBuilder implements ArgumentListBuilderInterface
         return $sprykArguments;
     }
 
-    /**
-     * @param array $sprykDefinitions
-     *
-     * @return array
-     */
     protected function filterValueArguments(array $sprykDefinitions): array
     {
         return array_filter($sprykDefinitions, function ($argumentDefinition) {
@@ -87,11 +71,6 @@ class ArgumentListBuilder implements ArgumentListBuilderInterface
         });
     }
 
-    /**
-     * @param array $sprykDefinitions
-     *
-     * @return array
-     */
     protected function getArguments(array $sprykDefinitions): array
     {
         $standardArguments = [];

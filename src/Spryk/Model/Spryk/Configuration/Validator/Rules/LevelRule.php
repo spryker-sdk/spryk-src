@@ -16,17 +16,8 @@ class LevelRule implements ConfigurationValidatorRuleInterface
      */
     protected $errorMessage = 'Level is required value of configuration';
 
-    /**
-     * @var \SprykerSdk\Spryk\SprykConfig
-     */
-    protected SprykConfig $config;
-
-    /**
-     * @param \SprykerSdk\Spryk\SprykConfig $config
-     */
-    public function __construct(SprykConfig $config)
+    public function __construct(protected SprykConfig $config)
     {
-        $this->config = $config;
     }
 
     /**
@@ -57,11 +48,6 @@ class LevelRule implements ConfigurationValidatorRuleInterface
         return $this->errorMessage;
     }
 
-    /**
-     * @param string $value
-     *
-     * @return void
-     */
     protected function buildInvalidValueErrorMessage(string $value): void
     {
         $this->errorMessage = sprintf(

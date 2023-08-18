@@ -23,12 +23,6 @@ class ModeArgumentExtenderPlugin extends AbstractExtender implements SprykConfig
         return $this->addModeArgument($sprykConfig, $context);
     }
 
-    /**
-     * @param array $sprykConfig
-     * @param array $context
-     *
-     * @return array
-     */
     protected function addModeArgument(array $sprykConfig, array $context): array
     {
         $arguments = $this->getArguments($sprykConfig);

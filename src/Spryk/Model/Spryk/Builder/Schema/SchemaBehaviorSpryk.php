@@ -70,20 +70,11 @@ class SchemaBehaviorSpryk extends AbstractBuilder
         $this->addBehavior($tableXmlElement);
     }
 
-    /**
-     * @return string
-     */
     protected function getSchemaName(): string
     {
         return $this->getStringArgument(static::ARGUMENT_NAME);
     }
 
-    /**
-     * @param \SimpleXMLElement $simpleXmlElement
-     * @param string $schemaName
-     *
-     * @return \SimpleXMLElement|null
-     */
     protected function findTableByName(SimpleXMLElement $simpleXmlElement, string $schemaName): ?SimpleXMLElement
     {
         foreach ($simpleXmlElement->children() as $schemaXmlElement) {
@@ -95,11 +86,6 @@ class SchemaBehaviorSpryk extends AbstractBuilder
         return null;
     }
 
-    /**
-     * @param \SimpleXMLElement $tableXmlElement
-     *
-     * @return void
-     */
     protected function addBehavior(SimpleXMLElement $tableXmlElement): void
     {
         $behaviorNameName = $this->getBehaviorName();
@@ -128,9 +114,6 @@ class SchemaBehaviorSpryk extends AbstractBuilder
         }
     }
 
-    /**
-     * @return string
-     */
     protected function getBehaviorName(): string
     {
         return $this->arguments->getArgument(static::BEHAVIOR_NAME)->getValue();
@@ -152,21 +135,13 @@ class SchemaBehaviorSpryk extends AbstractBuilder
         return $this->arguments->getArgument(static::PARAMETER_VALUES)->getValue();
     }
 
-    /**
-     * @param \SimpleXMLElement $simpleXmlElement
-     * @param string $behaviorName
-     *
-     * @return bool
-     */
     protected function isBehaviorDefinedInTable(SimpleXMLElement $simpleXmlElement, string $behaviorName): bool
     {
         $columnXmlElements = $simpleXmlElement->xpath('//behavior');
 
-        if ($columnXmlElements !== false) {
-            foreach ($columnXmlElements as $tableXmlElement) {
-                if ((string)$tableXmlElement['name'] === $behaviorName) {
-                    return true;
-                }
+        foreach ($columnXmlElements as $tableXmlElement) {
+            if ((string)$tableXmlElement['name'] === $behaviorName) {
+                return true;
             }
         }
 

@@ -1,0 +1,6 @@
+        return (new \Symfony\Component\Routing\Route('{{ resource }}'))
+            ->setDefaults([
+                '_controller' => [\{{ organization }}\Glue\{{ module }}\Controller\{{ resource | resourceNameToModuleName }}ResourceController::class, '{{ httpMethod | lower }}Action'],
+                '_resourceName' => '{{ resource | resourceNameToModuleName }}',
+            ])
+            ->setMethods(\Symfony\Component\HttpFoundation\Request::METHOD_{{ httpMethod | upper }});

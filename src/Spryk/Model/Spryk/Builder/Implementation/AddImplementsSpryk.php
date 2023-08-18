@@ -30,16 +30,6 @@ class AddImplementsSpryk extends AbstractBuilder
     public const ARGUMENT_INTERFACE = 'interface';
 
     /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface
-     */
-    protected NodeFinderInterface $nodeFinder;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Filter\ClassNameShortFilter
-     */
-    protected ClassNameShortFilter $classNameShortFilter;
-
-    /**
      * @param \SprykerSdk\Spryk\SprykConfig $config
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface $fileResolver
      * @param \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface $nodeFinder
@@ -48,12 +38,10 @@ class AddImplementsSpryk extends AbstractBuilder
     public function __construct(
         SprykConfig $config,
         FileResolverInterface $fileResolver,
-        NodeFinderInterface $nodeFinder,
-        ClassNameShortFilter $classNameShortFilter
+        protected NodeFinderInterface $nodeFinder,
+        protected ClassNameShortFilter $classNameShortFilter,
     ) {
         parent::__construct($config, $fileResolver);
-        $this->nodeFinder = $nodeFinder;
-        $this->classNameShortFilter = $classNameShortFilter;
     }
 
     /**
@@ -104,22 +92,13 @@ class AddImplementsSpryk extends AbstractBuilder
         ));
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolvedClass
-     * @param string $interface
-     *
-     * @return bool
-     */
     protected function hasImplements(
         ResolvedClassInterface $resolvedClass,
-        string $interface
+        string $interface,
     ): bool {
         return $this->nodeFinder->findImplements($resolvedClass->getClassTokenTree(), $interface) !== null;
     }
 
-    /**
-     * @return string
-     */
     protected function getInterface(): string
     {
         return $this->getStringArgument(static::ARGUMENT_INTERFACE);

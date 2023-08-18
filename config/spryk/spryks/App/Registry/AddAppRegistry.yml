@@ -22,8 +22,6 @@ excludedSpryks:
     - AddZedNavigationNode
 
 spryks:
-    - AddModule
-
     - AddZedBusinessModelMethod:
           arguments:
               allowOverride: true
@@ -36,7 +34,7 @@ spryks:
                   value:
                       - "$appRegistryRequestTransfer->requireTenantIdentifier();"
                       - ""
-                      - "return (new AppRegistryResponseTransfer())->setIsSuccessful(true);"
+                      - "return (new \\Generated\\Shared\\Transfer\\AppRegistryResponseTransfer())->setIsSuccessful(true);"
 
     - AddConstant:
           arguments:
@@ -82,7 +80,7 @@ spryks:
               input: "\\Symfony\\Component\\HttpFoundation\\Request $request"
               output: "\\Symfony\\Component\\HttpFoundation\\JsonResponse"
               controller: RegistryController
-              controllerMethod: disconnect
+              controllerMethod: disconnectAction
               body:
                   allowOverride: true
                   value: "App/Registry/ZedControllerDisconnectMethod.php.twig"
@@ -123,7 +121,7 @@ spryks:
               body:
                   value:
                       - "// Arrange"
-                      - "$request = \\Symfony\\Component\\HttpFoundation\\Request::create(static::PATH_REGISTRY_DISCONNECT, Request::METHOD_POST);"
+                      - "$request = \\Symfony\\Component\\HttpFoundation\\Request::create(static::PATH_REGISTRY_DISCONNECT, \\Symfony\\Component\\HttpFoundation\\Request::METHOD_POST);"
                       - "$request->headers->set(\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config::HEADER_TENANT_ID, \\Ramsey\\Uuid\\Uuid::uuid4()->toString());"
                       - ""
                       - "// Act"
@@ -142,7 +140,7 @@ spryks:
               body:
                   value:
                       - "// Arrange"
-                      - "$request = \\Symfony\\Component\\HttpFoundation\\Request::create(static::PATH_REGISTRY_DISCONNECT, Request::METHOD_GET);"
+                      - "$request = \\Symfony\\Component\\HttpFoundation\\Request::create(static::PATH_REGISTRY_DISCONNECT, \\Symfony\\Component\\HttpFoundation\\Request::METHOD_GET);"
                       - "$request->headers->set(\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config::HEADER_TENANT_ID, \\Ramsey\\Uuid\\Uuid::uuid4()->toString());"
                       - ""
                       - "// Act"
@@ -152,7 +150,7 @@ spryks:
                       - "$this->assertInstanceOf(\\Symfony\\Component\\HttpFoundation\\JsonResponse::class, $response);"
                       - "$this->assertFalse($response->isSuccessful());"
                       - "$this->assertThat($response->getContent(), new \\Codeception\\PHPUnit\\Constraint\\JsonContains(["
-                      - "    'errors' => [['code' => {{ module }}Config::RESPONSE_CODE_INVALID_HTTP_METHOD]],"
+                      - "    'errors' => [['code' => \\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config::RESPONSE_CODE_INVALID_HTTP_METHOD]],"
                       - "]));"
               withInterface: false
 
@@ -163,7 +161,7 @@ spryks:
               body:
                   value:
                       - "// Arrange"
-                      - "$request = \\Symfony\\Component\\HttpFoundation\\Request::create(static::PATH_REGISTRY_DISCONNECT, Request::METHOD_POST);"
+                      - "$request = \\Symfony\\Component\\HttpFoundation\\Request::create(static::PATH_REGISTRY_DISCONNECT, \\Symfony\\Component\\HttpFoundation\\Request::METHOD_POST);"
                       - ""
                       - "// Act"
                       - "$response = (new \\{{ organization }}\\Zed\\{{ module }}\\Communication\\Controller\\RegistryController())->disconnectAction($request);"
@@ -172,7 +170,7 @@ spryks:
                       - "$this->assertInstanceOf(\\Symfony\\Component\\HttpFoundation\\JsonResponse::class, $response);"
                       - "$this->assertFalse($response->isSuccessful());"
                       - "$this->assertThat($response->getContent(), new \\Codeception\\PHPUnit\\Constraint\\JsonContains(["
-                      - "    'errors' => [['code' => {{ module }}Config::RESPONSE_CODE_MISSING_TENANT_IDENTIFIER]],"
+                      - "    'errors' => [['code' => \\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config::RESPONSE_CODE_MISSING_TENANT_IDENTIFIER]],"
                       - "]));"
               withInterface: false
 
@@ -252,11 +250,11 @@ spryks:
                   value:
                       - "if ($request->getMethod() !== Request::METHOD_POST) {"
                       - "    return (new \\Generated\\Shared\\Transfer\\ErrorMessageTransfer())->setCode(\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config::RESPONSE_CODE_INVALID_HTTP_METHOD)"
-                      - "        ->setDetail({{ module }}Config::RESPONSE_MESSAGE_INVALID_HTTP_METHOD);"
+                      - "        ->setDetail(\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config::RESPONSE_MESSAGE_INVALID_HTTP_METHOD);"
                       - "}"
                       - ""
                       - "if (!$request->headers->get({{ module }}Config::HEADER_TENANT_ID)) {"
-                      - "    return (new \\Generated\\Shared\\Transfer\\ErrorMessageTransfer())->setCode({{ module }}Config::RESPONSE_CODE_MISSING_TENANT_IDENTIFIER)"
+                      - "    return (new \\Generated\\Shared\\Transfer\\ErrorMessageTransfer())->setCode(\\{{ organization }}\\Zed\\{{ module }}\\{{ module }}Config::RESPONSE_CODE_MISSING_TENANT_IDENTIFIER)"
                       - "        ->setDetail({{ module }}Config::RESPONSE_MESSAGE_MISSING_TENANT_IDENTIFIER);"
                       - "}"
                       - ""

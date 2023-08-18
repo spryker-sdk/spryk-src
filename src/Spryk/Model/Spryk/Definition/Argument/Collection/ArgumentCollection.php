@@ -29,8 +29,6 @@ class ArgumentCollection implements ArgumentCollectionInterface
     protected ?ArgumentCollectionInterface $previousSprykArgumentCollection = null;
 
     /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\ArgumentInterface $argument
-     *
      * @return $this
      */
     public function addArgument(ArgumentInterface $argument)
@@ -125,8 +123,6 @@ class ArgumentCollection implements ArgumentCollectionInterface
     }
 
     /**
-     * @param string $sprykName
-     *
      * @return $this
      */
     public function setSprykName(string $sprykName)
@@ -145,8 +141,6 @@ class ArgumentCollection implements ArgumentCollectionInterface
     }
 
     /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $argumentCollection
-     *
      * @return $this
      */
     public function setPreviousSprykArguments(ArgumentCollectionInterface $argumentCollection)

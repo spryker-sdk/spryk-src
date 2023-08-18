@@ -90,11 +90,7 @@ class WirePluginSpryk extends AbstractBuilder
     }
 
     /**
-     * @param string $targetClassName
-     *
      * @throws \SprykerSdk\Spryk\Exception\SprykException
-     *
-     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface
      */
     protected function resolveTargetClass(string $targetClassName): ResolvedClassInterface
     {
@@ -108,9 +104,6 @@ class WirePluginSpryk extends AbstractBuilder
         return $resolvedClass;
     }
 
-    /**
-     * @return string
-     */
     protected function getTargetClassName(): string
     {
         $target = $this->getTarget();
@@ -119,9 +112,6 @@ class WirePluginSpryk extends AbstractBuilder
         return $className;
     }
 
-    /**
-     * @return string
-     */
     protected function getTargetMethodName(): string
     {
         $target = $this->getTarget();
@@ -130,25 +120,16 @@ class WirePluginSpryk extends AbstractBuilder
         return trim($methodName, '()');
     }
 
-    /**
-     * @return array
-     */
     protected function getPluginClassNames(): array
     {
         return (array)$this->arguments->getArgument(static::ARGUMENT_PLUGIN)->getValue();
     }
 
-    /**
-     * @return string
-     */
     protected function getOrganization(): string
     {
         return $this->arguments->getArgument(static::ARGUMENT_ORGANIZATION)->getValue();
     }
 
-    /**
-     * @return string
-     */
     protected function getPluginBefore(): string
     {
         return $this->arguments->hasArgument(static::ARGUMENT_PLUGIN_BEFORE)
@@ -156,9 +137,6 @@ class WirePluginSpryk extends AbstractBuilder
             : '';
     }
 
-    /**
-     * @return string
-     */
     protected function getPluginAfter(): string
     {
         return $this->arguments->hasArgument(static::ARGUMENT_PLUGIN_AFTER)
@@ -166,9 +144,6 @@ class WirePluginSpryk extends AbstractBuilder
             : '';
     }
 
-    /**
-     * @return string|null
-     */
     protected function getPluginIndex(): ?string
     {
         return $this->arguments->hasArgument(static::ARGUMENT_PLUGIN_INDEX)

@@ -1,5 +1,5 @@
     // @todo refactor the method according to your needs
-    $glueResponseTransfer = new GlueResponseTransfer();
+    $glueResponseTransfer = new \Generated\Shared\Transfer\GlueResponseTransfer();
 
     if (${{ zedDomainEntity | lcfirst }}CollectionResponseTransfer->get{{ zedDomainEntity | pluralize }}()->count() > 0) {
         return $this->add{{ zedDomainEntity }}TransferToGlueResponse(${{ zedDomainEntity | lcfirst }}CollectionResponseTransfer->get{{ zedDomainEntity | pluralize }}()->offsetGet(0), $glueResponseTransfer);

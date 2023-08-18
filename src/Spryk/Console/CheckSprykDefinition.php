@@ -89,12 +89,6 @@ class CheckSprykDefinition extends AbstractSprykConsole
         return static::CODE_SUCCESS;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param array $validationResult
-     *
-     * @return void
-     */
     protected function printSprykDefinitionsErrorsAndWarnings(OutputInterface $output, array $validationResult): void
     {
         [$errors, $warnings] = $this->prepareSprykDefinitionsErrorsAndWarnings($validationResult);
@@ -128,11 +122,6 @@ class CheckSprykDefinition extends AbstractSprykConsole
         }
     }
 
-    /**
-     * @param array $validationResult
-     *
-     * @return array
-     */
     protected function prepareSprykDefinitionsErrorsAndWarnings(array $validationResult): array
     {
         $errors = [];
@@ -160,44 +149,21 @@ class CheckSprykDefinition extends AbstractSprykConsole
         return [$errors, $warnings];
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param string $message
-     *
-     * @return void
-     */
     protected function printErrorMessage(OutputInterface $output, string $message): void
     {
         $output->writeln('<error>' . $message . '</error>');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param string $message
-     *
-     * @return void
-     */
     protected function printWarningMessage(OutputInterface $output, string $message): void
     {
         $output->writeln($message);
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param string $message
-     *
-     * @return void
-     */
     protected function printInfoMessage(OutputInterface $output, string $message): void
     {
         $output->writeln('<comment>' . $message . '</comment>');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return void
-     */
     protected function printSuccessfulMessage(OutputInterface $output): void
     {
         $output->writeln('<info>No validation errors found</info>');

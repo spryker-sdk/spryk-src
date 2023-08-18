@@ -55,26 +55,6 @@ class MethodSpryk extends AbstractBuilder
     ];
 
     /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface
-     */
-    protected TemplateRendererInterface $renderer;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface
-     */
-    protected NodeFinderInterface $nodeFinder;
-
-    /**
-     * @var \PhpParser\Parser
-     */
-    protected Parser $parser;
-
-    /**
-     * @var \PhpParser\Lexer
-     */
-    protected Lexer $lexer;
-
-    /**
      * @param \SprykerSdk\Spryk\SprykConfig $config
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface $fileResolver
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface $renderer
@@ -85,17 +65,12 @@ class MethodSpryk extends AbstractBuilder
     public function __construct(
         SprykConfig $config,
         FileResolverInterface $fileResolver,
-        TemplateRendererInterface $renderer,
-        NodeFinderInterface $nodeFinder,
-        Parser $parser,
-        Lexer $lexer
+        protected TemplateRendererInterface $renderer,
+        protected NodeFinderInterface $nodeFinder,
+        protected Parser $parser,
+        protected Lexer $lexer,
     ) {
         parent::__construct($config, $fileResolver);
-
-        $this->renderer = $renderer;
-        $this->nodeFinder = $nodeFinder;
-        $this->parser = $parser;
-        $this->lexer = $lexer;
     }
 
     /**
@@ -130,8 +105,6 @@ class MethodSpryk extends AbstractBuilder
 
     /**
      * @throws \Exception
-     *
-     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface
      */
     protected function getTargetClass(): ResolvedClassInterface
     {
@@ -195,9 +168,6 @@ class MethodSpryk extends AbstractBuilder
         ));
     }
 
-    /**
-     * @return \PhpParser\Node\Stmt\ClassMethod
-     */
     protected function getClassMethodNode(): ClassMethod
     {
         $this->renderBody();
@@ -231,8 +201,6 @@ class MethodSpryk extends AbstractBuilder
      *     body:
      *         value: path/to/template.php.twig
      * ```
-     *
-     * @return void
      */
     protected function renderBody(): void
     {
@@ -247,12 +215,6 @@ class MethodSpryk extends AbstractBuilder
         }
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolvedClass
-     * @param string $methodName
-     *
-     * @return bool
-     */
     protected function methodExists(ResolvedClassInterface $resolvedClass, string $methodName): bool
     {
         $methodNode = $this->nodeFinder->findMethodNode($resolvedClass->getClassTokenTree(), $methodName);
@@ -264,17 +226,11 @@ class MethodSpryk extends AbstractBuilder
         return true;
     }
 
-    /**
-     * @return string
-     */
     protected function getTemplateName(): string
     {
         return $this->getStringArgument(static::ARGUMENT_TEMPLATE);
     }
 
-    /**
-     * @return string
-     */
     protected function getBody(): string
     {
         return $this->arguments->hasArgument('body') ? $this->arguments->getArgument('body') : '';
@@ -282,8 +238,6 @@ class MethodSpryk extends AbstractBuilder
 
     /**
      * @throws \SprykerSdk\Spryk\Exception\ArgumentNotFoundException
-     *
-     * @return string
      */
     protected function getMethodName(): string
     {
@@ -300,14 +254,11 @@ class MethodSpryk extends AbstractBuilder
         ));
     }
 
-    /**
-     * @return string
-     */
     protected function getTargetClassName(): string
     {
         $className = $this->getTarget();
 
-        if (strpos($className, '\\') === false && $this->arguments->hasArgument(static::ARGUMENT_FULLY_QUALIFIED_CLASS_NAME_PATTERN)) {
+        if (!str_contains($className, '\\') && $this->arguments->hasArgument(static::ARGUMENT_FULLY_QUALIFIED_CLASS_NAME_PATTERN)) {
             $className = $this->getStringArgument(static::ARGUMENT_FULLY_QUALIFIED_CLASS_NAME_PATTERN);
         }
 
@@ -319,15 +270,11 @@ class MethodSpryk extends AbstractBuilder
     }
 
     /**
-     * @param string $className
-     *
      * @throws \SprykerSdk\Spryk\Exception\NotAFullyQualifiedClassNameException
-     *
-     * @return void
      */
     protected function assertFullyQualifiedClassName(string $className): void
     {
-        if (strpos($className, '\\') === false) {
+        if (!str_contains($className, '\\')) {
             throw new NotAFullyQualifiedClassNameException(sprintf(
                 'Expected a fully qualified class name for reflection but got "%s". ' .
                 'Make sure you pass a fully qualified class name in the "%s" argument or use the "%s" argument with a value like "%s" in your spryk ' .

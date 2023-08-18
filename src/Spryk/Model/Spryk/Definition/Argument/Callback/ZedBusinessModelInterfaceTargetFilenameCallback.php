@@ -20,7 +20,6 @@ class ZedBusinessModelInterfaceTargetFilenameCallback implements CallbackInterfa
     }
 
     /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $argumentCollection
      * @param mixed|null $value
      *
      * @return mixed
@@ -28,7 +27,7 @@ class ZedBusinessModelInterfaceTargetFilenameCallback implements CallbackInterfa
     public function getValue(ArgumentCollectionInterface $argumentCollection, $value)
     {
         $className = $argumentCollection->getArgument('className')->getValue();
-        if (strpos($className, '\\') !== false) {
+        if (str_contains($className, '\\')) {
             $classNameFragments = explode('\\', $className);
 
             $className = array_pop($classNameFragments);

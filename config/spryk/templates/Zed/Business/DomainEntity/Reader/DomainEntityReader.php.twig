@@ -4,11 +4,6 @@
 
 namespace {{ organization }}\Zed\{{ module }}\Business\{{ domainEntity }}\Reader;
 
-use Generated\Shared\Transfer\{{ domainEntity }}CollectionRequestTransfer;
-use Generated\Shared\Transfer\{{ domainEntity }}CollectionResponseTransfer;
-use Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer;
-use Generated\Shared\Transfer\{{ domainEntity }}CriteriaTransfer;
-use Generated\Shared\Transfer\ErrorTransfer;
 use {{ organization }}\Zed\{{ module }}\Persistence\{{ module }}RepositoryInterface;
 
 class {{ domainEntity }}Reader implements {{ domainEntity }}ReaderInterface
@@ -41,8 +36,8 @@ class {{ domainEntity }}Reader implements {{ domainEntity }}ReaderInterface
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer
      */
     public function get{{ domainEntity }}Collection(
-        {{ domainEntity }}CriteriaTransfer ${{ domainEntity | lcfirst }}CriteriaTransfer
-    ): {{ domainEntity }}CollectionTransfer {
+        \Generated\Shared\Transfer\{{ domainEntity }}CriteriaTransfer ${{ domainEntity | lcfirst }}CriteriaTransfer
+    ): \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer {
         ${{ domainEntity | lcfirst }}CollectionTransfer = $this->{{ module | lcfirst }}Repository
             ->get{{ domainEntity }}Collection(${{ domainEntity | lcfirst }}CriteriaTransfer);
 
@@ -55,8 +50,8 @@ class {{ domainEntity }}Reader implements {{ domainEntity }}ReaderInterface
      * @return \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer
      */
     protected function execute{{ domainEntity }}ExpanderPlugins(
-        {{ domainEntity }}CollectionTransfer ${{ domainEntity | lcfirst }}CollectionTransfer
-    ): {{ domainEntity }}CollectionTransfer {
+        \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer ${{ domainEntity | lcfirst }}CollectionTransfer
+    ): \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer {
         ${{ domainEntity | lcfirst }}Transfers = ${{ domainEntity | lcfirst }}CollectionTransfer->get{{ domainEntity | pluralize}}()->getArrayCopy();
 
         foreach ($this->{{ domainEntity | lcfirst }}ExpanderPlugins as ${{ domainEntity | lcfirst }}ExpanderPlugin) {

@@ -1,0 +1,51 @@
+name: AddAsyncApiPublishMessage
+spryk: wrapper
+description: "Adds code to be able to receive a defined message. You can publish me this message."
+mode: both
+level: 2
+application: Zed
+
+priority: 1
+
+arguments:
+    module:
+        description: "The module name to which the message belongs to."
+        inherit: true
+
+    organization:
+        inherit: true
+        value: Spryker
+
+    application:
+        inherit: true
+        value: Zed
+
+    messageName: ~
+    channelName: ~
+    messages:
+        description: "Pass multiple properties in one by using --messages 'MessageA#propertyA:string,propertyB:int;MessageB#propertyA:string,propertyB:int'"
+
+    suite:
+        value: "AsyncApi"
+
+postSpryks:
+    - AddAsyncApiDefaults
+#    # MessageHandlerPlugin
+    - AddMessageBrokerMessageHandlerPlugin
+    - AddClass:
+          arguments:
+              channelName:
+                  inherit: true
+              messageName:
+                  inherit: true
+              application:
+                  value: AsyncApi
+              className:
+                 value: "{{ messageName }}"
+              isTestClass:
+                  value: true
+              template:
+                  value: Zed/AsyncApi/Tests/AsyncApiMessageHandlingTestClass.yml.twig
+              subDirectory:
+                  value: "{{ module }}Tests/{{ channelName | dashToCamelCase | camelCased | ucfirst }}/"
+

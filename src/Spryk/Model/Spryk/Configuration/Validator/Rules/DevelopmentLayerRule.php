@@ -12,21 +12,12 @@ use SprykerSdk\Spryk\SprykConfig;
 class DevelopmentLayerRule implements ConfigurationValidatorRuleInterface
 {
     /**
-     * @var \SprykerSdk\Spryk\SprykConfig
-     */
-    protected SprykConfig $config;
-
-    /**
      * @var string
      */
     protected $errorMessage;
 
-    /**
-     * @param \SprykerSdk\Spryk\SprykConfig $config
-     */
-    public function __construct(SprykConfig $config)
+    public function __construct(protected SprykConfig $config)
     {
-        $this->config = $config;
     }
 
     /**
@@ -57,11 +48,6 @@ class DevelopmentLayerRule implements ConfigurationValidatorRuleInterface
         return $this->errorMessage;
     }
 
-    /**
-     * @param string $value
-     *
-     * @return void
-     */
     protected function buildErrorMessage(string $value): void
     {
         $template = 'Development layer `%s` is unavailable. Please set `mode` one of: %s.';

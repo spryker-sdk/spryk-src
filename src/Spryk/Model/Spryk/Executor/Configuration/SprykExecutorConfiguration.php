@@ -42,26 +42,18 @@ class SprykExecutorConfiguration implements SprykExecutorConfigurationInterface
     /**
      * @var string|null
      */
-    protected $dependentModuleOrganization;
+    protected ?string $dependentModuleOrganization = null;
 
     /**
      * @var string|null
      */
     protected ?string $dependentModuleLayer = null;
 
-    /**
-     * @param string $sprykName
-     * @param array<string> $includeOptionalSubSpryks
-     * @param string $targetModuleName
-     * @param string $dependentModuleName
-     *
-     * @return \SprykerSdk\Spryk\Model\Spryk\Executor\Configuration\SprykExecutorConfigurationInterface
-     */
     public function prepare(
         string $sprykName,
         array $includeOptionalSubSpryks,
         string $targetModuleName,
-        string $dependentModuleName
+        string $dependentModuleName,
     ): SprykExecutorConfigurationInterface {
         $this->sprykName = $sprykName;
         $this->includeOptionalSubSpryks = $includeOptionalSubSpryks;
@@ -135,11 +127,6 @@ class SprykExecutorConfiguration implements SprykExecutorConfigurationInterface
         return $this->dependentModuleLayer;
     }
 
-    /**
-     * @param string $targetModuleName
-     *
-     * @return void
-     */
     protected function parseTargetModuleName(string $targetModuleName): void
     {
         if (!$targetModuleName) {
@@ -166,11 +153,6 @@ class SprykExecutorConfiguration implements SprykExecutorConfigurationInterface
         $this->targetModule = $targetModuleName;
     }
 
-    /**
-     * @param string $dependentModuleName
-     *
-     * @return void
-     */
     protected function parseDependentModuleName(string $dependentModuleName): void
     {
         if (!$dependentModuleName) {

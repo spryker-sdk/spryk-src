@@ -39,11 +39,6 @@ class ArgumentDescriptionValidation implements PostValidationInterface
         return $sprykDetails;
     }
 
-    /**
-     * @param array $sprykDefinitions
-     *
-     * @return array
-     */
     protected function extractArgumentDescription(array $sprykDefinitions): array
     {
         $argumentsDescriptions = [];
@@ -60,12 +55,6 @@ class ArgumentDescriptionValidation implements PostValidationInterface
         return $argumentsDescriptions;
     }
 
-    /**
-     * @param string $sprykName
-     * @param string $argumentName
-     *
-     * @return string
-     */
     protected function prepareWarningMessage(string $sprykName, string $argumentName): string
     {
         return sprintf(

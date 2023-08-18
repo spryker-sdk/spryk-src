@@ -1,9 +1,9 @@
     // @todo refactor the method according to your needs
-    $glueResponseTransfer = new GlueResponseTransfer();
+    $glueResponseTransfer = new \Generated\Shared\Transfer\GlueResponseTransfer();
 
     if (${{ zedDomainEntity | lcfirst }}CollectionResponseTransfer->getErrors()->count() !== 0) {
         foreach (${{ zedDomainEntity | lcfirst }}CollectionResponseTransfer->getErrors() as $error) {
-            $glueResponseTransfer->addError((new GlueErrorTransfer())->setMessage($error->getMessage()));
+            $glueResponseTransfer->addError((new \Generated\Shared\Transfer\GlueErrorTransfer())->setMessage($error->getMessage()));
         }
 
         return $glueResponseTransfer;

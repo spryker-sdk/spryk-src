@@ -6,10 +6,7 @@ level: 2
 
 arguments:
     module:
-        description: "Based on the applicationType the module name will be suffixed with BackendApi or StorefrontApi by the ResourceModuleName callback."
         inherit: true
-        default: "{{ resource | resourceNameToModuleName }}"
-        callback: GlueResourceModuleName
 
     dataModule:
         inherit: true
@@ -54,8 +51,9 @@ arguments:
             - EnsureResourceControllerSuffixCallback    # Ensure we always have ResourceController as suffix
 
     zedDomainEntity:
+        inherit: true
         description: "Defines the domainEntity used on Zed side for the CRUD Facade. It will be used to create all needed Transfer Objects."
-        value: "{{ resource | resourceNameToModelName | singularize }}"
+        default: "{{ resource | resourceNameToModelName | singularize }}"
 
     resourceDataObject:
         description: "Defines the Transfer that will be used in the Methods. Do not use Transfer as suffix, it will be added automatically. Example: Customer (ok) CustomerTransfer (wrong)"
@@ -74,7 +72,6 @@ preSpryks:
     - AddGlueTestApiCest
 
 postSpryks:
-    - AddGlueApiApplicationResourceMethod
     - AddGlueApiApplicationFactory
     # Add controller getCollectionAction
     - AddMethod:

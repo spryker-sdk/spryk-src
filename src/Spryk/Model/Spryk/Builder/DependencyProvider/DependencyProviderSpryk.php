@@ -45,26 +45,6 @@ class DependencyProviderSpryk extends AbstractBuilder
     protected const SPRYK_NAME = 'dependencyProvider';
 
     /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface
-     */
-    protected TemplateRendererInterface $renderer;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface
-     */
-    protected NodeFinderInterface $nodeFinder;
-
-    /**
-     * @var \PhpParser\Parser
-     */
-    protected Parser $parser;
-
-    /**
-     * @var \PhpParser\Lexer
-     */
-    protected Lexer $lexer;
-
-    /**
      * @param \SprykerSdk\Spryk\SprykConfig $config
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface $fileResolver
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface $renderer
@@ -75,17 +55,12 @@ class DependencyProviderSpryk extends AbstractBuilder
     public function __construct(
         SprykConfig $config,
         FileResolverInterface $fileResolver,
-        TemplateRendererInterface $renderer,
-        NodeFinderInterface $nodeFinder,
-        Parser $parser,
-        Lexer $lexer
+        protected TemplateRendererInterface $renderer,
+        protected NodeFinderInterface $nodeFinder,
+        protected Parser $parser,
+        protected Lexer $lexer,
     ) {
         parent::__construct($config, $fileResolver);
-
-        $this->renderer = $renderer;
-        $this->nodeFinder = $nodeFinder;
-        $this->parser = $parser;
-        $this->lexer = $lexer;
     }
 
     /**
@@ -128,9 +103,6 @@ class DependencyProviderSpryk extends AbstractBuilder
         );
     }
 
-    /**
-     * @return \PhpParser\Node\Stmt\Expression
-     */
     protected function getExpression(): Expression
     {
         $expressionContent = $this->getContentForExpression();
@@ -146,9 +118,6 @@ class DependencyProviderSpryk extends AbstractBuilder
         return $expression;
     }
 
-    /**
-     * @return string
-     */
     protected function getContentForExpression(): string
     {
         if ($this->arguments->hasArgument('body')) {
@@ -165,8 +134,6 @@ class DependencyProviderSpryk extends AbstractBuilder
 
     /**
      * Find out if the DependencyProvider already calls the `add*` method inside of the `provideDependencies` method.
-     *
-     * @return bool
      */
     protected function isDependencyDeclared(): bool
     {
@@ -183,25 +150,16 @@ class DependencyProviderSpryk extends AbstractBuilder
         return false;
     }
 
-    /**
-     * @return string
-     */
     protected function getProvideMethodArgument(): string
     {
         return $this->getStringArgument(static::ARGUMENT_PROVIDE_METHOD);
     }
 
-    /**
-     * @return string
-     */
     protected function getTemplateName(): string
     {
         return $this->getStringArgument(static::ARGUMENT_TEMPLATE);
     }
 
-    /**
-     * @return string
-     */
     protected function getAddProvideMethodName(): string
     {
         return $this->getStringArgument(static::ARGUMENT_PROVIDER_METHOD);

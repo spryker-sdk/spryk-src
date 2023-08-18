@@ -47,6 +47,36 @@ interface GlueStorefrontApiClassNames
     /**
      * @var string
      */
+    public const GLUE_STOREFRONT_API_POST_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsStorefrontApi\Controller\PostResourceControllerTest';
+
+    /**
+     * @var string
+     */
+    public const GLUE_STOREFRONT_API_PATCH_CONTROLLER_TEST = 'SprykerTest\Glue\FooBarsStorefrontApi\Controller\PatchResourceControllerTest';
+
+    /**
+     * @var string
+     */
+    public const GLUE_STOREFRONT_API_GET_REST_API_RESOURCE_TEST = 'SprykerTest\Glue\FooBarsStorefrontApi\RestApi\FooBarsGetRestApiCest';
+
+    /**
+     * @var string
+     */
+    public const GLUE_STOREFRONT_API_PATCH_REST_API_RESOURCE_TEST = 'SprykerTest\Glue\FooBarsStorefrontApi\RestApi\FooBarsPatchRestApiCest';
+
+    /**
+     * @var string
+     */
+    public const GLUE_STOREFRONT_API_DELETE_REST_API_RESOURCE_TEST = 'SprykerTest\Glue\FooBarsStorefrontApi\RestApi\FooBarsDeleteRestApiCest';
+
+    /**
+     * @var string
+     */
+    public const GLUE_STOREFRONT_API_POST_REST_API_RESOURCE_TEST = 'SprykerTest\Glue\FooBarsStorefrontApi\RestApi\FooBarsPostRestApiCest';
+
+    /**
+     * @var string
+     */
     public const GLUE_STOREFRONT_API_RESOURCE_PLUGIN = 'Spryker\Glue\FooBarsStorefrontApi\Plugin\FooBarsStorefrontApiResource';
 
     /**

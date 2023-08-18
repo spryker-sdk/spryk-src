@@ -6,8 +6,6 @@ mode: both
 arguments:
     module:
         inherit: true
-        default: "{{ resource | normalizeResourceName }}"
-        callback: GlueResourceModuleName
 
     organization:
         inherit: true
@@ -31,11 +29,14 @@ arguments:
     extends:
         callback: ResolveExtends
         value:
-            - "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
+            - "\\Spryker\\{{ application }}\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
             - "\\Spryker\\{{ application }}\\Kernel{% if applicationType == 'Backend' %}\\Backend{% endif %}\\AbstractPlugin"
 
     implements:
         value: "\\Spryker\\{{ application }}\\GlueApplicationExtension\\Dependency\\Plugin\\RouteProviderPluginInterface"
+
+    httpMethod:
+        inherit: true
 
     template:
         value: Common/Class.php.twig
@@ -47,7 +48,7 @@ arguments:
         value: "src/{{ organization }}/{{ application }}/{{ module }}/"
 
     subDirectory:
-        value: Plugin
+        value: Plugin/GlueApplication
 
 preSpryks:
     # Add Glue{{ applicationType }}ApiApplication
@@ -66,7 +67,7 @@ preSpryks:
               body:
                   value: "return [];"
               output:
-                  value: "array<\\Spryker\\Glue\\Glue{{ applicationType }}ApiApplicationExtension\\Dependency\\Plugin\\RouteProviderPluginInterface>"
+                  value: "array<\\Spryker\\Glue\\GlueApplicationExtension\\Dependency\\Plugin\\RouteProviderPluginInterface>"
               withInterface:
                   value: false
 
@@ -83,13 +84,41 @@ postSpryks:
                   value:
                       - "return $routeCollection;"
               target:
-                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
+                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
               withInterface:
                   value: false
+    - AddMethod:
+          arguments:
+              organization:
+                  inherit : true
+              module:
+                  inherit : true
+              resource:
+                  inherit : true
+              httpMethod:
+                  inherit : true
+              method:
+                  value: "get{{ httpMethod | lower | ucfirst }}{{ resource | resourceNameToModuleName }}Route"
+              output:
+                  value: "\\Symfony\\Component\\Routing\\Route"
+              body:
+                  value: Glue/Plugin/GlueApplication/GlueRouteProviderPluginMethodBody.php.twig
+              target:
+                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
+              withInterface:
+                  value: false
+    - AddToMethodBeforeReturn:
+          arguments:
+              target:
+                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
+              methodName:
+                  value: "addRoutes"
+              body:
+                  value: "$routeCollection->add('{{ httpMethod | lower }}{{ resource | resourceNameToModuleName }}', $this->get{{ httpMethod | lower | ucfirst }}{{ resource | resourceNameToModuleName }}Route());"
     # Wire the plugin after it was created
     - WirePlugin:
           arguments:
               plugin:
-                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
+                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
               target:
                   value: "\\{{ organization }}\\{{ application }}\\Glue{{ applicationType }}ApiApplication\\Glue{{ applicationType }}ApiApplicationDependencyProvider::getRouteProviderPlugins"

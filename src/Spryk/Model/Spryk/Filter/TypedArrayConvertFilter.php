@@ -64,11 +64,6 @@ class TypedArrayConvertFilter implements FilterInterface
         return implode(', ', $filteredParameters);
     }
 
-    /**
-     * @param string $parametersString
-     *
-     * @return string
-     */
     protected function convertParameterToTypeHint(string $parametersString): string
     {
         $parameters = array_map('trim', explode('|', $parametersString));
@@ -91,53 +86,28 @@ class TypedArrayConvertFilter implements FilterInterface
         return $this->isNullableParameter($parametersString) ? $this->makeParameterNullable($filteredParameter) : $filteredParameter;
     }
 
-    /**
-     * @param string $value
-     *
-     * @return bool
-     */
     protected function isTypedArray(string $value): bool
     {
         return (bool)preg_match('/(.*?)\[\]$/', $value) || (bool)preg_match('/(.*?)<(.*?)>$/', $value);
     }
 
-    /**
-     * @param string $value
-     *
-     * @return bool
-     */
     protected function isNullType(string $value): bool
     {
         return $value === 'null';
     }
 
-    /**
-     * @param string $value
-     *
-     * @return bool
-     */
     protected function isMixedType(string $value): bool
     {
         return $value === 'mixed';
     }
 
-    /**
-     * @param string $value
-     *
-     * @return bool
-     */
     protected function isNullableParameter(string $value): bool
     {
-        return strpos($value, static::NULLABLE_TYPE_HINT) === 0 || (bool)preg_match('/(\|null$)|(\|null\|)|(^null\|)/', $value);
+        return str_starts_with($value, static::NULLABLE_TYPE_HINT) || (bool)preg_match('/(\|null$)|(\|null\|)|(^null\|)/', $value);
     }
 
-    /**
-     * @param string $parameter
-     *
-     * @return string
-     */
     protected function makeParameterNullable(string $parameter): string
     {
-        return strpos($parameter, static::NULLABLE_TYPE_HINT) === 0 ? $parameter : static::NULLABLE_TYPE_HINT . $parameter;
+        return str_starts_with($parameter, static::NULLABLE_TYPE_HINT) ? $parameter : static::NULLABLE_TYPE_HINT . $parameter;
     }
 }

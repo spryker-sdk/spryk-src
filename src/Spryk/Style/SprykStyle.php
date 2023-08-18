@@ -37,10 +37,6 @@ class SprykStyle implements SprykStyleInterface
      */
     protected $output;
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     public function __construct(InputInterface $input, OutputInterface $output)
     {
         $this->input = $input;
@@ -50,11 +46,6 @@ class SprykStyle implements SprykStyleInterface
         $this->lineLength = min($width - (int)(DIRECTORY_SEPARATOR === '\\'), static::MAX_LINE_LENGTH);
     }
 
-    /**
-     * @param int $count
-     *
-     * @return void
-     */
     protected function newLine(int $count = 1): void
     {
         $this->write(str_repeat(PHP_EOL, $count));
@@ -111,7 +102,7 @@ class SprykStyle implements SprykStyleInterface
      */
     public function startPreSpryks(SprykDefinitionInterface $sprykDefinition): void
     {
-        if (!$this->output->isVerbose()) {
+        if (!$this->output->isVeryVerbose()) {
             return;
         }
 
@@ -169,7 +160,7 @@ class SprykStyle implements SprykStyleInterface
      */
     public function startPostSpryks(SprykDefinitionInterface $sprykDefinition): void
     {
-        if (!$this->output->isVerbose()) {
+        if (!$this->output->isVeryVerbose()) {
             return;
         }
 
@@ -277,6 +268,14 @@ class SprykStyle implements SprykStyleInterface
     public function getInput(): InputInterface
     {
         return $this->input;
+    }
+
+    /**
+     * @return \Symfony\Component\Console\Output\OutputInterface
+     */
+    public function getOutput(): OutputInterface
+    {
+        return $this->output;
     }
 
     /**

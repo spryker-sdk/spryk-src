@@ -41,25 +41,25 @@ class AddSharedDomainEntityManipulationTransferDefinitionTest extends Unit
             '<?xml version="1.0"?>
 <transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-  <transfer name="FooBarModel">
-    <property name="idFooBarModel" type="int"/>
-    <property name="uuid" type="string"/>
+  <transfer name="FooBarModel" strict="true">
+    <property name="idFooBarModel" type="int" strict="true"/>
+    <property name="uuid" type="string" strict="true"/>
   </transfer>
 
-  <transfer name="FooBarModelCollectionRequest">
-    <property name="isTransactional" type="bool"/>
-    <property name="fooBarModels" singular="fooBarModel" type="FooBarModel[]"/>
+  <transfer name="FooBarModelCollectionRequest" strict="true">
+    <property name="isTransactional" type="bool" strict="true"/>
+    <property name="fooBarModels" singular="fooBarModel" type="FooBarModel[]" strict="true"/>
   </transfer>
 
-  <transfer name="FooBarModelCollectionResponse">
-    <property name="errors" singular="error" type="Error[]"/>
-    <property name="fooBarModels" singular="fooBarModel" type="FooBarModel[]"/>
+  <transfer name="FooBarModelCollectionResponse" strict="true">
+    <property name="errors" singular="error" type="Error[]" strict="true"/>
+    <property name="fooBarModels" singular="fooBarModel" type="FooBarModel[]" strict="true"/>
   </transfer>
 
-  <transfer name="FooBarModelCollectionDeleteCriteria">
-    <property name="isTransactional" type="bool"/>
-    <property name="fooBarModelIds" singular="idFooBarModel" type="int[]"/>
-    <property name="uuids" singular="uuid" type="string[]"/>
+  <transfer name="FooBarModelCollectionDeleteCriteria" strict="true">
+    <property name="isTransactional" type="bool" strict="true"/>
+    <property name="fooBarModelIds" singular="idFooBarModel" type="int[]" strict="true"/>
+    <property name="uuids" singular="uuid" type="string[]" strict="true"/>
   </transfer>
 
   <transfer name="Error">
@@ -87,25 +87,25 @@ class AddSharedDomainEntityManipulationTransferDefinitionTest extends Unit
             '<?xml version="1.0"?>
 <transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-  <transfer name="FooBarModel">
-    <property name="idFooBarModel" type="int"/>
-    <property name="uuid" type="string"/>
+  <transfer name="FooBarModel" strict="true">
+    <property name="idFooBarModel" type="int" strict="true"/>
+    <property name="uuid" type="string" strict="true"/>
   </transfer>
 
-  <transfer name="FooBarModelCollectionRequest">
-    <property name="isTransactional" type="bool"/>
-    <property name="fooBarModels" singular="fooBarModel" type="FooBarModel[]"/>
+  <transfer name="FooBarModelCollectionRequest" strict="true">
+    <property name="isTransactional" type="bool" strict="true"/>
+    <property name="fooBarModels" singular="fooBarModel" type="FooBarModel[]" strict="true"/>
   </transfer>
 
-  <transfer name="FooBarModelCollectionResponse">
-    <property name="errors" singular="error" type="Error[]"/>
-    <property name="fooBarModels" singular="fooBarModel" type="FooBarModel[]"/>
+  <transfer name="FooBarModelCollectionResponse" strict="true">
+    <property name="errors" singular="error" type="Error[]" strict="true"/>
+    <property name="fooBarModels" singular="fooBarModel" type="FooBarModel[]" strict="true"/>
   </transfer>
 
-  <transfer name="FooBarModelCollectionDeleteCriteria">
-    <property name="isTransactional" type="bool"/>
-    <property name="fooBarModelIds" singular="idFooBarModel" type="int[]"/>
-    <property name="uuids" singular="uuid" type="string[]"/>
+  <transfer name="FooBarModelCollectionDeleteCriteria" strict="true">
+    <property name="isTransactional" type="bool" strict="true"/>
+    <property name="fooBarModelIds" singular="idFooBarModel" type="int[]" strict="true"/>
+    <property name="uuids" singular="uuid" type="string[]" strict="true"/>
   </transfer>
 
   <transfer name="Error">

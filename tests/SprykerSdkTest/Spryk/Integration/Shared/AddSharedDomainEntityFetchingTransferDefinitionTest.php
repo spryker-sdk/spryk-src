@@ -41,20 +41,20 @@ class AddSharedDomainEntityFetchingTransferDefinitionTest extends Unit
             '<?xml version="1.0"?>
 <transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-  <transfer name="FooBarModelCriteria">
-    <property name="fooBarModelConditions" type="FooBarModelConditions"/>
-    <property name="sortCollection" singular="sort" type="Sort[]"/>
-    <property name="pagination" type="Pagination"/>
+  <transfer name="FooBarModelCriteria" strict="true">
+    <property name="fooBarModelConditions" type="FooBarModelConditions" strict="true"/>
+    <property name="sortCollection" singular="sort" type="Sort[]" strict="true"/>
+    <property name="pagination" type="Pagination" strict="true"/>
   </transfer>
 
-  <transfer name="FooBarModelConditions">
-    <property name="fooBarModelIds" singular="fooBarModelId" type="int[]"/>
-    <property name="uuids" singular="uuid" type="string[]"/>
+  <transfer name="FooBarModelConditions" strict="true">
+    <property name="fooBarModelIds" singular="idFooBarModel" type="int[]" strict="true"/>
+    <property name="uuids" singular="uuid" type="string[]" strict="true"/>
   </transfer>
 
-  <transfer name="FooBarModelCollection">
-    <property name="fooBarModels" singular="fooBarModel" type="FooBarModel[]"/>
-    <property name="pagination" type="Pagination"/>
+  <transfer name="FooBarModelCollection" strict="true">
+    <property name="fooBarModels" singular="fooBarModel" type="FooBarModel[]" strict="true"/>
+    <property name="pagination" type="Pagination" strict="true"/>
   </transfer>
 
   <transfer name="Sort">
@@ -96,20 +96,20 @@ class AddSharedDomainEntityFetchingTransferDefinitionTest extends Unit
             '<?xml version="1.0"?>
 <transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-  <transfer name="FooBarModelCriteria">
-    <property name="fooBarModelConditions" type="FooBarModelConditions"/>
-    <property name="sortCollection" singular="sort" type="Sort[]"/>
-    <property name="pagination" type="Pagination"/>
+  <transfer name="FooBarModelCriteria" strict="true">
+    <property name="fooBarModelConditions" type="FooBarModelConditions" strict="true"/>
+    <property name="sortCollection" singular="sort" type="Sort[]" strict="true"/>
+    <property name="pagination" type="Pagination" strict="true"/>
   </transfer>
 
-  <transfer name="FooBarModelConditions">
-    <property name="fooBarModelIds" singular="fooBarModelId" type="int[]"/>
-    <property name="uuids" singular="uuid" type="string[]"/>
+  <transfer name="FooBarModelConditions" strict="true">
+    <property name="fooBarModelIds" singular="idFooBarModel" type="int[]" strict="true"/>
+    <property name="uuids" singular="uuid" type="string[]" strict="true"/>
   </transfer>
 
-  <transfer name="FooBarModelCollection">
-    <property name="fooBarModels" singular="fooBarModel" type="FooBarModel[]"/>
-    <property name="pagination" type="Pagination"/>
+  <transfer name="FooBarModelCollection" strict="true">
+    <property name="fooBarModels" singular="fooBarModel" type="FooBarModel[]" strict="true"/>
+    <property name="pagination" type="Pagination" strict="true"/>
   </transfer>
 
   <transfer name="Sort">

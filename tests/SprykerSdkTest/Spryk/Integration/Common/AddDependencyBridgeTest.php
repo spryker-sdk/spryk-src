@@ -44,7 +44,7 @@ class AddDependencyBridgeTest extends Unit
         string $application,
         string $expectedBridgeClass,
         string $expectedBridgeInterface,
-        ?string $layer = null
+        ?string $layer = null,
     ): void {
         $arguments = [
             '--module' => 'FooBar',

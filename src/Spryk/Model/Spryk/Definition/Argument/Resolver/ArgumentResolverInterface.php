@@ -24,6 +24,6 @@ interface ArgumentResolverInterface
         array $arguments,
         string $sprykName,
         SprykStyleInterface $style,
-        ?ArgumentCollectionInterface $resolvedArgumentCollection = null
+        ?ArgumentCollectionInterface $resolvedArgumentCollection = null,
     ): ArgumentCollectionInterface;
 }

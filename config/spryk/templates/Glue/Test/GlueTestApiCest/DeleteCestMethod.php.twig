@@ -1,10 +1,11 @@
 // Arrange
-$I->addJsonApiResourcePlugin(new \{{ organization }}\Glue\{{ module }}\Plugin\{{ module }}Resource());
+// $I->addJsonApiResourcePlugin(new \{{ organization }}\Glue\{{ module }}\Plugin\GlueApplication\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiResource());
+// $I->addRouteProviderPlugin(new \{{ organization }}\Glue\{{ module }}\Plugin\GlueApplication\{{ resource | resourceNameToModelName }}{{ applicationType }}ApiRouteProvider());
 
 ${{ zedDomainEntity | lcfirst }}Transfer = $I->have{{ zedDomainEntity }}TransferPersisted();
-$id{{ zedDomainEntity | lcfirst }} = ${{ zedDomainEntity | lcfirst }}Transfer->getId{{ zedDomainEntity }}();
+$id{{ zedDomainEntity }} = ${{ zedDomainEntity | lcfirst }}Transfer->getId{{ zedDomainEntity }}();
 
-$url = $I->build{{ resource | resourceNameToModelName }}Url($id{{ zedDomainEntity | lcfirst }});
+$url = $I->build{{ resource | resourceNameToModelName }}Url($id{{ zedDomainEntity }});
 
 // Act
 $I->sendDelete($url);

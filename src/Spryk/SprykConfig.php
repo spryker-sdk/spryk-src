@@ -129,8 +129,6 @@ class SprykConfig
     }
 
     /**
-     * @param string|null $subDirectory
-     *
      * @return array<string>
      */
     protected function buildDirectoryList(?string $subDirectory = null): array
@@ -158,8 +156,6 @@ class SprykConfig
 
     /**
      * The suite root directory.
-     *
-     * @return string
      */
     public function getProjectRootDirectory(): string
     {
@@ -169,17 +165,12 @@ class SprykConfig
     /**
      * The `spryker-sdk/spryk` root directory.
      * When running as PHAR this points to the root inside of the spryk.phar.
-     *
-     * @return string
      */
     public function getSprykRootDirectory(): string
     {
         return rtrim(SPRYK_ROOT_DIR, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }
 
-    /**
-     * @return array
-     */
     public function getAvailableDevelopmentLayers(): array
     {
         return [
@@ -224,9 +215,6 @@ class SprykConfig
         return [];
     }
 
-    /**
-     * @return string|null
-     */
     public function getProjectNamespace(): ?string
     {
         /** @var string $namespaceFromEnv */
@@ -269,8 +257,6 @@ class SprykConfig
      *
      * First case ensures that we have a cache file in place OOTB for users of the spryk.phar.
      * Second case ensures that projects can build their own cache file when they have their own Spryk definitions.
-     *
-     * @return string
      */
     public function getArgumentListWritePath(): string
     {
@@ -294,8 +280,6 @@ class SprykConfig
      *
      * First case ensures that when a project has created its own cache this file will be used.
      * Second case ensures that when a project does not have their own cache the one from the spryk.phar will be used.
-     *
-     * @return string|null
      */
     public function getArgumentListReadPath(): ?string
     {
@@ -317,17 +301,12 @@ class SprykConfig
 
     /**
      * Defines the default mode to use for the Spryks. Modes can be: project, core or both. When not set we use `project` as default.
-     *
-     * @return string
      */
     public function getDefaultMode(): string
     {
         return static::NAME_DEVELOPMENT_LAYER_PROJECT;
     }
 
-    /**
-     * @return int
-     */
     public function getDefaultBuildLevel(): int
     {
         return static::SPRYK_LEVEL_3;

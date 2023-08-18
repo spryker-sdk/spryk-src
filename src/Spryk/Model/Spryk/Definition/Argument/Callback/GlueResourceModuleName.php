@@ -20,7 +20,6 @@ class GlueResourceModuleName implements CallbackInterface
     }
 
     /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $argumentCollection
      * @param mixed|null $value
      *
      * @return mixed
@@ -37,11 +36,6 @@ class GlueResourceModuleName implements CallbackInterface
         return $this->ensureStorefrontApiModuleName($resourceName);
     }
 
-    /**
-     * @param string $resourceName
-     *
-     * @return string
-     */
     protected function ensureBackendApiModuleName(string $resourceName): string
     {
         if (!preg_match('/BackendApi$/', $resourceName)) {
@@ -51,11 +45,6 @@ class GlueResourceModuleName implements CallbackInterface
         return $resourceName;
     }
 
-    /**
-     * @param string $resourceName
-     *
-     * @return string
-     */
     protected function ensureStorefrontApiModuleName(string $resourceName): string
     {
         if (!preg_match('/StorefrontApi$/', $resourceName)) {

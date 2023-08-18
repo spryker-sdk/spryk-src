@@ -17,24 +17,8 @@ use PhpParser\NodeVisitorAbstract;
 
 class AddExpressionToMethodBeforeReturnVisitor extends NodeVisitorAbstract
 {
-    /**
-     * @var \PhpParser\Node\Stmt\Expression
-     */
-    protected Expression $expressionNode;
-
-    /**
-     * @var string
-     */
-    protected string $methodName;
-
-    /**
-     * @param \PhpParser\Node\Stmt\Expression $expressionNode
-     * @param string $methodName
-     */
-    public function __construct(Expression $expressionNode, string $methodName)
+    public function __construct(protected Expression $expressionNode, protected string $methodName)
     {
-        $this->expressionNode = $expressionNode;
-        $this->methodName = $methodName;
     }
 
     /**

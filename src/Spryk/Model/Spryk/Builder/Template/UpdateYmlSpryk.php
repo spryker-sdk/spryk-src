@@ -48,20 +48,13 @@ class UpdateYmlSpryk extends AbstractBuilder
     public const YAML_START_INLINE_LEVEL = 10;
 
     /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface
-     */
-    protected TemplateRendererInterface $renderer;
-
-    /**
      * @param \SprykerSdk\Spryk\SprykConfig $config
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface $fileResolver
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface $renderer
      */
-    public function __construct(SprykConfig $config, FileResolverInterface $fileResolver, TemplateRendererInterface $renderer)
+    public function __construct(SprykConfig $config, FileResolverInterface $fileResolver, protected TemplateRendererInterface $renderer)
     {
         parent::__construct($config, $fileResolver);
-
-        $this->renderer = $renderer;
     }
 
     /**
@@ -92,11 +85,6 @@ class UpdateYmlSpryk extends AbstractBuilder
         $this->log(sprintf('Updated <fg=green>%s</>', $this->getTargetPath()));
     }
 
-    /**
-     * @param array $targetYaml
-     *
-     * @return array
-     */
     protected function prepareTargetYaml(array $targetYaml): array
     {
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
@@ -135,12 +123,6 @@ class UpdateYmlSpryk extends AbstractBuilder
         return $targetYaml;
     }
 
-    /**
-     * @param array $existingYml
-     * @param array $newYml
-     *
-     * @return array
-     */
     protected function mergeYmlToAddWithExistingYml(array $existingYml, array $newYml): array
     {
         foreach ($newYml as $key => $value) {
@@ -176,9 +158,6 @@ class UpdateYmlSpryk extends AbstractBuilder
         return $this->getDataForYml();
     }
 
-    /**
-     * @return array
-     */
     protected function getDataForYml(): array
     {
         $content = $this->getContent($this->getTemplateName());
@@ -186,19 +165,11 @@ class UpdateYmlSpryk extends AbstractBuilder
         return Yaml::parse($content);
     }
 
-    /**
-     * @return string
-     */
     protected function getTemplateName(): string
     {
         return $this->getStringArgument(static::ARGUMENT_TEMPLATE);
     }
 
-    /**
-     * @param string $templateName
-     *
-     * @return string
-     */
     protected function getContent(string $templateName): string
     {
         return $this->renderer->render(
@@ -207,9 +178,6 @@ class UpdateYmlSpryk extends AbstractBuilder
         );
     }
 
-    /**
-     * @return string
-     */
     protected function getAddToElementPath(): string
     {
         $addToElement = $this->getStringArgument(static::ARGUMENT_ADD_TO_ELEMENT);
@@ -218,9 +186,6 @@ class UpdateYmlSpryk extends AbstractBuilder
         return sprintf('[%s]', implode('][', $addToElementFragments));
     }
 
-    /**
-     * @return string
-     */
     protected function getAddToElementName(): string
     {
         $addToElement = $this->getStringArgument(static::ARGUMENT_ADD_TO_ELEMENT);
@@ -229,9 +194,6 @@ class UpdateYmlSpryk extends AbstractBuilder
         return array_pop($addToElementFragments);
     }
 
-    /**
-     * @return string|null
-     */
     protected function getAddToElementType(): ?string
     {
         if (!$this->arguments->hasArgument(static::ARGUMENT_ADD_TO_ELEMENT_TYPE)) {
@@ -241,9 +203,6 @@ class UpdateYmlSpryk extends AbstractBuilder
         return $this->arguments->getArgument(static::ARGUMENT_ADD_TO_ELEMENT_TYPE)->getValue();
     }
 
-    /**
-     * @return string|null
-     */
     protected function getAfterElement(): ?string
     {
         return $this->arguments->getArgument(static::ARGUMENT_AFTER_ELEMENT)->getValue();

@@ -27,12 +27,6 @@ class ApplicationLayerExtenderPlugin extends AbstractExtender implements SprykCo
         return $this->buildApplicationLayerArgument($sprykConfig, $context);
     }
 
-    /**
-     * @param array $sprykConfig
-     * @param array $context
-     *
-     * @return array
-     */
     protected function buildApplicationLayerArgument(array $sprykConfig, array $context): array
     {
         $arguments = $this->getArguments($sprykConfig);
@@ -56,11 +50,6 @@ class ApplicationLayerExtenderPlugin extends AbstractExtender implements SprykCo
         return $this->setArguments($arguments, $sprykConfig);
     }
 
-    /**
-     * @param array $arguments
-     *
-     * @return string|null
-     */
     protected function getApplicationLayer(array $arguments): ?string
     {
         if (!isset($arguments['targetPath'])) {
@@ -90,11 +79,6 @@ class ApplicationLayerExtenderPlugin extends AbstractExtender implements SprykCo
         return array_pop($applicationLayer);
     }
 
-    /**
-     * @param array $arguments
-     *
-     * @return bool
-     */
     protected function isLayerPlaceholderExist(array $arguments): bool
     {
         if (!isset($arguments['targetPath'][SprykConfig::NAME_ARGUMENT_KEY_DEFAULT])) {
@@ -103,7 +87,7 @@ class ApplicationLayerExtenderPlugin extends AbstractExtender implements SprykCo
 
         $targetPath = $arguments['targetPath'][SprykConfig::NAME_ARGUMENT_KEY_DEFAULT];
 
-        if (strpos($targetPath, static::NAME_PLACEHOLDER_LAYER) === false) {
+        if (!str_contains($targetPath, static::NAME_PLACEHOLDER_LAYER)) {
             return false;
         }
 

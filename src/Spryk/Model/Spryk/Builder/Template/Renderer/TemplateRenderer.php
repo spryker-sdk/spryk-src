@@ -51,7 +51,6 @@ class TemplateRenderer implements TemplateRendererInterface
     ];
 
     /**
-     * @param \Twig\Environment $twig
      * @param array<\Twig\Extension\ExtensionInterface> $extensions
      */
     public function __construct(Environment $twig, array $extensions)
@@ -61,7 +60,7 @@ class TemplateRenderer implements TemplateRendererInterface
                 continue;
             }
 
-            if (!$twig->hasExtension(get_class($extension))) {
+            if (!$twig->hasExtension($extension::class)) {
                 $twig->addExtension($extension);
             }
         }
@@ -77,14 +76,9 @@ class TemplateRenderer implements TemplateRendererInterface
         $this->renderer = $twig;
     }
 
-    /**
-     * @param \Twig\Extension\ExtensionInterface $extension
-     *
-     * @return bool
-     */
     protected function isExcludedExtension(ExtensionInterface $extension): bool
     {
-        $extensionClassName = get_class($extension);
+        $extensionClassName = $extension::class;
 
         if (isset($this->excludedExtensions[$extensionClassName])) {
             return true;
@@ -140,9 +134,6 @@ class TemplateRenderer implements TemplateRendererInterface
         return $source->getCode();
     }
 
-    /**
-     * @return \Twig\Loader\LoaderInterface
-     */
     protected function getLoader(): LoaderInterface
     {
         return $this->renderer->getLoader();

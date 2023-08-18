@@ -20,7 +20,7 @@ interface SprykFacadeInterface
      */
     public function executeSpryk(
         SprykExecutorConfigurationInterface $sprykExecutorConfiguration,
-        SprykStyleInterface $style
+        SprykStyleInterface $style,
     ): void;
 
     /**

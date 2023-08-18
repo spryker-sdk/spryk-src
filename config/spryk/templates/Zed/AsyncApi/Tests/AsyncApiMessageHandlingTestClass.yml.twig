@@ -1,0 +1,30 @@
+<?php
+
+namespace {{ organization }}Test\AsyncApi\{{ module }}\{{ module }}Tests\{{ channelName | dashToCamelCase | camelCased | ucfirst }};
+
+use Codeception\Test\Unit;
+use {{ organization }}Test\AsyncApi\{{ module }}\{{ module }}AsyncApiTester;
+
+class {{ messageName }}Test extends Unit
+{
+    /**
+     * @var \{{ organization }}Test\AsyncApi\{{ module }}\{{ module }}AsyncApiTester
+     */
+    protected {{ module }}AsyncApiTester $tester;
+
+    /**
+     * @return void
+     */
+    public function test{{ messageName }}MessageIsHandled(): void
+    {
+        // Arrange
+        ${{ messageName | lcfirst }}Transfer = $this->tester->have{{ messageName }}Transfer();
+
+        // Act: This will trigger the MessageHandlerPlugin for this message.
+        $this->tester->runMessageReceiveTest(${{ messageName | lcfirst }}Transfer, '{{ channelName }}');
+
+        // Assert
+        // You need to update the assertion to something meaningful. e.g. test if an entity was saved to the database.
+        $this->assertTrue(true);
+    }
+}

@@ -14,8 +14,7 @@ arguments:
     targetPath:
         default: ""
 
-    target:
-        description: "Target place where it should be added to."
+    target: ~ # Target place where it should be added to.
 
     key:
         description: "When both key and value are given, this will be used as key. When key is not used the value will be added to the target path."

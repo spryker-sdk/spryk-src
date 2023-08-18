@@ -10,6 +10,7 @@ namespace SprykerSdkTest\Spryk\Integration\Glue\Dependency\Client;
 use Codeception\Test\Unit;
 use SprykerSdk\Spryk\Exception\SprykWrongDevelopmentLayerException;
 use SprykerSdkTest\Module\ClassName;
+use SprykerSdkTest\SprykIntegrationTester;
 
 /**
  * Auto-generated group annotations
@@ -28,7 +29,7 @@ class AddGlueDependencyClientBridgeTest extends Unit
     /**
      * @var \SprykerSdkTest\SprykIntegrationTester
      */
-    protected $tester;
+    protected SprykIntegrationTester $tester;
 
     /**
      * @return void

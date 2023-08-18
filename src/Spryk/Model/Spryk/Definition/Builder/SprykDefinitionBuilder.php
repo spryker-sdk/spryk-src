@@ -7,6 +7,7 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Definition\Builder;
 
+use SprykerSdk\Spryk\Debug\DebugInterface;
 use SprykerSdk\Spryk\Model\Spryk\Configuration\Extender\SprykConfigurationExtenderInterface;
 use SprykerSdk\Spryk\Model\Spryk\Configuration\Loader\SprykConfigurationLoaderInterface;
 use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Argument;
@@ -61,21 +62,6 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
     protected const CONFIGURATION_KEY_CONDITION = 'condition';
 
     /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Configuration\Extender\SprykConfigurationExtenderInterface
-     */
-    protected SprykConfigurationExtenderInterface $configurationExtender;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Configuration\Loader\SprykConfigurationLoaderInterface
-     */
-    protected SprykConfigurationLoaderInterface $sprykLoader;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Resolver\ArgumentResolverInterface
-     */
-    protected ArgumentResolverInterface $argumentResolver;
-
-    /**
      * @var array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface>
      */
     protected array $definitionCollection = [];
@@ -101,6 +87,11 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
     protected SprykStyleInterface $style;
 
     /**
+     * @var \SprykerSdk\Spryk\Debug\DebugInterface
+     */
+    protected DebugInterface $debug;
+
+    /**
      * @var string|null
      */
     protected ?string $mode = null;
@@ -110,32 +101,31 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
      */
     protected $sprykConfig;
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Configuration\Extender\SprykConfigurationExtenderInterface $configurationExtender
-     * @param \SprykerSdk\Spryk\Model\Spryk\Configuration\Loader\SprykConfigurationLoaderInterface $sprykLoader
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Resolver\ArgumentResolverInterface $argumentResolver
-     * @param \SprykerSdk\Spryk\SprykConfig $sprykConfig
-     */
     public function __construct(
-        SprykConfigurationExtenderInterface $configurationExtender,
-        SprykConfigurationLoaderInterface $sprykLoader,
-        ArgumentResolverInterface $argumentResolver,
-        SprykConfig $sprykConfig
+        protected SprykConfigurationExtenderInterface $configurationExtender,
+        protected SprykConfigurationLoaderInterface $sprykLoader,
+        protected ArgumentResolverInterface $argumentResolver,
+        SprykConfig $sprykConfig,
     ) {
-        $this->configurationExtender = $configurationExtender;
-        $this->sprykLoader = $sprykLoader;
-        $this->argumentResolver = $argumentResolver;
         $this->sprykConfig = $sprykConfig;
     }
 
     /**
-     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
-     *
      * @return $this
      */
     public function setStyle(SprykStyleInterface $style)
     {
         $this->style = $style;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setDebug(DebugInterface $debug)
+    {
+        $this->debug = $debug;
 
         return $this;
     }
@@ -150,7 +140,7 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
     public function buildDefinition(
         string $sprykName,
         ?array $preDefinedDefinition = null,
-        ?ArgumentCollectionInterface $parentArgumentCollection = null
+        ?ArgumentCollectionInterface $parentArgumentCollection = null,
     ): SprykDefinitionInterface {
         $this->debugData['countAll'] = isset($this->debugData['countAll']) ? ++$this->debugData['countAll'] : 1;
         $this->debugData['countAdded'] ??= 0;
@@ -182,6 +172,8 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
             $arguments[SprykConfig::NAME_ARGUMENT_ORGANIZATION]['value'] = $organization;
         }
 
+        // The Argument Collection will contain all Spryk argument collections. The last one is the first entry and
+        // each entry has a `previousSprykArgumentCollection` containing the previously resolved arguments.
         $argumentCollection = $this->argumentResolver->resolve(
             $arguments,
             $sprykName,
@@ -192,6 +184,7 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         $sprykDefinitionKey = sprintf('%s.%s', $sprykName, $argumentCollection->getFingerprint());
         $this->argumentCollectionCache[$sprykDefinitionKey] = $argumentCollection;
 
+        // Some Spryks don't have the need for an application argument but for the debug information we need to have an application.
         if (!$argumentCollection->hasArgument('application')) {
             $applicationArgument = new Argument();
             $applicationArgument->setName('application')
@@ -231,10 +224,6 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
 
     /**
      * Returns either the by User selected mode or the default mode.
-     *
-     * @param array $sprykDefinition
-     *
-     * @return string
      */
     protected function getMode(array $sprykDefinition): string
     {
@@ -245,7 +234,7 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         $mode = $this->style->getInput()->getOption(SprykConfig::NAME_ARGUMENT_MODE);
 
         if (!$mode) {
-            $mode = $this->sprykConfig->getDefaultMode();
+            return $this->sprykConfig->getDefaultMode();
         }
 
         return $mode;
@@ -253,17 +242,13 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
 
     /**
      * Returns either the by User selected organization, the project organization or null.
-     *
-     * @param string $mode
-     *
-     * @return string|null
      */
     protected function getOrganization(string $mode): ?string
     {
         $organization = $this->style->getInput()->getOption(SprykConfig::NAME_ARGUMENT_ORGANIZATION);
 
         if (!$organization && $mode === SprykConfig::NAME_DEVELOPMENT_LAYER_PROJECT) {
-            $organization = $this->sprykConfig->getProjectNamespace();
+            return $this->sprykConfig->getProjectNamespace();
         }
 
         return $organization;
@@ -277,7 +262,7 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
      */
     public function addTargetModuleParams(
         SprykExecutorConfigurationInterface $sprykExecutorConfiguration,
-        array $sprykConfiguration
+        array $sprykConfiguration,
     ): array {
         if ($sprykExecutorConfiguration->getTargetModule()) {
             $sprykConfiguration[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS]['module'][SprykConfig::NAME_ARGUMENT_KEY_VALUE] = $sprykExecutorConfiguration->getTargetModule();
@@ -302,7 +287,7 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
      */
     public function addDependentModuleParams(
         SprykExecutorConfigurationInterface $sprykExecutorConfiguration,
-        array $sprykConfiguration
+        array $sprykConfiguration,
     ): array {
         if ($sprykExecutorConfiguration->getDependentModule()) {
             $sprykConfiguration[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS]['dependentModule'][SprykConfig::NAME_ARGUMENT_KEY_VALUE] = $sprykExecutorConfiguration->getDependentModule();
@@ -319,12 +304,6 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         return $sprykConfiguration;
     }
 
-    /**
-     * @param array $arguments
-     * @param array|null $preDefinedDefinition
-     *
-     * @return array
-     */
     protected function mergeArguments(array $arguments, ?array $preDefinedDefinition = null): array
     {
         if (is_array($preDefinedDefinition) && isset($preDefinedDefinition[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS])) {
@@ -335,12 +314,6 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         return $arguments;
     }
 
-    /**
-     * @param string $sprykName
-     * @param string $builderName
-     *
-     * @return \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface
-     */
     protected function createDefinition(string $sprykName, string $builderName): SprykDefinitionInterface
     {
         $sprykDefinition = new SprykDefinition();
@@ -351,12 +324,6 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         return $sprykDefinition;
     }
 
-    /**
-     * @param array $sprykConfiguration
-     * @param array|null $preDefinedConfiguration
-     *
-     * @return array
-     */
     protected function getConfig(array $sprykConfiguration, ?array $preDefinedConfiguration = null): array
     {
         $configuration = [];
@@ -366,18 +333,12 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         }
 
         if (is_array($preDefinedConfiguration)) {
-            $configuration = array_merge($configuration, $preDefinedConfiguration);
+            return array_merge($configuration, $preDefinedConfiguration);
         }
 
         return $configuration;
     }
 
-    /**
-     * @param array $sprykConfiguration
-     * @param array|null $preDefinedDefinition
-     *
-     * @return string
-     */
     protected function getCondition(array $sprykConfiguration, ?array $preDefinedDefinition = null): string
     {
         if (isset($sprykConfiguration[static::CONFIGURATION_KEY_CONDITION])) {
@@ -392,8 +353,6 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
     }
 
     /**
-     * @param array $sprykConfiguration
-     *
      * @return array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition>
      */
     protected function getExcludedSpryks(array $sprykConfiguration): array
@@ -413,9 +372,6 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
     }
 
     /**
-     * @param array $sprykConfiguration
-     * @param string $parentSprykDefinitionKey
-     *
      * @return array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition>
      */
     protected function getPreSpryks(array $sprykConfiguration, string $parentSprykDefinitionKey): array
@@ -431,12 +387,6 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         return array_filter($preSpryks);
     }
 
-    /**
-     * @param array $preSpryks
-     * @param string $parentSprykDefinitionKey
-     *
-     * @return array
-     */
     protected function buildPreSprykDefinitions(array $preSpryks, string $parentSprykDefinitionKey): array
     {
         $preSprykDefinitions = [];
@@ -448,9 +398,6 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
     }
 
     /**
-     * @param array $sprykConfiguration
-     * @param string $parentSprykDefinitionKey
-     *
      * @return array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition>
      */
     protected function getSpryks(array $sprykConfiguration, string $parentSprykDefinitionKey): array
@@ -466,12 +413,6 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         return array_filter($spryks);
     }
 
-    /**
-     * @param array $spryks
-     * @param string $parentSprykDefinitionKey
-     *
-     * @return array
-     */
     protected function buildSprykDefinitions(array $spryks, string $parentSprykDefinitionKey): array
     {
         $sprykDefinitions = [];
@@ -483,9 +424,6 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
     }
 
     /**
-     * @param array $sprykConfiguration
-     * @param string $parentSprykDefinitionKey
-     *
      * @return array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition>
      */
     protected function getPostSpryks(array $sprykConfiguration, string $parentSprykDefinitionKey): array
@@ -501,12 +439,6 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         return array_filter($postSpryks);
     }
 
-    /**
-     * @param array $postSpryks
-     * @param string $parentSprykDefinitionKey
-     *
-     * @return array
-     */
     protected function buildPostSprykDefinitions(array $postSpryks, string $parentSprykDefinitionKey): array
     {
         $postSprykDefinitions = [];
@@ -517,13 +449,7 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         return $postSprykDefinitions;
     }
 
-    /**
-     * @param mixed $sprykInfo
-     * @param string $parentSprykDefinitionKey
-     *
-     * @return \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface|null
-     */
-    protected function buildSubSprykDefinition($sprykInfo, string $parentSprykDefinitionKey): ?SprykDefinitionInterface
+    protected function buildSubSprykDefinition(mixed $sprykInfo, string $parentSprykDefinitionKey): ?SprykDefinitionInterface
     {
         $parentArgumentCollection = clone $this->argumentCollectionCache[$parentSprykDefinitionKey];
 
@@ -565,11 +491,6 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
         return $sprykConfiguration[static::CONFIGURATION_KEY_POST_COMMANDS];
     }
 
-    /**
-     * @param string $sprykName
-     *
-     * @return array
-     */
     protected function loadConfig(string $sprykName): array
     {
         return $this->sprykLoader->loadSpryk($sprykName);

@@ -20,7 +20,7 @@ arguments:
         inherit: true
 
     targetPath:
-        value: "tests/{{ organization }}Test/Zed/{{ module }}/_data/{{ module | underscored }}.databuilder.xml"
+        value: "tests/_data/{{ module | underscored }}.databuilder.xml"
 
 preSpryks:
     - AddDataBuilderSchema

@@ -20,38 +20,15 @@ use Symfony\Component\Console\Question\Question;
 class ArgumentResolver implements ArgumentResolverInterface
 {
     /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface
-     */
-    protected ArgumentCollectionInterface $argumentCollection;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Superseder\SupersederInterface
-     */
-    protected SupersederInterface $superseder;
-
-    /**
      * @var \SprykerSdk\Spryk\Style\SprykStyleInterface
      */
     protected SprykStyleInterface $style;
 
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Normalizer\ArgumentDefinitionNormalizerInterface
-     */
-    protected ArgumentDefinitionNormalizerInterface $argumentDefinitionNormalizer;
-
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $argumentCollection
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Superseder\SupersederInterface $superseder
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Normalizer\ArgumentDefinitionNormalizerInterface $argumentDefinitionNormalizer
-     */
     public function __construct(
-        ArgumentCollectionInterface $argumentCollection,
-        SupersederInterface $superseder,
-        ArgumentDefinitionNormalizerInterface $argumentDefinitionNormalizer
+        protected ArgumentCollectionInterface $argumentCollection,
+        protected SupersederInterface $superseder,
+        protected ArgumentDefinitionNormalizerInterface $argumentDefinitionNormalizer,
     ) {
-        $this->argumentCollection = $argumentCollection;
-        $this->superseder = $superseder;
-        $this->argumentDefinitionNormalizer = $argumentDefinitionNormalizer;
     }
 
     /**
@@ -66,7 +43,7 @@ class ArgumentResolver implements ArgumentResolverInterface
         array $arguments,
         string $sprykName,
         SprykStyleInterface $style,
-        ?ArgumentCollectionInterface $resolvedArgumentCollection = null
+        ?ArgumentCollectionInterface $resolvedArgumentCollection = null,
     ): ArgumentCollectionInterface {
         $this->style = $style;
         $argumentCollection = clone $this->argumentCollection;
@@ -76,6 +53,8 @@ class ArgumentResolver implements ArgumentResolverInterface
             $resolvedArgumentCollection->setSprykName($sprykName);
         }
 
+        // The Argument Collection will contain all Spryk argument collections. The last one is the first entry and
+        // each entry has a `previousSprykArgumentCollection` containing the previously resolved arguments.
         $argumentCollection->setSprykName($sprykName);
         $argumentCollection->setPreviousSprykArguments($resolvedArgumentCollection);
 
@@ -87,25 +66,18 @@ class ArgumentResolver implements ArgumentResolverInterface
                 $resolvedArgumentCollection,
             );
             $argumentCollection->addArgument($argument);
+            $argument->addMeta('resolvedBySpryk', $sprykName);
             $resolvedArgumentCollection->addArgument($argument);
         }
 
         return $this->superseder->supersede($argumentCollection, $resolvedArgumentCollection);
     }
 
-    /**
-     * @param string $argumentName
-     * @param string $sprykName
-     * @param array $argumentDefinition
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $resolvedArgumentCollection
-     *
-     * @return \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Argument
-     */
     protected function resolveArgument(
         string $argumentName,
         string $sprykName,
         array $argumentDefinition,
-        ArgumentCollectionInterface $resolvedArgumentCollection
+        ArgumentCollectionInterface $resolvedArgumentCollection,
     ): Argument {
         $argument = new Argument();
         $argument->setName($argumentName);
@@ -133,18 +105,13 @@ class ArgumentResolver implements ArgumentResolverInterface
     }
 
     /**
-     * @param string $argumentName
-     * @param string $sprykName
-     * @param array $argumentDefinition
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $resolvedArgumentCollection
-     *
      * @return mixed
      */
     protected function getValueForArgument(
         string $argumentName,
         string $sprykName,
         array $argumentDefinition,
-        ArgumentCollectionInterface $resolvedArgumentCollection
+        ArgumentCollectionInterface $resolvedArgumentCollection,
     ) {
         if ($this->isValueKnownForArgument($argumentName, $argumentDefinition, $resolvedArgumentCollection)) {
             return $this->getKnownValueForArgument($argumentName, $argumentDefinition, $resolvedArgumentCollection);
@@ -165,17 +132,10 @@ class ArgumentResolver implements ArgumentResolverInterface
         return $this->askForArgumentValue($argumentName, $sprykName, $defaultValue, $allowEmptyInput);
     }
 
-    /**
-     * @param string $argumentName
-     * @param array $argumentDefinition
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $resolvedArgumentCollection
-     *
-     * @return bool
-     */
     protected function isValueKnownForArgument(
         string $argumentName,
         array $argumentDefinition,
-        ArgumentCollectionInterface $resolvedArgumentCollection
+        ArgumentCollectionInterface $resolvedArgumentCollection,
     ): bool {
         if (
             isset($argumentDefinition[SprykConfig::NAME_ARGUMENT_KEY_VALUE])
@@ -188,32 +148,21 @@ class ArgumentResolver implements ArgumentResolverInterface
         return false;
     }
 
-    /**
-     * @param string $argumentName
-     * @param array $argumentDefinition
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $resolvedArgumentCollection
-     *
-     * @return bool
-     */
     protected function canInherit(
         string $argumentName,
         array $argumentDefinition,
-        ArgumentCollectionInterface $resolvedArgumentCollection
+        ArgumentCollectionInterface $resolvedArgumentCollection,
     ): bool {
         return (isset($argumentDefinition['inherit']) && $resolvedArgumentCollection->hasArgument($argumentName));
     }
 
     /**
-     * @param string $argumentName
-     * @param array $argumentDefinition
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $resolvedArgumentCollection
-     *
      * @return mixed
      */
     protected function getKnownValueForArgument(
         string $argumentName,
         array $argumentDefinition,
-        ArgumentCollectionInterface $resolvedArgumentCollection
+        ArgumentCollectionInterface $resolvedArgumentCollection,
     ) {
         if (isset($argumentDefinition[SprykConfig::NAME_ARGUMENT_KEY_VALUE]) && !$this->issetNonEmptyOption($argumentName)) {
             return $argumentDefinition[SprykConfig::NAME_ARGUMENT_KEY_VALUE];
@@ -231,11 +180,6 @@ class ArgumentResolver implements ArgumentResolverInterface
         return OptionsContainer::getOption($argumentName);
     }
 
-    /**
-     * @param string $argumentName
-     *
-     * @return bool
-     */
     protected function issetNonEmptyOption(string $argumentName): bool
     {
         if (!OptionsContainer::hasOption($argumentName)) {
@@ -252,16 +196,12 @@ class ArgumentResolver implements ArgumentResolverInterface
     }
 
     /**
-     * @param string $argumentName
-     * @param array $argumentDefinition
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $resolvedArgumentCollection
-     *
      * @return mixed|null
      */
     protected function getDefaultValue(
         string $argumentName,
         array $argumentDefinition,
-        ArgumentCollectionInterface $resolvedArgumentCollection
+        ArgumentCollectionInterface $resolvedArgumentCollection,
     ) {
         if (isset($argumentDefinition[SprykConfig::NAME_ARGUMENT_KEY_DEFAULT])) {
             return $argumentDefinition[SprykConfig::NAME_ARGUMENT_KEY_DEFAULT];
@@ -278,14 +218,9 @@ class ArgumentResolver implements ArgumentResolverInterface
     }
 
     /**
-     * @param string $argument
-     * @param string $sprykName
-     * @param mixed $default
-     * @param bool $allowEmpty
-     *
      * @return mixed
      */
-    protected function askForArgumentValue(string $argument, string $sprykName, $default, bool $allowEmpty = false)
+    protected function askForArgumentValue(string $argument, string $sprykName, mixed $default, bool $allowEmpty = false)
     {
         $question = new Question(
             sprintf('Enter value for <fg=yellow>%s.%s</> argument', $sprykName, $argument),
@@ -309,14 +244,9 @@ class ArgumentResolver implements ArgumentResolverInterface
     }
 
     /**
-     * @param string $argument
-     * @param string $sprykName
-     * @param array<string>|array<int>|array<null> $values
-     * @param mixed $default
-     *
      * @return mixed
      */
-    protected function choseArgumentValue(string $argument, string $sprykName, array $values, $default)
+    protected function choseArgumentValue(string $argument, string $sprykName, array $values, mixed $default)
     {
         $question = new ChoiceQuestion(
             sprintf('Enter value for <fg=yellow>%s.%s</> argument', $sprykName, $argument),

@@ -18,42 +18,12 @@ use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedYmlInterface;
 
 class FileDumper implements FileDumperInterface
 {
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\Dumper\ClassDumperInterface
-     */
-    protected ClassDumperInterface $classDumper;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\Dumper\YmlDumperInterface
-     */
-    protected YmlDumperInterface $ymlDumper;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\Dumper\JsonDumperInterface
-     */
-    protected JsonDumperInterface $jsonDumper;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\Dumper\XmlDumperInterface
-     */
-    protected XmlDumperInterface $xmlDumper;
-
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\Dumper\ClassDumperInterface $classDumper
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\Dumper\YmlDumperInterface $ymlDumper
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\Dumper\JsonDumperInterface $jsonDumper
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\Dumper\XmlDumperInterface $xmlDumper
-     */
     public function __construct(
-        ClassDumperInterface $classDumper,
-        YmlDumperInterface $ymlDumper,
-        JsonDumperInterface $jsonDumper,
-        XmlDumperInterface $xmlDumper
+        protected ClassDumperInterface $classDumper,
+        protected YmlDumperInterface $ymlDumper,
+        protected JsonDumperInterface $jsonDumper,
+        protected XmlDumperInterface $xmlDumper,
     ) {
-        $this->classDumper = $classDumper;
-        $this->ymlDumper = $ymlDumper;
-        $this->jsonDumper = $jsonDumper;
-        $this->xmlDumper = $xmlDumper;
     }
 
     /**

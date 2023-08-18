@@ -15,42 +15,12 @@ use SprykerSdk\Spryk\SprykConfig;
 
 class SprykDefinitionChecker implements SprykDefinitionCheckerInterface
 {
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Dumper\Finder\SprykDefinitionFinderInterface
-     */
-    protected SprykDefinitionFinderInterface $sprykDefinitionFinder;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Configuration\Loader\SprykConfigurationLoaderInterface
-     */
-    protected SprykConfigurationLoaderInterface $configurationLoader;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Checker\Validator\CheckerSprykDefinitionValidatorInterface
-     */
-    protected CheckerSprykDefinitionValidatorInterface $checkerSprykDefinitionValidator;
-
-    /**
-     * @var \SprykerSdk\Spryk\SprykConfig
-     */
-    protected SprykConfig $sprykConfig;
-
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Dumper\Finder\SprykDefinitionFinderInterface $sprykDefinitionFinder
-     * @param \SprykerSdk\Spryk\Model\Spryk\Configuration\Loader\SprykConfigurationLoaderInterface $configurationLoader
-     * @param \SprykerSdk\Spryk\Model\Spryk\Checker\Validator\CheckerSprykDefinitionValidatorInterface $checkerSprykDefinitionValidator
-     * @param \SprykerSdk\Spryk\SprykConfig $sprykConfig
-     */
     public function __construct(
-        SprykDefinitionFinderInterface $sprykDefinitionFinder,
-        SprykConfigurationLoaderInterface $configurationLoader,
-        CheckerSprykDefinitionValidatorInterface $checkerSprykDefinitionValidator,
-        SprykConfig $sprykConfig
+        protected SprykDefinitionFinderInterface $sprykDefinitionFinder,
+        protected SprykConfigurationLoaderInterface $configurationLoader,
+        protected CheckerSprykDefinitionValidatorInterface $checkerSprykDefinitionValidator,
+        protected SprykConfig $sprykConfig,
     ) {
-        $this->sprykDefinitionFinder = $sprykDefinitionFinder;
-        $this->configurationLoader = $configurationLoader;
-        $this->checkerSprykDefinitionValidator = $checkerSprykDefinitionValidator;
-        $this->sprykConfig = $sprykConfig;
     }
 
     /**
@@ -83,11 +53,6 @@ class SprykDefinitionChecker implements SprykDefinitionCheckerInterface
         return $this->checkerSprykDefinitionValidator->postValidation($sprykDetails);
     }
 
-    /**
-     * @param array $spryk
-     *
-     * @return array
-     */
     protected function validateSprykDefinition(array $spryk): array
     {
         return $this->checkerSprykDefinitionValidator->validate($spryk);

@@ -6,8 +6,6 @@ mode: both
 arguments:
     module:
         inherit: true
-        default: "{{ resource | resourceNameToModuleName }}"
-        callback: GlueResourceModuleName
 
     organization:
         inherit: true
@@ -54,7 +52,7 @@ arguments:
         value: "src/{{ organization }}/{{ application }}/{{ module }}/"
 
     subDirectory:
-        value: Plugin
+        value: Plugin/GlueApplication
 
 preSpryks:
     # Add Glue{{ applicationType }}ApiApplication
@@ -88,7 +86,7 @@ postSpryks:
                   value:
                       - "return '{{ resource | resourcePluginToGetType }}';"
               target:
-                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
+                  value: "\\{{ organization }}\\Glue\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
               withInterface:
                   value: false
     - AddMethod:
@@ -104,7 +102,7 @@ postSpryks:
                   value:
                       - "return \\{{ organization }}\\{{ application }}\\{{ module }}\\Controller\\{{ controller }}::class;"
               target:
-                  value: "\\{{ organization }}\\Glue\\{{ module }}\\Plugin\\{{ className }}"
+                  value: "\\{{ organization }}\\Glue\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
               withInterface:
                   value: false
     - AddMethod:
@@ -117,7 +115,7 @@ postSpryks:
                   value:
                       - "return (new \\Generated\\Shared\\Transfer\\GlueResourceMethodCollectionTransfer());"
               target:
-                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
+                  value: "\\{{ organization }}\\Glue\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
               withInterface:
                   value: false
     - AddImplements:
@@ -126,12 +124,12 @@ postSpryks:
               interface:
                   value: "Spryker\\Glue\\GlueJsonApiConventionExtension\\Dependency\\Plugin\\JsonApiResourceInterface"
               target:
-                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
+                  value: "\\{{ organization }}\\Glue\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
     # Wire the plugin after it was created
     - WirePlugin:
           arguments:
               plugin:
-                  value: "\\{{ organization }}\\{{ application }}\\{{ module }}\\Plugin\\{{ className }}"
+                  value: "\\{{ organization }}\\Glue\\{{ module }}\\Plugin\\GlueApplication\\{{ className }}"
               target:
                   value: "\\Pyz\\Glue\\Glue{{ applicationType }}ApiApplication\\Glue{{ applicationType }}ApiApplicationDependencyProvider::getResourcePlugins"
 

@@ -1,7 +1,7 @@
         // @todo refactor the method according to your needs
         ${{ zedDomainEntity | lcfirst }}CollectionRequestTransfer = $this->getFactory()
             ->createGlueRequest{{ zedDomainEntity }}Mapper()
-            ->map{{ zedDomainEntity }}TransferTo{{ zedDomainEntity }}CollectionRequestTransfer({{ input | removeParametersTypeFilter }});
+            ->mapGlueRequestTransferTo{{ zedDomainEntity }}CollectionRequestTransfer({{ input | removeParametersTypeFilter }});
 
         ${{ zedDomainEntity | lcfirst }}CollectionResponseTransfer = $this->getFactory()
             ->get{{ dataModule }}{% if applicationType == 'Backend' %}Facade{% else %}Client{% endif %}()
@@ -9,4 +9,4 @@
 
         return $this->getFactory()
             ->createGlueResponse{{ zedDomainEntity }}Mapper()
-            ->map{{ zedDomainEntity }}CollectionResponseTransferToGlueResponseTransfer(${{ zedDomainEntity | lcfirst }}CollectionResponseTransfer);
+            ->map{{ zedDomainEntity }}CollectionResponseTransferToSingleResourceGlueResponseTransfer(${{ zedDomainEntity | lcfirst }}CollectionResponseTransfer);

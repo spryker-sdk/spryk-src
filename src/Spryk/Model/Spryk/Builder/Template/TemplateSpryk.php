@@ -32,20 +32,13 @@ class TemplateSpryk extends AbstractBuilder
     public const ARGUMENT_SUB_DIRECTORY = 'subDirectory';
 
     /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface
-     */
-    protected TemplateRendererInterface $renderer;
-
-    /**
      * @param \SprykerSdk\Spryk\SprykConfig $config
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface $fileResolver
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface $renderer
      */
-    public function __construct(SprykConfig $config, FileResolverInterface $fileResolver, TemplateRendererInterface $renderer)
+    public function __construct(SprykConfig $config, FileResolverInterface $fileResolver, protected TemplateRendererInterface $renderer)
     {
         parent::__construct($config, $fileResolver);
-
-        $this->renderer = $renderer;
     }
 
     /**
@@ -119,9 +112,6 @@ class TemplateSpryk extends AbstractBuilder
         return $targetPath . $subDirectory . $fileName;
     }
 
-    /**
-     * @return string
-     */
     protected function getFilename(): string
     {
         if ($this->arguments->hasArgument(static::ARGUMENT_TARGET_FILE_NAME)) {
@@ -131,9 +121,6 @@ class TemplateSpryk extends AbstractBuilder
         return $this->getFilenameFromTemplateName();
     }
 
-    /**
-     * @return string
-     */
     protected function getSubDirectory(): string
     {
         if ($this->arguments->hasArgument(static::ARGUMENT_SUB_DIRECTORY) && $this->arguments->getArgument(static::ARGUMENT_SUB_DIRECTORY)->getValue() !== null) {
@@ -143,19 +130,11 @@ class TemplateSpryk extends AbstractBuilder
         return '';
     }
 
-    /**
-     * @return string
-     */
     protected function getTemplateName(): string
     {
         return $this->getStringArgument(static::ARGUMENT_TEMPLATE);
     }
 
-    /**
-     * @param string $templateName
-     *
-     * @return string
-     */
     protected function getContent(string $templateName): string
     {
         if (isset($this->definition->getConfig()['noRender'])) {
@@ -168,13 +147,10 @@ class TemplateSpryk extends AbstractBuilder
         );
     }
 
-    /**
-     * @return string
-     */
     protected function getFilenameFromTemplateName(): string
     {
         $filename = str_replace('.twig', '', $this->getTemplateName());
-        if (strpos($filename, '/') !== false) {
+        if (str_contains($filename, '/')) {
             $filenameFragments = explode('/', $filename);
             $filename = array_pop($filenameFragments);
         }

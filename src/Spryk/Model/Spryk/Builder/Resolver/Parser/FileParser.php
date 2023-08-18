@@ -26,11 +26,6 @@ class FileParser implements ParserInterface
         return $this->fromFileContent($type);
     }
 
-    /**
-     * @param string $filePath
-     *
-     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedFile
-     */
     protected function fromFilePath(string $filePath): ResolvedFile
     {
         $resolved = new ResolvedFile();
@@ -48,11 +43,6 @@ class FileParser implements ParserInterface
         return $resolved;
     }
 
-    /**
-     * @param string $fileContents
-     *
-     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedFile
-     */
     protected function fromFileContent(string $fileContents): ResolvedFile
     {
         $resolved = new ResolvedFile();

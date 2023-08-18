@@ -20,28 +20,12 @@ class Superseder implements SupersederInterface
     public const PLACEHOLDER_PATTERN = '/{{(.*?)[}|\|]/';
 
     /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface
-     */
-    protected TemplateRendererInterface $templateRenderer;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Callback\Resolver\CallbackArgumentResolverInterface
-     */
-    protected CallbackArgumentResolverInterface $callbackArgumentResolver;
-
-    /**
      * @var array<string>
      */
     protected array $resolvedArguments = [];
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface $templateRenderer
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Callback\Resolver\CallbackArgumentResolverInterface $callbackArgumentResolver
-     */
-    public function __construct(TemplateRendererInterface $templateRenderer, CallbackArgumentResolverInterface $callbackArgumentResolver)
+    public function __construct(protected TemplateRendererInterface $templateRenderer, protected CallbackArgumentResolverInterface $callbackArgumentResolver)
     {
-        $this->templateRenderer = $templateRenderer;
-        $this->callbackArgumentResolver = $callbackArgumentResolver;
     }
 
     /**
@@ -67,17 +51,10 @@ class Superseder implements SupersederInterface
         return $sprykArguments;
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\ArgumentInterface $argument
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $sprykArguments
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $resolvedArguments
-     *
-     * @return void
-     */
     protected function resolveArgument(
         ArgumentInterface $argument,
         ArgumentCollectionInterface $sprykArguments,
-        ArgumentCollectionInterface $resolvedArguments
+        ArgumentCollectionInterface $resolvedArguments,
     ): void {
         $argumentValue = $argument->getValue();
 
@@ -98,21 +75,19 @@ class Superseder implements SupersederInterface
         $argument->setValue($argumentValues);
     }
 
-    /**
-     * @param mixed $argumentValue
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $sprykArguments
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $resolvedArguments
-     *
-     * @return mixed
-     */
     protected function replacePlaceholderInValue(
-        $argumentValue,
+        mixed $argumentValue,
         ArgumentCollectionInterface $sprykArguments,
-        ArgumentCollectionInterface $resolvedArguments
-    ) {
+        ArgumentCollectionInterface $resolvedArguments,
+    ): mixed {
         if (is_bool($argumentValue) || is_int($argumentValue)) {
             return $argumentValue;
         }
+
+        // In case we have a condition like {% if .... %} we need to resolve this one differently
+//        if (is_string($argumentValue) && str_contains('{%', $argumentValue)) {
+//            return $this->replacePlaceholderInValueWithCondition($argumentValue, $sprykArguments, $resolvedArguments);
+//        }
 
         preg_match_all(static::PLACEHOLDER_PATTERN, $argumentValue, $matches, PREG_SET_ORDER);
 
@@ -133,10 +108,28 @@ class Superseder implements SupersederInterface
     }
 
     /**
-     * @param string $argumentName
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $sprykArguments
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $resolvedArguments
-     *
+     * The argument value contains a condition like {% if .... %}. We first need to get the values from the collection resolved
+     * which are not yet resolved. After that we can use Twig to check if the condition is matched and resolve the condition.
+     */
+    protected function replacePlaceholderInValueWithCondition(
+        string $argumentValue,
+        ArgumentCollectionInterface $sprykArguments,
+        ArgumentCollectionInterface $resolvedArguments,
+    ): string {
+        $replacements = [];
+
+        foreach ($resolvedArguments->getArguments() as $resolvedArgument) {
+            $value = $resolvedArgument->getValue();
+            if ($value === 'default' || (is_string($value) && str_contains('{{', $value))) {
+                $value = $this->getResolvedValue($resolvedArgument->getName(), $sprykArguments, $resolvedArguments);
+            }
+            $replacements[$resolvedArgument->getName()] = $value;
+        }
+
+        return $this->templateRenderer->renderString($argumentValue, $replacements, $sprykArguments->getSprykName());
+    }
+
+    /**
      * @return mixed
      */
     protected function getResolvedValue(string $argumentName, ArgumentCollectionInterface $sprykArguments, ArgumentCollectionInterface $resolvedArguments)
@@ -151,10 +144,6 @@ class Superseder implements SupersederInterface
     }
 
     /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\ArgumentInterface $argument
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $sprykArguments
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $resolvedArguments
-     *
      * @return mixed
      */
     protected function resolveValue(ArgumentInterface $argument, ArgumentCollectionInterface $sprykArguments, ArgumentCollectionInterface $resolvedArguments)
@@ -168,11 +157,6 @@ class Superseder implements SupersederInterface
         return $argument->getValue();
     }
 
-    /**
-     * @param string $argumentValue
-     *
-     * @return bool
-     */
     protected function argumentHasPlaceholder(string $argumentValue): bool
     {
         preg_match_all(static::PLACEHOLDER_PATTERN, $argumentValue, $matches, PREG_SET_ORDER);

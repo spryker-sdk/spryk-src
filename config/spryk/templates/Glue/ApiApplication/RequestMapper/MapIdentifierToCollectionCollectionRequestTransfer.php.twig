@@ -1,5 +1,8 @@
     // @todo refactor the method according to your needs
-    ${{ zedDomainEntity | lcfirst }}CollectionRequestTransfer = new {{ zedDomainEntity }}CollectionRequestTransfer();
+    ${{ zedDomainEntity | lcfirst }}Transfer = new \Generated\Shared\Transfer\{{ zedDomainEntity }}Transfer();
+    ${{ zedDomainEntity | lcfirst }}Transfer->fromArray($glueRequestTransfer->getAttributes());
+
+    ${{ zedDomainEntity | lcfirst }}CollectionRequestTransfer = new \Generated\Shared\Transfer\{{ zedDomainEntity }}CollectionRequestTransfer();
     ${{ zedDomainEntity | lcfirst }}CollectionRequestTransfer->add{{ zedDomainEntity }}(${{ zedDomainEntity | lcfirst }}Transfer)->setIsTransactional(false);
 
     return ${{ zedDomainEntity | lcfirst }}CollectionRequestTransfer;

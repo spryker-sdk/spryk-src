@@ -15,16 +15,6 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
     /**
      * @var string
      */
-    public const PROPERTY_TYPE = 'propertyType';
-
-    /**
-     * @var string
-     */
-    public const PROPERTY_NAME = 'propertyName';
-
-    /**
-     * @var string
-     */
     public const DATA_BUILDER_RULE = 'dataBuilderRule';
 
     /**
@@ -51,65 +41,76 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
         /** @var \SimpleXMLElement $simpleXMLElement */
         $simpleXMLElement = $resolved->getSimpleXmlElement();
 
-        $transferName = $this->getTransferName();
+        // Multiple transfers
+        $transferDefinitions = $this->getTransferDefinitions();
 
-        /** @var \SimpleXMLElement $transferXMLElement */
-        $transferXMLElement = $this->findTransferByName($simpleXMLElement, $transferName);
-
-        $properties = $this->getProperties();
-
-        if ($properties) {
-            foreach ($properties as $propertyParts) {
-                $propertyDefinition = explode(':', trim($propertyParts));
-
-                $this->addProperty($transferXMLElement, $transferName, $propertyDefinition[0], $propertyDefinition[1], $this->dataBuilderRuleByProperty($propertyDefinition[1]));
+        foreach ($transferDefinitions as $transferName => $properties) {
+            $transferXMLElement = $this->findTransferByName($simpleXMLElement, $transferName);
+            foreach ($properties as $property) {
+                $dataBuilderRule = $property['dataBuilderRule'] ?? $this->dataBuilderRuleByProperty($property['name'], $property['type']);
+                $this->addProperty($transferXMLElement, $transferName, $property['name'], $dataBuilderRule);
             }
-
-            return;
         }
-
-        $propertyName = $this->getPropertyName();
-        $propertyType = $this->getPropertyType();
-        $dataBuilderRule = $this->getDataBuilderRule();
-
-        $this->addProperty($transferXMLElement, $transferName, $propertyName, $propertyType, $dataBuilderRule);
     }
 
     /**
-     * @param \SimpleXMLElement $transferXMLElement
-     * @param string $propertyName
-     *
-     * @return \SimpleXMLElement|null
+     * @return array<string, array<int, array<string, string|null>>>
      */
-    protected function findPropertyByName(SimpleXMLElement $transferXMLElement, string $propertyName): ?SimpleXMLElement
+    protected function getSingleProperty(): array
     {
-        foreach ($transferXMLElement->children() as $propertyXMLElement) {
-            if ((string)$propertyXMLElement['name'] === $propertyName) {
-                return $propertyXMLElement;
-            }
-        }
-
-        return null;
+        return [
+            $this->getTransferName() => [
+                [
+                    'name' => $this->getPropertyName(),
+                    'type' => $this->getPropertyType(),
+                    'dataBuilderRule' => $this->getDataBuilderRule(),
+                ],
+            ],
+        ];
     }
 
     /**
-     * @param \SimpleXMLElement $transferXMLElement
-     * @param string $transferName
-     * @param string $propertyName
-     * @param string $propertyType
-     * @param string|null $dataBuilderRule
+     * We can't have default values for database id fields. If we would not skip those the helper used in tests
+     * would throw an exception when they try to insert an Entity with an id.
      *
-     * @return void
+     * [Propel\Runtime\Exception\PropelException] Cannot insert a value for auto-increment primary key
+     *
+     * @param string $propertyName
+     * @param string $transferName
      */
+    protected function isAutoIncrementField(string $propertyName, string $transferName): bool
+    {
+        $databaseIdField = sprintf('id%s', $transferName);
+
+        if ($propertyName === $databaseIdField) {
+            return true;
+        }
+
+        return false;
+    }
+
+    protected function getDataBuilderRule(): ?string
+    {
+        $dataBuilderRule = $this->arguments->getArgument(static::DATA_BUILDER_RULE)->getValue();
+
+        if ($dataBuilderRule) {
+            return $dataBuilderRule;
+        }
+
+        return $this->dataBuilderRuleByProperty(
+            $this->getPropertyName(),
+            $this->getPropertyType(),
+        );
+    }
+
     protected function addProperty(
         SimpleXMLElement $transferXMLElement,
         string $transferName,
         string $propertyName,
-        string $propertyType,
-        ?string $dataBuilderRule
+        ?string $dataBuilderRule,
     ): void {
         // When no data builder rule can be found it must be a reference to another transfer object and we must ignore it.
-        if (!$dataBuilderRule) {
+        if (!$dataBuilderRule || $this->isAutoIncrementField($propertyName, $transferName)) {
             return;
         }
         $propertyXMLElement = $this->findPropertyByName($transferXMLElement, $propertyName);
@@ -127,85 +128,18 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
         $this->log(sprintf('Added dataBuilderXMLElement property <fg=green>%s.%s</>', $transferName, $propertyName));
     }
 
-    /**
-     * @return array|null
-     */
-    protected function getProperties(): ?array
+    protected function dataBuilderRuleByProperty(string $propertyName, string $propertyType): ?string
     {
-        $properties = $this->arguments
-            ->getArgument(static::PROPERTY_NAME)
-            ->getValue();
-
-        // When this property is an array it was executed with:
-        // --property propertyA --property propertyB ...
-        // or with
-        // --property propertyA:string --property propertyB:int ...
-        if (is_array($properties)) {
-            return $properties;
+        if ($propertyName === 'uuid') {
+            return 'uuid()';
         }
 
-        // When this argument contains a `:` this Spryk was called in a way that multiple properties should be added with one call
-        // This will most likely come from other SDK tools to have fewer calls to this Spryk.
-        // Examples:
-        // --property propertyA:string
-        // --property propertyA:string,propertyB:int
-        if (strpos($properties, ':') !== false) {
-            return explode(',', $properties);
-        }
-
-        return null;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getPropertyName(): string
-    {
-        return $this->getStringArgument(static::PROPERTY_NAME);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getPropertyType(): string
-    {
-        return $this->getStringArgument(static::PROPERTY_TYPE);
-    }
-
-    /**
-     * @return string|null
-     */
-    protected function getDataBuilderRule(): ?string
-    {
-        $dataBuilderRule = $this->arguments->getArgument(static::DATA_BUILDER_RULE)->getValue();
-
-        if ($dataBuilderRule) {
-            return $dataBuilderRule;
-        }
-
-        $propertyType = $this->getPropertyType();
-
-        return $this->dataBuilderRuleByProperty($propertyType);
-    }
-
-    /**
-     * @param string $propertyType
-     *
-     * @return string|null
-     */
-    protected function dataBuilderRuleByProperty(string $propertyType): ?string
-    {
-        switch ($propertyType) {
-            case 'string':
-                return 'word()';
-            case 'int':
-                return 'randomDigit()';
-            case 'bool':
-                return 'boolean()';
-            case 'array':
-                return 'randomElements()';
-        }
-
-        return null;
+        return match ($propertyType) {
+            'string' => 'word()',
+            'int' => 'randomDigit()',
+            'bool' => 'boolean()',
+            'array' => 'randomElements()',
+            default => null,
+        };
     }
 }

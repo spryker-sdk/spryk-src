@@ -14,17 +14,8 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class SprykConfigurationFinder implements SprykConfigurationFinderInterface
 {
-    /**
-     * @var \SprykerSdk\Spryk\SprykConfig
-     */
-    protected SprykConfig $config;
-
-    /**
-     * @param \SprykerSdk\Spryk\SprykConfig $config
-     */
-    public function __construct(SprykConfig $config)
+    public function __construct(protected SprykConfig $config)
     {
-        $this->config = $config;
     }
 
     /**
@@ -48,11 +39,6 @@ class SprykConfigurationFinder implements SprykConfigurationFinderInterface
         return $iterator->current();
     }
 
-    /**
-     * @param string $sprykName
-     *
-     * @return \Symfony\Component\Finder\Finder
-     */
     protected function buildFinder(string $sprykName): Finder
     {
         $fileName = sprintf('%s.yml', $sprykName);

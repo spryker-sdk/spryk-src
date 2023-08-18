@@ -44,10 +44,6 @@ class ArgumentDefinitionNormalizer implements ArgumentDefinitionNormalizerInterf
 
     /**
      * Removes all elements of values, so that later we can put them on the correct key.
-     *
-     * @param array $argumentDefinition
-     *
-     * @return array
      */
     protected function getCleanedArgumentDefinition(array $argumentDefinition): array
     {

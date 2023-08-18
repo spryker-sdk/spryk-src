@@ -8,6 +8,7 @@
 namespace SprykerSdkTest\Spryk\Integration\Zed\Test\Helper;
 
 use Codeception\Test\Unit;
+use SprykerSdkTest\SprykIntegrationTester;
 
 /**
  * Auto-generated group annotations
@@ -26,17 +27,19 @@ class AddZedTestHelperTest extends Unit
     /**
      * @var \SprykerSdkTest\SprykIntegrationTester
      */
-    protected $tester;
+    protected SprykIntegrationTester $tester;
 
     /**
      * @return void
      */
-    public function testAddsZedTestHelper(): void
+    public function testAddsZedTestHelperOnProjectLevel(): void
     {
         $this->tester->run($this, [
+            '--mode' => 'project',
+            '--organization' => 'Pyz',
             '--module' => 'FooBar',
         ]);
 
-        $this->assertFileExists($this->tester->getSprykerModuleDirectory() . '/tests/SprykerTest/Zed/FooBar/_support/Helper/FooBarHelper.php');
+        $this->assertFileExists($this->tester->getVirtualDirectory() . 'tests/PyzTest/Zed/FooBar/_support/Helper/FooBarHelper.php');
     }
 }

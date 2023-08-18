@@ -5,8 +5,7 @@ mode: both
 level: 2
 
 arguments:
-    module:
-        description: "Based on the applicationType the module name will be suffixed with BackendApi or StorefrontApi by the ResourceModuleName callback."
+    module: # Based on the applicationType the module name will be suffixed with BackendApi or StorefrontApi by the ResourceModuleName callback.
         inherit: true
         default: "{{ resource | resourceNameToModuleName }}{{ applicationType }}Api"
 
@@ -47,8 +46,9 @@ arguments:
         value: Common/Class.php.twig
 
     zedDomainEntity:
+        inherit: true
         description: "Defines the domainEntity used on Zed side for the CRUD Facade. It will be used to create all needed Transfer Objects."
-        value: "{{ resource | resourceNameToModelName | singularize }}"
+        default: "{{ resource | resourceNameToModelName | singularize }}"
 
     implements:
         value: "\\{{ organization }}\\Glue\\{{ module }}\\Mapper\\GlueResponse{{ resourceDataObject }}MapperInterface"

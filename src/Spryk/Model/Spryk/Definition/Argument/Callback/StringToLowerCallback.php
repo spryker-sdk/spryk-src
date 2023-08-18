@@ -20,7 +20,6 @@ class StringToLowerCallback implements CallbackInterface
     }
 
     /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $argumentCollection
      * @param mixed|null $value
      *
      * @return mixed

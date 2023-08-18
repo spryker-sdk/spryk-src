@@ -29,17 +29,8 @@ class ResourceNameToControllerNameFilter implements FilterInterface
      */
     protected const FILTER_NAME = 'resourceNameToControllerName';
 
-    /**
-     * @var \Laminas\Filter\Word\DashToCamelCase
-     */
-    private DashToCamelCase $dashToCamelCase;
-
-    /**
-     * @param \Laminas\Filter\Word\DashToCamelCase $dashToCamelCase
-     */
-    public function __construct(DashToCamelCase $dashToCamelCase)
+    public function __construct(private DashToCamelCase $dashToCamelCase)
     {
-        $this->dashToCamelCase = $dashToCamelCase;
     }
 
     /**

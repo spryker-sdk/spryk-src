@@ -19,50 +19,13 @@ class FileResolver implements FileResolverInterface
      */
     protected static $resolved = [];
 
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\ParserInterface
-     */
-    protected ParserInterface $classParser;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\ParserInterface
-     */
-    protected ParserInterface $ymlParser;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\ParserInterface
-     */
-    protected ParserInterface $jsonParser;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\ParserInterface
-     */
-    protected ParserInterface $xmlParser;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\ParserInterface
-     */
-    protected ParserInterface $fileParser;
-
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\ParserInterface $classParser
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\ParserInterface $ymlParser
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\ParserInterface $jsonParser
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\ParserInterface $xmlParser
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Parser\ParserInterface $fileParser
-     */
     public function __construct(
-        ParserInterface $classParser,
-        ParserInterface $ymlParser,
-        ParserInterface $jsonParser,
-        ParserInterface $xmlParser,
-        ParserInterface $fileParser
+        protected ParserInterface $classParser,
+        protected ParserInterface $ymlParser,
+        protected ParserInterface $jsonParser,
+        protected ParserInterface $xmlParser,
+        protected ParserInterface $fileParser,
     ) {
-        $this->classParser = $classParser;
-        $this->ymlParser = $ymlParser;
-        $this->jsonParser = $jsonParser;
-        $this->xmlParser = $xmlParser;
-        $this->fileParser = $fileParser;
     }
 
     /**
@@ -107,11 +70,6 @@ class FileResolver implements FileResolverInterface
         return $this->searchInResolved($name) !== null;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface|null
-     */
     protected function searchInResolved(string $name): ?ResolvedInterface
     {
         foreach ($this->all() as $resolved) {
@@ -128,11 +86,6 @@ class FileResolver implements FileResolverInterface
         return null;
     }
 
-    /**
-     * @param string $fileName
-     *
-     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedInterface
-     */
     protected function parseFile(string $fileName): ResolvedInterface
     {
         $extension = $this->getExtension($fileName);
@@ -141,7 +94,7 @@ class FileResolver implements FileResolverInterface
             case 'php':
                 try {
                     return $this->classParser->parse($fileName);
-                } catch (FileDoesNotContainClassOrInterfaceException $e) {
+                } catch (FileDoesNotContainClassOrInterfaceException) {
                     return $this->fileParser->parse($fileName);
                 }
             case 'yml':
@@ -156,11 +109,6 @@ class FileResolver implements FileResolverInterface
         }
     }
 
-    /**
-     * @param string $fileName
-     *
-     * @return string|null
-     */
     protected function getExtension(string $fileName): ?string
     {
         $pathInfo = pathinfo($fileName);
@@ -182,41 +130,21 @@ class FileResolver implements FileResolverInterface
     {
         $extension = $this->getExtension($filePath);
 
-        switch ($extension) {
-            case 'php':
-                $this->addPhpFile($filePath, $content);
-
-                break;
-            case 'yml':
-            case 'yaml':
-                $this->addYmlFile($filePath, $content);
-
-                break;
-            case 'json':
-                $this->addJsonFile($filePath, $content);
-
-                break;
-            case 'xml':
-                $this->addXmlFile($filePath, $content);
-
-                break;
-            default:
-                $this->addDefaultFile($filePath, $content);
-        }
+        match ($extension) {
+            'php' => $this->addPhpFile($filePath, $content),
+            'yml', 'yaml' => $this->addYmlFile($filePath, $content),
+            'json' => $this->addJsonFile($filePath, $content),
+            'xml' => $this->addXmlFile($filePath, $content),
+            default => $this->addDefaultFile($filePath, $content),
+        };
     }
 
-    /**
-     * @param string $filePath
-     * @param string $content
-     *
-     * @return void
-     */
     protected function addPhpFile(string $filePath, string $content): void
     {
         try {
             /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolved */
             $resolved = $this->classParser->parse($content);
-        } catch (FileDoesNotContainClassOrInterfaceException $e) {
+        } catch (FileDoesNotContainClassOrInterfaceException) {
             $this->addDefaultFile($filePath, $content);
 
             return;
@@ -228,12 +156,6 @@ class FileResolver implements FileResolverInterface
         static::$resolved[$resolved->getClassName()] = $resolved;
     }
 
-    /**
-     * @param string $filePath
-     * @param string $content
-     *
-     * @return void
-     */
     protected function addYmlFile(string $filePath, string $content): void
     {
         $resolved = $this->ymlParser->parse($content);
@@ -243,12 +165,6 @@ class FileResolver implements FileResolverInterface
         static::$resolved[$filePath] = $resolved;
     }
 
-    /**
-     * @param string $filePath
-     * @param string $content
-     *
-     * @return void
-     */
     protected function addJsonFile(string $filePath, string $content): void
     {
         $resolved = $this->jsonParser->parse($content);
@@ -258,12 +174,6 @@ class FileResolver implements FileResolverInterface
         static::$resolved[$filePath] = $resolved;
     }
 
-    /**
-     * @param string $filePath
-     * @param string $content
-     *
-     * @return void
-     */
     protected function addXmlFile(string $filePath, string $content): void
     {
         $resolved = $this->xmlParser->parse($content);
@@ -273,12 +183,6 @@ class FileResolver implements FileResolverInterface
         static::$resolved[$filePath] = $resolved;
     }
 
-    /**
-     * @param string $filePath
-     * @param string $content
-     *
-     * @return void
-     */
     protected function addDefaultFile(string $filePath, string $content): void
     {
         $resolved = $this->fileParser->parse($content);

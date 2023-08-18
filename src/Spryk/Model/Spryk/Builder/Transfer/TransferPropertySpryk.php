@@ -14,21 +14,6 @@ class TransferPropertySpryk extends AbstractTransferSpryk
     /**
      * @var string
      */
-    public const PROPERTY_TYPE = 'propertyType';
-
-    /**
-     * @var string
-     */
-    public const PROPERTY_NAME = 'propertyName';
-
-    /**
-     * @var string
-     */
-    public const SINGULAR = 'singular';
-
-    /**
-     * @var string
-     */
     protected const SPRYK_NAME = 'transferProperty';
 
     /**
@@ -40,66 +25,23 @@ class TransferPropertySpryk extends AbstractTransferSpryk
         $resolved = $this->fileResolver->resolve($this->getTargetPath());
         $simpleXMLElement = $resolved->getSimpleXmlElement();
 
-        $transferName = $this->getTransferName();
+        // Multiple transfers
+        $transferDefinitions = $this->getTransferDefinitions();
 
-        $transferXMLElement = $this->findTransferByName($simpleXMLElement, $transferName);
-
-        if (!$transferXMLElement) {
-            $this->log(sprintf('Could not find transferXMLElement by name <fg=green>%s</> in <fg=green>%s</>', $transferName, $this->getTargetPath()));
-
-            return;
-        }
-
-        $properties = $this->getProperties();
-
-        if ($properties) {
-            foreach ($properties as $propertyParts) {
-                $propertyDefinition = explode(':', trim($propertyParts));
-                $this->addProperty($transferXMLElement, $transferName, $propertyDefinition[0], $propertyDefinition[1], $propertyDefinition[2] ?? null);
-            }
-
-            return;
-        }
-
-        $propertyName = $this->getPropertyName();
-        $propertyType = $this->getPropertyType();
-        $singular = $this->getSingular();
-
-        $this->addProperty($transferXMLElement, $transferName, $propertyName, $propertyType, $singular);
-    }
-
-    /**
-     * @param \SimpleXMLElement $transferXMLElement
-     * @param string $propertyName
-     *
-     * @return \SimpleXMLElement|null
-     */
-    protected function findPropertyByName(SimpleXMLElement $transferXMLElement, string $propertyName): ?SimpleXMLElement
-    {
-        foreach ($transferXMLElement->children() as $propertyXMLElement) {
-            if ((string)$propertyXMLElement['name'] === $propertyName) {
-                return $propertyXMLElement;
+        foreach ($transferDefinitions as $transferName => $properties) {
+            $transferXMLElement = $this->findTransferByName($simpleXMLElement, $transferName);
+            foreach ($properties as $property) {
+                $this->addProperty($transferXMLElement, $transferName, $property['name'], $property['type'], $property['singular']);
             }
         }
-
-        return null;
     }
 
-    /**
-     * @param \SimpleXMLElement $transferXMLElement
-     * @param string $transferName
-     * @param string $propertyName
-     * @param string $propertyType
-     * @param string|null $singular
-     *
-     * @return void
-     */
     protected function addProperty(
         SimpleXMLElement $transferXMLElement,
         string $transferName,
         string $propertyName,
         string $propertyType,
-        ?string $singular = null
+        ?string $singular = null,
     ): void {
         $propertyXMLElement = $this->findPropertyByName($transferXMLElement, $propertyName);
 
@@ -111,96 +53,15 @@ class TransferPropertySpryk extends AbstractTransferSpryk
         $propertyXMLElement->addAttribute('name', $propertyName);
         $propertyXMLElement->addAttribute('type', $propertyType);
 
+        // Some Transfer properties can't be made strict as they are not strict in modules.
+        if (!in_array($transferName, $this->strictTransfersBlacklist) || in_array($propertyName, $this->strictPropertiesWhitelist)) {
+            $propertyXMLElement->addAttribute('strict', 'true');
+        }
+
         if ($singular) {
             $propertyXMLElement->addAttribute('singular', $singular);
         }
 
         $this->log(sprintf('Added transferXMLElement property <fg=green>%s.%s</>', $transferName, $propertyName));
-    }
-
-    /**
-     * @return array|null
-     */
-    protected function getProperties(): ?array
-    {
-        $properties = $this->arguments
-            ->getArgument(static::PROPERTY_NAME)
-            ->getValue();
-
-        // When this property is an array it was executed with:
-        // --property propertyA --propertyB ...
-        // or with
-        // --property propertyA:string --propertyB:int ...
-        if (is_array($properties)) {
-            return $properties;
-        }
-
-        // When this argument contains a `:` this Spryk was called in a way that multiple properties should be added with one call
-        // This will most likely come from other SDK tools to have fewer calls to this Spryk.
-        // Examples:
-        // --property propertyA:string
-        // --property propertyA:string,propertyB:int
-        if (strpos($properties, ':') !== false) {
-            return explode(',', $properties);
-        }
-
-        return null;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getPropertyName(): string
-    {
-        return $this->getStringArgument(static::PROPERTY_NAME);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getPropertyType(): string
-    {
-        return $this->getStringArgument(static::PROPERTY_TYPE);
-    }
-
-    /**
-     * @return string|null
-     */
-    protected function getSingular(): ?string
-    {
-        $singular = $this->arguments->getArgument(static::SINGULAR)->getValue();
-
-        if ($singular) {
-            return $singular;
-        }
-
-        return null;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isTransferPropertyDefined(): bool
-    {
-        /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedXmlInterface $resolved */
-        $resolved = $this->fileResolver->resolve($this->getTargetPath());
-        $simpleXMLElement = $resolved->getSimpleXmlElement();
-
-        $transferName = $this->getTransferName();
-        $propertyName = $this->getPropertyName();
-
-        $transferXMLElement = $this->findTransferByName($simpleXMLElement, $transferName);
-
-        if (!$transferXMLElement) {
-            return false;
-        }
-
-        $propertyXMLElement = $this->findPropertyByName($transferXMLElement, $propertyName);
-
-        if (!$propertyXMLElement) {
-            return false;
-        }
-
-        return true;
     }
 }

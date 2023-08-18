@@ -1,7 +1,7 @@
-${{ domainEntity | lcfirst }}CollectionTransfer = new {{ domainEntity }}CollectionTransfer();
+${{ domainEntity | lcfirst }}CollectionTransfer = new \Generated\Shared\Transfer\{{ domainEntity }}CollectionTransfer();
 ${{ domainEntity | lcfirst }}Query = $this->getFactory()
     ->create{{ domainEntity }}Query();
- 
+
 ${{ domainEntity | lcfirst }}Entities = $this->apply{{ domainEntity }}DeleteFilters(
     ${{ domainEntity | lcfirst }}Query,
     ${{ domainEntity | lcfirst }}CollectionDeleteCriteriaTransfer,

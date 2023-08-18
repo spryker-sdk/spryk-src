@@ -6,10 +6,7 @@ level: 3
 
 arguments:
     module:
-        description: "Based on the applicationType the module name will be suffixed with BackendApi or StorefrontApi by the ResourceModuleName callback."
         inherit: true
-        default: "{{ resource | resourceNameToModuleName }}"
-        callback: GlueResourceModuleName
 
     organization:
         inherit: true
@@ -75,17 +72,3 @@ postSpryks:
               annotations:
                   value:
                       - "@method \\{{ organization }}\\Glue\\{{ module }}\\{{ module }}Factory getFactory()"
-
-    - AddClass:
-          condition: "isTestClass === true"
-          arguments:
-              subDirectory:
-                  value: Controller
-              className:
-                  value: "{{ controller }}"
-              extends:
-                  callback: ResolveExtends
-                  value:
-                      - "\\Codeception\\Test\\Unit"
-              isTestClass:
-                  value: true

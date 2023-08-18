@@ -39,7 +39,7 @@ class AddGlueProcessorModelMethodTest extends Unit
     public function testAddsGlueFactoryMethod(
         array $params,
         string $className,
-        string $methodName
+        string $methodName,
     ): void {
         $this->tester->run($this, $params);
         $this->tester->assertClassOrInterfaceHasMethod($className, $methodName);

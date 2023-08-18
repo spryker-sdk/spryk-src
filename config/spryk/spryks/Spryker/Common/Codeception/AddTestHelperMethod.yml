@@ -1,0 +1,34 @@
+name: AddTestHelperMethod
+spryk: method
+description: "Adds a new method to the *module*Helper."
+mode: both
+
+arguments:
+    module:
+        inherit: true
+
+    organization:
+        inherit: true
+        default: SprykerTest
+
+    application:
+        inherit: true
+        default: Zed
+
+    method: ~
+    body: ~
+
+    output:
+        value: void
+
+    template:
+        value: Common/Method.php.twig
+
+    target:
+        value: "\\{{ organization }}Test\\{{ application }}\\{{ module }}\\Helper\\{{ module }}Helper"
+
+    suite:
+        inherit: true
+
+preSpryks:
+    - AddTestHelper

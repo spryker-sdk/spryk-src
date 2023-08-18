@@ -27,12 +27,6 @@ class DevelopmentLayerExtenderPlugin extends AbstractExtender implements SprykCo
         return $this->buildModeArgument($sprykConfig, $context);
     }
 
-    /**
-     * @param array $sprykConfig
-     * @param array $context
-     *
-     * @return array
-     */
     protected function buildModeArgument(array $sprykConfig, array $context): array
     {
         if ($this->isBoth($sprykConfig, $context)) {

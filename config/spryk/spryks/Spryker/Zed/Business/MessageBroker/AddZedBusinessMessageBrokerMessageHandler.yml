@@ -1,7 +1,7 @@
 name: AddZedBusinessMessageBrokerMessageHandler
 # Adds a MessageHandler class
 # Adds a MessageHandler interface
-# Adds the Factory method to get the MessageHandler
+# Adds the Factory method to create the MessageHandler
 # Adds a facade method to call the created handler
 spryk: template
 description: "Adds a new MessageBroker MessageHandler to the Zed application."
@@ -19,54 +19,35 @@ arguments:
 
     organization:
         inherit: true
-        default: Spryker
+
+    application:
+        inherit: true
 
     messageName:
         inherit: true
 
     className:
-        value: "{{ module }}MessageHandler"
+        value: "{{ messageName }}MessageHandler"
 
     subDirectory:
         inherit: true
-        value: "MessageBroker"
+        value: "Business/MessageBroker"
 
     interfaceName:
         value: "\\{{ organization}}\\Zed\\{{ module}}\\Business\\MessageBroker\\{{ className }}Interface"
 
+    implements:
+        value: "\\{{ organization}}\\Zed\\{{ module}}\\Business\\MessageBroker\\{{ className }}Interface"
+
     template:
-        value: Zed/Business/MessageBroker/MessageHandler.php.twig
+        value: Common/Class.php.twig
 
     targetFilename:
         callbackOnly: true
         callback: ZedBusinessModelTargetFilenameCallback
 
     targetPath:
-        value: "src/{{ organization }}/Zed/{{ module }}/Business"
+        value: "src/{{ organization }}/Zed/{{ module }}/"
 
 preSpryks:
     - AddModule
-
-postSpryks:
-    - AddZedBusinessModelInterface # Add Interface for the newly created method
-    - AddZedBusinessFactoryMethod: # Add method to get the MessageBrokerFacade dependency for class creation in the factory
-          arguments:
-              subDirectory:
-                  value: "MessageBroker"
-              dependencyMethods:
-                  value:
-                      - "getMessageBrokerFacade"
-
-    - AddZedBusinessFactoryDependencyMethod:
-          arguments:
-              dependencyType:
-                  value: "Facade"
-              dependentModule:
-                  value: "MessageBroker"
-              dependencyMethod:
-                  value: "getMessageBrokerFacade"
-
-    - AddZedDependencyFacadeDependencyProviderMethod:
-          arguments:
-              dependentModule:
-                  value: "MessageBroker"

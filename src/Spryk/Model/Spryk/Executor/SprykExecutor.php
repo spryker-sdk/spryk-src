@@ -8,7 +8,7 @@
 namespace SprykerSdk\Spryk\Model\Spryk\Executor;
 
 use Jfcherng\Diff\DiffHelper;
-use SprykerSdk\Spryk\Exception\SprykWrongDevelopmentLayerException;
+use SprykerSdk\Spryk\Debug\DebugInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Collection\SprykBuilderCollectionInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\FileDumperInterface;
 use SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface;
@@ -17,26 +17,11 @@ use SprykerSdk\Spryk\Model\Spryk\Definition\Builder\SprykDefinitionBuilderInterf
 use SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface;
 use SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface;
 use SprykerSdk\Spryk\Model\Spryk\Executor\Configuration\SprykExecutorConfigurationInterface;
-use SprykerSdk\Spryk\SprykConfig;
+use SprykerSdk\Spryk\ModeResolver\ModeResolverInterface;
 use SprykerSdk\Spryk\Style\SprykStyleInterface;
 
 class SprykExecutor implements SprykExecutorInterface
 {
-    /**
-     * @var \SprykerSdk\Spryk\SprykConfig
-     */
-    protected SprykConfig $sprykConfig;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Definition\Builder\SprykDefinitionBuilderInterface
-     */
-    protected SprykDefinitionBuilderInterface $definitionBuilder;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Collection\SprykBuilderCollectionInterface
-     */
-    protected SprykBuilderCollectionInterface $sprykBuilderCollection;
-
     /**
      * @var array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface>
      */
@@ -53,34 +38,9 @@ class SprykExecutor implements SprykExecutorInterface
     protected string $mainSprykDefinitionMode;
 
     /**
-     * @var array<\SprykerSdk\Spryk\Model\Spryk\Command\SprykCommandInterface>
-     */
-    protected array $sprykCommands;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface
-     */
-    protected FileResolverInterface $fileResolver;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\FileDumperInterface
-     */
-    protected FileDumperInterface $fileDumper;
-
-    /**
      * @var int
      */
     protected int $currentExecutionLevel = 0;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface
-     */
-    protected ConditionMatcherInterface $conditionMatcher;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Cleanup\CleanupRunnerInterface
-     */
-    protected CleanupRunnerInterface $cleanupRunner;
 
     /**
      * @var array<string, \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface>
@@ -88,33 +48,19 @@ class SprykExecutor implements SprykExecutorInterface
     protected array $postCommandCache = [];
 
     /**
-     * @param \SprykerSdk\Spryk\SprykConfig $sprykConfig
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Builder\SprykDefinitionBuilderInterface $definitionBuilder
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Collection\SprykBuilderCollectionInterface $sprykBuilderCollection
      * @param array<\SprykerSdk\Spryk\Model\Spryk\Command\SprykCommandInterface> $sprykCommands
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface $fileResolver
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Dumper\FileDumperInterface $fileDumper
-     * @param \SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface $conditionMatcher
-     * @param \SprykerSdk\Spryk\Model\Spryk\Cleanup\CleanupRunnerInterface $cleanupRunner
      */
     public function __construct(
-        SprykConfig $sprykConfig,
-        SprykDefinitionBuilderInterface $definitionBuilder,
-        SprykBuilderCollectionInterface $sprykBuilderCollection,
-        array $sprykCommands,
-        FileResolverInterface $fileResolver,
-        FileDumperInterface $fileDumper,
-        ConditionMatcherInterface $conditionMatcher,
-        CleanupRunnerInterface $cleanupRunner
+        private SprykDefinitionBuilderInterface $definitionBuilder,
+        private SprykBuilderCollectionInterface $sprykBuilderCollection,
+        private array $sprykCommands,
+        private FileResolverInterface $fileResolver,
+        private FileDumperInterface $fileDumper,
+        private ConditionMatcherInterface $conditionMatcher,
+        private CleanupRunnerInterface $cleanupRunner,
+        private DebugInterface $debug,
+        private ModeResolverInterface $modeResolver,
     ) {
-        $this->sprykConfig = $sprykConfig;
-        $this->definitionBuilder = $definitionBuilder;
-        $this->sprykBuilderCollection = $sprykBuilderCollection;
-        $this->sprykCommands = $sprykCommands;
-        $this->fileResolver = $fileResolver;
-        $this->fileDumper = $fileDumper;
-        $this->conditionMatcher = $conditionMatcher;
-        $this->cleanupRunner = $cleanupRunner;
     }
 
     /**
@@ -125,7 +71,7 @@ class SprykExecutor implements SprykExecutorInterface
      */
     public function execute(
         SprykExecutorConfigurationInterface $sprykExecutorConfiguration,
-        SprykStyleInterface $style
+        SprykStyleInterface $style,
     ): void {
         $this->definitionBuilder->setStyle($style);
         $this->includeOptionalSubSpryks = $sprykExecutorConfiguration->getIncludeOptionalSubSpryks();
@@ -144,9 +90,18 @@ class SprykExecutor implements SprykExecutorInterface
             $sprykPreDefinition,
         );
 
-        $this->mainSprykDefinitionMode = $this->getSprykDefinitionMode($sprykDefinition, $style);
+        $this->mainSprykDefinitionMode = $this->modeResolver->getMode($sprykDefinition, $style);
+
+        $this->debug->setStyle($style);
+        // Execute nothing after debug information was printed
+        if ($this->debug->isDebug()) {
+            $this->debug->printDebug($sprykDefinition);
+
+            return;
+        }
 
         $this->buildSpryk($sprykDefinition, $style);
+
         $this->executePostCommands($style);
 
         $this->dumpFiles();
@@ -155,18 +110,13 @@ class SprykExecutor implements SprykExecutorInterface
     }
 
     /**
-     * @return void
+     * Dumps all files to their location.
      */
     protected function dumpFiles(): void
     {
         $this->fileDumper->dumpFiles($this->fileResolver->all());
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
-     *
-     * @return void
-     */
     protected function writeFiles(SprykStyleInterface $style): void
     {
         $isDryRun = $style->getInput()->getOption('dry-run');
@@ -190,12 +140,6 @@ class SprykExecutor implements SprykExecutorInterface
         }
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
-     *
-     * @return void
-     */
     protected function buildSpryk(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): void
     {
         if (($sprykDefinition->getMode() !== 'both' && $sprykDefinition->getMode() !== $this->mainSprykDefinitionMode) || !$this->conditionMatched($sprykDefinition)) {
@@ -214,11 +158,6 @@ class SprykExecutor implements SprykExecutorInterface
         $style->endSpryk($sprykDefinition);
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     *
-     * @return bool
-     */
     protected function conditionMatched(SprykDefinitionInterface $sprykDefinition): bool
     {
         $conditionString = $sprykDefinition->getCondition();
@@ -230,12 +169,6 @@ class SprykExecutor implements SprykExecutorInterface
         return $this->conditionMatcher->match($conditionString, $sprykDefinition->getArgumentCollection());
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
-     *
-     * @return void
-     */
     protected function executePreSpryks(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): void
     {
         $style->startPreSpryks($sprykDefinition);
@@ -245,12 +178,6 @@ class SprykExecutor implements SprykExecutorInterface
         $style->endPreSpryks($sprykDefinition);
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
-     *
-     * @return void
-     */
     protected function executeSpryks(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): void
     {
         $style->startSpryks($sprykDefinition);
@@ -260,12 +187,6 @@ class SprykExecutor implements SprykExecutorInterface
         $style->endSpryks($sprykDefinition);
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
-     *
-     * @return void
-     */
     protected function executeSpryk(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): void
     {
         $builder = $this->sprykBuilderCollection->getBuilder($sprykDefinition);
@@ -279,12 +200,6 @@ class SprykExecutor implements SprykExecutorInterface
         $this->executedSpryks[$sprykDefinition->getSprykDefinitionKey()] = $sprykDefinition;
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
-     *
-     * @return void
-     */
     protected function executePostSpryks(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): void
     {
         $style->startPostSpryks($sprykDefinition);
@@ -294,12 +209,6 @@ class SprykExecutor implements SprykExecutorInterface
         $style->endPostSpryks($sprykDefinition);
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
-     *
-     * @return void
-     */
     protected function executePreCommands(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): void
     {
         if (!$sprykDefinition->getPreCommands()) {
@@ -317,10 +226,6 @@ class SprykExecutor implements SprykExecutorInterface
 
     /**
      * For performance reasons this method must be executed after all Spryks were executed.
-     *
-     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
-     *
-     * @return void
      */
     protected function executePostCommands(SprykStyleInterface $style): void
     {
@@ -333,11 +238,6 @@ class SprykExecutor implements SprykExecutorInterface
         $style->commandsEventReport('Post commands end');
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     *
-     * @return void
-     */
     protected function cachePostCommands(SprykDefinitionInterface $sprykDefinition): void
     {
         if (!$sprykDefinition->getPostCommands()) {
@@ -349,17 +249,10 @@ class SprykExecutor implements SprykExecutorInterface
         }
     }
 
-    /**
-     * @param string $commandName
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
-     *
-     * @return void
-     */
     protected function executeCommand(
         string $commandName,
         SprykDefinitionInterface $sprykDefinition,
-        SprykStyleInterface $style
+        SprykStyleInterface $style,
     ): void {
         foreach ($this->sprykCommands as $command) {
             if ($command->getName() !== $commandName) {
@@ -372,12 +265,6 @@ class SprykExecutor implements SprykExecutorInterface
         }
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
-     *
-     * @return void
-     */
     protected function buildPreSpryks(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): void
     {
         $preSpryks = $sprykDefinition->getPreSpryks();
@@ -398,12 +285,6 @@ class SprykExecutor implements SprykExecutorInterface
         }
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
-     *
-     * @return void
-     */
     protected function buildSpryks(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): void
     {
         $spryks = $sprykDefinition->getSpryks();
@@ -424,12 +305,6 @@ class SprykExecutor implements SprykExecutorInterface
         }
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
-     *
-     * @return void
-     */
     protected function buildPostSpryks(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): void
     {
         $postSpryks = $sprykDefinition->getPostSpryks();
@@ -450,11 +325,6 @@ class SprykExecutor implements SprykExecutorInterface
         }
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     *
-     * @return bool
-     */
     protected function shouldSubSprykBeBuild(SprykDefinitionInterface $sprykDefinition): bool
     {
         if (isset($this->executedSpryks[$sprykDefinition->getSprykDefinitionKey()])) {
@@ -466,52 +336,5 @@ class SprykExecutor implements SprykExecutorInterface
         }
 
         return true;
-    }
-
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
-     *
-     * @throws \SprykerSdk\Spryk\Exception\SprykWrongDevelopmentLayerException
-     *
-     * @return string
-     */
-    protected function getSprykDefinitionMode(
-        SprykDefinitionInterface $sprykDefinition,
-        SprykStyleInterface $style
-    ): string {
-        if (!$this->isValidModes($sprykDefinition, $style)) {
-            $errorMessage = '`%s` spryk support `%s` development layer only.';
-
-            throw new SprykWrongDevelopmentLayerException(
-                sprintf($errorMessage, $sprykDefinition->getSprykName(), strtoupper($sprykDefinition->getMode())),
-            );
-        }
-
-        $sprykMode = $style->getInput()->getOption(SprykConfig::NAME_ARGUMENT_MODE);
-
-        return is_string($sprykMode) ? $sprykMode : $sprykDefinition->getMode();
-    }
-
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
-     *
-     * @return bool
-     */
-    protected function isValidModes(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): bool
-    {
-        $sprykModeArgument = $style->getInput()->getOption(SprykConfig::NAME_ARGUMENT_MODE);
-        $sprykModeDefinition = $sprykDefinition->getMode();
-
-        if ($sprykModeDefinition === 'both') {
-            return true;
-        }
-
-        if ($sprykModeArgument === false || $sprykModeArgument === null) {
-            return true;
-        }
-
-        return $sprykModeArgument === $sprykModeDefinition;
     }
 }

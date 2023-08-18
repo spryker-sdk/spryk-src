@@ -69,11 +69,6 @@ class UpdateJsonSpryk extends AbstractBuilder
         return $targetPath . $fileName;
     }
 
-    /**
-     * @param array $jsonAsArray
-     *
-     * @return array
-     */
     protected function updateJson(array $jsonAsArray): array
     {
         $target = $this->getTarget();
@@ -107,17 +102,11 @@ class UpdateJsonSpryk extends AbstractBuilder
         return $jsonAsArray;
     }
 
-    /**
-     * @return string
-     */
     protected function getKey(): string
     {
         return $this->getStringArgument(static::ARGUMENT_KEY);
     }
 
-    /**
-     * @return string
-     */
     protected function getValue(): string
     {
         return $this->getStringArgument(static::ARGUMENT_VALUE);

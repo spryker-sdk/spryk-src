@@ -13,24 +13,8 @@ use PhpParser\NodeVisitorAbstract;
 
 class ReplaceMethodBodyNodeVisitor extends NodeVisitorAbstract
 {
-    /**
-     * @var string
-     */
-    protected string $methodName;
-
-    /**
-     * @var \PhpParser\Node\Stmt\ClassMethod
-     */
-    protected ClassMethod $classMethod;
-
-    /**
-     * @param string $methodName
-     * @param \PhpParser\Node\Stmt\ClassMethod $classMethod
-     */
-    public function __construct(string $methodName, ClassMethod $classMethod)
+    public function __construct(protected string $methodName, protected ClassMethod $classMethod)
     {
-        $this->methodName = $methodName;
-        $this->classMethod = $classMethod;
     }
 
     /**
