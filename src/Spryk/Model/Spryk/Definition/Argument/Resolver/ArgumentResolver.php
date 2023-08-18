@@ -244,8 +244,6 @@ class ArgumentResolver implements ArgumentResolverInterface
     }
 
     /**
-     * @param array $values
-     *
      * @return mixed
      */
     protected function choseArgumentValue(string $argument, string $sprykName, array $values, mixed $default)

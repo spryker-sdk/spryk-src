@@ -25,6 +25,7 @@
         <exclude name="Spryker.Commenting.DocBlockReturnVoid.ReturnMissing"/>
         <exclude name="Spryker.Commenting.DocBlock.ReturnVoidMissing"/>
         <exclude name="Spryker.Commenting.DocBlockParam.SignatureMismatch"/>
+        <exclude name="Spryker.Commenting.DocBlockParamAllowDefaultValue.Typehint"/>
         <exclude name="Spryker.Commenting.DocBlock.ConstructDesctructMissingDocBlock"/>
     </rule>
 

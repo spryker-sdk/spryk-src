@@ -42,7 +42,7 @@ class SprykExecutorConfiguration implements SprykExecutorConfigurationInterface
     /**
      * @var string|null
      */
-    protected ?string $dependentModuleOrganization;
+    protected ?string $dependentModuleOrganization = null;
 
     /**
      * @var string|null
