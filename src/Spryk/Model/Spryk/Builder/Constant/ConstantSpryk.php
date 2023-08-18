@@ -36,19 +36,13 @@ class ConstantSpryk extends AbstractBuilder
     public const ARGUMENT_CONSTANT_VISIBILITY = 'visibility';
 
     /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface
-     */
-    protected NodeFinderInterface $nodeFinder;
-
-    /**
      * @param \SprykerSdk\Spryk\SprykConfig $config
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface $fileResolver
      * @param \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface $nodeFinder
      */
-    public function __construct(SprykConfig $config, FileResolverInterface $fileResolver, NodeFinderInterface $nodeFinder)
+    public function __construct(SprykConfig $config, FileResolverInterface $fileResolver, protected NodeFinderInterface $nodeFinder)
     {
         parent::__construct($config, $fileResolver);
-        $this->nodeFinder = $nodeFinder;
     }
 
     /**
@@ -98,12 +92,6 @@ class ConstantSpryk extends AbstractBuilder
         ));
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolvedClass
-     * @param string $constantName
-     *
-     * @return bool
-     */
     protected function constantExists(ResolvedClassInterface $resolvedClass, string $constantName): bool
     {
         $constNode = $this->nodeFinder->findConstantNode($resolvedClass->getClassTokenTree(), $constantName);
@@ -115,17 +103,11 @@ class ConstantSpryk extends AbstractBuilder
         return true;
     }
 
-    /**
-     * @return string
-     */
     protected function getConstantVisibility(): string
     {
         return $this->getStringArgument(static::ARGUMENT_CONSTANT_VISIBILITY);
     }
 
-    /**
-     * @return string
-     */
     protected function getConstantName(): string
     {
         $constantName = $this->getStringArgument(static::ARGUMENT_CONSTANT_NAME);
@@ -138,9 +120,6 @@ class ConstantSpryk extends AbstractBuilder
         return $filterChain->filter($constantName);
     }
 
-    /**
-     * @return string
-     */
     protected function getConstantValue(): string
     {
         return $this->getStringArgument(static::ARGUMENT_CONSTANT_VALUE);

@@ -63,17 +63,11 @@ class NavigationSpryk extends AbstractBuilder
         $this->log(sprintf('Added navigation entry in <fg=green>%s</>', $this->getTargetPath()));
     }
 
-    /**
-     * @return string
-     */
     protected function getController(): string
     {
         return $this->getStringArgument(static::ARGUMENT_CONTROLLER);
     }
 
-    /**
-     * @return string
-     */
     protected function getAction(): string
     {
         return $this->getStringArgument(static::ARGUMENT_ACTION);

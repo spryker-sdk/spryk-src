@@ -28,11 +28,6 @@ class XmlParser implements ParserInterface
         return $this->fromFileContent($type);
     }
 
-    /**
-     * @param string $filePath
-     *
-     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedXml
-     */
     protected function fromFilePath(string $filePath): ResolvedXml
     {
         $resolved = new ResolvedXml();
@@ -51,11 +46,7 @@ class XmlParser implements ParserInterface
     }
 
     /**
-     * @param string $fileContents
-     *
      * @throws \SprykerSdk\Spryk\Exception\XmlException
-     *
-     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedXml
      */
     protected function fromFileContent(string $fileContents): ResolvedXml
     {

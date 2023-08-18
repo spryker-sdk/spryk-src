@@ -21,11 +21,6 @@ class DescriptionExistingRule extends AbstractCheckerValidatorRule
         }
     }
 
-    /**
-     * @param array $sprykDefinition
-     *
-     * @return bool
-     */
     protected function isSprykDescriptionExists(array $sprykDefinition): bool
     {
         return isset($sprykDefinition['description']) && strlen($sprykDefinition['description']);

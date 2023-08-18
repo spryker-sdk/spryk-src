@@ -13,17 +13,8 @@ use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollecti
 
 class CallbackArgumentResolver implements CallbackArgumentResolverInterface
 {
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Callback\Collection\CallbackCollectionInterface
-     */
-    protected CallbackCollectionInterface $callbackCollection;
-
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Callback\Collection\CallbackCollectionInterface $callbackCollection
-     */
-    public function __construct(CallbackCollectionInterface $callbackCollection)
+    public function __construct(protected CallbackCollectionInterface $callbackCollection)
     {
-        $this->callbackCollection = $callbackCollection;
     }
 
     /**

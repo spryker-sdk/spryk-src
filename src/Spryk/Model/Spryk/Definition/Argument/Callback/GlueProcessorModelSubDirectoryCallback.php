@@ -25,7 +25,6 @@ class GlueProcessorModelSubDirectoryCallback implements CallbackInterface
     }
 
     /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $argumentCollection
      * @param mixed|null $value
      *
      * @return mixed
@@ -33,7 +32,7 @@ class GlueProcessorModelSubDirectoryCallback implements CallbackInterface
     public function getValue(ArgumentCollectionInterface $argumentCollection, $value)
     {
         $className = (string)$argumentCollection->getArgument('className')->getValue();
-        if (strpos($className, '\\') === false) {
+        if (!str_contains($className, '\\')) {
             return null;
         }
 

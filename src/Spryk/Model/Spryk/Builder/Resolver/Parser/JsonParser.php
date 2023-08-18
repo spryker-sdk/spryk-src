@@ -27,11 +27,6 @@ class JsonParser implements ParserInterface
         return $this->fromFileContent($type);
     }
 
-    /**
-     * @param string $filePath
-     *
-     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedJsonInterface
-     */
     protected function fromFilePath(string $filePath): ResolvedJsonInterface
     {
         $resolved = $this->fromFileContent((string)file_get_contents($filePath));
@@ -40,11 +35,6 @@ class JsonParser implements ParserInterface
         return $resolved;
     }
 
-    /**
-     * @param string $fileContents
-     *
-     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedJsonInterface
-     */
     protected function fromFileContent(string $fileContents): ResolvedJsonInterface
     {
         $resolved = new ResolvedJson();

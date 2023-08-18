@@ -158,7 +158,7 @@ abstract class AbstractTransferSpryk extends AbstractBuilder
         // Examples:
         // --property propertyA:string
         // --property propertyA:string,propertyB:int
-        if (strpos($properties, ':') !== false) {
+        if (str_contains($properties, ':')) {
             return explode(',', $properties);
         }
 
@@ -166,8 +166,6 @@ abstract class AbstractTransferSpryk extends AbstractBuilder
     }
 
     /**
-     * @param string $properties
-     *
      * @return array
      */
     protected function getPropertiesFromString(string $properties): array
@@ -182,9 +180,6 @@ abstract class AbstractTransferSpryk extends AbstractBuilder
     }
 
     /**
-     * @param \SimpleXMLElement $simpleXMLElement
-     * @param string $transferName
-     *
      * @return \SimpleXMLElement
      */
     protected function findTransferByName(SimpleXMLElement $simpleXMLElement, string $transferName): SimpleXMLElement
@@ -253,9 +248,6 @@ abstract class AbstractTransferSpryk extends AbstractBuilder
     }
 
     /**
-     * @param \SimpleXMLElement $transferXMLElement
-     * @param string $propertyName
-     *
      * @return \SimpleXMLElement|null
      */
     protected function findPropertyByName(SimpleXMLElement $transferXMLElement, string $propertyName): ?SimpleXMLElement

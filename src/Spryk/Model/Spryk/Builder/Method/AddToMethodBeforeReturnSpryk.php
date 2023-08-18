@@ -26,26 +26,6 @@ class AddToMethodBeforeReturnSpryk extends AbstractBuilder
     protected const ARGUMENT_TEMPLATE = 'template';
 
     /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface
-     */
-    protected TemplateRendererInterface $renderer;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface
-     */
-    protected NodeFinderInterface $nodeFinder;
-
-    /**
-     * @var \PhpParser\Parser
-     */
-    protected Parser $parser;
-
-    /**
-     * @var \PhpParser\Lexer
-     */
-    protected Lexer $lexer;
-
-    /**
      * @param \SprykerSdk\Spryk\SprykConfig $config
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface $fileResolver
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface $renderer
@@ -56,17 +36,12 @@ class AddToMethodBeforeReturnSpryk extends AbstractBuilder
     public function __construct(
         SprykConfig $config,
         FileResolverInterface $fileResolver,
-        TemplateRendererInterface $renderer,
-        NodeFinderInterface $nodeFinder,
-        Parser $parser,
-        Lexer $lexer,
+        protected TemplateRendererInterface $renderer,
+        protected NodeFinderInterface $nodeFinder,
+        protected Parser $parser,
+        protected Lexer $lexer,
     ) {
         parent::__construct($config, $fileResolver);
-
-        $this->renderer = $renderer;
-        $this->nodeFinder = $nodeFinder;
-        $this->parser = $parser;
-        $this->lexer = $lexer;
     }
 
     /**
@@ -87,8 +62,6 @@ class AddToMethodBeforeReturnSpryk extends AbstractBuilder
 
     /**
      * Find out if the content is already added to the method method.
-     *
-     * @return bool
      */
     protected function isDeclared(): bool
     {
@@ -135,9 +108,6 @@ class AddToMethodBeforeReturnSpryk extends AbstractBuilder
         );
     }
 
-    /**
-     * @return \PhpParser\Node\Stmt\Expression
-     */
     protected function getExpression(): Expression
     {
         $expressionContent = $this->getContentForExpression();
@@ -153,9 +123,6 @@ class AddToMethodBeforeReturnSpryk extends AbstractBuilder
         return $expression;
     }
 
-    /**
-     * @return string
-     */
     protected function getContentForExpression(): string
     {
         if ($this->arguments->hasArgument('body')) {
@@ -170,25 +137,16 @@ class AddToMethodBeforeReturnSpryk extends AbstractBuilder
         );
     }
 
-    /**
-     * @return string
-     */
     protected function getTemplateName(): string
     {
         return $this->getStringArgument(static::ARGUMENT_TEMPLATE);
     }
 
-    /**
-     * @return string
-     */
     protected function getMethodName(): string
     {
         return $this->arguments->getArgument('methodName')->getValue();
     }
 
-    /**
-     * @return string
-     */
     protected function getContent(): string
     {
         return $this->arguments->getArgument('body')->getValue();

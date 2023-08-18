@@ -70,14 +70,6 @@ class OrderStatementsInClassVisitor extends NodeVisitorAbstract
         return $node;
     }
 
-    /**
-     * @param array $traitStatements
-     * @param array $constStatements
-     * @param array $propertyStatements
-     * @param array $methodStatements
-     *
-     * @return array
-     */
     protected function orderStatements(array $traitStatements, array $constStatements, array $propertyStatements, array $methodStatements): array
     {
         $orderedStatements = [];
@@ -90,8 +82,6 @@ class OrderStatementsInClassVisitor extends NodeVisitorAbstract
 
     /**
      * @param array<\PhpParser\Node\Stmt\ClassMethod> $methodStatements
-     *
-     * @return array
      */
     protected function orderMethodStatements(array $methodStatements): array
     {

@@ -21,8 +21,6 @@ class SprykFacade implements SprykFacadeInterface
     /**
      * This is only needed when the SprykFacadeInterface is used from an external module like `spryker-sdk/spryk-gui`.
      * When using the console commands provided by this the factory will be auto-wired by the application.
-     *
-     * @param \SprykerSdk\Spryk\SprykFactory|null $factory
      */
     public function __construct(?SprykFactory $factory = null)
     {
@@ -37,8 +35,6 @@ class SprykFacade implements SprykFacadeInterface
 
     /**
      * This method is only required to be able to use `new SprykFacade()` in other packages e.g. `spryker-sdk/spryk-gui`.
-     *
-     * @return \SprykerSdk\Spryk\SprykFactory
      */
     protected function getSprykFactory(): SprykFactory
     {

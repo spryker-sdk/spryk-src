@@ -36,15 +36,6 @@ class TransferPropertySpryk extends AbstractTransferSpryk
         }
     }
 
-    /**
-     * @param \SimpleXMLElement $transferXMLElement
-     * @param string $transferName
-     * @param string $propertyName
-     * @param string $propertyType
-     * @param string|null $singular
-     *
-     * @return void
-     */
     protected function addProperty(
         SimpleXMLElement $transferXMLElement,
         string $transferName,

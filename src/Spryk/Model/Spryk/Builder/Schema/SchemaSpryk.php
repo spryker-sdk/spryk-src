@@ -21,20 +21,13 @@ class SchemaSpryk extends AbstractBuilder
     public const ARGUMENT_TABLE_NAME = 'tableName';
 
     /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Filter\CamelCaseFilter
-     */
-    protected CamelCaseFilter $filter;
-
-    /**
      * @param \SprykerSdk\Spryk\SprykConfig $config
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface $fileResolver
      * @param \SprykerSdk\Spryk\Model\Spryk\Filter\CamelCaseFilter $filter
      */
-    public function __construct(SprykConfig $config, FileResolverInterface $fileResolver, CamelCaseFilter $filter)
+    public function __construct(SprykConfig $config, FileResolverInterface $fileResolver, protected CamelCaseFilter $filter)
     {
         parent::__construct($config, $fileResolver);
-
-        $this->filter = $filter;
     }
 
     /**
@@ -70,20 +63,11 @@ class SchemaSpryk extends AbstractBuilder
         $this->log(sprintf('Added table to <fg=green>%s</>', $this->getTargetPath()));
     }
 
-    /**
-     * @return string
-     */
     protected function getTableName(): string
     {
         return $this->getStringArgument(static::ARGUMENT_TABLE_NAME);
     }
 
-    /**
-     * @param \SimpleXMLElement $simpleXmlElement
-     * @param string $tableName
-     *
-     * @return bool
-     */
     protected function isTableDefinedInSchema(SimpleXMLElement $simpleXmlElement, string $tableName): bool
     {
         $tableXmlElements = $simpleXmlElement->xpath('//table');

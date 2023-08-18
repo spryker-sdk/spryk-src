@@ -41,26 +41,6 @@ class ResourceRouteSpryk extends AbstractBuilder
     protected const SPRYK_NAME = 'resourceRoute';
 
     /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface
-     */
-    protected TemplateRendererInterface $renderer;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface
-     */
-    protected NodeFinderInterface $nodeFinder;
-
-    /**
-     * @var \PhpParser\Parser
-     */
-    protected Parser $parser;
-
-    /**
-     * @var \PhpParser\Lexer
-     */
-    protected Lexer $lexer;
-
-    /**
      * @param \SprykerSdk\Spryk\SprykConfig $config
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface $fileResolver
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Template\Renderer\TemplateRendererInterface $renderer
@@ -71,17 +51,12 @@ class ResourceRouteSpryk extends AbstractBuilder
     public function __construct(
         SprykConfig $config,
         FileResolverInterface $fileResolver,
-        TemplateRendererInterface $renderer,
-        NodeFinderInterface $nodeFinder,
-        Parser $parser,
-        Lexer $lexer,
+        protected TemplateRendererInterface $renderer,
+        protected NodeFinderInterface $nodeFinder,
+        protected Parser $parser,
+        protected Lexer $lexer,
     ) {
         parent::__construct($config, $fileResolver);
-
-        $this->renderer = $renderer;
-        $this->nodeFinder = $nodeFinder;
-        $this->parser = $parser;
-        $this->lexer = $lexer;
     }
 
     /**
@@ -128,9 +103,6 @@ class ResourceRouteSpryk extends AbstractBuilder
         );
     }
 
-    /**
-     * @return \PhpParser\Node\Stmt\Expression
-     */
     protected function getExpression(): Expression
     {
         $templateName = $this->getTemplateName();
@@ -149,17 +121,11 @@ class ResourceRouteSpryk extends AbstractBuilder
         return $expression;
     }
 
-    /**
-     * @return string
-     */
     protected function getTemplateName(): string
     {
         return $this->getStringArgument(static::ARGUMENT_TEMPLATE);
     }
 
-    /**
-     * @return bool
-     */
     protected function isRouteDeclared(): bool
     {
         /** @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface|null $resolved */
@@ -181,9 +147,6 @@ class ResourceRouteSpryk extends AbstractBuilder
         return false;
     }
 
-    /**
-     * @return string
-     */
     protected function getResourceRouteMethod(): string
     {
         return $this->getStringArgument(static::ARGUMENT_RESOURCE_ROUTE_METHOD);

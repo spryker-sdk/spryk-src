@@ -27,19 +27,9 @@ class AddUseVisitor extends NodeVisitorAbstract
      */
     protected string $className;
 
-    /**
-     * @var string|null
-     */
-    protected ?string $alias;
-
-    /**
-     * @param string $className
-     * @param string|null $alias
-     */
-    public function __construct(string $className, ?string $alias = null)
+    public function __construct(string $className, protected ?string $alias = null)
     {
         $this->className = trim($className, '\\');
-        $this->alias = $alias;
     }
 
     /**
@@ -82,8 +72,6 @@ class AddUseVisitor extends NodeVisitorAbstract
 
     /**
      * @param array<\PhpParser\Node\Stmt> $stmts
-     *
-     * @return bool
      */
     protected function useAdded(array $stmts): bool
     {
@@ -101,12 +89,6 @@ class AddUseVisitor extends NodeVisitorAbstract
         return false;
     }
 
-    /**
-     * @param \PhpParser\Node\Stmt\Use_ $nodeA
-     * @param \PhpParser\Node\Stmt\Use_ $nodeB
-     *
-     * @return int
-     */
     protected function compareUseStatements(Use_ $nodeA, Use_ $nodeB): int
     {
         $aNameParts = explode('\\', $nodeA->uses[0]->name->toString());
@@ -125,9 +107,6 @@ class AddUseVisitor extends NodeVisitorAbstract
         return count($aNameParts) <=> count($bNameParts);
     }
 
-    /**
-     * @return \PhpParser\Node\Stmt\Use_
-     */
     protected function createUse(): Use_
     {
         $use = (new BuilderFactory())->use($this->className);

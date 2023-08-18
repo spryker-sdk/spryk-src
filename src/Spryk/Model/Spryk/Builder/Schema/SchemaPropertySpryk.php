@@ -90,20 +90,11 @@ class SchemaPropertySpryk extends AbstractBuilder
         $this->addColumn($tableXmlElement);
     }
 
-    /**
-     * @return string
-     */
     protected function getSchemaName(): string
     {
         return $this->getStringArgument(static::ARGUMENT_NAME);
     }
 
-    /**
-     * @param \SimpleXMLElement $simpleXmlElement
-     * @param string $schemaName
-     *
-     * @return \SimpleXMLElement|null
-     */
     protected function findTableByName(SimpleXMLElement $simpleXmlElement, string $schemaName): ?SimpleXMLElement
     {
         foreach ($simpleXmlElement->children() as $schemaXmlElement) {
@@ -115,11 +106,6 @@ class SchemaPropertySpryk extends AbstractBuilder
         return null;
     }
 
-    /**
-     * @param \SimpleXMLElement $tableXmlElement
-     *
-     * @return void
-     */
     protected function addColumn(SimpleXMLElement $tableXmlElement): void
     {
         $columnName = $this->getPropertyByName(static::PROPERTY_NAME);
@@ -136,22 +122,11 @@ class SchemaPropertySpryk extends AbstractBuilder
         $this->fillNonRequiredAttributes($columnXmlElement);
     }
 
-    /**
-     * @param string $propertyName
-     *
-     * @return string
-     */
     protected function getPropertyByName(string $propertyName): string
     {
         return $this->arguments->getArgument($propertyName)->getValue();
     }
 
-    /**
-     * @param \SimpleXMLElement $simpleXmlElement
-     * @param string $columnName
-     *
-     * @return bool
-     */
     protected function isColumnDefinedInTable(SimpleXMLElement $simpleXmlElement, string $columnName): bool
     {
         $columnXmlElements = $simpleXmlElement->xpath('//column');
@@ -165,11 +140,6 @@ class SchemaPropertySpryk extends AbstractBuilder
         return false;
     }
 
-    /**
-     * @param \SimpleXMLElement $columnXmlElement
-     *
-     * @return void
-     */
     protected function fillNonRequiredAttributes(SimpleXMLElement $columnXmlElement): void
     {
         $nonRequiredProperties = [

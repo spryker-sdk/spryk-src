@@ -80,11 +80,6 @@ class SprykDumpConsole extends AbstractSprykConsole
         return static::CODE_SUCCESS;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     *
-     * @return int|null
-     */
     protected function getLevelOption(InputInterface $input): ?int
     {
         $level = current((array)$input->getOption(static::OPTION_LEVEL));
@@ -92,12 +87,6 @@ class SprykDumpConsole extends AbstractSprykConsole
         return $level === 'all' ? null : (int)$level;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param int|null $level
-     *
-     * @return void
-     */
     protected function dumpAllSpryks(OutputInterface $output, ?int $level): void
     {
         $sprykDefinitions = $this->getFacade()->getSprykDefinitions($level);
@@ -107,12 +96,6 @@ class SprykDumpConsole extends AbstractSprykConsole
         $this->printTable($output, ['Spryk name', 'Description', 'Arguments'], $sprykDefinitions);
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param string $sprykName
-     *
-     * @return void
-     */
     protected function dumpSpryk(OutputInterface $output, string $sprykName): void
     {
         $sprykDefinition = $this->getFacade()->getSprykDefinition($sprykName);
@@ -125,12 +108,6 @@ class SprykDumpConsole extends AbstractSprykConsole
         $this->printCommandRunExample($sprykDefinition[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS], $sprykName, $output);
     }
 
-    /**
-     * @param array $sprykArguments
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return void
-     */
     protected function printTableWithRequiredArguments(array $sprykArguments, OutputInterface $output): void
     {
         $output->writeln('');
@@ -158,12 +135,6 @@ class SprykDumpConsole extends AbstractSprykConsole
         $output->writeln('<fg=yellow>This Spryk does not have any required arguments to be passed</>');
     }
 
-    /**
-     * @param array $sprykArguments
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return void
-     */
     protected function printTableWithOptionalArguments(array $sprykArguments, OutputInterface $output): void
     {
         $headers = ['Optional Argument', 'Description', 'Default', 'Value'];
@@ -195,12 +166,6 @@ class SprykDumpConsole extends AbstractSprykConsole
         }
     }
 
-    /**
-     * @param array $preSpryks
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return void
-     */
     protected function printTableWithPreSpryks(array $preSpryks, OutputInterface $output): void
     {
         $output->writeln('');
@@ -227,12 +192,6 @@ class SprykDumpConsole extends AbstractSprykConsole
         $output->writeln('<fg=yellow>This Spryk does not have any preSpryk to be executed</>');
     }
 
-    /**
-     * @param array $postSpryks
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return void
-     */
     protected function printTableWithPostSpryks(array $postSpryks, OutputInterface $output): void
     {
         $output->writeln('');
@@ -259,13 +218,6 @@ class SprykDumpConsole extends AbstractSprykConsole
         $output->writeln('<fg=yellow>This Spryk does not have any postSpryk to be executed</>');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param array $headers
-     * @param array $rows
-     *
-     * @return void
-     */
     protected function printTable(OutputInterface $output, array $headers, array $rows): void
     {
         (new Table($output))
@@ -274,13 +226,6 @@ class SprykDumpConsole extends AbstractSprykConsole
             ->render();
     }
 
-    /**
-     * @param array $arguments
-     * @param string $sprykName
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return void
-     */
     protected function printCommandRunExample(array $arguments, string $sprykName, OutputInterface $output): void
     {
         $consoleOutput = [
@@ -309,11 +254,7 @@ class SprykDumpConsole extends AbstractSprykConsole
     }
 
     /**
-     * @param array $sprykDefinitions
-     *
      * @throws \Exception
-     *
-     * @return array
      */
     protected function formatSpryks(array $sprykDefinitions): array
     {
@@ -333,11 +274,6 @@ class SprykDumpConsole extends AbstractSprykConsole
         return $formatted;
     }
 
-    /**
-     * @param array $sprykDefinition
-     *
-     * @return string
-     */
     protected function formatArguments(array $sprykDefinition): string
     {
         return implode(', ', array_keys($sprykDefinition[SprykConfig::SPRYK_DEFINITION_KEY_ARGUMENTS]));

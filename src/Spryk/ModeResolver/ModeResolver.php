@@ -37,12 +37,6 @@ class ModeResolver implements ModeResolverInterface
         return is_string($sprykMode) ? $sprykMode : $sprykDefinition->getMode();
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
-     *
-     * @return bool
-     */
     private function isValidMode(SprykDefinitionInterface $sprykDefinition, SprykStyleInterface $style): bool
     {
         $sprykModeArgument = $style->getInput()->getOption(SprykConfig::NAME_ARGUMENT_MODE);

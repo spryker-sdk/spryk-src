@@ -31,11 +31,6 @@ class TargetPathExtenderPlugin extends AbstractExtender implements SprykConfigur
         return $this->buildProjectPath($sprykConfig);
     }
 
-    /**
-     * @param array $sprykConfig
-     *
-     * @return array
-     */
     protected function buildProjectPath(array $sprykConfig): array
     {
         $arguments = $this->getArguments($sprykConfig);
@@ -65,11 +60,6 @@ class TargetPathExtenderPlugin extends AbstractExtender implements SprykConfigur
         return $this->setArguments($arguments, $sprykConfig);
     }
 
-    /**
-     * @param string $targetPath
-     *
-     * @return string
-     */
     protected function buildTargetPath(string $targetPath): string
     {
         $pathPattern = sprintf('/\%1$ssrc\%1$s.+|\%1$stests\%1$s.+/', DIRECTORY_SEPARATOR);

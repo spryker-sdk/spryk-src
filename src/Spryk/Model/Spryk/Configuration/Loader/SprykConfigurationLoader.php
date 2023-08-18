@@ -17,26 +17,6 @@ use Symfony\Component\Yaml\Yaml;
 class SprykConfigurationLoader implements SprykConfigurationLoaderInterface
 {
     /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Configuration\Finder\SprykConfigurationFinderInterface
-     */
-    protected SprykConfigurationFinderInterface $configurationFinder;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Configuration\Extender\SprykConfigurationExtenderInterface
-     */
-    protected SprykConfigurationExtenderInterface $configurationExtender;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Configuration\Validator\ConfigurationValidatorInterface
-     */
-    protected ConfigurationValidatorInterface $configurationValidator;
-
-    /**
-     * @var \SprykerSdk\Spryk\SprykConfig
-     */
-    protected SprykConfig $sprykConfig;
-
-    /**
      * @var array<string, mixed>|null
      */
     protected ?array $rootConfiguration = null;
@@ -46,22 +26,12 @@ class SprykConfigurationLoader implements SprykConfigurationLoaderInterface
      */
     protected array $loadedConfigurations = [];
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Configuration\Finder\SprykConfigurationFinderInterface $configurationFinder
-     * @param \SprykerSdk\Spryk\Model\Spryk\Configuration\Extender\SprykConfigurationExtenderInterface $configurationExtender
-     * @param \SprykerSdk\Spryk\Model\Spryk\Configuration\Validator\ConfigurationValidatorInterface $configurationValidator
-     * @param \SprykerSdk\Spryk\SprykConfig $sprykConfig
-     */
     public function __construct(
-        SprykConfigurationFinderInterface $configurationFinder,
-        SprykConfigurationExtenderInterface $configurationExtender,
-        ConfigurationValidatorInterface $configurationValidator,
-        SprykConfig $sprykConfig,
+        protected SprykConfigurationFinderInterface $configurationFinder,
+        protected SprykConfigurationExtenderInterface $configurationExtender,
+        protected ConfigurationValidatorInterface $configurationValidator,
+        protected SprykConfig $sprykConfig,
     ) {
-        $this->configurationFinder = $configurationFinder;
-        $this->configurationExtender = $configurationExtender;
-        $this->configurationValidator = $configurationValidator;
-        $this->sprykConfig = $sprykConfig;
     }
 
     /**
@@ -82,11 +52,6 @@ class SprykConfigurationLoader implements SprykConfigurationLoaderInterface
         ]);
     }
 
-    /**
-     * @param string $sprykName
-     *
-     * @return array
-     */
     protected function load(string $sprykName): array
     {
         if (!isset($this->loadedConfigurations[$sprykName])) {
@@ -97,9 +62,6 @@ class SprykConfigurationLoader implements SprykConfigurationLoaderInterface
         return $this->loadedConfigurations[$sprykName];
     }
 
-    /**
-     * @return array
-     */
     protected function getRootConfiguration(): array
     {
         if (!$this->rootConfiguration) {
@@ -111,11 +73,7 @@ class SprykConfigurationLoader implements SprykConfigurationLoaderInterface
     }
 
     /**
-     * @param array $sprykConfiguration
-     *
      * @throws \SprykerSdk\Spryk\Exception\SprykConfigNotValid
-     *
-     * @return void
      */
     protected function validateConfiguration(array $sprykConfiguration): void
     {
@@ -128,12 +86,6 @@ class SprykConfigurationLoader implements SprykConfigurationLoaderInterface
         throw new SprykConfigNotValid(implode(PHP_EOL, $validationErrorMessages));
     }
 
-    /**
-     * @param array $sprykConfiguration
-     * @param string|null $sprykMode
-     *
-     * @return array
-     */
     protected function buildMode(array $sprykConfiguration, ?string $sprykMode = null): array
     {
         if (!isset($sprykConfiguration[SprykConfig::NAME_ARGUMENT_MODE])) {
@@ -147,11 +99,6 @@ class SprykConfigurationLoader implements SprykConfigurationLoaderInterface
         return $sprykConfiguration;
     }
 
-    /**
-     * @param array $sprykConfiguration
-     *
-     * @return array
-     */
     protected function buildLevel(array $sprykConfiguration): array
     {
         if (!isset($sprykConfiguration[SprykConfig::SPRYK_DEFINITION_KEY_LEVEL])) {

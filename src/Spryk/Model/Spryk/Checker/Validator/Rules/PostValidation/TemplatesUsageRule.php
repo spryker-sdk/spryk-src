@@ -14,24 +14,8 @@ use Throwable;
 
 class TemplatesUsageRule implements PostValidationInterface
 {
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Checker\Finder\SprykTemplateFinderInterface
-     */
-    protected SprykTemplateFinderInterface $sprykTemplateFinder;
-
-    /**
-     * @var \SprykerSdk\Spryk\SprykConfig
-     */
-    protected SprykConfig $config;
-
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Checker\Finder\SprykTemplateFinderInterface $sprykTemplateFinder
-     * @param \SprykerSdk\Spryk\SprykConfig $config
-     */
-    public function __construct(SprykTemplateFinderInterface $sprykTemplateFinder, SprykConfig $config)
+    public function __construct(protected SprykTemplateFinderInterface $sprykTemplateFinder, protected SprykConfig $config)
     {
-        $this->sprykTemplateFinder = $sprykTemplateFinder;
-        $this->config = $config;
     }
 
     /**
@@ -52,11 +36,6 @@ class TemplatesUsageRule implements PostValidationInterface
         return $sprykDetails;
     }
 
-    /**
-     * @param array $sprykDetails
-     *
-     * @return void
-     */
     public function fix(array $sprykDetails): void
     {
         $usedTemplates = $this->extractUsedTemplates($sprykDetails);
@@ -80,11 +59,6 @@ class TemplatesUsageRule implements PostValidationInterface
         ];
     }
 
-    /**
-     * @param array $sprykDetails
-     *
-     * @return array
-     */
     protected function extractUsedTemplates(array $sprykDetails): array
     {
         $usedTemplates = [];
@@ -122,7 +96,7 @@ class TemplatesUsageRule implements PostValidationInterface
                             $usedTemplates[] = $foundTemplate;
                         }
                     }
-                } catch (Throwable $exception) {
+                } catch (Throwable) {
                 }
             }
         }
@@ -130,12 +104,6 @@ class TemplatesUsageRule implements PostValidationInterface
         return $usedTemplates;
     }
 
-    /**
-     * @param array $usedTemplates
-     * @param array $spryk
-     *
-     * @return void
-     */
     protected function checkTemplateArgumentExisting(array &$usedTemplates, array $spryk): void
     {
         foreach ($this->getArgumentListWhichTemplateCanBeUsed() as $argumentName) {
@@ -157,12 +125,6 @@ class TemplatesUsageRule implements PostValidationInterface
         ];
     }
 
-    /**
-     * @param array $usedTemplates
-     * @param array $argument
-     *
-     * @return void
-     */
     protected function checkTemplateInArgument(array &$usedTemplates, array $argument): void
     {
         if (isset($argument['value'])) {
@@ -182,12 +144,6 @@ class TemplatesUsageRule implements PostValidationInterface
         }
     }
 
-    /**
-     * @param array $usedTemplates
-     * @param string $argument
-     *
-     * @return void
-     */
     protected function writeUnusedTemplate(array &$usedTemplates, string $argument): void
     {
         if (!$this->isTwigTemplateExtension($argument)) {
@@ -197,31 +153,16 @@ class TemplatesUsageRule implements PostValidationInterface
         $usedTemplates[] = $argument;
     }
 
-    /**
-     * @param string $argumentValue
-     *
-     * @return bool
-     */
     protected function isTwigTemplateExtension(string $argumentValue): bool
     {
-        return strpos($argumentValue, '.twig') !== false;
+        return str_contains($argumentValue, '.twig');
     }
 
-    /**
-     * @param string $template
-     *
-     * @return string
-     */
     protected function getFileName(string $template): string
     {
         return array_reverse(explode('/', $template))[0];
     }
 
-    /**
-     * @param array $usedTemplates
-     *
-     * @return array
-     */
     protected function collectUnusedTemplates(array $usedTemplates): array
     {
         $unusedTemplates = [];
@@ -235,21 +176,11 @@ class TemplatesUsageRule implements PostValidationInterface
         return array_unique($unusedTemplates);
     }
 
-    /**
-     * @param string $templateName
-     *
-     * @return string
-     */
     protected function getTemplatePath(string $templateName): string
     {
         return '';
     }
 
-    /**
-     * @param string $templatePath
-     *
-     * @return string
-     */
     protected function prepareWarningMessage(string $templatePath): string
     {
         return sprintf(

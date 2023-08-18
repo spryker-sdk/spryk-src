@@ -15,34 +15,8 @@ use SprykerSdk\Spryk\Model\Spryk\Builder\NodeVisitor\OrderStatementsInClassVisit
 
 class ClassDumper implements ClassDumperInterface
 {
-    /**
-     * @var \PhpParser\PrettyPrinter\Standard
-     */
-    protected Standard $classPrinter;
-
-    /**
-     * @var \PhpParser\Parser
-     */
-    protected Parser $parser;
-
-    /**
-     * @var \PhpParser\Lexer
-     */
-    protected Lexer $lexer;
-
-    /**
-     * @param \PhpParser\PrettyPrinter\Standard $classPrinter
-     * @param \PhpParser\Parser $parser
-     * @param \PhpParser\Lexer $lexer
-     */
-    public function __construct(
-        Standard $classPrinter,
-        Parser $parser,
-        Lexer $lexer,
-    ) {
-        $this->classPrinter = $classPrinter;
-        $this->parser = $parser;
-        $this->lexer = $lexer;
+    public function __construct(protected Standard $classPrinter, protected Parser $parser, protected Lexer $lexer)
+    {
     }
 
     /**
@@ -63,11 +37,6 @@ class ClassDumper implements ClassDumperInterface
         }
     }
 
-    /**
-     * @param array $statements
-     *
-     * @return array
-     */
     protected function orderStatementsInClass(array $statements): array
     {
         $traverser = new NodeTraverser();

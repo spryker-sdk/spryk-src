@@ -40,16 +40,6 @@ abstract class AbstractBuilder implements SprykBuilderInterface
     public const ARGUMENT_MODULE = 'module';
 
     /**
-     * @var \SprykerSdk\Spryk\SprykConfig
-     */
-    protected SprykConfig $config;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface
-     */
-    protected FileResolverInterface $fileResolver;
-
-    /**
      * @var \SprykerSdk\Spryk\Style\SprykStyleInterface|null
      */
     protected ?SprykStyleInterface $style = null;
@@ -64,14 +54,8 @@ abstract class AbstractBuilder implements SprykBuilderInterface
      */
     protected ArgumentCollectionInterface $arguments;
 
-    /**
-     * @param \SprykerSdk\Spryk\SprykConfig $config
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface $fileResolver
-     */
-    public function __construct(SprykConfig $config, FileResolverInterface $fileResolver)
+    public function __construct(protected SprykConfig $config, protected FileResolverInterface $fileResolver)
     {
-        $this->config = $config;
-        $this->fileResolver = $fileResolver;
     }
 
     /**
@@ -105,8 +89,6 @@ abstract class AbstractBuilder implements SprykBuilderInterface
     abstract protected function build(): void;
 
     /**
-     * @param string $message
-     *
      * @return void
      */
     protected function log(string $message): void
@@ -151,8 +133,6 @@ abstract class AbstractBuilder implements SprykBuilderInterface
     }
 
     /**
-     * @param string $relativeFilePath
-     *
      * @return string
      */
     protected function getFileTargetPath(string $relativeFilePath): string
@@ -164,8 +144,6 @@ abstract class AbstractBuilder implements SprykBuilderInterface
     }
 
     /**
-     * @param string $relativeDirPath
-     *
      * @return string
      */
     protected function getAbsoluteTargetPath(string $relativeDirPath): string
@@ -216,8 +194,6 @@ abstract class AbstractBuilder implements SprykBuilderInterface
     }
 
     /**
-     * @param string $argumentName
-     *
      * @throws \InvalidArgumentException
      *
      * @return string
@@ -234,8 +210,6 @@ abstract class AbstractBuilder implements SprykBuilderInterface
     }
 
     /**
-     * @param string $argumentName
-     *
      * @throws \InvalidArgumentException
      *
      * @return array
@@ -252,8 +226,6 @@ abstract class AbstractBuilder implements SprykBuilderInterface
     }
 
     /**
-     * @param string $argumentName
-     *
      * @return mixed
      */
     protected function getArgumentByName(string $argumentName)

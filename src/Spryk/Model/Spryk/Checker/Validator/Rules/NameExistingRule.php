@@ -35,21 +35,11 @@ class NameExistingRule extends AbstractCheckerValidatorRule
         }
     }
 
-    /**
-     * @param array $sprykDefinition
-     *
-     * @return bool
-     */
     protected function isNamePropertyExists(array $sprykDefinition): bool
     {
         return isset($sprykDefinition['name']);
     }
 
-    /**
-     * @param array $spryk
-     *
-     * @return bool
-     */
     protected function isSprykNameEqualsFileName(array $spryk): bool
     {
         $fileName = $this->extractFileNameByPath($spryk['path']);
@@ -57,11 +47,6 @@ class NameExistingRule extends AbstractCheckerValidatorRule
         return isset($spryk['definition']['name']) && $fileName === $spryk['definition']['name'];
     }
 
-    /**
-     * @param string $filePath
-     *
-     * @return string|null
-     */
     protected function extractFileNameByPath(string $filePath): ?string
     {
         $filePath = explode('/', $filePath);
@@ -105,11 +90,6 @@ class NameExistingRule extends AbstractCheckerValidatorRule
         }
     }
 
-    /**
-     * @param string $sprykContents
-     *
-     * @return string
-     */
     protected function getNameParameterLine(string $sprykContents): string
     {
         $matches = [];

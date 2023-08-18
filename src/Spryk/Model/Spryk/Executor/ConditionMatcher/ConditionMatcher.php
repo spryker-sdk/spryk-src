@@ -23,9 +23,6 @@ class ConditionMatcher implements ConditionMatcherInterface
      */
     protected $expressionLanguage;
 
-    /**
-     * @param \Symfony\Component\ExpressionLanguage\ExpressionLanguage $expressionLanguage
-     */
     public function __construct(ExpressionLanguage $expressionLanguage)
     {
         $this->expressionLanguage = $expressionLanguage;

@@ -29,21 +29,6 @@ class AddGlueResourceMethodVisitor extends NodeVisitorAbstract
     protected const CONFIGURATION_TRANSFER_NAME = 'GlueResourceMethodConfigurationTransfer';
 
     /**
-     * @var string
-     */
-    protected string $methodName;
-
-    /**
-     * @var string
-     */
-    protected string $resourceDataObjectName;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface
-     */
-    protected NodeFinderInterface $nodeFinder;
-
-    /**
      * @var array<string>
      */
     protected $methodNamesRequireDomainEntityTransfer = [
@@ -51,16 +36,8 @@ class AddGlueResourceMethodVisitor extends NodeVisitorAbstract
         'setPatch',
     ];
 
-    /**
-     * @param string $methodName
-     * @param string $resourceDataObjectName
-     * @param \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface $nodeFinder
-     */
-    public function __construct(string $methodName, string $resourceDataObjectName, NodeFinderInterface $nodeFinder)
+    public function __construct(protected string $methodName, protected string $resourceDataObjectName, protected NodeFinderInterface $nodeFinder)
     {
-        $this->methodName = $methodName;
-        $this->resourceDataObjectName = $resourceDataObjectName;
-        $this->nodeFinder = $nodeFinder;
     }
 
     /**

@@ -10,8 +10,6 @@ namespace SprykerSdk\Spryk\Model\Spryk\Configuration\Validator\Rules;
 interface ConfigurationValidatorRuleInterface
 {
     /**
-     * @param array $sprykConfig
-     *
      * @return bool
      */
     public function validate(array $sprykConfig): bool;

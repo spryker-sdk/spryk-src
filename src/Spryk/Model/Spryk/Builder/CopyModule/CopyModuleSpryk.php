@@ -33,19 +33,13 @@ class CopyModuleSpryk extends AbstractBuilder
     protected const ARGUMENT_TO_MODULE = 'toModule';
 
     /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Filter\DasherizeFilter
-     */
-    protected DasherizeFilter $dasherizeFilter;
-
-    /**
      * @param \SprykerSdk\Spryk\SprykConfig $config
      * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface $fileResolver
      * @param \SprykerSdk\Spryk\Model\Spryk\Filter\DasherizeFilter $dasherizeFilter
      */
-    public function __construct(SprykConfig $config, FileResolverInterface $fileResolver, DasherizeFilter $dasherizeFilter)
+    public function __construct(SprykConfig $config, FileResolverInterface $fileResolver, protected DasherizeFilter $dasherizeFilter)
     {
         parent::__construct($config, $fileResolver);
-        $this->dasherizeFilter = $dasherizeFilter;
     }
 
     /**
@@ -100,19 +94,11 @@ class CopyModuleSpryk extends AbstractBuilder
         return $finder;
     }
 
-    /**
-     * @return string
-     */
     protected function getSourcePath(): string
     {
         return $this->getStringArgument(static::ARGUMENT_SOURCE_PATH);
     }
 
-    /**
-     * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
-     *
-     * @return void
-     */
     protected function copySourceFile(SplFileInfo $fileInfo): void
     {
         $targetPath = $this->buildTargetPath($fileInfo);
@@ -133,11 +119,6 @@ class CopyModuleSpryk extends AbstractBuilder
         ));
     }
 
-    /**
-     * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
-     *
-     * @return string
-     */
     protected function buildTargetPath(SplFileInfo $fileInfo): string
     {
         $module = $this->getModuleName();
@@ -145,7 +126,7 @@ class CopyModuleSpryk extends AbstractBuilder
         $sourcePathRelative = ($fileInfo->getRelativePath() !== '') ? $fileInfo->getRelativePath() . DIRECTORY_SEPARATOR : '';
         $targetPath = $this->getTargetPath();
 
-        if (strpos($fileInfo->getPathname(), sprintf('/%sExtension/', $module)) !== false) {
+        if (str_contains($fileInfo->getPathname(), sprintf('/%sExtension/', $module))) {
             $targetPath = rtrim($targetPath, DIRECTORY_SEPARATOR) . 'Extension' . DIRECTORY_SEPARATOR;
         }
 
@@ -157,11 +138,7 @@ class CopyModuleSpryk extends AbstractBuilder
     }
 
     /**
-     * @param string $fileName
-     *
      * @throws \SprykerSdk\Spryk\Exception\SprykException
-     *
-     * @return string
      */
     protected function renameFile(string $fileName): string
     {
@@ -190,9 +167,6 @@ class CopyModuleSpryk extends AbstractBuilder
         return $fileName;
     }
 
-    /**
-     * @return array
-     */
     protected function buildSearchAndReplaceMapForFilePath(): array
     {
         $organization = $this->getOrganizationName();
@@ -210,11 +184,7 @@ class CopyModuleSpryk extends AbstractBuilder
     }
 
     /**
-     * @param string $content
-     *
      * @throws \SprykerSdk\Spryk\Exception\SprykException
-     *
-     * @return string
      */
     protected function prepareTargetFileContent(string $content): string
     {
@@ -229,9 +199,6 @@ class CopyModuleSpryk extends AbstractBuilder
         return $content;
     }
 
-    /**
-     * @return array
-     */
     protected function buildSearchAndReplaceMapForFileContent(): array
     {
         $organization = $this->getOrganizationName();
@@ -278,11 +245,6 @@ class CopyModuleSpryk extends AbstractBuilder
         return $this->config->getProjectRootDirectory() . $this->getStringArgument(static::ARGUMENT_TARGET_PATH);
     }
 
-    /**
-     * @param string $string
-     *
-     * @return string
-     */
     protected function dasherize(string $string): string
     {
         return $this->dasherizeFilter->filter($string);

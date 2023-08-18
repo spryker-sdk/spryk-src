@@ -95,8 +95,6 @@ class SprykDefinition implements SprykDefinitionInterface
     }
 
     /**
-     * @param string $builder
-     *
      * @return $this
      */
     public function setBuilder(string $builder)
@@ -115,8 +113,6 @@ class SprykDefinition implements SprykDefinitionInterface
     }
 
     /**
-     * @param string $sprykName
-     *
      * @return $this
      */
     public function setSprykName(string $sprykName)
@@ -135,8 +131,6 @@ class SprykDefinition implements SprykDefinitionInterface
     }
 
     /**
-     * @param string $sprykDefinitionKey
-     *
      * @return $this
      */
     public function setSprykDefinitionKey(string $sprykDefinitionKey)
@@ -147,8 +141,6 @@ class SprykDefinition implements SprykDefinitionInterface
     }
 
     /**
-     * @param array $config
-     *
      * @return $this
      */
     public function setConfig(array $config)
@@ -175,8 +167,6 @@ class SprykDefinition implements SprykDefinitionInterface
     }
 
     /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $argumentCollection
-     *
      * @return $this
      */
     public function setArgumentCollection(ArgumentCollectionInterface $argumentCollection)
@@ -315,8 +305,6 @@ class SprykDefinition implements SprykDefinitionInterface
     }
 
     /**
-     * @param string $mode
-     *
      * @return $this
      */
     public function setMode(string $mode)
@@ -327,8 +315,6 @@ class SprykDefinition implements SprykDefinitionInterface
     }
 
     /**
-     * @param string $condition
-     *
      * @return $this
      */
     public function setCondition(string $condition)

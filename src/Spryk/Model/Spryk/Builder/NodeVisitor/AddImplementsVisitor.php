@@ -16,17 +16,8 @@ use PhpParser\NodeVisitorAbstract;
 
 class AddImplementsVisitor extends NodeVisitorAbstract
 {
-    /**
-     * @var string
-     */
-    protected string $interface;
-
-    /**
-     * @param string $interface
-     */
-    public function __construct(string $interface)
+    public function __construct(protected string $interface)
     {
-        $this->interface = $interface;
     }
 
     /**

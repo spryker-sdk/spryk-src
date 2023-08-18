@@ -23,8 +23,6 @@ trait InputHelper
     protected $output;
 
     /**
-     * @param \Symfony\Component\Console\Question\Question $question
-     *
      * @return mixed
      */
     public function askQuestion(Question $question)

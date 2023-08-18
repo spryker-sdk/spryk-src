@@ -13,16 +13,10 @@ use SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\NameExistingRule;
 class CheckerSprykDefinitionValidator implements CheckerSprykDefinitionValidatorInterface
 {
     /**
-     * @var array<\SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\PostValidation\PostValidationInterface>
-     */
-    protected array $postValidations;
-
-    /**
      * @param array<\SprykerSdk\Spryk\Model\Spryk\Checker\Validator\Rules\PostValidation\PostValidationInterface> $postValidations
      */
-    public function __construct(array $postValidations)
+    public function __construct(protected array $postValidations)
     {
-        $this->postValidations = $postValidations;
     }
 
     /**
@@ -64,9 +58,6 @@ class CheckerSprykDefinitionValidator implements CheckerSprykDefinitionValidator
         return $this->postValidations;
     }
 
-    /**
-     * @return array
-     */
     protected function getRules(): array
     {
         return [

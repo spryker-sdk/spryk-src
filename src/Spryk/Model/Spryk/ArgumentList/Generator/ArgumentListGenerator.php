@@ -15,11 +15,6 @@ use Symfony\Component\Yaml\Yaml;
 class ArgumentListGenerator implements ArgumentListGeneratorInterface
 {
     /**
-     * @var \SprykerSdk\Spryk\SprykConfig
-     */
-    protected SprykConfig $config;
-
-    /**
      * @var string
      */
     protected $argumentListFilePath;
@@ -29,15 +24,10 @@ class ArgumentListGenerator implements ArgumentListGeneratorInterface
      */
     protected $argumentListBuilder;
 
-    /**
-     * @param \SprykerSdk\Spryk\SprykConfig $config
-     * @param \SprykerSdk\Spryk\Model\Spryk\ArgumentList\Builder\ArgumentListBuilderInterface $argumentListBuilder
-     */
     public function __construct(
-        SprykConfig $config,
+        protected SprykConfig $config,
         ArgumentListBuilderInterface $argumentListBuilder,
     ) {
-        $this->config = $config;
         $this->argumentListBuilder = $argumentListBuilder;
     }
 
@@ -70,9 +60,6 @@ class ArgumentListGenerator implements ArgumentListGeneratorInterface
         throw new FileGenerationException('File was not generated. Please check internal logs.');
     }
 
-    /**
-     * @return string
-     */
     protected function getFileDescriptionComment(): string
     {
         return '###'

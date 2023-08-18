@@ -15,17 +15,8 @@ use SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollecti
  */
 class ResolveExtends implements CallbackInterface
 {
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface
-     */
-    protected FileResolverInterface $fileResolver;
-
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\FileResolverInterface $fileResolver
-     */
-    public function __construct(FileResolverInterface $fileResolver)
+    public function __construct(protected FileResolverInterface $fileResolver)
     {
-        $this->fileResolver = $fileResolver;
     }
 
     /**
@@ -37,10 +28,7 @@ class ResolveExtends implements CallbackInterface
     }
 
     /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $argumentCollection
      * @param mixed|null $value
-     *
-     * @return string
      */
     public function getValue(ArgumentCollectionInterface $argumentCollection, $value): string
     {

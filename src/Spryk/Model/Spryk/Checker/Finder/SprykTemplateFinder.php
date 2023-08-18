@@ -12,17 +12,8 @@ use Symfony\Component\Finder\Finder;
 
 class SprykTemplateFinder implements SprykTemplateFinderInterface
 {
-    /**
-     * @var \SprykerSdk\Spryk\SprykConfig
-     */
-    protected SprykConfig $config;
-
-    /**
-     * @param \SprykerSdk\Spryk\SprykConfig $config
-     */
-    public function __construct(SprykConfig $config)
+    public function __construct(protected SprykConfig $config)
     {
-        $this->config = $config;
     }
 
     /**

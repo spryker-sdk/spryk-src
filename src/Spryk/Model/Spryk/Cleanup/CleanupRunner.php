@@ -84,11 +84,6 @@ class CleanupRunner implements CleanupRunnerInterface
         // @codeCoverageIgnoreEnd
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClassInterface $resolved
-     *
-     * @return void
-     */
     protected function addResolvedClassForCleanup(ResolvedClassInterface $resolved): void
     {
         if ($resolved->getClassName()) {
@@ -106,28 +101,18 @@ class CleanupRunner implements CleanupRunnerInterface
         }
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedYmlInterface $resolved
-     *
-     * @return void
-     */
     protected function addResolvedJsonForCleanup(ResolvedYmlInterface $resolved): void
     {
         $pathToRunCodeceptionBuild = $this->getPathToRunCodeceptionBuild($resolved->getFilePath());
 
         if ($pathToRunCodeceptionBuild) {
-            if (substr($pathToRunCodeceptionBuild, 0, strlen(APPLICATION_ROOT_DIR)) === APPLICATION_ROOT_DIR) {
+            if (str_starts_with($pathToRunCodeceptionBuild, APPLICATION_ROOT_DIR)) {
                 $pathToRunCodeceptionBuild = ltrim(substr($pathToRunCodeceptionBuild, strlen(APPLICATION_ROOT_DIR)), DIRECTORY_SEPARATOR);
             }
             $this->pathsToRunCodeceptionBuild[$pathToRunCodeceptionBuild] = $pathToRunCodeceptionBuild;
         }
     }
 
-    /**
-     * @param string $filePath
-     *
-     * @return string|null
-     */
     protected function getPathToRunCodeceptionBuild(string $filePath): ?string
     {
         $pathFragments = explode(DIRECTORY_SEPARATOR, $filePath);
@@ -150,11 +135,6 @@ class CleanupRunner implements CleanupRunnerInterface
         return $filePath;
     }
 
-    /**
-     * @param string $filePath
-     *
-     * @return string
-     */
     protected function getPathForCodeSniffer(string $filePath): string
     {
         $cutOffPosition = $this->getCutOffPosition($filePath) + 2;
@@ -162,18 +142,13 @@ class CleanupRunner implements CleanupRunnerInterface
 
         $pathForCodeSniffer = implode(DIRECTORY_SEPARATOR, array_slice($pathFragments, 0, $cutOffPosition));
 
-        if (substr($pathForCodeSniffer, 0, strlen(APPLICATION_ROOT_DIR)) === APPLICATION_ROOT_DIR) {
+        if (str_starts_with($pathForCodeSniffer, APPLICATION_ROOT_DIR)) {
             $pathForCodeSniffer = substr($pathForCodeSniffer, strlen(APPLICATION_ROOT_DIR));
         }
 
         return ltrim($pathForCodeSniffer, DIRECTORY_SEPARATOR);
     }
 
-    /**
-     * @param string $filePath
-     *
-     * @return int
-     */
     protected function getCutOffPosition(string $filePath): int
     {
         $pathFragments = explode(DIRECTORY_SEPARATOR, $filePath);
@@ -197,11 +172,7 @@ class CleanupRunner implements CleanupRunnerInterface
     }
 
     /**
-     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
-     *
      * @throws \Exception
-     *
-     * @return void
      */
     protected function runCodeceptionBuildOnPaths(SprykStyleInterface $style): void
     {
@@ -219,11 +190,6 @@ class CleanupRunner implements CleanupRunnerInterface
         }
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
-     *
-     * @return void
-     */
     protected function runCodeSnifferOnModules(SprykStyleInterface $style): void
     {
         foreach ($this->modulesToRunCodeSniffer as $moduleNameToFix) {
@@ -236,11 +202,6 @@ class CleanupRunner implements CleanupRunnerInterface
         }
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
-     *
-     * @return void
-     */
     protected function runCodeSnifferOnPaths(SprykStyleInterface $style): void
     {
         foreach ($this->pathsToRunCodeSniffer as $pathToRunCodeSniffer) {
@@ -253,11 +214,6 @@ class CleanupRunner implements CleanupRunnerInterface
         }
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
-     *
-     * @return void
-     */
     protected function runTransferBuilders(SprykStyleInterface $style): void
     {
         if (!$this->runTransferBuilders) {
@@ -279,11 +235,6 @@ class CleanupRunner implements CleanupRunnerInterface
         echo $process->getOutput();
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Style\SprykStyleInterface $style
-     *
-     * @return void
-     */
     protected function runPropelInstall(SprykStyleInterface $style): void
     {
         if (!$this->runPropelInstall) {

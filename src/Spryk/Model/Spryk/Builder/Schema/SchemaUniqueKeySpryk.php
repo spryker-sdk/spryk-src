@@ -65,20 +65,11 @@ class SchemaUniqueKeySpryk extends AbstractBuilder
         $this->addUniqueKey($tableXmlElement);
     }
 
-    /**
-     * @return string
-     */
     protected function getSchemaName(): string
     {
         return $this->getStringArgument(static::ARGUMENT_NAME);
     }
 
-    /**
-     * @param \SimpleXMLElement $simpleXmlElement
-     * @param string $schemaName
-     *
-     * @return \SimpleXMLElement|null
-     */
     protected function findTableByName(SimpleXMLElement $simpleXmlElement, string $schemaName): ?SimpleXMLElement
     {
         foreach ($simpleXmlElement->children() as $schemaXmlElement) {
@@ -90,11 +81,6 @@ class SchemaUniqueKeySpryk extends AbstractBuilder
         return null;
     }
 
-    /**
-     * @param \SimpleXMLElement $tableXmlElement
-     *
-     * @return void
-     */
     protected function addUniqueKey(SimpleXMLElement $tableXmlElement): void
     {
         $uniqueKeyName = $this->getUniqueKeyName();
@@ -112,9 +98,6 @@ class SchemaUniqueKeySpryk extends AbstractBuilder
         }
     }
 
-    /**
-     * @return string
-     */
     protected function getUniqueKeyName(): string
     {
         return $this->arguments->getArgument(static::KEY_NAME)->getValue();
@@ -128,12 +111,6 @@ class SchemaUniqueKeySpryk extends AbstractBuilder
         return $this->arguments->getArgument(static::COLUMNS)->getValue();
     }
 
-    /**
-     * @param \SimpleXMLElement $simpleXmlElement
-     * @param string $uniqueKeyName
-     *
-     * @return bool
-     */
     protected function isUniqueKeyDefinedInTable(SimpleXMLElement $simpleXmlElement, string $uniqueKeyName): bool
     {
         $columnXmlElements = $simpleXmlElement->xpath('//unique');

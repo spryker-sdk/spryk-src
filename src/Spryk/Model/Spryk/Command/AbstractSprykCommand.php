@@ -44,8 +44,6 @@ abstract class AbstractSprykCommand implements SprykCommandInterface
     }
 
     /**
-     * @param \Symfony\Component\Process\Process $process
-     *
      * @return string
      */
     protected function getProcessErrorOutput(Process $process): string
@@ -66,15 +64,11 @@ abstract class AbstractSprykCommand implements SprykCommandInterface
     abstract protected function getCommandLine(): string;
 
     /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     *
      * @return bool
      */
     abstract protected function isRunnable(SprykDefinitionInterface $sprykDefinition): bool;
 
     /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     *
      * @return string
      */
     abstract protected function getFallbackMessage(SprykDefinitionInterface $sprykDefinition): string;

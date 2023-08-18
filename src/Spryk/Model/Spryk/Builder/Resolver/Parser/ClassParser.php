@@ -20,31 +20,8 @@ use SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface;
 
 class ClassParser implements ParserInterface
 {
-    /**
-     * @var \PhpParser\Parser
-     */
-    protected Parser $parser;
-
-    /**
-     * @var \PhpParser\Lexer
-     */
-    protected Lexer $lexer;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface
-     */
-    protected NodeFinderInterface $nodeFinder;
-
-    /**
-     * @param \PhpParser\Parser $parser
-     * @param \PhpParser\Lexer $lexer
-     * @param \SprykerSdk\Spryk\Model\Spryk\NodeFinder\NodeFinderInterface $nodeFinder
-     */
-    public function __construct(Parser $parser, Lexer $lexer, NodeFinderInterface $nodeFinder)
+    public function __construct(protected Parser $parser, protected Lexer $lexer, protected NodeFinderInterface $nodeFinder)
     {
-        $this->parser = $parser;
-        $this->lexer = $lexer;
-        $this->nodeFinder = $nodeFinder;
     }
 
     /**
@@ -54,22 +31,17 @@ class ClassParser implements ParserInterface
      */
     public function parse(string $type): ResolvedInterface
     {
-        if (strpos($type, '<?php') !== false) {
+        if (str_contains($type, '<?php')) {
             return $this->fromFileContent($type);
         }
 
-        if (strpos($type, '.php') !== false) {
+        if (str_contains($type, '.php')) {
             return $this->fromFile($type);
         }
 
         return $this->fromClassName($type);
     }
 
-    /**
-     * @param string $className
-     *
-     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClass
-     */
     protected function fromClassName(string $className): ResolvedClass
     {
         /** @phpstan-var class-string $className */
@@ -96,11 +68,6 @@ class ClassParser implements ParserInterface
         return $resolved;
     }
 
-    /**
-     * @param string $filePath
-     *
-     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClass
-     */
     protected function fromFile(string $filePath): ResolvedClass
     {
         $fileContents = (string)file_get_contents($filePath);
@@ -113,11 +80,7 @@ class ClassParser implements ParserInterface
     }
 
     /**
-     * @param string $fileContents
-     *
      * @throws \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Exception\FileDoesNotContainClassOrInterfaceException
-     *
-     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedClass
      */
     protected function fromFileContent(string $fileContents): ResolvedClass
     {

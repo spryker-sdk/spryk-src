@@ -26,22 +26,11 @@ abstract class AbstractExtender
      */
     protected const NAME_APPLICATION_LAYER_ZED = 'Zed';
 
-    /**
-     * @var \SprykerSdk\Spryk\SprykConfig
-     */
-    protected SprykConfig $config;
-
-    /**
-     * @param \SprykerSdk\Spryk\SprykConfig $config
-     */
-    public function __construct(SprykConfig $config)
+    public function __construct(protected SprykConfig $config)
     {
-        $this->config = $config;
     }
 
     /**
-     * @param array $sprykConfig
-     *
      * @return array
      */
     protected function getArguments(array $sprykConfig): array
@@ -50,9 +39,6 @@ abstract class AbstractExtender
     }
 
     /**
-     * @param array $arguments
-     * @param array $sprykConfig
-     *
      * @return array
      */
     protected function setArguments(array $arguments, array $sprykConfig): array
@@ -67,9 +53,6 @@ abstract class AbstractExtender
     }
 
     /**
-     * @param array $sprykConfig
-     * @param array $context
-     *
      * @return string|null
      */
     protected function getDevelopmentLayer(array $sprykConfig, array $context): ?string
@@ -82,9 +65,6 @@ abstract class AbstractExtender
     }
 
     /**
-     * @param array $sprykConfig
-     * @param array $context
-     *
      * @return bool
      */
     protected function isProject(array $sprykConfig, array $context): bool
@@ -93,9 +73,6 @@ abstract class AbstractExtender
     }
 
     /**
-     * @param array $sprykConfig
-     * @param array $context
-     *
      * @return bool
      */
     protected function isCore(array $sprykConfig, array $context): bool
@@ -104,9 +81,6 @@ abstract class AbstractExtender
     }
 
     /**
-     * @param array $sprykConfig
-     * @param array $context
-     *
      * @return bool
      */
     protected function isBoth(array $sprykConfig, array $context): bool

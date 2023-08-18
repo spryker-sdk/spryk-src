@@ -49,10 +49,6 @@ class Debug implements DebugInterface
      */
     protected array $postCommandCache = [];
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Executor\ConditionMatcher\ConditionMatcherInterface $conditionMatcher
-     * @param \SprykerSdk\Spryk\ModeResolver\ModeResolverInterface $modeResolver
-     */
     public function __construct(private ConditionMatcherInterface $conditionMatcher, private ModeResolverInterface $modeResolver)
     {
     }
@@ -99,11 +95,6 @@ class Debug implements DebugInterface
         $this->buildSpryk($sprykDefinition);
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     *
-     * @return void
-     */
     protected function buildSpryk(SprykDefinitionInterface $sprykDefinition): void
     {
         $this->executePreSpryks($sprykDefinition);
@@ -112,11 +103,6 @@ class Debug implements DebugInterface
         $this->executePostSpryks($sprykDefinition);
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     *
-     * @return bool
-     */
     protected function conditionMatched(SprykDefinitionInterface $sprykDefinition): bool
     {
         $conditionString = $sprykDefinition->getCondition();
@@ -128,11 +114,6 @@ class Debug implements DebugInterface
         return $this->conditionMatcher->match($conditionString, $sprykDefinition->getArgumentCollection());
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     *
-     * @return void
-     */
     protected function executePreSpryks(SprykDefinitionInterface $sprykDefinition): void
     {
         ++$this->currentExecutionLevel;
@@ -140,11 +121,6 @@ class Debug implements DebugInterface
         --$this->currentExecutionLevel;
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     *
-     * @return void
-     */
     protected function executeSpryks(SprykDefinitionInterface $sprykDefinition): void
     {
         ++$this->currentExecutionLevel;
@@ -152,11 +128,6 @@ class Debug implements DebugInterface
         --$this->currentExecutionLevel;
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     *
-     * @return void
-     */
     protected function executeSpryk(SprykDefinitionInterface $sprykDefinition): void
     {
         $this->style->writeln(str_repeat('-', $this->currentExecutionLevel) . ' ' . $sprykDefinition->getSprykName());
@@ -174,11 +145,6 @@ class Debug implements DebugInterface
         $this->executedSpryks[$sprykDefinition->getSprykDefinitionKey()] = $sprykDefinition;
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\ArgumentInterface $argument
-     *
-     * @return mixed
-     */
     private function getValueOfArgument(ArgumentInterface $argument): mixed
     {
         /** @var array|string|int|bool $value */
@@ -195,11 +161,6 @@ class Debug implements DebugInterface
         return $value;
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     *
-     * @return void
-     */
     protected function executePostSpryks(SprykDefinitionInterface $sprykDefinition): void
     {
         ++$this->currentExecutionLevel;
@@ -207,11 +168,6 @@ class Debug implements DebugInterface
         --$this->currentExecutionLevel;
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     *
-     * @return void
-     */
     protected function buildPreSpryks(SprykDefinitionInterface $sprykDefinition): void
     {
         $preSpryks = $sprykDefinition->getPreSpryks();
@@ -232,11 +188,6 @@ class Debug implements DebugInterface
         }
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     *
-     * @return void
-     */
     protected function buildSpryks(SprykDefinitionInterface $sprykDefinition): void
     {
         $spryks = $sprykDefinition->getSpryks();
@@ -257,11 +208,6 @@ class Debug implements DebugInterface
         }
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     *
-     * @return void
-     */
     protected function buildPostSpryks(SprykDefinitionInterface $sprykDefinition): void
     {
         $postSpryks = $sprykDefinition->getPostSpryks();
@@ -282,11 +228,6 @@ class Debug implements DebugInterface
         }
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinitionInterface $sprykDefinition
-     *
-     * @return bool
-     */
     protected function shouldSubSprykBeBuild(SprykDefinitionInterface $sprykDefinition): bool
     {
         if (isset($this->executedSpryks[$sprykDefinition->getSprykDefinitionKey()])) {

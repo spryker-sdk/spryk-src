@@ -77,8 +77,6 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
      *
      * @param string $propertyName
      * @param string $transferName
-     *
-     * @return bool
      */
     protected function isAutoIncrementField(string $propertyName, string $transferName): bool
     {
@@ -91,9 +89,6 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
         return false;
     }
 
-    /**
-     * @return string|null
-     */
     protected function getDataBuilderRule(): ?string
     {
         $dataBuilderRule = $this->arguments->getArgument(static::DATA_BUILDER_RULE)->getValue();
@@ -108,14 +103,6 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
         );
     }
 
-    /**
-     * @param \SimpleXMLElement $transferXMLElement
-     * @param string $transferName
-     * @param string $propertyName
-     * @param string|null $dataBuilderRule
-     *
-     * @return void
-     */
     protected function addProperty(
         SimpleXMLElement $transferXMLElement,
         string $transferName,
@@ -141,29 +128,18 @@ class DataBuilderPropertySpryk extends AbstractTransferSpryk
         $this->log(sprintf('Added dataBuilderXMLElement property <fg=green>%s.%s</>', $transferName, $propertyName));
     }
 
-    /**
-     * @param string $propertyName
-     * @param string $propertyType
-     *
-     * @return string|null
-     */
     protected function dataBuilderRuleByProperty(string $propertyName, string $propertyType): ?string
     {
         if ($propertyName === 'uuid') {
             return 'uuid()';
         }
 
-        switch ($propertyType) {
-            case 'string':
-                return 'word()';
-            case 'int':
-                return 'randomDigit()';
-            case 'bool':
-                return 'boolean()';
-            case 'array':
-                return 'randomElements()';
-        }
-
-        return null;
+        return match ($propertyType) {
+            'string' => 'word()',
+            'int' => 'randomDigit()',
+            'bool' => 'boolean()',
+            'array' => 'randomElements()',
+            default => null,
+        };
     }
 }

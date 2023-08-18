@@ -33,10 +33,7 @@ class DependencyFactoryMethodReturn implements CallbackInterface
     }
 
     /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $argumentCollection
      * @param mixed|null $value
-     *
-     * @return string
      */
     public function getValue(ArgumentCollectionInterface $argumentCollection, $value): string
     {
@@ -64,28 +61,15 @@ class DependencyFactoryMethodReturn implements CallbackInterface
         );
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $argumentCollection
-     *
-     * @return string
-     */
     protected function getTargetApplication(ArgumentCollectionInterface $argumentCollection): string
     {
-        switch ($argumentCollection->getArgument('dependencyType', true)->getValue()) {
-            case 'Facade':
-                return 'Zed';
-            case 'Client':
-                return 'Client';
-            default:
-                return $argumentCollection->getArgument('application', true);
-        }
+        return match ($argumentCollection->getArgument('dependencyType', true)->getValue()) {
+            'Facade' => 'Zed',
+            'Client' => 'Client',
+            default => $argumentCollection->getArgument('application', true),
+        };
     }
 
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $argumentCollection
-     *
-     * @return string
-     */
     protected function getSubNameSpace(ArgumentCollectionInterface $argumentCollection): string
     {
         if ($argumentCollection->getArgument('dependencyType', true)->getValue() === 'Facade') {

@@ -7,7 +7,9 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Definition\Argument;
 
-class Argument implements ArgumentInterface
+use Stringable;
+
+class Argument implements ArgumentInterface, Stringable
 {
     /**
      * @var string
@@ -35,8 +37,6 @@ class Argument implements ArgumentInterface
     protected array $meta = [];
 
     /**
-     * @param string $name
-     *
      * @return $this
      */
     public function setName(string $name)
@@ -83,8 +83,6 @@ class Argument implements ArgumentInterface
     }
 
     /**
-     * @param bool $allowOverride
-     *
      * @return $this
      */
     public function setAllowOverride(bool $allowOverride)
@@ -103,8 +101,6 @@ class Argument implements ArgumentInterface
     }
 
     /**
-     * @param array $callbacks
-     *
      * @return $this
      */
     public function setCallbacks(array $callbacks)

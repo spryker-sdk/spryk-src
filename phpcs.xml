@@ -19,7 +19,14 @@
     <exclude-pattern>*/tests/_data/*</exclude-pattern>
     <exclude-pattern>*/tests/_support/Fixtures/*</exclude-pattern>
 
-    <rule ref="vendor/spryker/code-sniffer/Spryker/ruleset.xml"/>
+    <rule ref="vendor/spryker/code-sniffer/Spryker/ruleset.xml">
+        <exclude name="Spryker.Commenting.DocBlockReturnVoid.ReturnVoidMissing"/>
+        <exclude name="Spryker.Commenting.DocBlock.DocBlockMissing"/>
+        <exclude name="Spryker.Commenting.DocBlockReturnVoid.ReturnMissing"/>
+        <exclude name="Spryker.Commenting.DocBlock.ReturnVoidMissing"/>
+        <exclude name="Spryker.Commenting.DocBlockParam.SignatureMismatch"/>
+        <exclude name="Spryker.Commenting.DocBlock.ConstructDesctructMissingDocBlock"/>
+    </rule>
 
     <rule ref="vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml">
         <exclude name="SprykerStrict.TypeHints.ParameterTypeHint"/>

@@ -56,11 +56,6 @@ class SprykRunConsole extends AbstractSprykConsole
     public const OPTION_INCLUDE_OPTIONALS_SHORT = 'i';
 
     /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Executor\Configuration\SprykExecutorConfigurationInterface
-     */
-    protected SprykExecutorConfigurationInterface $executorConfiguration;
-
-    /**
      * @var array|null
      */
     protected static ?array $argumentsList = null;
@@ -70,11 +65,9 @@ class SprykRunConsole extends AbstractSprykConsole
      * @param \SprykerSdk\Spryk\SprykFacadeInterface $facade
      * @param string|null $name
      */
-    public function __construct(SprykExecutorConfigurationInterface $executorConfiguration, SprykFacadeInterface $facade, ?string $name = null)
+    public function __construct(protected SprykExecutorConfigurationInterface $executorConfiguration, SprykFacadeInterface $facade, ?string $name = null)
     {
         parent::__construct($facade, $name);
-
-        $this->executorConfiguration = $executorConfiguration;
     }
 
     /**
@@ -104,9 +97,6 @@ class SprykRunConsole extends AbstractSprykConsole
         }
     }
 
-    /**
-     * @return array
-     */
     protected function getSprykArguments(): array
     {
         if (static::$argumentsList === null) {
@@ -114,7 +104,7 @@ class SprykRunConsole extends AbstractSprykConsole
         }
 
         return array_filter(static::$argumentsList, function (array $argumentDefinition) {
-            return strpos($argumentDefinition['name'], '.') === false;
+            return !str_contains($argumentDefinition['name'], '.');
         });
     }
 
@@ -144,11 +134,7 @@ class SprykRunConsole extends AbstractSprykConsole
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     *
      * @throws \RuntimeException
-     *
-     * @return string
      */
     protected function getSprykName(InputInterface $input): string
     {
@@ -160,29 +146,16 @@ class SprykRunConsole extends AbstractSprykConsole
         return $name;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     *
-     * @return string
-     */
     protected function getTargetModuleName(InputInterface $input): string
     {
         return current((array)$input->getArgument(static::ARGUMENT_TARGET_MODULE)) ?: '';
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     *
-     * @return string
-     */
     protected function getDependentModuleName(InputInterface $input): string
     {
         return current((array)$input->getArgument(static::ARGUMENT_DEPENDENT_MODULE)) ?: '';
     }
 
-    /**
-     * @return string
-     */
     protected function getHelpText(): string
     {
         return 'Use `console spryk:dump <info>{SPRYK NAME}</info>` to get the options of a specific Spryk.';

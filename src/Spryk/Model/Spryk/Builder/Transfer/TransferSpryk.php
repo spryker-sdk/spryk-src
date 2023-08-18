@@ -54,9 +54,6 @@ class TransferSpryk extends AbstractTransferSpryk
         $this->log(sprintf('Added transfer in <fg=green>%s</>', $this->getTargetPath()));
     }
 
-    /**
-     * @return bool
-     */
     protected function isTransferDefined(): bool
     {
         $transferName = $this->getTransferName();

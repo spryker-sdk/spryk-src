@@ -12,26 +12,8 @@ use SprykerSdk\Spryk\Model\Spryk\Fixer\Finder\SprykDefinitionFinderInterface;
 
 class SprykDefinitionFixer implements SprykDefinitionFixerInterface
 {
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Fixer\Finder\SprykDefinitionFinderInterface
-     */
-    protected SprykDefinitionFinderInterface $sprykDefinitionFinder;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Checker\SprykDefinitionChecker
-     */
-    private SprykDefinitionChecker $sprykDefinitionChecker;
-
-    /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Fixer\Finder\SprykDefinitionFinderInterface $sprykDefinitionFinder
-     * @param \SprykerSdk\Spryk\Model\Spryk\Checker\SprykDefinitionChecker $sprykDefinitionChecker
-     */
-    public function __construct(
-        SprykDefinitionFinderInterface $sprykDefinitionFinder,
-        SprykDefinitionChecker $sprykDefinitionChecker,
-    ) {
-        $this->sprykDefinitionFinder = $sprykDefinitionFinder;
-        $this->sprykDefinitionChecker = $sprykDefinitionChecker;
+    public function __construct(protected SprykDefinitionFinderInterface $sprykDefinitionFinder, private SprykDefinitionChecker $sprykDefinitionChecker)
+    {
     }
 
     /**

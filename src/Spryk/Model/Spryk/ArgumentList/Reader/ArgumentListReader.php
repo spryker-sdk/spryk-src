@@ -14,34 +14,11 @@ use Symfony\Component\Yaml\Yaml;
 
 class ArgumentListReader implements ArgumentListReaderInterface
 {
-    /**
-     * @var \SprykerSdk\Spryk\SprykConfig
-     */
-    protected SprykConfig $config;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\ArgumentList\Builder\ArgumentListBuilderInterface
-     */
-    protected ArgumentListBuilderInterface $argumentListBuilder;
-
-    /**
-     * @var \SprykerSdk\Spryk\Model\Spryk\Dumper\SprykDefinitionDumperInterface
-     */
-    protected SprykDefinitionDumperInterface $definitionDumper;
-
-    /**
-     * @param \SprykerSdk\Spryk\SprykConfig $config
-     * @param \SprykerSdk\Spryk\Model\Spryk\ArgumentList\Builder\ArgumentListBuilderInterface $argumentListBuilder
-     * @param \SprykerSdk\Spryk\Model\Spryk\Dumper\SprykDefinitionDumperInterface $definitionDumper
-     */
     public function __construct(
-        SprykConfig $config,
-        ArgumentListBuilderInterface $argumentListBuilder,
-        SprykDefinitionDumperInterface $definitionDumper,
+        protected SprykConfig $config,
+        protected ArgumentListBuilderInterface $argumentListBuilder,
+        protected SprykDefinitionDumperInterface $definitionDumper,
     ) {
-        $this->config = $config;
-        $this->argumentListBuilder = $argumentListBuilder;
-        $this->definitionDumper = $definitionDumper;
     }
 
     /**
@@ -60,11 +37,6 @@ class ArgumentListReader implements ArgumentListReaderInterface
         return $this->argumentListBuilder->buildArgumentList($sprykDefinitions);
     }
 
-    /**
-     * @param string $cacheFilePath
-     *
-     * @return array
-     */
     protected function getCachedArgumentList(string $cacheFilePath): array
     {
         $argumentList = Yaml::parseFile($cacheFilePath);

@@ -25,7 +25,6 @@ class EnsureRestAttributesTransferAffixCallback implements CallbackInterface
     }
 
     /**
-     * @param \SprykerSdk\Spryk\Model\Spryk\Definition\Argument\Collection\ArgumentCollectionInterface $argumentCollection
      * @param mixed|null $value
      *
      * @return mixed
@@ -38,11 +37,6 @@ class EnsureRestAttributesTransferAffixCallback implements CallbackInterface
         return $this->ensureSuffix($value);
     }
 
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
     protected function ensurePrefix(string $value): string
     {
         $prefix = 'Rest';
@@ -53,15 +47,10 @@ class EnsureRestAttributesTransferAffixCallback implements CallbackInterface
         return $prefix . $value;
     }
 
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
     protected function ensureSuffix(string $value): string
     {
         $suffix = 'Attributes';
-        if (substr_compare($value, $suffix, -strlen($suffix)) === 0) {
+        if (str_ends_with($value, $suffix)) {
             return $value;
         }
 

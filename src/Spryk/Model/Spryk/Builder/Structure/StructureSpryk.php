@@ -73,9 +73,6 @@ class StructureSpryk extends AbstractBuilder
         return $directories;
     }
 
-    /**
-     * @return string
-     */
     protected function getModuleDirectory(): string
     {
         return rtrim($this->getTargetPath(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
@@ -83,10 +80,6 @@ class StructureSpryk extends AbstractBuilder
 
     /**
      * Adds newly created modules to the autoloader to make reflection work.
-     *
-     * @param string $path
-     *
-     * @return void
      */
     protected function addDirectoryToAutoload(string $path): void
     {

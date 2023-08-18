@@ -89,11 +89,7 @@ class UpdateGlueValidationSpryk extends AbstractBuilder
     }
 
     /**
-     * @param string $targetFile
-     *
      * @throws \SprykerSdk\Spryk\Exception\SprykException
-     *
-     * @return \SprykerSdk\Spryk\Model\Spryk\Builder\Resolver\Resolved\ResolvedYmlInterface
      */
     protected function getResolvedYmlFile(string $targetFile): ResolvedYmlInterface
     {
@@ -106,14 +102,6 @@ class UpdateGlueValidationSpryk extends AbstractBuilder
         return $resolvedTargetFile;
     }
 
-    /**
-     * @param array $validationStructure
-     * @param string $resource
-     * @param string $method
-     * @param string $field
-     *
-     * @return array
-     */
     protected function populateValidationStructure(array $validationStructure, string $resource, string $method, string $field): array
     {
         if (!isset($validationStructure[$resource])) {
@@ -129,11 +117,6 @@ class UpdateGlueValidationSpryk extends AbstractBuilder
         return $validationStructure;
     }
 
-    /**
-     * @param string $targetFile
-     *
-     * @return void
-     */
     protected function createTargetFileDirIfNotExists(string $targetFile): void
     {
         $targetDir = dirname($targetFile);
@@ -151,33 +134,21 @@ class UpdateGlueValidationSpryk extends AbstractBuilder
         return 'updateGlueValidation';
     }
 
-    /**
-     * @return string
-     */
     protected function getResource(): string
     {
         return (string)$this->arguments->getArgument(static::ARGUMENT_RESOURCE)->getValue();
     }
 
-    /**
-     * @return string
-     */
     protected function getMethod(): string
     {
         return strtolower($this->arguments->getArgument(static::ARGUMENT_HTTP_METHOD)->getValue());
     }
 
-    /**
-     * @return string
-     */
     protected function getField(): string
     {
         return (string)$this->arguments->getArgument(static::ARGUMENT_FIELD)->getValue();
     }
 
-    /**
-     * @return bool
-     */
     protected function getIsRequired(): bool
     {
         $isRequired = $this->arguments->getArgument(static::ARGUMENT_IS_REQUIRED)->getValue();
@@ -185,9 +156,6 @@ class UpdateGlueValidationSpryk extends AbstractBuilder
         return $isRequired === 'false' ? false : (bool)$isRequired;
     }
 
-    /**
-     * @return string
-     */
     protected function getTargetFile(): string
     {
         return $this->getFileTargetPath((string)$this->arguments->getArgument(static::ARGUMENT_TARGET_FILE)->getValue());
