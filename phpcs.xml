@@ -40,12 +40,7 @@
 
     <!-- Define your own sniffs here -->
 
-    <rule ref="Spryker.Internal.SprykerDisallowFunctions">
-        <properties>
-            <!-- We want to prevent 8.1+ functions to break 8.0 compatibility -->
-            <property name="phpVersion" value="8.0"/>
-        </properties>
-    </rule>
+    <rule ref="Spryker.Internal.SprykerDisallowFunctions"></rule>
 
     <rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration"/>
     <rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInClosureUse"/>
