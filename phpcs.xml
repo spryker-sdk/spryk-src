@@ -40,7 +40,12 @@
 
     <!-- Define your own sniffs here -->
 
-    <rule ref="Spryker.Internal.SprykerDisallowFunctions"></rule>
+    <rule ref="Spryker.Internal.SprykerDisallowFunctions">
+        <properties>
+            <!-- Lowest supported version of PHP at the moment is 8.1 -->
+            <property name="phpVersion" value="8.1"/>
+        </properties>
+    </rule>
 
     <rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration"/>
     <rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInClosureUse"/>
