@@ -126,7 +126,7 @@ class CopyModuleSpryk extends AbstractBuilder
         $sourcePathRelative = ($fileInfo->getRelativePath() !== '') ? $fileInfo->getRelativePath() . DIRECTORY_SEPARATOR : '';
         $targetPath = $this->getTargetPath();
 
-        if (str_contains($fileInfo->getPathname(), sprintf('/%sExtension/', $module))) {
+        if (strpos($fileInfo->getPathname(), sprintf('/%sExtension/', $module)) !== false) {
             $targetPath = rtrim($targetPath, DIRECTORY_SEPARATOR) . 'Extension' . DIRECTORY_SEPARATOR;
         }
 

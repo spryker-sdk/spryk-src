@@ -26,7 +26,7 @@ class ClassNameShortCallback implements CallbackInterface
      */
     public function getValue(ArgumentCollectionInterface $argumentCollection, $value)
     {
-        if (!str_contains($value, '\\')) {
+        if (strpos($value, '\\') === false) {
             return $value;
         }
 

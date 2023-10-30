@@ -104,7 +104,7 @@ class SprykRunConsole extends AbstractSprykConsole
         }
 
         return array_filter(static::$argumentsList, function (array $argumentDefinition) {
-            return !str_contains($argumentDefinition['name'], '.');
+            return (strpos($argumentDefinition['name'], '.') === false);
         });
     }
 

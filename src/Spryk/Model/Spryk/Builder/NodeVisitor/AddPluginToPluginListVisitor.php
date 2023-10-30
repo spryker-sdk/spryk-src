@@ -244,7 +244,7 @@ class AddPluginToPluginListVisitor extends NodeVisitorAbstract
 
     protected function createIndexExpr(string $index): Expr
     {
-        if (str_starts_with($index, 'static::')) {
+        if (strpos($index, 'static::') === 0) {
             $indexParts = explode('::', $index);
 
             return new ClassConstFetch(
@@ -253,7 +253,7 @@ class AddPluginToPluginListVisitor extends NodeVisitorAbstract
             );
         }
 
-        if (str_contains($index, '::')) {
+        if (strpos($index, '::') !== false) {
             $indexParts = explode('::', $index);
             $classNamespaceChain = explode('\\', $indexParts[0]);
 

@@ -73,7 +73,7 @@ return [
         },
         function (string $filePath, string $prefix, string $content): string {
             // Skip function renaming in twig/twig/src/ those functions are in the same namespace anyways
-            if (str_contains($filePath, 'twig/twig/src/')) {
+            if (strpos($filePath, 'twig/twig/src/') !== false) {
                 return $content;
             }
 

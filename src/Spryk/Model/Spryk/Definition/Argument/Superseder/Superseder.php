@@ -85,7 +85,7 @@ class Superseder implements SupersederInterface
         }
 
         // In case we have a condition like {% if .... %} we need to resolve this one differently
-//        if (is_string($argumentValue) && str_contains('{%', $argumentValue)) {
+//        if (is_string($argumentValue) && strpos('{%', $argumentValue) !== false) {
 //            return $this->replacePlaceholderInValueWithCondition($argumentValue, $sprykArguments, $resolvedArguments);
 //        }
 
@@ -120,7 +120,7 @@ class Superseder implements SupersederInterface
 
         foreach ($resolvedArguments->getArguments() as $resolvedArgument) {
             $value = $resolvedArgument->getValue();
-            if ($value === 'default' || (is_string($value) && str_contains('{{', $value))) {
+            if ($value === 'default' || (is_string($value) && strpos('{{', $value) !== false)) {
                 $value = $this->getResolvedValue($resolvedArgument->getName(), $sprykArguments, $resolvedArguments);
             }
             $replacements[$resolvedArgument->getName()] = $value;

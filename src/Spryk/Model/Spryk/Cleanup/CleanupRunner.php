@@ -106,7 +106,7 @@ class CleanupRunner implements CleanupRunnerInterface
         $pathToRunCodeceptionBuild = $this->getPathToRunCodeceptionBuild($resolved->getFilePath());
 
         if ($pathToRunCodeceptionBuild) {
-            if (str_starts_with($pathToRunCodeceptionBuild, APPLICATION_ROOT_DIR)) {
+            if (strpos($pathToRunCodeceptionBuild, APPLICATION_ROOT_DIR) === 0) {
                 $pathToRunCodeceptionBuild = ltrim(substr($pathToRunCodeceptionBuild, strlen(APPLICATION_ROOT_DIR)), DIRECTORY_SEPARATOR);
             }
             $this->pathsToRunCodeceptionBuild[$pathToRunCodeceptionBuild] = $pathToRunCodeceptionBuild;
@@ -142,7 +142,7 @@ class CleanupRunner implements CleanupRunnerInterface
 
         $pathForCodeSniffer = implode(DIRECTORY_SEPARATOR, array_slice($pathFragments, 0, $cutOffPosition));
 
-        if (str_starts_with($pathForCodeSniffer, APPLICATION_ROOT_DIR)) {
+        if (strpos($pathForCodeSniffer, APPLICATION_ROOT_DIR) === 0) {
             $pathForCodeSniffer = substr($pathForCodeSniffer, strlen(APPLICATION_ROOT_DIR));
         }
 

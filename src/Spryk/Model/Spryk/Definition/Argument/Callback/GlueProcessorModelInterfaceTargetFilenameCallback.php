@@ -32,7 +32,7 @@ class GlueProcessorModelInterfaceTargetFilenameCallback implements CallbackInter
     public function getValue(ArgumentCollectionInterface $argumentCollection, $value)
     {
         $className = (string)$argumentCollection->getArgument('className')->getValue();
-        if (str_contains($className, '\\')) {
+        if (strpos($className, '\\') !== false) {
             $classNameFragments = explode('\\', $className);
 
             $className = array_pop($classNameFragments);

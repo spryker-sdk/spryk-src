@@ -74,7 +74,7 @@ class AddToMethodBeforeReturnSpryk extends AbstractBuilder
             return true;
         }
 
-        if (str_contains($resolved->getContent(), $content)) {
+        if (strpos($resolved->getContent(), $content) !== false) {
             return true;
         }
 

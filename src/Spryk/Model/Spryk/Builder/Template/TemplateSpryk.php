@@ -150,7 +150,7 @@ class TemplateSpryk extends AbstractBuilder
     protected function getFilenameFromTemplateName(): string
     {
         $filename = str_replace('.twig', '', $this->getTemplateName());
-        if (str_contains($filename, '/')) {
+        if (strpos($filename, '/') !== false) {
             $filenameFragments = explode('/', $filename);
             $filename = array_pop($filenameFragments);
         }

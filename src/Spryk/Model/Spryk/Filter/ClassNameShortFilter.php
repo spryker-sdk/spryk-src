@@ -31,7 +31,7 @@ class ClassNameShortFilter implements FilterInterface
      */
     public function filter(string $value): string
     {
-        if (!str_contains($value, '\\')) {
+        if (strpos($value, '\\') === false) {
             return $value;
         }
         $classNameFragments = explode('\\', $value);

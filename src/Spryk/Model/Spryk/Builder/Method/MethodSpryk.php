@@ -258,7 +258,7 @@ class MethodSpryk extends AbstractBuilder
     {
         $className = $this->getTarget();
 
-        if (!str_contains($className, '\\') && $this->arguments->hasArgument(static::ARGUMENT_FULLY_QUALIFIED_CLASS_NAME_PATTERN)) {
+        if (strpos($className, '\\') === false && $this->arguments->hasArgument(static::ARGUMENT_FULLY_QUALIFIED_CLASS_NAME_PATTERN)) {
             $className = $this->getStringArgument(static::ARGUMENT_FULLY_QUALIFIED_CLASS_NAME_PATTERN);
         }
 
@@ -274,7 +274,7 @@ class MethodSpryk extends AbstractBuilder
      */
     protected function assertFullyQualifiedClassName(string $className): void
     {
-        if (!str_contains($className, '\\')) {
+        if (strpos($className, '\\') === false) {
             throw new NotAFullyQualifiedClassNameException(sprintf(
                 'Expected a fully qualified class name for reflection but got "%s". ' .
                 'Make sure you pass a fully qualified class name in the "%s" argument or use the "%s" argument with a value like "%s" in your spryk ' .
