@@ -32,7 +32,7 @@ class GlueProcessorModelSubDirectoryCallback implements CallbackInterface
     public function getValue(ArgumentCollectionInterface $argumentCollection, $value)
     {
         $className = (string)$argumentCollection->getArgument('className')->getValue();
-        if (strpos($className, '\\') === false) {
+        if (!str_contains($className, '\\')) {
             return null;
         }
 

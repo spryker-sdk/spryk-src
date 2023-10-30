@@ -158,7 +158,7 @@ abstract class AbstractTransferSpryk extends AbstractBuilder
         // Examples:
         // --property propertyA:string
         // --property propertyA:string,propertyB:int
-        if (strpos($properties, ':') !== false) {
+        if (str_contains($properties, ':')) {
             return explode(',', $properties);
         }
 

@@ -155,7 +155,7 @@ class TemplatesUsageRule implements PostValidationInterface
 
     protected function isTwigTemplateExtension(string $argumentValue): bool
     {
-        return (strpos($argumentValue, '.twig') !== false);
+        return str_contains($argumentValue, '.twig');
     }
 
     protected function getFileName(string $template): string

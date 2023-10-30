@@ -87,7 +87,7 @@ class ApplicationLayerExtenderPlugin extends AbstractExtender implements SprykCo
 
         $targetPath = $arguments['targetPath'][SprykConfig::NAME_ARGUMENT_KEY_DEFAULT];
 
-        if (strpos($targetPath, static::NAME_PLACEHOLDER_LAYER) === false) {
+        if (!str_contains($targetPath, static::NAME_PLACEHOLDER_LAYER)) {
             return false;
         }
 

@@ -103,11 +103,11 @@ class TypedArrayConvertFilter implements FilterInterface
 
     protected function isNullableParameter(string $value): bool
     {
-        return strpos($value, static::NULLABLE_TYPE_HINT) === 0 || (bool)preg_match('/(\|null$)|(\|null\|)|(^null\|)/', $value);
+        return str_starts_with($value, static::NULLABLE_TYPE_HINT) || (bool)preg_match('/(\|null$)|(\|null\|)|(^null\|)/', $value);
     }
 
     protected function makeParameterNullable(string $parameter): string
     {
-        return strpos($parameter, static::NULLABLE_TYPE_HINT) === 0 ? $parameter : static::NULLABLE_TYPE_HINT . $parameter;
+        return str_starts_with($parameter, static::NULLABLE_TYPE_HINT) ? $parameter : static::NULLABLE_TYPE_HINT . $parameter;
     }
 }

@@ -31,11 +31,11 @@ class ClassParser implements ParserInterface
      */
     public function parse(string $type): ResolvedInterface
     {
-        if (strpos($type, '<?php') !== false) {
+        if (str_contains($type, '<?php')) {
             return $this->fromFileContent($type);
         }
 
-        if (strpos($type, '.php') !== false) {
+        if (str_contains($type, '.php')) {
             return $this->fromFile($type);
         }
 
