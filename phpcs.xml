@@ -32,12 +32,7 @@
     <rule ref="vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml">
         <exclude name="SprykerStrict.TypeHints.ParameterTypeHint"/>
         <exclude name="SprykerStrict.TypeHints.PropertyTypeHint"/>
-    </rule>
-
-    <rule ref="SprykerStrict.TypeHints.ReturnTypeHint">
-        <properties>
-            <property name="enableIntersectionTypeHint" value="false"/>
-        </properties>
+        <exclude name="SprykerStrict.TypeHints.ReturnTypeHint"/>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Classes.DisallowConstructorPropertyPromotion">
