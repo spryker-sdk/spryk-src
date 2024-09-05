@@ -11,6 +11,7 @@ $stubFinder = \Isolated\Symfony\Component\Finder\Finder::create();
 
 foreach ($stubFinder->files()->name('*.php')->in([
     '../../vendor/symfony/polyfill-php80',
+    '../../vendor/symfony/deprecation-contracts',
 ]) as $file) {
     $stubs[] = $file->getPathName();
 }
@@ -67,6 +68,9 @@ return [
         },
         function (string $filePath, string $prefix, string $content): string {
             return str_replace('\'twig_', sprintf('\'%s\\twig_', $prefix), $content);
+        },
+        function (string $filePath, string $prefix, string $content): string {
+            return str_replace('\\\\Twig\\\\Extension\\\\CoreExtension::captureOutput', sprintf('\\\\%s\\\\Twig\\\\Extension\\\\CoreExtension::captureOutput', $prefix), $content);
         },
         function (string $filePath, string $prefix, string $content): string {
             return str_replace('$context[\'_seq\'] = twig_', sprintf('$context[\'_seq\'] = %s\\\\twig_', $prefix), $content);
