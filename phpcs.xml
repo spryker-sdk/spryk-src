@@ -34,6 +34,12 @@
         <exclude name="SprykerStrict.TypeHints.PropertyTypeHint"/>
     </rule>
 
+    <rule ref="SprykerStrict.TypeHints.ReturnTypeHint">
+        <properties>
+            <property name="enableIntersectionTypeHint" value="false"/>
+        </properties>
+    </rule>
+
     <rule ref="SlevomatCodingStandard.Classes.DisallowConstructorPropertyPromotion">
         <exclude name="SlevomatCodingStandard.Classes.DisallowConstructorPropertyPromotion.DisallowedConstructorPropertyPromotion"/>
     </rule>
