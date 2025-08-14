@@ -19,7 +19,8 @@
         "src/",
         "config/",
         "var/cache/prod/",
-        "vendor/twig/twig/"
+        "vendor/twig/twig/",
+        "vendor/symfony/twig-bundle/"
     ],
     "force-autodiscovery": true,
     "output": "tmp/spryk.phar",

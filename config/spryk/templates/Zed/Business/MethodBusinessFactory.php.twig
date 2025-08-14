@@ -30,13 +30,11 @@
     {
     return new \{{ organization }}\Zed\{{ module }}\Business\{{ subDirectoryName }}{{ className }}(
     {% for dependencyMethod in dependencyMethods.value -%}
-        {%- apply spaceless -%}
-            {% set endofline = '' %}
-            {% if not loop.last %}
-                {% set endofline = ',' %}
-            {% endif %}
-            {% set line = '    $this->' ~ dependencyMethod ~ '()' ~ endofline %}
-        {%- endapply -%}
+        {%- set endofline = '' -%}
+        {%- if not loop.last -%}
+            {%- set endofline = ',' -%}
+        {%- endif -%}
+        {%- set line = '    $this->' ~ dependencyMethod ~ '()' ~ endofline -%}
         {{ line | raw }}
     {% endfor -%}
     );
