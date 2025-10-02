@@ -5,13 +5,11 @@
     {% endif %}
 {% endif %}
 
-{%- apply spaceless -%}
-    {% if subDirectory is defined and subDirectory.value is not null %}
-        {% set subDirectory = '\\' ~ subDirectory | replace({"/": "\\"}) %}
-    {% else %}
-        {% set subDirectory = '' %}
-    {% endif %}
-{%- endapply -%}
+{%- if subDirectory is defined and subDirectory.value is not null -%}
+    {%- set subDirectory = '\\' ~ subDirectory | replace({"/": "\\"}) -%}
+{%- else -%}
+    {%- set subDirectory = '' -%}
+{%- endif -%}
 
 {% if fqcnClassName.value is not empty %}
     {% set class = fqcnClassName %}
@@ -48,13 +46,12 @@
 {
 return new {{ class }}(
 {% for dependencyMethod in dependencyMethods.value -%}
-    {%- apply spaceless -%}
-        {% set endofline = '' %}
-        {% if not loop.last %}
-            {% set endofline = ',' %}
-        {% endif %}
-        {% set line = '    $this->' ~ dependencyMethod ~ '()' ~ endofline %}
-    {%- endapply -%}
+    {%- if not loop.last -%}
+        {%- set endofline = ',' -%}
+    {%- else -%}
+        {%- set endofline = '' -%}
+    {%- endif -%}
+    {%- set line = '    $this->' ~ dependencyMethod ~ '()' ~ endofline -%}
     {{ line | raw }}
 {% endfor -%}
 );

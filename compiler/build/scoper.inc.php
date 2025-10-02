@@ -70,9 +70,6 @@ return [
             return str_replace('\'twig_', sprintf('\'%s\\twig_', $prefix), $content);
         },
         function (string $filePath, string $prefix, string $content): string {
-            return str_replace('\\\\Twig\\\\Extension\\\\CoreExtension::captureOutput', sprintf('\\\\%s\\\\Twig\\\\Extension\\\\CoreExtension::captureOutput', $prefix), $content);
-        },
-        function (string $filePath, string $prefix, string $content): string {
             return str_replace('$context[\'_seq\'] = twig_', sprintf('$context[\'_seq\'] = %s\\\\twig_', $prefix), $content);
         },
         function (string $filePath, string $prefix, string $content): string {

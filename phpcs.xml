@@ -43,8 +43,8 @@
 
     <rule ref="Spryker.Internal.SprykerDisallowFunctions">
         <properties>
-            <!-- Lowest supported version of PHP at the moment is 8.2 -->
-            <property name="phpVersion" value="8.2"/>
+            <!-- Lowest supported version of PHP at the moment is 8.3 -->
+            <property name="phpVersion" value="8.3"/>
         </properties>
     </rule>
 
