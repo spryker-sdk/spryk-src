@@ -13,7 +13,8 @@ arguments:
         inherit: true
         default: Spryker
 
-    type: ~ # Defines the "*" in add*Plugins
+    # Defines the "*" in add*Plugins
+    type:
         inherit: true
 
     providerMethod:

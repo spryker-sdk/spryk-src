@@ -47,7 +47,7 @@ class SprykDefinition implements SprykDefinitionInterface
     protected bool $isCalled = false;
 
     /**
-     * @var array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition>
+     * @var array<string, bool> Keyed by Spryk name; consumers only check key presence.
      */
     protected array $excludedSpryks = [];
 
@@ -177,7 +177,7 @@ class SprykDefinition implements SprykDefinitionInterface
     }
 
     /**
-     * @return array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition>
+     * @return array<string, bool>
      */
     public function getExcludedSpryks(): array
     {
@@ -185,7 +185,7 @@ class SprykDefinition implements SprykDefinitionInterface
     }
 
     /**
-     * @param array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition> $excludedSpryks
+     * @param array<string, bool> $excludedSpryks
      *
      * @return $this
      */

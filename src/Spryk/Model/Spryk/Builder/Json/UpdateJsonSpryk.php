@@ -85,21 +85,29 @@ class UpdateJsonSpryk extends AbstractBuilder
 
         $currentData = $propertyAccessor->getValue($jsonAsArray, $target);
 
-        if ($currentData) {
-            if ($key) {
-                $currentData[$key] = $value;
-                $propertyAccessor->setValue($jsonAsArray, $target, $currentData);
-
-                return $jsonAsArray;
-            }
-
-            $currentData[] = $value;
-            $propertyAccessor->setValue($jsonAsArray, $target, $currentData);
-
+        if (!$currentData) {
             return $jsonAsArray;
         }
 
-        return $jsonAsArray;
+        if ($key) {
+            $currentData[$key] = $value;
+            $propertyAccessor->setValue($jsonAsArray, $target, $currentData);
+
+            // PropertyAccessor::setValue() takes its target by reference as object|array,
+            // which widens the type of the array passed into it.
+            /** @var array<mixed> $updatedJson */
+            $updatedJson = $jsonAsArray;
+
+            return $updatedJson;
+        }
+
+        $currentData[] = $value;
+        $propertyAccessor->setValue($jsonAsArray, $target, $currentData);
+
+        /** @var array<mixed> $updatedJson */
+        $updatedJson = $jsonAsArray;
+
+        return $updatedJson;
     }
 
     protected function getKey(): string

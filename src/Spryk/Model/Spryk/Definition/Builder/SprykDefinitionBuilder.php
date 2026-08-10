@@ -353,7 +353,7 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
     }
 
     /**
-     * @return array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition>
+     * @return array<string, bool> Keyed by Spryk name; consumers only check key presence.
      */
     protected function getExcludedSpryks(array $sprykConfiguration): array
     {
@@ -364,9 +364,6 @@ class SprykDefinitionBuilder implements SprykDefinitionBuilderInterface
                 $excludedSpryks[$sprykName] = true;
             }
         }
-
-        /** @var array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition> $excludedSpryks */
-        $excludedSpryks = array_filter($excludedSpryks);
 
         return $excludedSpryks;
     }

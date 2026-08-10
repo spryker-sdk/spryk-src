@@ -120,7 +120,12 @@ class UpdateYmlSpryk extends AbstractBuilder
 
         $propertyAccessor->setValue($targetYaml, $addToElementPath, $ymlToAdd);
 
-        return $targetYaml;
+        // PropertyAccessor::setValue() takes its target by reference as object|array,
+        // which widens the type of the array passed into it.
+        /** @var array<mixed> $updatedYaml */
+        $updatedYaml = $targetYaml;
+
+        return $updatedYaml;
     }
 
     protected function mergeYmlToAddWithExistingYml(array $existingYml, array $newYml): array
