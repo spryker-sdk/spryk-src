@@ -137,7 +137,7 @@ class SchemaBehaviorSpryk extends AbstractBuilder
 
     protected function isBehaviorDefinedInTable(SimpleXMLElement $simpleXmlElement, string $behaviorName): bool
     {
-        $columnXmlElements = $simpleXmlElement->xpath('//behavior');
+        $columnXmlElements = $simpleXmlElement->xpath('//behavior') ?: [];
 
         foreach ($columnXmlElements as $tableXmlElement) {
             if ((string)$tableXmlElement['name'] === $behaviorName) {

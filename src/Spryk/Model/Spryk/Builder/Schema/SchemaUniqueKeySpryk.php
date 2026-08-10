@@ -113,7 +113,7 @@ class SchemaUniqueKeySpryk extends AbstractBuilder
 
     protected function isUniqueKeyDefinedInTable(SimpleXMLElement $simpleXmlElement, string $uniqueKeyName): bool
     {
-        $columnXmlElements = $simpleXmlElement->xpath('//unique');
+        $columnXmlElements = $simpleXmlElement->xpath('//unique') ?: [];
 
         foreach ($columnXmlElements as $tableXmlElement) {
             if ((string)$tableXmlElement['name'] === $uniqueKeyName) {

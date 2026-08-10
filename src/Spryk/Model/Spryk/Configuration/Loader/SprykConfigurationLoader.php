@@ -66,7 +66,9 @@ class SprykConfigurationLoader implements SprykConfigurationLoaderInterface
     {
         if (!$this->rootConfiguration) {
             $rootConfiguration = $this->configurationFinder->find('spryk');
-            $this->rootConfiguration = Yaml::parse($rootConfiguration->getContents());
+            /** @var array<mixed> $parsedConfiguration */
+            $parsedConfiguration = Yaml::parse($rootConfiguration->getContents());
+            $this->rootConfiguration = $parsedConfiguration;
         }
 
         return $this->rootConfiguration;

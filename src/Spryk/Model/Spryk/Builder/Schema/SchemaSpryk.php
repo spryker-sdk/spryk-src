@@ -70,7 +70,7 @@ class SchemaSpryk extends AbstractBuilder
 
     protected function isTableDefinedInSchema(SimpleXMLElement $simpleXmlElement, string $tableName): bool
     {
-        $tableXmlElements = $simpleXmlElement->xpath('//table');
+        $tableXmlElements = $simpleXmlElement->xpath('//table') ?: [];
         foreach ($tableXmlElements as $tableXmlElement) {
             if ((string)$tableXmlElement['name'] === $tableName) {
                 return true;

@@ -129,7 +129,7 @@ class SchemaPropertySpryk extends AbstractBuilder
 
     protected function isColumnDefinedInTable(SimpleXMLElement $simpleXmlElement, string $columnName): bool
     {
-        $columnXmlElements = $simpleXmlElement->xpath('//column');
+        $columnXmlElements = $simpleXmlElement->xpath('//column') ?: [];
 
         foreach ($columnXmlElements as $tableXmlElement) {
             if ((string)$tableXmlElement['name'] === $columnName) {

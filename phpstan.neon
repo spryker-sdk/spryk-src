@@ -3,13 +3,16 @@ parameters:
     paths:
         - src/
 
-    checkMissingIterableValueType: false
-    checkGenericClassInNonGenericObjectType: false
-
     bootstrapFiles:
         - '%rootDir%/../../../phpstan-bootstrap.php'
 
     ignoreErrors:
         - '#Parameter \#2 \$callback of function array_filter expects .+, .+glob.+ given#'
+        # PHPStan 2.0 replaced the checkMissingIterableValueType and
+        # checkGenericClassInNonGenericObjectType options with these identifiers.
+        -
+            identifier: missingType.iterableValue
+        -
+            identifier: missingType.generics
 
     reportUnmatchedIgnoredErrors: false
