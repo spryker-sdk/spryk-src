@@ -72,12 +72,12 @@ interface SprykDefinitionInterface
     public function setArgumentCollection(ArgumentCollectionInterface $argumentCollection);
 
     /**
-     * @return array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition>
+     * @return array<string, bool> Keyed by Spryk name; consumers only check key presence.
      */
     public function getExcludedSpryks(): array;
 
     /**
-     * @param array<\SprykerSdk\Spryk\Model\Spryk\Definition\SprykDefinition> $excludedSpryks
+     * @param array<string, bool> $excludedSpryks
      *
      * @return $this
      */

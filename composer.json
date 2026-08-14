@@ -19,12 +19,12 @@
         "symfony/polyfill-php80": "^1.25",
         "symfony/process": "^5.0.0 || ^6.0.0",
         "symfony/property-access": "^5.4",
-        "symfony/proxy-manager-bridge": "^5.4.0",
+        "symfony/proxy-manager-bridge": "^6.4.0",
         "symfony/runtime": "^7.1",
         "symfony/stopwatch": "^5.4 || ^6.0.0",
         "symfony/twig-bundle": "^5.4",
         "symfony/yaml": "^5.0.0 || ^6.0.0",
-        "symplify/autowire-array-parameter": "^10.0.0",
+        "symplify/autowire-array-parameter": "^11.1",
         "twig/twig": "^3.0.0"
     },
     "require-dev": {
