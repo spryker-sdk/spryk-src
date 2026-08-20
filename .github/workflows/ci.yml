@@ -15,7 +15,7 @@ jobs:
       matrix:
         php-version: [
             '8.3',
-            '8.4'
+            '8.5'
         ]
     steps:
       - name: Checkout
@@ -59,11 +59,11 @@ jobs:
         run: composer test
 
       - name: Codecept tests with coverage
-        if: ${{ matrix.php-version == '8.4' }}
+        if: ${{ matrix.php-version == '8.5' }}
         run: composer test-cover
 
       - name: Code Coverage Report
-        if: success() && matrix.php-version == '8.4'
+        if: success() && matrix.php-version == '8.5'
         uses: codecov/codecov-action@v3
         with:
             file: ./tests/_output/coverage.xml
